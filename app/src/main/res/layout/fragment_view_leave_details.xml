@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        tools:ignore="UselessParent">
+
+        <include
+            layout="@layout/toolbar_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_View_leavetype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LEAVE TYPE"
+                android:textStyle="bold"
+                android:padding="4dp"
+                android:background="@color/white"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/et_View_leavetype"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="Casual Leave"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_leavetype" />
+
+                <TextView
+                    android:id="@+id/tv_View_applieddate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="APPLIED DATE"
+                    android:textStyle="bold"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_leavetype" />
+
+                <TextView
+                    android:id="@+id/et_View_applieddate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="19-02-2020"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_applieddate" />
+
+                <TextView
+                android:id="@+id/tv_View_fromdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text="FROM DATE"
+                android:textStyle="bold"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_applieddate"/>
+
+                <TextView
+                    android:id="@+id/et_View_fromdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="24-02-2020"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_fromdate" />
+
+            <TextView
+                android:id="@+id/tv_View_todate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text="TO DATE"
+                android:textStyle="bold"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_fromdate"/>
+
+                <TextView
+                    android:id="@+id/et_View_todate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="24-02-2020"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_todate" />
+
+            <TextView
+                android:id="@+id/tv_View_no_of_counts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NUMBER OF DAY(S)"
+                android:textStyle="bold"
+                android:padding="4dp"
+                android:background="@color/white"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_todate"/>
+
+                <TextView
+                    android:id="@+id/et_View_no_of_counts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="1"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_no_of_counts" />
+
+            <TextView
+                android:id="@+id/tv_View_remarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="REMARKS"
+                android:textStyle="bold"
+                android:padding="4dp"
+                android:background="@color/white"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_no_of_counts"/>
+
+                <TextView
+                    android:id="@+id/et_View_remarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="Native"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_remarks" />
+
+            <TextView
+                android:id="@+id/tv_View_leavestatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LEAVE STATUS"
+                android:textStyle="bold"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_remarks"/>
+
+                <TextView
+                    android:id="@+id/et_View_leavestatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="Approved"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_leavestatus" />
+
+            <TextView
+                android:id="@+id/tv_View_approveddate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="APPROVED DATE"
+                android:textStyle="bold"
+                android:padding="4dp"
+                android:background="@color/white"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_leavestatus"/>
+
+                <TextView
+                    android:id="@+id/et_View_approveddate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="25-02-2020"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_approveddate" />
+
+            <TextView
+                android:id="@+id/tv_View_remarksbyapprover"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="REMARKS BY APPROVER"
+                android:textStyle="bold"
+                android:padding="4dp"
+                android:background="@color/white"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_approveddate"/>
+
+                <TextView
+                    android:id="@+id/et_View_remarksbyapprover"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="done"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_remarksbyapprover" />
+
+            <TextView
+                android:id="@+id/tv_View_approver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="APPROVER"
+                android:textStyle="bold"
+                android:padding="4dp"
+                android:background="@color/white"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_remarksbyapprover"/>
+
+                <TextView
+                    android:id="@+id/et_View_approver"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="done"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_approver" />
+        <HorizontalScrollView
+            android:id="@+id/scroll"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/et_View_approver"
+            tools:ignore="MissingConstraints">
+
+            <TableLayout
+                android:id="@+id/tableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_approver"/>
+
+        </HorizontalScrollView>
+
+                <Button
+                    android:id="@+id/btn_accept"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/button_style"
+                    android:text="ACCEPT"
+                    android:textColor="@color/orange"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toStartOf="@+id/btn_reject"
+                    app:layout_constraintTop_toBottomOf="@+id/scroll"
+                    app:layout_constraintWidth_percent="0.5" />
+
+                <Button
+                    android:id="@+id/btn_reject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/button_style"
+                    android:text="REJECT"
+                    android:textColor="@color/orange"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/scroll"
+                    app:layout_constraintWidth_percent="0.5" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+    </LinearLayout>
+</FrameLayout>

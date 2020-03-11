@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/calender_frame"
+    tools:context=".fragment.leave.LeaveCalenderForTeam"
+    android:background="#C0C0C0">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <com.applandeo.materialcalendarview.CalendarView
+            android:id="@+id/custom_calender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:disabledDaysLabelsColor="@color/disabledDialogButtonColor"
+            app:eventsEnabled="true"
+            app:headerColor="@color/orange"
+            app:highlightedDaysLabelsColor="@color/gray"
+            app:todayLabelColor="@color/orange"
+            app:type="one_day_picker" />
+
+      </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</FrameLayout>

@@ -1,5 +1,6 @@
 package com.android.wilcoconnect.api;
 
+import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.wilcoconnect.IssueTracking;
 import com.android.wilcoconnect.model.login.Login;
 import com.android.wilcoconnect.model.wilcoconnect.MyRequestData;
@@ -86,4 +87,10 @@ public interface ApiInterface {
                                       @Query("employeeID") String employeeID,
                                       @Query("statusCode") String statusCode,
                                       @Query("masterID") int masterID);
+
+    /*
+    * Get the Profile Module BasicInformation
+    * */
+    @GET("api/ProfileRequest/GetBasicDetails")
+    Call<BasicDetails> getProfileData( @Query("employeeID") String EmployeeID);
 }

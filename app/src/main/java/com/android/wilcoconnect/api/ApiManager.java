@@ -3,6 +3,7 @@ package com.android.wilcoconnect.api;
 import androidx.annotation.NonNull;
 
 import com.android.wilcoconnect.app.MainApplication;
+import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.model.wilcoconnect.IssueTracking;
 import com.android.wilcoconnect.model.login.Login;
@@ -172,5 +173,13 @@ public class ApiManager {
         public void getIssueTraking(SendRequest request, Callback<IssueTracking> callback) {
             Call<IssueTracking> myRequest = service.IssueTracking(request.Email, request.companyCode, request.employeeID, request.statusCode, request.masterID);
             myRequest.enqueue(callback);
+        }
+
+        /*
+        * Get the Profile Basic information
+        * */
+        public void getprofileDetail(String EmployeeId, Callback<BasicDetails> callback){
+            Call<BasicDetails> information = service.getProfileData(EmployeeId);
+            information.enqueue(callback);
         }
     }

@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                 * To call the Api to get the Token Authorization
                 * */
                 Login data = new Login(email.getText().toString(), password.getText().toString(), "password");
-                progress.setVisibility(View.VISIBLE);
+                //progress.setVisibility(View.VISIBLE);
                 ApiManager.getInstance().getToken(data, new Callback<TokenData>() {
                     /*
                     * When the Api Success.

@@ -100,15 +100,18 @@ public interface ApiInterface {
     /*
     * Get the Profile Module Family Details
     * */
+    @GET("api/ProfileRequest/GetFamilyDetails")
     Call<FamilyDetails> get_FamilyData( @Query("employeeID") String EmployeeID);
 
     /*
      * Get the Profile Module Education Details
      * */
+    @GET("api/ProfileRequest/GetEducationDetails")
     Call<EducationDetails> get_EducationData(@Query("employeeID") String EmployeeID);
 
     /*
      * Get the Profile Module Last Position Details
      * */
+    @GET("api/ProfileRequest/GetLastPositionDetails")
     Call<LastPositionDetails> get_LastPositionData(@Query("employeeID") String EmployeeID);
 }

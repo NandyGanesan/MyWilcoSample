@@ -19,6 +19,10 @@ import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.profile.BasicInformation;
+import com.android.wilcoconnect.model.profile.EducationDetails;
+import com.android.wilcoconnect.model.profile.FamilyDetailData;
+import com.android.wilcoconnect.model.profile.FamilyDetails;
+import com.android.wilcoconnect.model.profile.LastPositionDetails;
 import com.android.wilcoconnect.model.profile.ProfileMenu;
 import com.android.wilcoconnect.shared.ProfileInformationDisplayAdapter;
 import com.google.gson.Gson;
@@ -40,6 +44,9 @@ public class ProfileInformation extends DialogFragment {
     private HashMap<String, ArrayList<BasicInformation>> item = new HashMap<>();
     private ArrayList<BasicInformation> selectedList = new ArrayList<>();
     private BasicDetails basicinformationdata = new BasicDetails();
+    private EducationDetails educationDetailsdata = new EducationDetails();
+    private FamilyDetails familyDetailsdata = new FamilyDetails();
+    private LastPositionDetails lastPositionDetailsdata = new LastPositionDetails();
     private static final String MYPREFS_NAME = "MyPrefsFile";
     private String EmployeeId;
     private RecyclerView recyclerView;
@@ -79,8 +86,9 @@ public class ProfileInformation extends DialogFragment {
         SharedPreferences prefs = getActivity().getSharedPreferences(MYPREFS_NAME, MODE_PRIVATE);
         EmployeeId = prefs.getString("EmployeeID", "No name defined");
 
-        get_value();
-
+        if(menu.getValues().equals("Basic information")||menu.getValues().equals("Address")||menu.getValues().equals("Last Position")){
+            get_value();
+        }
         return view;
     }
 
@@ -285,7 +293,7 @@ public class ProfileInformation extends DialogFragment {
 
     private void get_value() {
         /*
-         * Get the overall profile Detail
+         * Get the overall profile Basic Detail
          * */
         ApiManager.getInstance().getBasicDetail(EmployeeId, new Callback<BasicDetails>() {
             /*
@@ -295,7 +303,26 @@ public class ProfileInformation extends DialogFragment {
             public void onResponse(Call<BasicDetails> call, Response<BasicDetails> response) {
                 basicinformationdata = response.body();
                 if(basicinformationdata!=null){
-                    get_Hashmap_value();
+                    /*
+                     * Get the overall Last Position Detail
+                     * */
+                    ApiManager.getInstance().getLastPostionDetail(EmployeeId, new Callback<LastPositionDetails>() {
+                        /*
+                         * Get the Api success..
+                         * */
+                        @Override
+                        public void onResponse(Call<LastPositionDetails> call, Response<LastPositionDetails> response) {
+                            lastPositionDetailsdata = response.body();
+                            if(lastPositionDetailsdata!=null){
+                                get_Hashmap_value();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<LastPositionDetails> call, Throwable t) {
+                            Log.e(TAG, Objects.requireNonNull(t.getLocalizedMessage()));
+                        }
+                    });
                 }
             }
 

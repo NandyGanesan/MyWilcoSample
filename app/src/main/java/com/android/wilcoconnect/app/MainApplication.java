@@ -20,7 +20,7 @@ public class MainApplication extends Application {
     }
 
     /*
-    * Super oncreate method
+    * Super onCreate method
     * */
     @Override
     public void onCreate() {

@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.profile.BasicDetails;
+import com.android.wilcoconnect.model.profile.EducationDetails;
+import com.android.wilcoconnect.model.profile.FamilyDetails;
+import com.android.wilcoconnect.model.profile.LastPositionDetails;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.model.wilcoconnect.IssueTracking;
 import com.android.wilcoconnect.model.login.Login;
@@ -178,8 +181,32 @@ public class ApiManager {
         /*
         * Get the Profile Basic information
         * */
-        public void getprofileDetail(String EmployeeId, Callback<BasicDetails> callback){
-            Call<BasicDetails> information = service.getProfileData(EmployeeId);
+        public void getBasicDetail(String EmployeeId, Callback<BasicDetails> callback){
+            Call<BasicDetails> information = service.get_ProfileData(EmployeeId);
             information.enqueue(callback);
         }
-    }
+
+        /*
+         * Get the Profile Basic information
+         * */
+        public void getFamilyDetail(String EmployeeId, Callback<FamilyDetails> callback){
+            Call<FamilyDetails> information = service.get_FamilyData(EmployeeId);
+            information.enqueue(callback);
+        }
+
+        /*
+         * Get the Profile Basic information
+         * */
+        public void getEducationDetail(String EmployeeId, Callback<EducationDetails> callback){
+            Call<EducationDetails> information = service.get_EducationData(EmployeeId);
+            information.enqueue(callback);
+        }
+
+        /*
+         * Get the Profile Basic information
+         * */
+        public void getLastPostionDetail(String EmployeeId, Callback<LastPositionDetails> callback){
+            Call<LastPositionDetails> information = service.get_LastPositionData(EmployeeId);
+            information.enqueue(callback);
+        }
+}

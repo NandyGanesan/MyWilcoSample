@@ -1,6 +1,9 @@
 package com.android.wilcoconnect.api;
 
 import com.android.wilcoconnect.model.profile.BasicDetails;
+import com.android.wilcoconnect.model.profile.EducationDetails;
+import com.android.wilcoconnect.model.profile.FamilyDetails;
+import com.android.wilcoconnect.model.profile.LastPositionDetails;
 import com.android.wilcoconnect.model.wilcoconnect.IssueTracking;
 import com.android.wilcoconnect.model.login.Login;
 import com.android.wilcoconnect.model.wilcoconnect.MyRequestData;
@@ -89,8 +92,23 @@ public interface ApiInterface {
                                       @Query("masterID") int masterID);
 
     /*
-    * Get the Profile Module BasicInformation
+    * Get the Profile Module BasicInformation and Address
     * */
     @GET("api/ProfileRequest/GetBasicDetails")
-    Call<BasicDetails> getProfileData( @Query("employeeID") String EmployeeID);
+    Call<BasicDetails> get_ProfileData( @Query("employeeID") String EmployeeID);
+
+    /*
+    * Get the Profile Module Family Details
+    * */
+    Call<FamilyDetails> get_FamilyData( @Query("employeeID") String EmployeeID);
+
+    /*
+     * Get the Profile Module Education Details
+     * */
+    Call<EducationDetails> get_EducationData(@Query("employeeID") String EmployeeID);
+
+    /*
+     * Get the Profile Module Last Position Details
+     * */
+    Call<LastPositionDetails> get_LastPositionData(@Query("employeeID") String EmployeeID);
 }

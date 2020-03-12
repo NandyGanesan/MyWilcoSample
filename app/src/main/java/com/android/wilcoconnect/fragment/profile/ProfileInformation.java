@@ -287,7 +287,7 @@ public class ProfileInformation extends DialogFragment {
         /*
          * Get the overall profile Detail
          * */
-        ApiManager.getInstance().getprofileDetail(EmployeeId, new Callback<BasicDetails>() {
+        ApiManager.getInstance().getBasicDetail(EmployeeId, new Callback<BasicDetails>() {
             /*
              * Get the Api success..
              * */

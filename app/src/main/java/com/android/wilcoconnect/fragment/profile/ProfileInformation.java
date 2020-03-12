@@ -20,7 +20,6 @@ import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.profile.BasicInformation;
 import com.android.wilcoconnect.model.profile.EducationDetails;
-import com.android.wilcoconnect.model.profile.FamilyDetailData;
 import com.android.wilcoconnect.model.profile.FamilyDetails;
 import com.android.wilcoconnect.model.profile.LastPositionDetails;
 import com.android.wilcoconnect.model.profile.ProfileMenu;
@@ -277,6 +276,70 @@ public class ProfileInformation extends DialogFragment {
         AddressDetail.add(addressinfo11);
 
         item.put("Address",AddressDetail);
+
+        ArrayList<BasicInformation> lastpositiondetail=new ArrayList<>();
+
+        BasicInformation lastposition = new BasicInformation();
+        lastposition.setDataLabel("Designation");
+        lastposition.setDataDetail(lastPositionDetailsdata.getData().getDesignation());
+        lastpositiondetail.add(lastposition);
+
+        BasicInformation lastposition1 = new BasicInformation();
+        lastposition1.setDataLabel("Organization");
+        lastposition1.setDataDetail(lastPositionDetailsdata.getData().getOrganisation());
+        lastpositiondetail.add(lastposition1);
+
+        BasicInformation lastposition2 = new BasicInformation();
+        lastposition2.setDataLabel("Job Responsibilities");
+        lastposition2.setDataDetail(lastPositionDetailsdata.getData().getJobResponsibilities());
+        lastpositiondetail.add(lastposition2);
+
+        BasicInformation lastposition3 = new BasicInformation();
+        lastposition3.setDataLabel("Gross Salary(Per Month)");
+        lastposition3.setDataDetail(""+lastPositionDetailsdata.getData().getGrossSalaryPerMonth());
+        lastpositiondetail.add(lastposition3);
+
+        BasicInformation lastposition4 = new BasicInformation();
+        lastposition4.setDataLabel("Joined Date");
+        lastposition4.setDataDetail(lastPositionDetailsdata.getData().getLastPositionDateofJoin());
+        lastpositiondetail.add(lastposition4);
+
+        BasicInformation lastposition5 = new BasicInformation();
+        lastposition5.setDataLabel("Designation at Joined Date");
+        lastposition5.setDataDetail(lastPositionDetailsdata.getData().getDateofJoinDesignation());
+        lastpositiondetail.add(lastposition5);
+
+        BasicInformation lastposition6 = new BasicInformation();
+        lastposition6.setDataLabel("Reported Person");
+        lastposition6.setDataDetail(lastPositionDetailsdata.getData().getReportingTo());
+        lastpositiondetail.add(lastposition6);
+
+        BasicInformation lastposition7 = new BasicInformation();
+        lastposition7.setDataLabel("Reported Designation");
+        lastposition7.setDataDetail(lastPositionDetailsdata.getData().getReportingToDesignation());
+        lastpositiondetail.add(lastposition7);
+
+        BasicInformation lastposition8 = new BasicInformation();
+        lastposition8.setDataLabel("Address");
+        lastposition8.setDataDetail(lastPositionDetailsdata.getData().getAddress1());
+        lastpositiondetail.add(lastposition8);
+
+        BasicInformation lastposition9 = new BasicInformation();
+        lastposition9.setDataLabel("Country");
+        lastposition9.setDataDetail(lastPositionDetailsdata.getData().getCountryName());
+        lastpositiondetail.add(lastposition9);
+
+        BasicInformation lastposition0 = new BasicInformation();
+        lastposition0.setDataLabel("State");
+        lastposition0.setDataDetail(lastPositionDetailsdata.getData().getStateName());
+        lastpositiondetail.add(lastposition0);
+
+        BasicInformation lastposition00 = new BasicInformation();
+        lastposition00.setDataLabel("City");
+        lastposition00.setDataDetail(lastPositionDetailsdata.getData().getLastPosCity());
+        lastpositiondetail.add(lastposition00);
+
+        item.put("Last Position",lastpositiondetail);
 
         if (item.containsKey(menu.getValues())) {
             selectedList = new ArrayList<>();

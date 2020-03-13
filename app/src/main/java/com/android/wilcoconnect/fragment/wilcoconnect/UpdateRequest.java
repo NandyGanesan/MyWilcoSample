@@ -297,17 +297,14 @@ public class UpdateRequest extends Fragment {
             iv_attachments.setVisibility(View.VISIBLE);
         }
 
-        iv_attachments.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(newServiceRequest.getFilepath().equals("")){
-                    getActivity().finish();
-                }
-                else{
-                    Uri uri = Uri.parse("http://192.168.1.50/hrdev/content/"+newServiceRequest.getFilepath());
-                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(intent);
-                }
+        iv_attachments.setOnClickListener(v -> {
+            if(newServiceRequest.getFilepath().equals("")){
+                getActivity().finish();
+            }
+            else{
+                Uri uri = Uri.parse("http://192.168.1.50/hrdev/content/"+newServiceRequest.getFilepath());
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
             }
         });
 

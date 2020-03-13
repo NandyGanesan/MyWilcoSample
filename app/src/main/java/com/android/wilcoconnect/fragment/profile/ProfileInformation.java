@@ -19,15 +19,20 @@ import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.profile.BasicInformation;
+import com.android.wilcoconnect.model.profile.EducationDetailData;
 import com.android.wilcoconnect.model.profile.EducationDetails;
+import com.android.wilcoconnect.model.profile.FamilyDetailData;
 import com.android.wilcoconnect.model.profile.FamilyDetails;
 import com.android.wilcoconnect.model.profile.LastPositionDetails;
 import com.android.wilcoconnect.model.profile.ProfileMenu;
+import com.android.wilcoconnect.shared.EducationAdapter;
+import com.android.wilcoconnect.shared.FamilyAdapter;
 import com.android.wilcoconnect.shared.ProfileInformationDisplayAdapter;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 import retrofit2.Call;
@@ -44,7 +49,9 @@ public class ProfileInformation extends DialogFragment {
     private ArrayList<BasicInformation> selectedList = new ArrayList<>();
     private BasicDetails basicinformationdata = new BasicDetails();
     private EducationDetails educationDetailsdata = new EducationDetails();
+    private List<EducationDetailData> educationlist;
     private FamilyDetails familyDetailsdata = new FamilyDetails();
+    private List<FamilyDetailData> familylist;
     private LastPositionDetails lastPositionDetailsdata = new LastPositionDetails();
     private static final String MYPREFS_NAME = "MyPrefsFile";
     private String EmployeeId;
@@ -88,7 +95,86 @@ public class ProfileInformation extends DialogFragment {
         if(menu.getValues().equals("Basic information")||menu.getValues().equals("Address")||menu.getValues().equals("Last Position")){
             get_value();
         }
+        else if(menu.getValues().equals("Education")){
+            get_education_value();
+        }
+        else if(menu.getValues().equals("Family")){
+            get_family_value();
+        }
         return view;
+    }
+
+    private void get_family_value() {
+        /*
+         * Get the overall profile Family Detail
+         * */
+        ApiManager.getInstance().getFamilyDetail(EmployeeId, new Callback<FamilyDetails>() {
+            /*
+             * Get the Api success..
+             * */
+            @Override
+            public void onResponse(Call<FamilyDetails> call, Response<FamilyDetails> response) {
+                familyDetailsdata = response.body();
+                assert familyDetailsdata != null;
+                if(familyDetailsdata.getData()!=null){
+                    familylist = familyDetailsdata.getData();
+                    display_family();
+                }
+            }
+            /*
+             * Get the Api Failure
+             * */
+            @Override
+            public void onFailure(Call<FamilyDetails> call, Throwable t) {
+                Log.e(TAG, Objects.requireNonNull(t.getLocalizedMessage()));
+            }
+        });
+    }
+
+    private void display_family() {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        if(familylist.size()>0) {
+            FamilyAdapter adapter = new FamilyAdapter(familylist,getActivity());
+            recyclerView.setAdapter(adapter);
+        }
+    }
+
+    private void get_education_value() {
+        /*
+         * Get the overall Education Detail
+         * */
+        ApiManager.getInstance().getEducationDetail(EmployeeId, new Callback<EducationDetails>() {
+            /*
+             * Get the Api success..
+             * */
+            @Override
+            public void onResponse(Call<EducationDetails> call, Response<EducationDetails> response) {
+                educationDetailsdata = response.body();
+                assert educationDetailsdata != null;
+                if(educationDetailsdata.getData()!=null){
+                    educationlist = educationDetailsdata.getData();
+                    display_education();
+                }
+
+            }
+            /*
+             * Get the Api Failure
+             * */
+            @Override
+            public void onFailure(Call<EducationDetails> call, Throwable t) {
+                Log.e(TAG, Objects.requireNonNull(t.getLocalizedMessage()));
+            }
+        });
+    }
+
+    private void display_education() {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        if(educationlist.size()>0) {
+            EducationAdapter adapter = new EducationAdapter(educationlist,getActivity());
+            recyclerView.setAdapter(adapter);
+        }
     }
 
     @Override

@@ -78,24 +78,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(3).setIcon(R.drawable.user);
         tabLayout.getTabAt(4).setIcon(R.drawable.ic_dehaze_black_24dp);
 
-        /*
-         * Set the Viewpager Action
-         * */
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
-
          /*
          * Define the Tab Layout Action
          * */

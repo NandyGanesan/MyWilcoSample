@@ -54,42 +54,39 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             holder.datalist.setCardBackgroundColor(c.getColor(R.color.gray));
         }
 
-        holder.datalist.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d("TAG", "cardview click" + position);
-                if (serviceRequests.get(position).getStatusCode().equals("CF") ||
-                        serviceRequests.get(position).getStatusCode().equals("A") ||
-                        serviceRequests.get(position).getStatusCode().equals("RO") ||
-                        serviceRequests.get(position).getStatusCode().equals("RJ") ||
-                        serviceRequests.get(position).getStatusCode().equals("RS") ||
-                        serviceRequests.get(position).getStatusCode().equals("C") ||
-                        serviceRequests.get(position).getStatusCode().equals("CC") ||
-                        serviceRequests.get(position).getStatusCode().equals("N") ||
-                        serviceRequests.get(position).getStatusCode().equals("NCF")) {
+        holder.datalist.setOnClickListener(v -> {
+            Log.d("TAG", "cardview click" + position);
+            if (serviceRequests.get(position).getStatusCode().equals("CF") ||
+                    serviceRequests.get(position).getStatusCode().equals("A") ||
+                    serviceRequests.get(position).getStatusCode().equals("RO") ||
+                    serviceRequests.get(position).getStatusCode().equals("RJ") ||
+                    serviceRequests.get(position).getStatusCode().equals("RS") ||
+                    serviceRequests.get(position).getStatusCode().equals("C") ||
+                    serviceRequests.get(position).getStatusCode().equals("CC") ||
+                    serviceRequests.get(position).getStatusCode().equals("N") ||
+                    serviceRequests.get(position).getStatusCode().equals("NCF")) {
 
-                    ServiceRequest newRequest = new ServiceRequest();
-                    newRequest.setSupport(serviceRequests.get(position).getSupportFunctionName());
-                    newRequest.setRequest(serviceRequests.get(position).getRequestDescription());
-                    newRequest.setDescription(serviceRequests.get(position).getShortDescription());
-                    newRequest.setSummary(serviceRequests.get(position).getShortDescription());
-                    newRequest.setPriority(serviceRequests.get(position).getPriorityLevel());
-                    newRequest.setStatus(serviceRequests.get(position).getStatus());
-                    newRequest.setLastComment(serviceRequests.get(position).getUserstatus());
-                    newRequest.setIssueNumber(serviceRequests.get(position).getIssueNumber());
-                    newRequest.setMasterID(serviceRequests.get(position).getIssueMasterID());
-                    newRequest.setStatusCode(serviceRequests.get(position).getStatusCode());
-                    newRequest.setFilepath(serviceRequests.get(position).getFilePath());
+                ServiceRequest newRequest = new ServiceRequest();
+                newRequest.setSupport(serviceRequests.get(position).getSupportFunctionName());
+                newRequest.setRequest(serviceRequests.get(position).getRequestDescription());
+                newRequest.setDescription(serviceRequests.get(position).getShortDescription());
+                newRequest.setSummary(serviceRequests.get(position).getShortDescription());
+                newRequest.setPriority(serviceRequests.get(position).getPriorityLevel());
+                newRequest.setStatus(serviceRequests.get(position).getStatus());
+                newRequest.setLastComment(serviceRequests.get(position).getUserstatus());
+                newRequest.setIssueNumber(serviceRequests.get(position).getIssueNumber());
+                newRequest.setMasterID(serviceRequests.get(position).getIssueMasterID());
+                newRequest.setStatusCode(serviceRequests.get(position).getStatusCode());
+                newRequest.setFilepath(serviceRequests.get(position).getFilePath());
 
-                    /**
-                     * Show the data in New Update View
-                     * and perform respective operations
-                     * */
-                    Gson gson = new Gson();
-                    String s = gson.toJson(newRequest);
-                    if (listener != null)
-                        listener.onClick(v, s);
-                }
+                /**
+                 * Show the data in New Update View
+                 * and perform respective operations
+                 * */
+                Gson gson = new Gson();
+                String s = gson.toJson(newRequest);
+                if (listener != null)
+                    listener.onClick(v, s);
             }
         });
     }

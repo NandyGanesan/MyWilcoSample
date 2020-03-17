@@ -17,14 +17,10 @@ import com.android.wilcoconnect.model.common.Success;
 import com.android.wilcoconnect.model.login.TokenData;
 import com.android.wilcoconnect.model.common.UserData;
 
-import java.io.IOException;
-
-import okhttp3.Interceptor;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -64,18 +60,14 @@ public class ApiManager {
             * Token is Enable then Call the Authorized Api.
             * */
             else{
-                httpClient.addInterceptor(new Interceptor() {
-                    @NonNull
-                    @Override
-                    public Response intercept(@NonNull Chain chain) throws IOException {
-                        Request original = chain.request();
-                        Request request = original.newBuilder()
-                                .header("Authorization", headers)
-                                .method(original.method(), original.body())
-                                .build();
+                httpClient.addInterceptor(chain -> {
+                    Request original = chain.request();
+                    Request request = original.newBuilder()
+                            .header("Authorization", headers)
+                            .method(original.method(), original.body())
+                            .build();
 
-                        return chain.proceed(request);
-                    }
+                    return chain.proceed(request);
                 });
                 OkHttpClient client = httpClient.build();
                 Retrofit retrofit = new Retrofit.Builder()

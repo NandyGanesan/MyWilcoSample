@@ -32,14 +32,11 @@ public class SplashActivity extends AppCompatActivity {
             /*
              * Display the Splash Screen for Particular Time Period
              * */
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Log.i(TAG,"GO for Login Screen");
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivityForResult(intent, 101);
-                    finish();
-                }
+            new Handler().postDelayed(() -> {
+                Log.i(TAG,"GO for Login Screen");
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivityForResult(intent, 101);
+                finish();
             },SPLASH_TIME_OUT);
         }
 

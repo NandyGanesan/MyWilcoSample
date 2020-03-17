@@ -138,13 +138,8 @@ public class NewService extends Fragment {
         * Toolbar Back action and set Title
         * */
         newservice_toolbar = view.findViewById(R.id.main_withnav_toolbar);
-        newservice_toolbar.setTitle("New Service Request");//WilcoConnect-
-        newservice_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        newservice_toolbar.setTitle("New Service Request");
+        newservice_toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
 
         /*
          * Get the Header
@@ -157,16 +152,13 @@ public class NewService extends Fragment {
         /*
          * Get the image file from the Gallery..
          * */
-        btn_file.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int result = checkPermission();
-                if (result == PackageManager.PERMISSION_GRANTED) {
-                    Intent image_intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(image_intent, RESULT_LOAD_FILE);
-                } else {
-                    requestPermission();
-                }
+        btn_file.setOnClickListener(v -> {
+            int result = checkPermission();
+            if (result == PackageManager.PERMISSION_GRANTED) {
+                Intent image_intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(image_intent, RESULT_LOAD_FILE);
+            } else {
+                requestPermission();
             }
         });
 
@@ -220,224 +212,188 @@ public class NewService extends Fragment {
         /*
          * select the Support Function from the dropdown list
          * */
-        btn_support.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btn_support.setOnClickListener(v -> {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Select the Support Function:");
-                builder.setItems(support, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        checkItem = which;
-                        //Toast.makeText(getActivity(), support[which], Toast.LENGTH_SHORT).show();
-                        btn_support.setText(support[which]);
-                        for (int item = 0; item < supportdropdown.size(); item++) {
-                            if (support[which].equalsIgnoreCase(supportdropdown.get(item).getSupportFunctionName())) {
-                                newrequest.setSupportFunctionID(supportdropdown.get(item).getSupportFunctionID());
-                                requestdropdown = supportdropdown.get(item).getRequestType();
-                            }
-                        }
-                        dialog.dismiss();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Select the Support Function:");
+            builder.setItems(support, (dialog, which) -> {
+                checkItem = which;
+                btn_support.setText(support[which]);
+                for (int item = 0; item < supportdropdown.size(); item++) {
+                    if (support[which].equalsIgnoreCase(supportdropdown.get(item).getSupportFunctionName())) {
+                        newrequest.setSupportFunctionID(supportdropdown.get(item).getSupportFunctionID());
+                        requestdropdown = supportdropdown.get(item).getRequestType();
                     }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (checkItem < 0)
-                            btn_support.setText("Support Function");
-                        requestdropdown = null;
+                }
+                dialog.dismiss();
+            }).setNegativeButton("Cancel", (dialog, which) -> {
+                if (checkItem < 0)
+                    btn_support.setText("Support Function");
+                requestdropdown = null;
 
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
 
         /*
          * select the request type from the dropdown list
          * */
-        btn_request.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkItem = -1;
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Select the Request Type:");
-                if (requestdropdown != null) {
-                    requestdd = new String[requestdropdown.size()];
-                    for (int item = 0; item < requestdropdown.size(); item++) {
-                        requestdd[item] = requestdropdown.get(item).getFunctionShortForm();
-                    }
-                    builder.setItems(requestdd, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            checkItem = which;
-                            for (int item = 0; item < requestdropdown.size(); item++) {
-                                if (requestdd[checkItem].equalsIgnoreCase(requestdropdown.get(item).getFunctionShortForm())) {
-                                    btn_request.setText(requestdropdown.get(item).getFunctionShortForm());
-                                    newrequest.setRequestTypeId(requestdropdown.get(item).getRequestTypeID());
-                                }
-                            }
-                            dialog.dismiss();
-                        }
-                    }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (checkItem < 0)
-                                btn_request.setText("Request Type");
-                        }
-                    });
-                } else {
-                    builder.setTitle("Error:");
-                    builder.setMessage("First to select the Support Function and then to select the Request Type...");
-                    builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            btn_request.setText("Request Type");
-                        }
-                    });
+        btn_request.setOnClickListener(v -> {
+            checkItem = -1;
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Select the Request Type:");
+            if (requestdropdown != null) {
+                requestdd = new String[requestdropdown.size()];
+                for (int item = 0; item < requestdropdown.size(); item++) {
+                    requestdd[item] = requestdropdown.get(item).getFunctionShortForm();
                 }
-
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                builder.setItems(requestdd, (dialog, which) -> {
+                    checkItem = which;
+                    for (int item = 0; item < requestdropdown.size(); item++) {
+                        if (requestdd[checkItem].equalsIgnoreCase(requestdropdown.get(item).getFunctionShortForm())) {
+                            btn_request.setText(requestdropdown.get(item).getFunctionShortForm());
+                            newrequest.setRequestTypeId(requestdropdown.get(item).getRequestTypeID());
+                        }
+                    }
+                    dialog.dismiss();
+                }).setNegativeButton("Cancel", (dialog, which) -> {
+                    if (checkItem < 0)
+                        btn_request.setText("Request Type");
+                });
+            } else {
+                builder.setTitle("Error:");
+                builder.setMessage("First to select the Support Function and then to select the Request Type...");
+                builder.setPositiveButton("Ok", (dialog, which) -> btn_request.setText("Request Type"));
             }
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
 
 
         /*
          * select the priority level from the dropdown list
          * */
-        btn_priority.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkItem = -1;
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Select the Priority Level:");
-                builder.setItems(prioritydd, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        checkItem = which;
-                        btn_priority.setText(priorityData.get(which).getPriorityLevel());
-                        newrequest.setPriorityLevelID(priorityData.get(which).getID());
-                        dialog.dismiss();
-                    }
-                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (checkItem < 0)
-                            btn_priority.setText("Priority");
-                    }
-                });
+        btn_priority.setOnClickListener(v -> {
+            checkItem = -1;
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Select the Priority Level:");
+            builder.setItems(prioritydd, (dialog, which) -> {
+                checkItem = which;
+                btn_priority.setText(priorityData.get(which).getPriorityLevel());
+                newrequest.setPriorityLevelID(priorityData.get(which).getID());
+                dialog.dismiss();
+            }).setNegativeButton("Cancel", (dialog, which) -> {
+                if (checkItem < 0)
+                    btn_priority.setText("Priority");
+            });
 
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
 
         /*
          * Get all the Data from the User..
          * And Post the User Request..
          * */
-        btn_create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btn_support.setError(null);
-                btn_request.setError(null);
-                description.setError(null);
-                summary.setError(null);
-                btn_priority.setError(null);
-                if (btn_support.getText().toString().equals("Support Function")) {
-                    btn_support.setError("Select the Support Function");
-                } else if (btn_request.getText().toString().equals("Request Type")) {
-                    btn_request.setError("Select the Request Type");
-                } else if (description.getText().toString().equals("")) {
-                    description.setError("Require to fill Description");
-                } else if (summary.getText().toString().equals("")) {
-                    summary.setError("Require to fill Summary");
-                } else if (btn_priority.getText().toString().equals("Priority")) {
-                    btn_priority.setError("Select the Priority Level");
-                } else {
-                    newrequest.setStatusCode("N");
-                    newrequest.setIssueDescription(description.getText().toString());
-                    newrequest.setIssueSummary(summary.getText().toString());
-                    //pass it like this
-                    File file = new File(btn_file.getText().toString());
-                    RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-                    // MultipartBody.Part is used to send also the actual file name
-                    MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestBody1);
-                    MediaType text = MediaType.parse("text/plain");
-                    Log.i(TAG, "NEW REQUEST DATA");
-                    RequestBody Redescription = RequestBody.create(text, description.getText().toString());
-                    Log.i(TAG, "description: " + description.getText().toString());
-                    RequestBody Resummary = RequestBody.create(text, summary.getText().toString());
-                    Log.i(TAG, "summary: " + summary.getText().toString());
-                    RequestBody ReEmail = RequestBody.create(text, newrequest.getEmail());
-                    Log.i(TAG, "Email: " + newrequest.getEmail());
-                    RequestBody ReEmployeeId = RequestBody.create(text, newrequest.getEmployeeID());
-                    Log.i(TAG, "EmployeeID: " + newrequest.getEmployeeID());
-                    RequestBody ReCompanyCode = RequestBody.create(text, newrequest.getCompanyCode());
-                    Log.i(TAG, "CompanyCode: " + newrequest.getCompanyCode());
-                    RequestBody ReSupportId = RequestBody.create(text, String.valueOf(newrequest.getSupportFunctionID()));
-                    Log.i(TAG, "SupportFunctionID: " + newrequest.getSupportFunctionID());
-                    RequestBody ReRequestId = RequestBody.create(text, String.valueOf(newrequest.getRequestTypeId()));
-                    Log.i(TAG, "RequestTypeId: " + newrequest.getRequestTypeId());
-                    RequestBody RePriorityId = RequestBody.create(text, String.valueOf(newrequest.getPriorityLevelID()));
-                    Log.i(TAG, "PriorityLevelID: " + newrequest.getPriorityLevelID());
-                    RequestBody ReIssueMasterId = RequestBody.create(text, String.valueOf(newrequest.getIssueMasterID()));
-                    Log.i(TAG, "IssueMasterID: " + newrequest.getIssueMasterID());
-                    RequestBody RestatusCode = RequestBody.create(text, "N");
-                    Log.i(TAG, "statusCode: " + "N");
-                    RequestBody ReComments = RequestBody.create(text, "");
-                    Log.i(TAG, "Comments: " + " ");
+        btn_create.setOnClickListener(v -> {
+            btn_support.setError(null);
+            btn_request.setError(null);
+            description.setError(null);
+            summary.setError(null);
+            btn_priority.setError(null);
+            if (btn_support.getText().toString().equals("Support Function")) {
+                btn_support.setError("Select the Support Function");
+            } else if (btn_request.getText().toString().equals("Request Type")) {
+                btn_request.setError("Select the Request Type");
+            } else if (description.getText().toString().equals("")) {
+                description.setError("Require to fill Description");
+            } else if (summary.getText().toString().equals("")) {
+                summary.setError("Require to fill Summary");
+            } else if (btn_priority.getText().toString().equals("Priority")) {
+                btn_priority.setError("Select the Priority Level");
+            } else {
+                newrequest.setStatusCode("N");
+                newrequest.setIssueDescription(description.getText().toString());
+                newrequest.setIssueSummary(summary.getText().toString());
+                //pass it like this
+                File file = new File(btn_file.getText().toString());
+                RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                // MultipartBody.Part is used to send also the actual file name
+                MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestBody1);
+                MediaType text = MediaType.parse("text/plain");
+                Log.i(TAG, "NEW REQUEST DATA");
+                RequestBody Redescription = RequestBody.create(text, description.getText().toString());
+                Log.i(TAG, "description: " + description.getText().toString());
+                RequestBody Resummary = RequestBody.create(text, summary.getText().toString());
+                Log.i(TAG, "summary: " + summary.getText().toString());
+                RequestBody ReEmail = RequestBody.create(text, newrequest.getEmail());
+                Log.i(TAG, "Email: " + newrequest.getEmail());
+                RequestBody ReEmployeeId = RequestBody.create(text, newrequest.getEmployeeID());
+                Log.i(TAG, "EmployeeID: " + newrequest.getEmployeeID());
+                RequestBody ReCompanyCode = RequestBody.create(text, newrequest.getCompanyCode());
+                Log.i(TAG, "CompanyCode: " + newrequest.getCompanyCode());
+                RequestBody ReSupportId = RequestBody.create(text, String.valueOf(newrequest.getSupportFunctionID()));
+                Log.i(TAG, "SupportFunctionID: " + newrequest.getSupportFunctionID());
+                RequestBody ReRequestId = RequestBody.create(text, String.valueOf(newrequest.getRequestTypeId()));
+                Log.i(TAG, "RequestTypeId: " + newrequest.getRequestTypeId());
+                RequestBody RePriorityId = RequestBody.create(text, String.valueOf(newrequest.getPriorityLevelID()));
+                Log.i(TAG, "PriorityLevelID: " + newrequest.getPriorityLevelID());
+                RequestBody ReIssueMasterId = RequestBody.create(text, String.valueOf(newrequest.getIssueMasterID()));
+                Log.i(TAG, "IssueMasterID: " + newrequest.getIssueMasterID());
+                RequestBody RestatusCode = RequestBody.create(text, "N");
+                Log.i(TAG, "statusCode: " + "N");
+                RequestBody ReComments = RequestBody.create(text, "");
+                Log.i(TAG, "Comments: " + " ");
 
-                    ApiManager.getInstance().StoreRequest(
-                            null,
-                            ReEmail,
-                            ReEmployeeId,
-                            ReCompanyCode,
-                            ReIssueMasterId,
-                            ReSupportId,
-                            ReRequestId,
-                            RePriorityId,
-                            Resummary,
-                            Redescription,
-                            RestatusCode,
-                            ReComments, new Callback<Success>() {
+                ApiManager.getInstance().StoreRequest(
+                        null,
+                        ReEmail,
+                        ReEmployeeId,
+                        ReCompanyCode,
+                        ReIssueMasterId,
+                        ReSupportId,
+                        ReRequestId,
+                        RePriorityId,
+                        Resummary,
+                        Redescription,
+                        RestatusCode,
+                        ReComments, new Callback<Success>() {
+                            /*
+                             * Store the new request.
+                             * When the api call is Success..
+                             * */
+                            @Override
+                            public void onResponse(@NonNull Call<Success> call, @NonNull Response<Success> response) {
+                                Success success = response.body();
                                 /*
-                                 * Store the new request.
-                                 * When the api call is Success..
+                                 * Data store Success
                                  * */
-                                @Override
-                                public void onResponse(@NonNull Call<Success> call, @NonNull Response<Success> response) {
-                                    Success success = response.body();
-                                    /*
-                                     * Data store Success
-                                     * */
-                                    if (response.isSuccessful() && Objects.requireNonNull(success).getStatus().equals("true")) {
-                                        Log.d(TAG, "New Request Add Success");
-                                        tv_error.setVisibility(View.GONE);
-                                        fragment = new WilcoConnect();
-                                        replaceFragment(fragment);
-                                    }
-                                    /*
-                                     * Data store Failure
-                                     * */
-                                    else {
-                                        tv_error.setVisibility(View.VISIBLE);
-                                        Log.d(TAG, "New Request Add Failure");
-                                    }
+                                if (response.isSuccessful() && Objects.requireNonNull(success).getStatus().equals("true")) {
+                                    Log.d(TAG, "New Request Add Success");
+                                    tv_error.setVisibility(View.GONE);
+                                    fragment = new WilcoConnect();
+                                    replaceFragment(fragment);
                                 }
-
-                                /**
-                                 * When the api call is Failure..
+                                /*
+                                 * Data store Failure
                                  * */
-                                @Override
-                                public void onFailure(@NonNull Call<Success> call, @NonNull Throwable t) {
+                                else {
                                     tv_error.setVisibility(View.VISIBLE);
                                     Log.d(TAG, "New Request Add Failure");
                                 }
-                            });
-                }
+                            }
+
+                            /**
+                             * When the api call is Failure..
+                             * */
+                            @Override
+                            public void onFailure(@NonNull Call<Success> call, @NonNull Throwable t) {
+                                tv_error.setVisibility(View.VISIBLE);
+                                Log.d(TAG, "New Request Add Failure");
+                            }
+                        });
             }
         });
         return view;
@@ -496,13 +452,10 @@ public class NewService extends Fragment {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (shouldShowRequestPermissionRationale(CAMERA)) {
                         showMessageOKCancel("You need to allow access to external storage read/write permissions",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                            Intent image_intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                            startActivityForResult(image_intent, RESULT_LOAD_FILE);
-                                        }
+                                (dialog, which) -> {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                        Intent image_intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                        startActivityForResult(image_intent, RESULT_LOAD_FILE);
                                     }
                                 });
                     }
@@ -523,11 +476,10 @@ public class NewService extends Fragment {
                 .show();
     }
 
-    public void replaceFragment(Fragment someFragment) {
+    private void replaceFragment(Fragment someFragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.frame, someFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
 }

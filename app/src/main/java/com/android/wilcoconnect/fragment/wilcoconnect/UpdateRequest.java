@@ -92,12 +92,7 @@ public class UpdateRequest extends Fragment {
         view = inflater.inflate(R.layout.fragment_newservice, container, false);
 
         updaterequest_toolbar = view.findViewById(R.id.main_withnav_toolbar);
-        updaterequest_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        updaterequest_toolbar.setNavigationOnClickListener(v -> getActivity().onBackPressed());
         /*
          * Retrieve the Intent Value
          * */
@@ -405,169 +400,155 @@ public class UpdateRequest extends Fragment {
             /*
              * select the priority level from the dropdown list
              * */
-            btn_priority.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    priorityData();
-                }
-            });
+            btn_priority.setOnClickListener(v -> priorityData());
         }
 
-        btn_update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RequestBody ReEmail = RequestBody.create(text, prefs.getString("Email", "No name defined"));
-                Log.i(TAG, "Email         : " + prefs.getString("Email", "No name defined"));
-                RequestBody ReEmployeeId = RequestBody.create(text, prefs.getString("EmployeeID", "No name defined"));
-                Log.i(TAG, "EmployeeID        : " + prefs.getString("EmployeeID", "No name defined"));
-                RequestBody ReCompanyCode = RequestBody.create(text, prefs.getString("CompanyCode", "No name defined"));
-                Log.i(TAG, "CompanyCode         : " + prefs.getString("CompanyCode", "No name defined"));
-                RequestBody ReIssueMasterId = RequestBody.create(text, String.valueOf(newServiceRequest.getMasterID()));
-                Log.i(TAG, "IssueMasterId         : " + newServiceRequest.getMasterID());
-                RequestBody RePriorityId = RequestBody.create(text, String.valueOf(newrequest.getPriorityLevelID()));
-                Log.i(TAG, "PriorityId         : " + newrequest.getPriorityLevelID());
-                RequestBody ReSupportId = RequestBody.create(text, String.valueOf(data.getData().get(0).getRequestDetails().get(0).getSupportIndexFunctionID()));
-                Log.i(TAG, "SupportId         : " + data.getData().get(0).getRequestDetails().get(0).getSupportIndexFunctionID());
-                RequestBody ReRequestId = RequestBody.create(text, String.valueOf(data.getData().get(0).getRequestDetails().get(0).getRequestTypeID()));
-                Log.i(TAG, "RequestId         : " + data.getData().get(0).getRequestDetails().get(0).getRequestTypeID());
-                RequestBody Redescription = RequestBody.create(text, description.getText().toString());
-                Log.i(TAG, "description         : " + description.getText().toString());
-                RequestBody Resummary = RequestBody.create(text, summary.getText().toString());
-                Log.i(TAG, "summary         : " + summary.getText().toString());
+        btn_update.setOnClickListener(v -> {
+            RequestBody ReEmail = RequestBody.create(text, prefs.getString("Email", "No name defined"));
+            Log.i(TAG, "Email         : " + prefs.getString("Email", "No name defined"));
+            RequestBody ReEmployeeId = RequestBody.create(text, prefs.getString("EmployeeID", "No name defined"));
+            Log.i(TAG, "EmployeeID        : " + prefs.getString("EmployeeID", "No name defined"));
+            RequestBody ReCompanyCode = RequestBody.create(text, prefs.getString("CompanyCode", "No name defined"));
+            Log.i(TAG, "CompanyCode         : " + prefs.getString("CompanyCode", "No name defined"));
+            RequestBody ReIssueMasterId = RequestBody.create(text, String.valueOf(newServiceRequest.getMasterID()));
+            Log.i(TAG, "IssueMasterId         : " + newServiceRequest.getMasterID());
+            RequestBody RePriorityId = RequestBody.create(text, String.valueOf(newrequest.getPriorityLevelID()));
+            Log.i(TAG, "PriorityId         : " + newrequest.getPriorityLevelID());
+            RequestBody ReSupportId = RequestBody.create(text, String.valueOf(data.getData().get(0).getRequestDetails().get(0).getSupportIndexFunctionID()));
+            Log.i(TAG, "SupportId         : " + data.getData().get(0).getRequestDetails().get(0).getSupportIndexFunctionID());
+            RequestBody ReRequestId = RequestBody.create(text, String.valueOf(data.getData().get(0).getRequestDetails().get(0).getRequestTypeID()));
+            Log.i(TAG, "RequestId         : " + data.getData().get(0).getRequestDetails().get(0).getRequestTypeID());
+            RequestBody Redescription = RequestBody.create(text, description.getText().toString());
+            Log.i(TAG, "description         : " + description.getText().toString());
+            RequestBody Resummary = RequestBody.create(text, summary.getText().toString());
+            Log.i(TAG, "summary         : " + summary.getText().toString());
 
-                if (btn_update.getText().toString().equals("UPDATE")) {
-                    Log.d("NewUpdateView", "Update Click");
-                    if (closure.getText().toString().equals("")) {
-                        closure.setError("Enter the Comments");
-                    } else {
-                        RequestBody Recomments = RequestBody.create(text, closure.getText().toString());
-                        Log.i(TAG, "comments         : " + closure.getText().toString());
-                        RequestBody RestatusCode = RequestBody.create(text, update_statuscode);
-                        Log.i(TAG, "statusCode         : " + update_statuscode);
-                        update(ReEmail, ReEmployeeId, ReCompanyCode, ReIssueMasterId, ReSupportId, ReRequestId, RePriorityId, Resummary, Redescription, RestatusCode, Recomments);
-                    }
-                }
-                if (btn_update.getText().toString().equals("CLOSE SR")) {
-                    Log.d("NewUpdateView", "Close Click");
-                    if (closure.getText().toString().equals("")) {
-                        closure.setError("Enter the Comments");
-                    } else if (latest.getText().toString().equals("")) {
-                        latest.setError("Enter the Comment");
-                    } else {
-                        RequestBody Recomments = RequestBody.create(text, latest.getText().toString());
-                        Log.i(TAG, "comments         : " + latest.getText().toString());
-                        RequestBody RestatusCode = RequestBody.create(text, close_statuscode);
-                        Log.i(TAG, "statusCode         : " + close_statuscode);
-                        update(ReEmail, ReEmployeeId, ReCompanyCode, ReIssueMasterId, ReSupportId, ReRequestId, RePriorityId, Resummary, Redescription, RestatusCode, Recomments);
-                    }
-                }
-            }
-        });
-
-        btn_create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RequestBody ReEmail = RequestBody.create(text, prefs.getString("Email", "No name defined"));
-                Log.i(TAG, "Email         : " + prefs.getString("Email", "No name defined"));
-                RequestBody ReEmployeeId = RequestBody.create(text, prefs.getString("EmployeeID", "No name defined"));
-                Log.i(TAG, "EmployeeID        : " + prefs.getString("EmployeeID", "No name defined"));
-                RequestBody ReCompanyCode = RequestBody.create(text, prefs.getString("CompanyCode", "No name defined"));
-                Log.i(TAG, "CompanyCode         : " + prefs.getString("CompanyCode", "No name defined"));
-                RequestBody ReIssueMasterId = RequestBody.create(text, String.valueOf(newServiceRequest.getMasterID()));
-                Log.i(TAG, "IssueMasterId         : " + newServiceRequest.getMasterID());
-                RequestBody RePriorityId = RequestBody.create(text, String.valueOf(data.getData().get(0).getRequestDetails().get(0).getPriorityLevelID()));
-                Log.i(TAG, "PriorityId         : " + data.getData().get(0).getRequestDetails().get(0).getPriorityLevelID());
-                RequestBody ReSupportId = RequestBody.create(text, String.valueOf(data.getData().get(0).getRequestDetails().get(0).getSupportIndexFunctionID()));
-                Log.i(TAG, "SupportFunctionId         : " + data.getData().get(0).getRequestDetails().get(0).getSupportIndexFunctionID());
-                RequestBody ReRequestId = RequestBody.create(text, String.valueOf(data.getData().get(0).getRequestDetails().get(0).getRequestTypeID()));
-                Log.i(TAG, "questId         : " + data.getData().get(0).getRequestDetails().get(0).getRequestTypeID());
-                RequestBody Redescription = RequestBody.create(text, description.getText().toString());
-                Log.i(TAG, "description         : " + description.getText().toString());
-                RequestBody Resummary = RequestBody.create(text, summary.getText().toString());
-                Log.i(TAG, "summary         : " + summary.getText().toString());
-                if (btn_create.getText().toString().equals("CANCEL SR")) {
-                    Log.d("NewUpdateView", "Cancel click");
-                    if (closure.getText().toString().equals("")) {
-                        closure.setError("Enter the Comments");
-                    } else {
-                        RequestBody Recomments = RequestBody.create(text, closure.getText().toString());
-                        Log.i(TAG, "comments         : " + closure.getText().toString());
-                        RequestBody RestatusCode = RequestBody.create(text, cancel_statuscode);
-                        Log.i(TAG, "statusCode         : " + cancel_statuscode);
-                        update(ReEmail,
-                                ReEmployeeId,
-                                ReCompanyCode,
-                                ReIssueMasterId,
-                                ReSupportId,
-                                ReRequestId,
-                                RePriorityId,
-                                Resummary,
-                                Redescription,
-                                RestatusCode,
-                                Recomments);
-                    }
-                }
-                if (btn_create.getText().toString().equals("CLARIFIED")) {
-                    Log.d("NewUpdateView", "Clarified click");
-                    if (closure.getText().toString().equals("")) {
-                        closure.setError("Enter the Comments");
-                    } else if (latest.getText().toString().equals("")) {
-                        latest.setError("Enter the Comment");
-                    } else {
-                        RequestBody Recomments = RequestBody.create(text, latest.getText().toString());
-                        Log.i(TAG, "comments         : " + latest.getText().toString());
-                        RequestBody RestatusCode = RequestBody.create(text, clarified_statuscode);
-                        Log.i(TAG, "statusCode         : " + clarified_statuscode);
-                        update(ReEmail,
-                                ReEmployeeId,
-                                ReCompanyCode,
-                                ReIssueMasterId,
-                                ReSupportId,
-                                ReRequestId,
-                                RePriorityId,
-                                Resummary,
-                                Redescription,
-                                RestatusCode,
-                                Recomments);
-                    }
-                }
-                if (btn_create.getText().toString().equals("REOPEN")) {
-                    Log.d("NewUpdateView", "Reopen click");
-                    if (closure.getText().toString().equals("")) {
-                        closure.setError("Enter the Comments");
-                    } else if (latest.getText().toString().equals("")) {
-                        latest.setError("Enter the Comment");
-                    } else {
-                        RequestBody Recomments = RequestBody.create(text, latest.getText().toString());
-                        Log.i(TAG, "comments         : " + latest.getText().toString());
-                        RequestBody RestatusCode = RequestBody.create(text, reopen_statuscode);
-                        Log.i(TAG, "statusCode         : " + reopen_statuscode);
-                        update(ReEmail,
-                                ReEmployeeId,
-                                ReCompanyCode,
-                                ReIssueMasterId,
-                                ReSupportId,
-                                ReRequestId,
-                                RePriorityId,
-                                Resummary,
-                                Redescription,
-                                RestatusCode,
-                                Recomments);
-                    }
-                }
-            }
-        });
-
-        attach_file.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int result = checkPermission();
-                if (result == PackageManager.PERMISSION_GRANTED) {
-                    Intent image_intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(image_intent, RESULT_LOAD_FILE);
+            if (btn_update.getText().toString().equals("UPDATE")) {
+                Log.d("NewUpdateView", "Update Click");
+                if (closure.getText().toString().equals("")) {
+                    closure.setError("Enter the Comments");
                 } else {
-                    requestPermission();
+                    RequestBody Recomments = RequestBody.create(text, closure.getText().toString());
+                    Log.i(TAG, "comments         : " + closure.getText().toString());
+                    RequestBody RestatusCode = RequestBody.create(text, update_statuscode);
+                    Log.i(TAG, "statusCode         : " + update_statuscode);
+                    update(ReEmail, ReEmployeeId, ReCompanyCode, ReIssueMasterId, ReSupportId, ReRequestId, RePriorityId, Resummary, Redescription, RestatusCode, Recomments);
                 }
+            }
+            if (btn_update.getText().toString().equals("CLOSE SR")) {
+                Log.d("NewUpdateView", "Close Click");
+                if (closure.getText().toString().equals("")) {
+                    closure.setError("Enter the Comments");
+                } else if (latest.getText().toString().equals("")) {
+                    latest.setError("Enter the Comment");
+                } else {
+                    RequestBody Recomments = RequestBody.create(text, latest.getText().toString());
+                    Log.i(TAG, "comments         : " + latest.getText().toString());
+                    RequestBody RestatusCode = RequestBody.create(text, close_statuscode);
+                    Log.i(TAG, "statusCode         : " + close_statuscode);
+                    update(ReEmail, ReEmployeeId, ReCompanyCode, ReIssueMasterId, ReSupportId, ReRequestId, RePriorityId, Resummary, Redescription, RestatusCode, Recomments);
+                }
+            }
+        });
+
+        btn_create.setOnClickListener(v -> {
+            RequestBody ReEmail = RequestBody.create(text, prefs.getString("Email", "No name defined"));
+            Log.i(TAG, "Email         : " + prefs.getString("Email", "No name defined"));
+            RequestBody ReEmployeeId = RequestBody.create(text, prefs.getString("EmployeeID", "No name defined"));
+            Log.i(TAG, "EmployeeID        : " + prefs.getString("EmployeeID", "No name defined"));
+            RequestBody ReCompanyCode = RequestBody.create(text, prefs.getString("CompanyCode", "No name defined"));
+            Log.i(TAG, "CompanyCode         : " + prefs.getString("CompanyCode", "No name defined"));
+            RequestBody ReIssueMasterId = RequestBody.create(text, String.valueOf(newServiceRequest.getMasterID()));
+            Log.i(TAG, "IssueMasterId         : " + newServiceRequest.getMasterID());
+            RequestBody RePriorityId = RequestBody.create(text, String.valueOf(data.getData().get(0).getRequestDetails().get(0).getPriorityLevelID()));
+            Log.i(TAG, "PriorityId         : " + data.getData().get(0).getRequestDetails().get(0).getPriorityLevelID());
+            RequestBody ReSupportId = RequestBody.create(text, String.valueOf(data.getData().get(0).getRequestDetails().get(0).getSupportIndexFunctionID()));
+            Log.i(TAG, "SupportFunctionId         : " + data.getData().get(0).getRequestDetails().get(0).getSupportIndexFunctionID());
+            RequestBody ReRequestId = RequestBody.create(text, String.valueOf(data.getData().get(0).getRequestDetails().get(0).getRequestTypeID()));
+            Log.i(TAG, "questId         : " + data.getData().get(0).getRequestDetails().get(0).getRequestTypeID());
+            RequestBody Redescription = RequestBody.create(text, description.getText().toString());
+            Log.i(TAG, "description         : " + description.getText().toString());
+            RequestBody Resummary = RequestBody.create(text, summary.getText().toString());
+            Log.i(TAG, "summary         : " + summary.getText().toString());
+            if (btn_create.getText().toString().equals("CANCEL SR")) {
+                Log.d("NewUpdateView", "Cancel click");
+                if (closure.getText().toString().equals("")) {
+                    closure.setError("Enter the Comments");
+                } else {
+                    RequestBody Recomments = RequestBody.create(text, closure.getText().toString());
+                    Log.i(TAG, "comments         : " + closure.getText().toString());
+                    RequestBody RestatusCode = RequestBody.create(text, cancel_statuscode);
+                    Log.i(TAG, "statusCode         : " + cancel_statuscode);
+                    update(ReEmail,
+                            ReEmployeeId,
+                            ReCompanyCode,
+                            ReIssueMasterId,
+                            ReSupportId,
+                            ReRequestId,
+                            RePriorityId,
+                            Resummary,
+                            Redescription,
+                            RestatusCode,
+                            Recomments);
+                }
+            }
+            if (btn_create.getText().toString().equals("CLARIFIED")) {
+                Log.d("NewUpdateView", "Clarified click");
+                if (closure.getText().toString().equals("")) {
+                    closure.setError("Enter the Comments");
+                } else if (latest.getText().toString().equals("")) {
+                    latest.setError("Enter the Comment");
+                } else {
+                    RequestBody Recomments = RequestBody.create(text, latest.getText().toString());
+                    Log.i(TAG, "comments         : " + latest.getText().toString());
+                    RequestBody RestatusCode = RequestBody.create(text, clarified_statuscode);
+                    Log.i(TAG, "statusCode         : " + clarified_statuscode);
+                    update(ReEmail,
+                            ReEmployeeId,
+                            ReCompanyCode,
+                            ReIssueMasterId,
+                            ReSupportId,
+                            ReRequestId,
+                            RePriorityId,
+                            Resummary,
+                            Redescription,
+                            RestatusCode,
+                            Recomments);
+                }
+            }
+            if (btn_create.getText().toString().equals("REOPEN")) {
+                Log.d("NewUpdateView", "Reopen click");
+                if (closure.getText().toString().equals("")) {
+                    closure.setError("Enter the Comments");
+                } else if (latest.getText().toString().equals("")) {
+                    latest.setError("Enter the Comment");
+                } else {
+                    RequestBody Recomments = RequestBody.create(text, latest.getText().toString());
+                    Log.i(TAG, "comments         : " + latest.getText().toString());
+                    RequestBody RestatusCode = RequestBody.create(text, reopen_statuscode);
+                    Log.i(TAG, "statusCode         : " + reopen_statuscode);
+                    update(ReEmail,
+                            ReEmployeeId,
+                            ReCompanyCode,
+                            ReIssueMasterId,
+                            ReSupportId,
+                            ReRequestId,
+                            RePriorityId,
+                            Resummary,
+                            Redescription,
+                            RestatusCode,
+                            Recomments);
+                }
+            }
+        });
+
+        attach_file.setOnClickListener(v -> {
+            int result = checkPermission();
+            if (result == PackageManager.PERMISSION_GRANTED) {
+                Intent image_intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(image_intent, RESULT_LOAD_FILE);
+            } else {
+                requestPermission();
             }
         });
         return view;
@@ -582,21 +563,15 @@ public class UpdateRequest extends Fragment {
          * */
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Select the Priority Level:");
-        builder.setItems(prioritydd, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                checkItem = which;
-                btn_priority.setText(priorityData.get(which).getPriorityLevel());
-                newrequest.setPriorityLevelID(priorityData.get(which).getID());
-                Log.i(TAG, "RePriorityId         : " + newrequest.getPriorityLevelID());
-                dialog.dismiss();
-            }
-        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (checkItem < 0)
-                    btn_request.setText("Priority");
-            }
+        builder.setItems(prioritydd, (dialog, which) -> {
+            checkItem = which;
+            btn_priority.setText(priorityData.get(which).getPriorityLevel());
+            newrequest.setPriorityLevelID(priorityData.get(which).getID());
+            Log.i(TAG, "RePriorityId         : " + newrequest.getPriorityLevelID());
+            dialog.dismiss();
+        }).setNegativeButton("Cancel", (dialog, which) -> {
+            if (checkItem < 0)
+                btn_request.setText("Priority");
         });
 
         AlertDialog dialog = builder.create();
@@ -708,13 +683,10 @@ public class UpdateRequest extends Fragment {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (shouldShowRequestPermissionRationale(CAMERA)) {
                         showMessageOKCancel("You need to allow access to external storage read/write permissions",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                            Intent imageintent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                                            startActivityForResult(imageintent, RESULT_LOAD_FILE);
-                                        }
+                                (dialog, which) -> {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                        Intent imageintent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                        startActivityForResult(imageintent, RESULT_LOAD_FILE);
                                     }
                                 });
                     }

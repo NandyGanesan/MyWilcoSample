@@ -135,7 +135,7 @@ public class ApproveFromPage extends DialogFragment {
     * Method to Design the Table view in Approve leave
     * */
     private void setTableData() {
-        TableLayout stk = (TableLayout) view.findViewById(R.id.tableLayout);
+        TableLayout stk =  view.findViewById(R.id.tableLayout);
         TableRow tbrow0 = new TableRow(getActivity());
         TextView tv0 = new TextView(getActivity());
         tv0.setText(" Type ");

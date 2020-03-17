@@ -14,8 +14,6 @@ import com.android.wilcoconnect.shared.FragmentAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.Objects;
-
 
 public class LeaveHome extends Fragment {
 
@@ -74,23 +72,6 @@ public class LeaveHome extends Fragment {
         tabLayout.getTabAt(3).setText("APPROVE LEAVE");
         tabLayout.getTabAt(4).setText("APPLY LEAVE FOR TEAM");
         tabLayout.getTabAt(5).setText("LEAVE CALENDER");
-
-          /*
-         * Set the Viewpager Action
-         * */
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-           }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
 
         /*
          * Define the Tab Layout Action

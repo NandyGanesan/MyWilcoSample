@@ -64,12 +64,7 @@ public class Leave extends Fragment {
             snackbar.show();
         }
         else{
-            leaveadapter = new MyleaveListAdapter(getActivity(), leavedata, new RecyclerViewListener() {
-                @Override
-                public void onClick(View view, String value) {
-                    newInstance(value);
-                }
-            });
+            leaveadapter = new MyleaveListAdapter(getActivity(), leavedata, (view, value) -> newInstance(value));
             recyclerView.setAdapter(leaveadapter);
         }
     }
@@ -101,7 +96,6 @@ public class Leave extends Fragment {
         myleave1.setApprover("");
         myleave1.setRemarks("I am going to hometown for the purpose of festival.");
         leavedata.add(myleave1);
-
     }
 
     private void newInstance(String s) {

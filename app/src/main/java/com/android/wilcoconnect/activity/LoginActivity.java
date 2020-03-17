@@ -41,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     private UserData user;
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     private String TAG = "LoginActivity";
-    private ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,6 @@ public class LoginActivity extends AppCompatActivity {
         email = findViewById(R.id.tiet_email);
         password = findViewById(R.id.tiet_password);
         login = findViewById(R.id.btn_login);
-        progress = findViewById(R.id.loadingProgress);
 
         /*
         * Set the validation condition in email and password field
@@ -82,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
                 * To call the Api to get the Token Authorization
                 * */
                 Login data = new Login(email.getText().toString(), password.getText().toString(), "password");
-                //progress.setVisibility(View.VISIBLE);
                 ApiManager.getInstance().getToken(data, new Callback<TokenData>() {
                     /*
                     * When the Api Success.

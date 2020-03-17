@@ -60,12 +60,7 @@ public class ApproveLeaveFromGrid extends Fragment {
             snackbar.show();
         }
         else {
-            approve_adapter = new ApproveLeaveListAdapter(getActivity(), approveList, new RecyclerViewListener() {
-                @Override
-                public void onClick(View view, String value) {
-                    newInstance(value);
-                }
-            });
+            approve_adapter = new ApproveLeaveListAdapter(getActivity(), approveList, (view, value) -> newInstance(value));
             recyclerView.setAdapter(approve_adapter);
         }
     }

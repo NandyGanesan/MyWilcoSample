@@ -104,16 +104,13 @@ public class ApplyLeave extends Fragment {
             fromYear = c.get(Calendar.YEAR);
             fromMonth = c.get(Calendar.MONTH);
             fromDay = c.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view1, int year, int monthOfYear, int dayOfMonth) {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view1, year, monthOfYear, dayOfMonth) -> {
 
-                            btn_from_date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                            if(btn_to_date.getText().toString()!="" && btn_from_date.getText().toString()!="" &&
-                                    btn_to_date.getText().toString()!=null && btn_from_date.getText().toString()!=null){
-                                getCount();
-                            }
-                }
+                        btn_from_date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                        if(btn_to_date.getText().toString()!="" && btn_from_date.getText().toString()!="" &&
+                                btn_to_date.getText().toString()!=null && btn_from_date.getText().toString()!=null){
+                            getCount();
+                        }
             }, fromYear, fromMonth, fromDay);
             datePickerDialog.show();
         });

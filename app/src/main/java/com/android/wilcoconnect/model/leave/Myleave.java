@@ -16,7 +16,7 @@ public class Myleave {
     public String message;
 
     @SerializedName("data")
-    public ArrayList<MyLeaveData> data;
+    public ArrayList<Data> data;
 
     public int getCode() {
         return code;
@@ -42,11 +42,12 @@ public class Myleave {
         this.message = message;
     }
 
-    public ArrayList<MyLeaveData> getData() {
+    public ArrayList<Data> getData() {
         return data;
     }
 
-    public void setData(ArrayList<MyLeaveData> data) {
+    public void setData(ArrayList<Data> data) {
         this.data = data;
     }
 }
+

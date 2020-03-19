@@ -83,7 +83,6 @@ public class Holiday extends Fragment {
         * Get the List of Data
         * */
         getlist();
-        set_holiday_list();
 
         /*
         * Click the Selection Dropdown to select Particular Location
@@ -113,6 +112,9 @@ public class Holiday extends Fragment {
             public void onResponse(Call<HolidayData> call, Response<HolidayData> response) {
                 if(response.body()!=null && response.isSuccessful()){
                     holidayDateList = response.body().getData();
+                    if(holidayDateList.size()>0) {
+                        set_holiday_list();
+                    }
                 }
             }
 

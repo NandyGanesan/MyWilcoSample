@@ -24,7 +24,6 @@ import com.android.wilcoconnect.shared.HolidayListAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -84,6 +83,7 @@ public class Holiday extends Fragment {
         * Get the List of Data
         * */
         getlist();
+        set_holiday_list();
 
         /*
         * Click the Selection Dropdown to select Particular Location
@@ -95,7 +95,7 @@ public class Holiday extends Fragment {
             builder.setItems(location, (dialog, which) -> {
                 checkItem = which;
                 btn_location.setText(location[which]);
-                setholidaylist();
+                set_holiday_list();
             }).setNegativeButton("Cancel", (dialog, which) -> {
                 if (checkItem < 0)
                     btn_location.setText(location[0]);
@@ -126,7 +126,7 @@ public class Holiday extends Fragment {
     /*
      * When append the list of data into the RecyclerView within the CardView
      * */
-    private void setholidaylist() {
+    private void set_holiday_list() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         if(holidayDateList.size()>0) {
@@ -168,5 +168,4 @@ public class Holiday extends Fragment {
             snackbar.show();
         }
     }
-
 }

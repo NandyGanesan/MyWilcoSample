@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ public class Holiday extends Fragment {
     private ConstraintLayout layout;
     private AddRequest addRequest = new AddRequest();
     private static String MY_PREFS_NAME = "MyPrefsFile";
+    private HolidayListAdapter holidayadapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,11 +86,6 @@ public class Holiday extends Fragment {
         getlist();
 
         /*
-         * When append the list of data into the RecyclerView within the CardView
-         * */
-        setholidaylist();
-
-        /*
         * Click the Selection Dropdown to select Particular Location
         * */
         btn_location.setOnClickListener(v -> {
@@ -121,7 +118,7 @@ public class Holiday extends Fragment {
 
             @Override
             public void onFailure(Call<HolidayData> call, Throwable t) {
-
+                Log.d(TAG , t.getLocalizedMessage());
             }
         });
     }
@@ -132,7 +129,6 @@ public class Holiday extends Fragment {
     private void setholidaylist() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        HolidayListAdapter holidayadapter;
         if(holidayDateList.size()>0) {
             if (btn_location.getText().equals("All")) {
                 holidayadapter = new HolidayListAdapter(getActivity(), holidayDateList);

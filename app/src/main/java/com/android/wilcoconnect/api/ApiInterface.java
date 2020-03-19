@@ -1,6 +1,7 @@
 package com.android.wilcoconnect.api;
 
 import com.android.wilcoconnect.model.leave.HolidayData;
+import com.android.wilcoconnect.model.leave.Myleave;
 import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.profile.EducationDetails;
 import com.android.wilcoconnect.model.profile.FamilyDetails;
@@ -123,4 +124,21 @@ public interface ApiInterface {
     Call<HolidayData> getholidaylist(@Query("Email") String Email,
                                      @Query("companyCode") String companyCode,
                                      @Query("employeeID") String employeeID);
+
+    /*
+    * Get My leave list
+    * */
+    @GET("api/Leave/myleaveList")
+    Call<Myleave> getMyLeaveList(@Query("Email") String Email,
+                                 @Query("companyCode") String companyCode,
+                                 @Query("employeeID") String employeeID);
+
+    /*
+     * Get My leave list
+     * */
+    @GET("api/Menu/mobileMenuList")
+    Call<Myleave> getmobilemenulist(@Query("Email") String Email,
+                                 @Query("companyCode") String companyCode,
+                                 @Query("employeeID") String employeeID);
+
 }

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,12 +14,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.android.wilcoconnect.R;
+import com.android.wilcoconnect.api.ApiManager;
+import com.android.wilcoconnect.app.MainApplication;
+import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.leave.HolidayDate;
+import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.shared.HolidayListAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class Holiday extends Fragment {
 
@@ -29,9 +40,12 @@ public class Holiday extends Fragment {
     private Button btn_location;
     private String[] location={"All","Tamil Nadu","California","Telangana"};
     private ArrayList<HolidayDate> holidayDateList = new ArrayList<>();
+    private ArrayList<HolidayDate> selectedholidaylist = new ArrayList<>();
     private int checkItem=0;
     private RecyclerView recyclerView;
     private ConstraintLayout layout;
+    private AddRequest addRequest = new AddRequest();
+    private static String MY_PREFS_NAME = "MyPrefsFile";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,15 +61,38 @@ public class Holiday extends Fragment {
         layout = view.findViewById(R.id.layoutdata);
 
         /*
+         * Get the Header
+         * */
+        SharedPreferences preferences = getActivity().getSharedPreferences(MainApplication.MY_PREFS_NAME, MODE_PRIVATE);
+        if (preferences != null) {
+            MainApplication.token_data = preferences.getString("header", "No name defined");
+        }
+
+        /*
+         * Get the shared preference data to assign the another object..
+         * */
+        SharedPreferences prefs = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        if(prefs!=null) {
+            addRequest.setEmail(prefs.getString("Email", "No name defined"));
+            addRequest.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
+            addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
+        }
+
+        /*
         * Get the List of Data
         * */
         getlist();
 
         /*
+         * When append the list of data into the RecyclerView within the CardView
+         * */
+        setholidaylist();
+
+        /*
         * Click the Selection Dropdown to select Particular Location
         * */
         btn_location.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle("Select the Location:");
             checkItem=1;
             builder.setItems(location, (dialog, which) -> {
@@ -69,12 +106,24 @@ public class Holiday extends Fragment {
             AlertDialog dialog = builder.create();
             dialog.show();
         });
-        /*
-        * When append the list of data into the RecyclerView within the CardView
-        * */
-        setholidaylist();
 
         return view;
+    }
+
+    private void getlist() {
+        ApiManager.getInstance().getholidaylist(addRequest, new Callback<HolidayData>() {
+            @Override
+            public void onResponse(Call<HolidayData> call, Response<HolidayData> response) {
+                if(response.body()!=null && response.isSuccessful()){
+                    holidayDateList = response.body().getData();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<HolidayData> call, Throwable t) {
+
+            }
+        });
     }
 
     /*
@@ -84,9 +133,36 @@ public class Holiday extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         HolidayListAdapter holidayadapter;
-        if(btn_location.getText().toString().equals("Tamil Nadu")||btn_location.getText().toString().equals("All")){
-            holidayadapter = new HolidayListAdapter(getActivity(),holidayDateList);
-            recyclerView.setAdapter(holidayadapter);
+        if(holidayDateList.size()>0) {
+            if (btn_location.getText().equals("All")) {
+                holidayadapter = new HolidayListAdapter(getActivity(), holidayDateList);
+                recyclerView.setAdapter(holidayadapter);
+            } else {
+                selectedholidaylist = new ArrayList<>();
+                for(int i=0;i<holidayDateList.size();i++){
+                    if(btn_location.getText().equals(holidayDateList.get(i).getStateName())){
+                        HolidayDate data = new HolidayDate();
+                        data.setStateID(holidayDateList.get(i).getStateID());
+                        data.setHolidayID(holidayDateList.get(i).getHolidayID());
+                        data.setLeaveDate(holidayDateList.get(i).getLeaveDate());
+                        data.setLeaveDay(holidayDateList.get(i).getLeaveDay());
+                        data.setStateName(holidayDateList.get(i).getStateName());
+                        data.setDescription(holidayDateList.get(i).getDescription());
+                        selectedholidaylist.add(data);
+                    }
+                }
+                if(selectedholidaylist.size()>0) {
+                    holidayadapter = new HolidayListAdapter(getActivity(), selectedholidaylist);
+                    recyclerView.setAdapter(holidayadapter);
+                }
+                else{
+                    holidayadapter =null;
+                    recyclerView.setAdapter(holidayadapter);
+                    Snackbar snackbar = Snackbar
+                            .make(layout, "No Data Found", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                }
+            }
         }
         else{
             holidayadapter =null;
@@ -94,36 +170,7 @@ public class Holiday extends Fragment {
             Snackbar snackbar = Snackbar
                     .make(layout, "No Data Found", Snackbar.LENGTH_LONG);
             snackbar.show();
-           // Toast.makeText(getActivity(), "No record found", Toast.LENGTH_SHORT).show();
         }
     }
 
-    /*
-     * Add the List of Data
-     * */
-    private void getlist() {
-
-        holidayDateList = new ArrayList<>();
-
-        HolidayDate holidayDate = new HolidayDate();
-        holidayDate.setLeaveDate("15-Jan-2020");
-        holidayDate.setDays("Wednesday");
-        holidayDate.setDescription("Pongal");
-        holidayDate.setState("Tamil Nadu");
-        holidayDateList.add(holidayDate);
-
-        HolidayDate holidayDate1  = new HolidayDate();
-        holidayDate1.setLeaveDate("16-Jan-2020");
-        holidayDate1.setDays("Thursday");
-        holidayDate1.setDescription("Thiruvalluvar Day");
-        holidayDate1.setState("Tamil Nadu");
-        holidayDateList.add(holidayDate1);
-
-        HolidayDate holidayDate2 = new HolidayDate();
-        holidayDate2.setLeaveDate("20-Apr-2020");
-        holidayDate2.setDays("Tuesday");
-        holidayDate2.setDescription("Tamil New Year");
-        holidayDate2.setState("Tamil Nadu");
-        holidayDateList.add(holidayDate2);
-    }
 }

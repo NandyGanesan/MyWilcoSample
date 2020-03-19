@@ -1,5 +1,6 @@
 package com.android.wilcoconnect.api;
 
+import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.profile.EducationDetails;
 import com.android.wilcoconnect.model.profile.FamilyDetails;
@@ -114,4 +115,12 @@ public interface ApiInterface {
      * */
     @GET("api/ProfileRequest/GetLastPositionDetails")
     Call<LastPositionDetails> get_LastPositionData(@Query("employeeID") String EmployeeID);
+
+    /*
+     * Get the holiday list
+     * */
+    @GET("api/Leave/getHolidayList")
+    Call<HolidayData> getholidaylist(@Query("Email") String Email,
+                                     @Query("companyCode") String companyCode,
+                                     @Query("employeeID") String employeeID);
 }

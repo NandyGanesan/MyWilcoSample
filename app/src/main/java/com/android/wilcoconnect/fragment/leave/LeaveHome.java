@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -19,7 +20,6 @@ public class LeaveHome extends Fragment {
 
     private ArrayList<Fragment> fragments;
     private String TAG = "LeaveHome";
-    private Toolbar main_toolbar;
     private ViewPager viewPager;
     private TabLayout tabLayout;
     View view;
@@ -34,7 +34,7 @@ public class LeaveHome extends Fragment {
          * Toolbar Initialization
          * And set the Title color and title
          * */
-        main_toolbar = view.findViewById(R.id.main_nonav_toolbar);
+        Toolbar main_toolbar = view.findViewById(R.id.main_nonav_toolbar);
         main_toolbar.setTitle("LEAVE");
         main_toolbar.setTitleTextColor(getActivity().getColor(R.color.toolbarbackground));
 
@@ -82,7 +82,7 @@ public class LeaveHome extends Fragment {
                      * Style for Selected Tab
                      * */
                     @Override
-                    public void onTabSelected(TabLayout.Tab tab) {
+                    public void onTabSelected(@NonNull TabLayout.Tab tab) {
                         super.onTabSelected(tab);
                     }
 

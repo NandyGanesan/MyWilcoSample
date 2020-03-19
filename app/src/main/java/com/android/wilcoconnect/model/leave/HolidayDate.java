@@ -1,15 +1,34 @@
 package com.android.wilcoconnect.model.leave;
 
+import com.google.gson.annotations.SerializedName;
+
 public class HolidayDate {
 
+    @SerializedName("HolidayID")
+    public int HolidayID;
+
+    @SerializedName("LeaveDate")
     public String LeaveDate;
 
-    public String Days;
+    @SerializedName("LeaveDay")
+    public String LeaveDay;
 
+    @SerializedName("Description")
     public String Description;
 
-    public String State;
+    @SerializedName("StateName")
+    public String StateName;
 
+    @SerializedName("StateID")
+    public int StateID;
+
+    public int getHolidayID() {
+        return HolidayID;
+    }
+
+    public void setHolidayID(int holidayID) {
+        HolidayID = holidayID;
+    }
 
     public String getLeaveDate() {
         return LeaveDate;
@@ -19,12 +38,12 @@ public class HolidayDate {
         LeaveDate = leaveDate;
     }
 
-    public String getDays() {
-        return Days;
+    public String getLeaveDay() {
+        return LeaveDay;
     }
 
-    public void setDays(String days) {
-        Days = days;
+    public void setLeaveDay(String leaveDay) {
+        LeaveDay = leaveDay;
     }
 
     public String getDescription() {
@@ -35,11 +54,19 @@ public class HolidayDate {
         Description = description;
     }
 
-    public String getState() {
-        return State;
+    public String getStateName() {
+        return StateName;
     }
 
-    public void setState(String state) {
-        State = state;
+    public void setStateName(String stateName) {
+        StateName = stateName;
+    }
+
+    public int getStateID() {
+        return StateID;
+    }
+
+    public void setStateID(int stateID) {
+        StateID = stateID;
     }
 }

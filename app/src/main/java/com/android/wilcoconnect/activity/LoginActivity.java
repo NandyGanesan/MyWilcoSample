@@ -135,6 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                                     else{
                                         finish();
                                         Toast.makeText(LoginActivity.this, "Login Failure", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this,"Email or Password is Incorrect",Toast.LENGTH_LONG).show();
                                         password.setError("Email or Password is Incorrect");
                                         Log.d(TAG, "Login Failure");
                                     }
@@ -146,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onFailure(@NonNull Call<UserData> call, @NonNull Throwable t) {
                                     Toast.makeText(LoginActivity.this, "Login Failure", Toast.LENGTH_SHORT).show();
-                                    password.setError("Email or Password is Incorrect");
+                                    Toast.makeText(LoginActivity.this,"Email or Password is Incorrect",Toast.LENGTH_LONG).show();
                                     Log.e(TAG, "createUser: " + t.getLocalizedMessage());
                                 }
                             });
@@ -159,6 +160,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Call<TokenData> call, @NonNull Throwable t) {
                         Toast.makeText(LoginActivity.this, "Login Failure", Toast.LENGTH_SHORT).show();
                         password.setError("Email or Password is Incorrect");
+                        Toast.makeText(LoginActivity.this,"Email or Password is Incorrect",Toast.LENGTH_LONG).show();
                         Log.e(TAG, "createUser: " + t.getLocalizedMessage());
                     }
                 });

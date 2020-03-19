@@ -1,5 +1,6 @@
 package com.android.wilcoconnect.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -87,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                      * Style for Selected Tab
                      * */
                     @Override
-                    public void onTabSelected(TabLayout.Tab tab) {
+                    public void onTabSelected(@NonNull TabLayout.Tab tab) {
                         super.onTabSelected(tab);
                         int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.orange);
                         tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
@@ -109,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onTabReselected(TabLayout.Tab tab) {
                         super.onTabReselected(tab);
+                        int tabIconColor = ContextCompat.getColor(getApplicationContext(), R.color.orange);
+                        tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
                     }
                 }
         );

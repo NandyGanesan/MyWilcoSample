@@ -1,8 +1,7 @@
 package com.android.wilcoconnect.api;
 
-import androidx.annotation.NonNull;
-
 import com.android.wilcoconnect.app.MainApplication;
+import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.profile.EducationDetails;
 import com.android.wilcoconnect.model.profile.FamilyDetails;
@@ -201,4 +200,13 @@ public class ApiManager {
             Call<LastPositionDetails> information = service.get_LastPositionData(EmployeeId);
             information.enqueue(callback);
         }
+
+        /*
+        * Get the Holiday List
+        * */
+        public void getholidaylist(AddRequest request, Callback<HolidayData> callback) {
+            Call<HolidayData> holidaylist = service.getholidaylist(request.Email, request.companyCode, request.EmployeeID);
+            holidaylist.enqueue(callback);
+        }
+
 }

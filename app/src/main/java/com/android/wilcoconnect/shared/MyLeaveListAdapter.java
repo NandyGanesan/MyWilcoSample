@@ -17,13 +17,13 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class MyleaveListAdapter extends RecyclerView.Adapter<MyleaveListAdapter.ViewHolder> {
+public class MyLeaveListAdapter extends RecyclerView.Adapter<MyLeaveListAdapter.ViewHolder> {
 
     RecyclerViewListener listener;
     private Context c;
     private ArrayList<MyLeaveData> myLeaveData;
 
-    public MyleaveListAdapter(Context c, ArrayList<MyLeaveData> myLeaveData,RecyclerViewListener listener) {
+    public MyLeaveListAdapter(Context c, ArrayList<MyLeaveData> myLeaveData, RecyclerViewListener listener) {
         this.c = c;
         this.myLeaveData = myLeaveData;
         this.listener = listener;
@@ -33,7 +33,7 @@ public class MyleaveListAdapter extends RecyclerView.Adapter<MyleaveListAdapter.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.leavelist,parent,false);
-        return new MyleaveListAdapter.ViewHolder(view);
+        return new MyLeaveListAdapter.ViewHolder(view);
     }
 
     @Override

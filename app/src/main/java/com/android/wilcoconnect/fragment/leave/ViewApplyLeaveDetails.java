@@ -59,16 +59,16 @@ public class ViewApplyLeaveDetails extends DialogFragment {
         tv_View_approver = view.findViewById(R.id.et_View_approver);
 
 
-        tv_View_leavetype.setText(leaveData.getLeaveType());
-        tv_View_applieddate.setText(leaveData.getAppliedDate());
+        tv_View_leavetype.setText(leaveData.getLeaveTypeText());
+        tv_View_applieddate.setText(leaveData.getLeaveAppliedDate());
         tv_View_fromdate.setText(leaveData.getFromDate());
         tv_View_todate.setText(leaveData.getToDate());
-        tv_View_no_of_counts.setText(""+leaveData.getNo_of_Counts());
-        tv_View_remarks.setText(leaveData.getRemarks());
-        tv_View_leavestatus.setText(leaveData.getLeaveStatus());
+        tv_View_no_of_counts.setText(""+leaveData.getNoofDays());
+        tv_View_remarks.setText(leaveData.getRequestRemarks());
+        tv_View_leavestatus.setText(leaveData.getRequestStatus());
         tv_View_approveddate.setText(leaveData.getApprovedDate());
-        tv_View_remarksbyapprover.setText(leaveData.getRemarksByApprover());
-        tv_View_approver.setText(leaveData.getApprover());
+        tv_View_remarksbyapprover.setText(leaveData.getApprovedRemarks());
+        tv_View_approver.setText(leaveData.getPrimaryApprover());
 
         return view;
     }

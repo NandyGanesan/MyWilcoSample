@@ -1,5 +1,6 @@
 package com.android.wilcoconnect.fragment.leave;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,18 +8,28 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.android.wilcoconnect.R;
+import com.android.wilcoconnect.api.ApiManager;
+import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.leave.MyLeaveData;
-import com.android.wilcoconnect.network_interface.RecyclerViewListener;
+import com.android.wilcoconnect.model.leave.Myleave;
+import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.shared.MyleaveListAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class Leave extends Fragment {
 
@@ -29,6 +40,8 @@ public class Leave extends Fragment {
     private ArrayList<MyLeaveData> leavedata = new ArrayList<>();
     private RecyclerView recyclerView;
     private FrameLayout frameLayout;
+    private AddRequest addRequest = new AddRequest();
+    private static String MY_PREFS_NAME = "MyPrefsFile";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,9 +52,28 @@ public class Leave extends Fragment {
         frameLayout = view.findViewById(R.id.leave_frame);
 
         /*
+         * Get the Header
+         * */
+        SharedPreferences preferences = getActivity().getSharedPreferences(MainApplication.MY_PREFS_NAME, MODE_PRIVATE);
+        if (preferences != null) {
+            MainApplication.token_data = preferences.getString("header", "No name defined");
+        }
+
+        /*
+         * Get the shared preference data to assign the another object..
+         * */
+        SharedPreferences prefs = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        if(prefs!=null) {
+            addRequest.setEmail(prefs.getString("Email", "No name defined"));
+            addRequest.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
+            addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
+        }
+
+        /*
          * Get the List of Data
          * */
-        getlist();
+        get_list();
+
         /*
          * When append the list of data into the RecyclerView within the CardView
          * */
@@ -69,33 +101,23 @@ public class Leave extends Fragment {
         }
     }
 
-    private void getlist() {
-        leavedata = new ArrayList<>();
-        MyLeaveData myleave = new MyLeaveData();
-        myleave.setLeaveType("Casual Leave");
-        myleave.setLeaveStatus("Approved");
-        myleave.setFromDate("17-Jan-2020");
-        myleave.setToDate("17-Jan-2020");
-        myleave.setAppliedDate("03-Jan-2020");
-        myleave.setNo_of_Counts(1);
-        myleave.setApprovedDate("03-Feb-2020");
-        myleave.setRemarksByApprover("Approved");
-        myleave.setApprover("Selvakumar Raju");
-        myleave.setRemarks("I am going to my hometown to celebrate Pongal.");
-        leavedata.add(myleave);
+    private void get_list() {
+        ApiManager.getInstance().getMyleavelist(addRequest, new Callback<Myleave>() {
+            @Override
+            public void onResponse(Call<Myleave> call, Response<Myleave> response) {
+                if(response.body()!=null && response.isSuccessful()){
+                    leavedata = response.body().getData().get(0).getLeaveList();
+                    if (leavedata.size() > 0) {
+                        setleavelist();
+                    }
+                }
+            }
 
-        MyLeaveData myleave1 = new MyLeaveData();
-        myleave1.setLeaveType("Casual Leave");
-        myleave1.setLeaveStatus("Applied");
-        myleave1.setFromDate("14-Jan-2020");
-        myleave1.setToDate("14-Jan-2020");
-        myleave1.setAppliedDate("27-Dec-2020");
-        myleave1.setNo_of_Counts(1);
-        myleave1.setApprovedDate("");
-        myleave1.setRemarksByApprover("");
-        myleave1.setApprover("");
-        myleave1.setRemarks("I am going to hometown for the purpose of festival.");
-        leavedata.add(myleave1);
+            @Override
+            public void onFailure(Call<Myleave> call, Throwable t) {
+                Log.d(TAG,t.getLocalizedMessage());
+            }
+        });
     }
 
     private void newInstance(String s) {

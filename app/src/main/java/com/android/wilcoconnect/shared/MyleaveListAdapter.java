@@ -38,35 +38,31 @@ public class MyleaveListAdapter extends RecyclerView.Adapter<MyleaveListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.leavetype.setText(myLeaveData.get(position).getLeaveType());
-        holder.status.setText(myLeaveData.get(position).getLeaveStatus());
+        holder.leavetype.setText(myLeaveData.get(position).getLeaveTypeText());
+        holder.status.setText(myLeaveData.get(position).getRequestStatus());
         holder.fromdate.setText(myLeaveData.get(position).getFromDate());
         holder.Todate.setText(myLeaveData.get(position).getToDate());
 
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MyLeaveData particularleavedata = new MyLeaveData();
-                particularleavedata.setLeaveType(myLeaveData.get(position).getLeaveType());
-                particularleavedata.setAppliedDate(myLeaveData.get(position).getAppliedDate());
-                particularleavedata.setFromDate(myLeaveData.get(position).getFromDate());
-                particularleavedata.setToDate(myLeaveData.get(position).getToDate());
-                particularleavedata.setNo_of_Counts(myLeaveData.get(position).getNo_of_Counts());
-                particularleavedata.setLeaveStatus(myLeaveData.get(position).getLeaveStatus());
-                particularleavedata.setRemarks(myLeaveData.get(position).getRemarks());
-                particularleavedata.setApprovedDate(myLeaveData.get(position).getApprovedDate());
-                particularleavedata.setRemarksByApprover(myLeaveData.get(position).getRemarksByApprover());
-                particularleavedata.setApprover(myLeaveData.get(position).getApprover());
-                /**
-                 * Show the data in New Update View
-                 * and perform respective operations
-                 * */
-                Gson gson = new Gson();
-                String s = gson.toJson(particularleavedata);
-                if (listener != null)
-                    listener.onClick(v, s);
-
-            }
+        holder.cardView.setOnClickListener(v -> {
+            MyLeaveData particularleavedata = new MyLeaveData();
+            particularleavedata.setLeaveTypeText(myLeaveData.get(position).getLeaveTypeText());
+            particularleavedata.setLeaveAppliedDate(myLeaveData.get(position).getLeaveAppliedDate());
+            particularleavedata.setFromDate(myLeaveData.get(position).getFromDate());
+            particularleavedata.setToDate(myLeaveData.get(position).getToDate());
+            particularleavedata.setNoofDays(myLeaveData.get(position).getNoofDays());
+            particularleavedata.setRequestStatus(myLeaveData.get(position).getRequestStatus());
+            particularleavedata.setRequestRemarks(myLeaveData.get(position).getRequestRemarks());
+            particularleavedata.setApprovedDate(myLeaveData.get(position).getApprovedDate());
+            particularleavedata.setApprovedRemarks(myLeaveData.get(position).getApprovedRemarks());
+            particularleavedata.setPrimaryApprover(myLeaveData.get(position).getPrimaryApprover());
+            /**
+             * Show the data in New Update View
+             * and perform respective operations
+             * */
+            Gson gson = new Gson();
+            String s = gson.toJson(particularleavedata);
+            if (listener != null)
+                listener.onClick(v, s);
         });
     }
 

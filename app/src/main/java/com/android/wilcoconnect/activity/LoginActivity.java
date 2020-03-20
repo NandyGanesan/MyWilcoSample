@@ -21,6 +21,7 @@ import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.login.Login;
 import com.android.wilcoconnect.model.login.TokenData;
 import com.android.wilcoconnect.model.common.UserData;
+import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.google.gson.Gson;
 
 import java.util.Objects;
@@ -118,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                                     /*
                                     * Response Success then pass the Data through the Intent.
                                     * */
-                                    if (response.isSuccessful() && Objects.requireNonNull(user).getData().getEmail() != null) {
+                                    if (response.isSuccessful() && user.getData().getEmail() != null) {
                                         Log.d(TAG, "Login Success");
                                         Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
                                         Gson gson = new Gson();

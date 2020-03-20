@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import com.android.wilcoconnect.fragment.MenuFragment;
 import com.android.wilcoconnect.fragment.profile.Profile;
 import com.android.wilcoconnect.fragment.wilcoconnect.WilcoConnect;
 import com.android.wilcoconnect.R;
+import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.shared.FragmentAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         /*
          * Toolbar Initialization

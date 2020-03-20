@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.android.wilcoconnect.R;
+import com.android.wilcoconnect.model.MenuList.Menu;
+import com.android.wilcoconnect.model.MenuList.SubMenu;
+import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.shared.FragmentAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -22,13 +25,16 @@ public class LeaveHome extends Fragment {
     private String TAG = "LeaveHome";
     private ViewPager viewPager;
     private TabLayout tabLayout;
+    private static final String MY_PREFS_NAME = "MyPrefsFile";
+    private AddRequest addRequest;
+    private Menu menu;
+    private ArrayList<SubMenu> subMenuArrayList = new ArrayList<>();
     View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_leave_module_way, container, false);
-
 
         /*
          * Toolbar Initialization

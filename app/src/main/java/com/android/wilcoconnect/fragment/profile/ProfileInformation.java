@@ -21,13 +21,20 @@ import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.profile.BasicInformation;
 import com.android.wilcoconnect.model.profile.EducationDetailData;
 import com.android.wilcoconnect.model.profile.EducationDetails;
+import com.android.wilcoconnect.model.profile.ExperienceDetailData;
+import com.android.wilcoconnect.model.profile.ExperienceDetails;
 import com.android.wilcoconnect.model.profile.FamilyDetailData;
 import com.android.wilcoconnect.model.profile.FamilyDetails;
 import com.android.wilcoconnect.model.profile.LastPositionDetails;
 import com.android.wilcoconnect.model.profile.ProfileMenu;
+import com.android.wilcoconnect.model.profile.ReferenceDetailData;
+import com.android.wilcoconnect.model.profile.ReferenceDetails;
+import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.shared.EducationAdapter;
+import com.android.wilcoconnect.shared.ExperienceAdapter;
 import com.android.wilcoconnect.shared.FamilyAdapter;
 import com.android.wilcoconnect.shared.ProfileInformationDisplayAdapter;
+import com.android.wilcoconnect.shared.ReferenceAdapter;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -53,10 +60,15 @@ public class ProfileInformation extends DialogFragment {
     private FamilyDetails familyDetailsdata = new FamilyDetails();
     private List<FamilyDetailData> familylist;
     private LastPositionDetails lastPositionDetailsdata = new LastPositionDetails();
+    private ReferenceDetails referenceDetails;
+    private List<ReferenceDetailData> referenceDetailDataList;
+    private ExperienceDetails experienceDetails = new ExperienceDetails();
+    private List<ExperienceDetailData> experienceDetailList;
     private static final String MYPREFS_NAME = "MyPrefsFile";
     private String EmployeeId;
     private RecyclerView recyclerView;
     private ProfileMenu menu;
+    private AddRequest request;
 
     @Override
     public View onCreateView(LayoutInflater  inflater, ViewGroup container,
@@ -91,6 +103,9 @@ public class ProfileInformation extends DialogFragment {
          * */
         SharedPreferences prefs = getActivity().getSharedPreferences(MYPREFS_NAME, MODE_PRIVATE);
         EmployeeId = prefs.getString("EmployeeID", "No name defined");
+        request.setEmail(prefs.getString("Email", "No name defined"));
+        request.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
+        request.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
 
         if(menu.getValues().equals("Basic information")||menu.getValues().equals("Address")||menu.getValues().equals("Last Position")){
             get_value();
@@ -101,7 +116,71 @@ public class ProfileInformation extends DialogFragment {
         else if(menu.getValues().equals("Family")){
             get_family_value();
         }
+        else if(menu.getValues().equals("Experience")){
+            get_experience_value();
+        }
+        else if(menu.getValues().equals("Reference")){
+            get_reference_value();
+        }
         return view;
+    }
+
+    private void get_reference_value() {
+        ApiManager.getInstance().getReferenceDetail(request, new Callback<ReferenceDetails>() {
+            @Override
+            public void onResponse(Call<ReferenceDetails> call, Response<ReferenceDetails> response) {
+                referenceDetails = response.body();
+                if(response.isSuccessful() && response.body().getData()!=null){
+                    referenceDetailDataList = referenceDetails.getData().get(0).getReferenceInfo();
+                    if(referenceDetailDataList.size()>0){
+                        display_reference_Detail();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReferenceDetails> call, Throwable t) {
+                Log.d(TAG,t.getLocalizedMessage());
+            }
+        });
+    }
+
+    private void display_reference_Detail() {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        if (referenceDetailDataList.size() > 0) {
+            ReferenceAdapter adapter = new ReferenceAdapter(referenceDetailDataList,getActivity());
+            recyclerView.setAdapter(adapter);
+        }
+    }
+
+    private void get_experience_value() {
+
+        ApiManager.getInstance().getExperienceDetail(request, new Callback<ExperienceDetails>() {
+            @Override
+            public void onResponse(Call<ExperienceDetails> call, Response<ExperienceDetails> response) {
+                experienceDetails = response.body();
+                if(experienceDetails.getData()!=null && response.isSuccessful()){
+                    experienceDetailList = experienceDetails.getData().get(0).getExperience();
+                    display_experience_data();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ExperienceDetails> call, Throwable t) {
+                Log.d(TAG,t.getLocalizedMessage());
+            }
+        });
+        
+    }
+
+    private void display_experience_data() {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        if(experienceDetailList.size()>0){
+            ExperienceAdapter adapter = new ExperienceAdapter(experienceDetailList,getActivity());
+            recyclerView.setAdapter(adapter);
+        }
     }
 
     private void get_family_value() {

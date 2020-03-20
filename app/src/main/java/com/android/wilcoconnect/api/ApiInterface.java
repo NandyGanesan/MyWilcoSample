@@ -5,8 +5,10 @@ import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.leave.Myleave;
 import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.profile.EducationDetails;
+import com.android.wilcoconnect.model.profile.ExperienceDetails;
 import com.android.wilcoconnect.model.profile.FamilyDetails;
 import com.android.wilcoconnect.model.profile.LastPositionDetails;
+import com.android.wilcoconnect.model.profile.ReferenceDetails;
 import com.android.wilcoconnect.model.wilcoconnect.IssueTracking;
 import com.android.wilcoconnect.model.login.Login;
 import com.android.wilcoconnect.model.wilcoconnect.MyRequestData;
@@ -119,6 +121,21 @@ public interface ApiInterface {
     Call<LastPositionDetails> get_LastPositionData(@Query("employeeID") String EmployeeID);
 
     /*
+    * Get the Profile Module Experience Details
+    * */
+    @GET("api/ProfileRequest/GetExperienceDetailsOfAnEmployee")
+    Call<ExperienceDetails> getExperienceDetails(@Query("eMail") String Email,
+                                                 @Query("companyCode") String companyCode,
+                                                 @Query("employeeID") String employeeID);
+
+    /*
+    * Get the Profile Module Reference Details
+    * */
+    Call<ReferenceDetails> getReferenceDetails(@Query("eMail") String Email,
+                                               @Query("companyCode") String companyCode,
+                                               @Query("employeeID") String employeeID);
+
+    /*
      * Get the holiday list
      * */
     @GET("api/Leave/getHolidayList")
@@ -135,7 +152,7 @@ public interface ApiInterface {
                                  @Query("employeeID") String employeeID);
 
     /*
-     * Get My leave list
+     * Get Overall menu list
      * */
     @GET("api/Menu/mobileMenuList")
     Call<Menu> getmobilemenulist(@Query("Email") String Email,

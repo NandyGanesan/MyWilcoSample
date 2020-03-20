@@ -6,8 +6,10 @@ import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.leave.Myleave;
 import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.profile.EducationDetails;
+import com.android.wilcoconnect.model.profile.ExperienceDetails;
 import com.android.wilcoconnect.model.profile.FamilyDetails;
 import com.android.wilcoconnect.model.profile.LastPositionDetails;
+import com.android.wilcoconnect.model.profile.ReferenceDetails;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.model.wilcoconnect.IssueTracking;
 import com.android.wilcoconnect.model.login.Login;
@@ -188,7 +190,7 @@ public class ApiManager {
         }
 
         /*
-         * Get the Profile Basic information
+         * Get the Profile Education Details
          * */
         public void getEducationDetail(String EmployeeId, Callback<EducationDetails> callback){
             Call<EducationDetails> information = service.get_EducationData(EmployeeId);
@@ -196,11 +198,27 @@ public class ApiManager {
         }
 
         /*
-         * Get the Profile Basic information
+         * Get the Profile Last Position Details
          * */
         public void getLastPostionDetail(String EmployeeId, Callback<LastPositionDetails> callback){
             Call<LastPositionDetails> information = service.get_LastPositionData(EmployeeId);
             information.enqueue(callback);
+        }
+
+        /*
+        * Get the Profile Experience Details
+        * */
+        public void getExperienceDetail(AddRequest request, Callback<ExperienceDetails> callback){
+            Call<ExperienceDetails> experienceDetailslist = service.getExperienceDetails(request.Email,request.companyCode,request.EmployeeID);
+            experienceDetailslist.enqueue(callback);
+        }
+
+        /*
+        * Get the Profile Reference Details
+        * */
+        public void getReferenceDetail(AddRequest request, Callback<ReferenceDetails> callback){
+            Call<ReferenceDetails> referenceDetailslist = service.getReferenceDetails(request.Email,request.companyCode,request.EmployeeID);
+            referenceDetailslist.enqueue(callback);
         }
 
         /*

@@ -54,6 +54,11 @@ public class UserData {
         @SerializedName("Email")
         public String Email;
 
+        @SerializedName("CompanyCode")
+        public String CompanyCode;
+
+        @SerializedName("FirstName")
+        public String FirstName;
 
         public String getEmployeeID() {
             return EmployeeID;
@@ -127,6 +132,22 @@ public class UserData {
         public void setEmail(String email) {
             Email = email;
         }
+
+        public String getCompanyCode() {
+            return CompanyCode;
+        }
+
+        public void setCompanyCode(String companyCode) {
+            CompanyCode = companyCode;
+        }
+
+        public String getFirstName() {
+            return FirstName;
+        }
+
+        public void setFirstName(String firstName) {
+            FirstName = firstName;
+        }
     }
 
     public int getStatuscode() {
@@ -160,4 +181,6 @@ public class UserData {
     public void setData(Data data) {
         this.data = data;
     }
+
+
 }

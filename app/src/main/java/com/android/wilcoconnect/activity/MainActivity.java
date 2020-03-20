@@ -11,17 +11,24 @@ import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 
+import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.fragment.Home;
 import com.android.wilcoconnect.fragment.leave.LeaveHome;
 import com.android.wilcoconnect.fragment.MenuFragment;
 import com.android.wilcoconnect.fragment.profile.Profile;
 import com.android.wilcoconnect.fragment.wilcoconnect.WilcoConnect;
 import com.android.wilcoconnect.R;
+import com.android.wilcoconnect.model.MenuList.Menu;
+import com.android.wilcoconnect.model.common.UserData;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.shared.FragmentAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     /*

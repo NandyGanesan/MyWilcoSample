@@ -63,27 +63,6 @@ public class WilcoConnect extends Fragment {
         wilco_connect_toolbar.setTitle("WilcoConnect-My Service Request");
 
         /*
-         * Get the value from the Login Activity
-         * Display the Employee Id and Employee Email in Navigation View
-         * */
-        Intent intent = Objects.requireNonNull(getActivity()).getIntent();
-        if (intent.getExtras() != null)
-            if (intent.getExtras().getString("key") != null) {
-                String value = intent.getExtras().getString("key");
-                Gson gson = new Gson();
-                Tv_UserData = gson.fromJson(value, UserData.class);
-                /*
-                 * Store User Email and EmployeeId and CompanyCode in Shared Preference
-                 * For the purpose of frequent Access
-                 * */
-                SharedPreferences.Editor editor = this.getActivity().getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE).edit();
-                editor.putString("Email", Tv_UserData.data.getEmail());
-                editor.putString("EmployeeID", Tv_UserData.data.getEmployeeID());
-                editor.putString("CompanyCode", "WL");
-                editor.apply();
-            }
-
-        /*
          * Get the Shared Preference Data...To assign the another object
          * */
         SharedPreferences prefs = this.getActivity().getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);

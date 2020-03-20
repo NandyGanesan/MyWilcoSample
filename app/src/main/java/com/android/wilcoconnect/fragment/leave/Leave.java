@@ -20,7 +20,7 @@ import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.leave.MyLeaveData;
 import com.android.wilcoconnect.model.leave.Myleave;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
-import com.android.wilcoconnect.shared.MyLeaveListAdapter;
+import com.android.wilcoconnect.shared.MyLeaveListDataAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -42,6 +42,7 @@ public class Leave extends Fragment {
     private FrameLayout frameLayout;
     private AddRequest addRequest = new AddRequest();
     private static String MY_PREFS_NAME = "MyPrefsFile";
+    private MyLeaveListDataAdapter leaveadapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,7 +88,6 @@ public class Leave extends Fragment {
     private void setleavelist() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        MyLeaveListAdapter leaveadapter;
         if(leavedata.size()<0){
             leaveadapter =null;
             recyclerView.setAdapter(leaveadapter);
@@ -96,7 +96,7 @@ public class Leave extends Fragment {
             snackbar.show();
         }
         else{
-            leaveadapter = new MyLeaveListAdapter(getActivity(), leavedata, (view, value) -> newInstance(value));
+            leaveadapter = new MyLeaveListDataAdapter(getActivity(), leavedata, (view, value) -> newInstance(value));
             recyclerView.setAdapter(leaveadapter);
         }
     }

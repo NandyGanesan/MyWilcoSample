@@ -1,6 +1,7 @@
 package com.android.wilcoconnect.api;
 
 import com.android.wilcoconnect.app.MainApplication;
+import com.android.wilcoconnect.model.MenuList.Menu;
 import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.leave.Myleave;
 import com.android.wilcoconnect.model.profile.BasicDetails;
@@ -216,6 +217,14 @@ public class ApiManager {
         public void getMyleavelist(AddRequest request, Callback<Myleave> callback){
             Call<Myleave> leavelist = service.getMyLeaveList(request.Email, request.companyCode, request.EmployeeID);
             leavelist.enqueue(callback);
+        }
+
+        /*
+        * Get the Menu List
+        * */
+        public void getMenuList(AddRequest request, Callback<Menu> callback){
+            Call<Menu> menulist = service.getmobilemenulist(request.Email,request.companyCode,request.EmployeeID);
+            menulist.enqueue(callback);
         }
 
 }

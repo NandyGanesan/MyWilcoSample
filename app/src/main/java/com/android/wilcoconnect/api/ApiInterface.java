@@ -1,5 +1,6 @@
 package com.android.wilcoconnect.api;
 
+import com.android.wilcoconnect.model.MenuList.Menu;
 import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.leave.Myleave;
 import com.android.wilcoconnect.model.profile.BasicDetails;
@@ -137,7 +138,7 @@ public interface ApiInterface {
      * Get My leave list
      * */
     @GET("api/Menu/mobileMenuList")
-    Call<Myleave> getmobilemenulist(@Query("Email") String Email,
+    Call<Menu> getmobilemenulist(@Query("Email") String Email,
                                  @Query("companyCode") String companyCode,
                                  @Query("employeeID") String employeeID);
 

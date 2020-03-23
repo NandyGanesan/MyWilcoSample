@@ -82,6 +82,7 @@ public class ProfileInformation extends DialogFragment {
     private AttachmentDetailData attachmentDetailData = new AttachmentDetailData();
     private static final String MYPREFS_NAME = "logininfo";
     private RecyclerView recyclerView;
+    private ArrayList<BasicInformation> additionalDetail;
     private ProfileMenu menu;
     private AddRequest addRequest = new AddRequest();
 
@@ -195,6 +196,9 @@ public class ProfileInformation extends DialogFragment {
                 additionalDetails = response.body();
                 if(additionalDetails!=null && response.isSuccessful()){
                     additionalDetailData = additionalDetails.getData().get(0).getAdditionalInfo();
+                    if(additionalDetailData!=null) {
+                        display_additional_detail();
+                    }
                 }
             }
             /*
@@ -205,6 +209,72 @@ public class ProfileInformation extends DialogFragment {
                 Log.e(TAG,t.getLocalizedMessage());
             }
         });
+    }
+
+    private void display_additional_detail() {
+        additionalDetail = new ArrayList<>();
+
+        BasicInformation information0 = new BasicInformation();
+        information0.setDataLabel("Physical Disability");
+        information0.setDataDetail(additionalDetailData.getPhysicalDisabilityDetail());
+        additionalDetail.add(information0);
+
+        BasicInformation information1 = new BasicInformation();
+        information1.setDataLabel("Court Proceeding");
+        information1.setDataDetail(additionalDetailData.getCourtProceedingDetail());
+        additionalDetail.add(information1);
+
+        BasicInformation information2 = new BasicInformation();
+        information2.setDataLabel("Languages Known");
+        information2.setDataDetail(additionalDetailData.getLanguageKnown());
+        additionalDetail.add(information2);
+
+        BasicInformation information3 = new BasicInformation();
+        information3.setDataLabel("Relation to any of our employees");
+        information3.setDataDetail(additionalDetailData.getRelationPersonName());
+        additionalDetail.add(information3);
+
+        BasicInformation information4 = new BasicInformation();
+        information4.setDataLabel("Willing to travel- In India");
+        information4.setDataDetail(additionalDetailData.getTravelIndiaList());
+        additionalDetail.add(information4);
+
+        BasicInformation information5 = new BasicInformation();
+        information5.setDataLabel("Willing to travel- In Abroad ");
+        information5.setDataDetail(additionalDetailData.getTravelAbroadList());
+        additionalDetail.add(information5);
+
+        BasicInformation information6 = new BasicInformation();
+        information6.setDataLabel("State Restrictions Problems ");
+        information6.setDataDetail("");
+        additionalDetail.add(information6);
+
+        BasicInformation information7 = new BasicInformation();
+        information7.setDataLabel("Membership of Professional Institution/Association");
+        information7.setDataDetail(additionalDetailData.getMembershipofProfessionInstituion());
+        additionalDetail.add(information7);
+
+        BasicInformation information8 = new BasicInformation();
+        information8.setDataLabel("Specialized Training / Training Program Attended");
+        information8.setDataDetail(additionalDetailData.getSpecializedTraining());
+        additionalDetail.add(information8);
+
+        BasicInformation information9 = new BasicInformation();
+        information9.setDataLabel("Like to attend any Specific Training ");
+        information9.setDataDetail(additionalDetailData.getSpecificTraining());
+        additionalDetail.add(information9);
+
+        BasicInformation information = new BasicInformation();
+        information.setDataLabel("Other Information / Suggestion ");
+        information.setDataDetail(additionalDetailData.getOtherInformation());
+        additionalDetail.add(information);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        if(additionalDetail.size()>0){
+            ProfileInformationDisplayAdapter adapter = new ProfileInformationDisplayAdapter(additionalDetail,getActivity());
+            recyclerView.setAdapter(adapter);
+        }
     }
 
     private void get_reference_value() {

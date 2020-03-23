@@ -25,7 +25,7 @@ public class LeaveHome extends Fragment {
     private String TAG = "LeaveHome";
     private ViewPager viewPager;
     private TabLayout tabLayout;
-    private static final String MY_PREFS_NAME = "MyPrefsFile";
+    private static final String MY_PREFS_NAME = "logininfo";
     private AddRequest addRequest;
     private Menu menu;
     private ArrayList<SubMenu> subMenuArrayList = new ArrayList<>();

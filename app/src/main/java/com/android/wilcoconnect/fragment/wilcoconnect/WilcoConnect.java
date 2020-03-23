@@ -44,7 +44,7 @@ public class WilcoConnect extends Fragment {
     private MyAdapter adapter;
     private StatusAdapter statusAdapter;
     private UserData Tv_UserData;
-    private static final String MY_PREFS_NAME = "MyPrefsFile";
+    private static final String MY_PREFS_NAME = "logininfo";
     private SendRequest sendRequest = new SendRequest();
     private String[] statusType = new String[]{"All", "New", "Open", "Resolved", "Rejected", "Closed", "Cancelled"};
     private static ArrayList<MyRequestData.Data.MyRequests> request = new ArrayList<>();

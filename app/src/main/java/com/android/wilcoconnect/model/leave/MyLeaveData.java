@@ -1,132 +1,230 @@
 package com.android.wilcoconnect.model.leave;
 
+import com.google.gson.annotations.SerializedName;
+
 public class MyLeaveData {
 
+    @SerializedName("LeaveRequestID")
     public int LeaveRequestID;
 
+    @SerializedName("EmployeeID")
     public String EmployeeID;
 
+    @SerializedName("LeaveTypeID")
     public int LeaveTypeID;
 
+    @SerializedName("FromDate")
     public String FromDate;
 
+    @SerializedName("strFromDate")
+    public String strFromDate;
+
+    @SerializedName("ToDate")
     public String ToDate;
 
+    @SerializedName("strToDate")
+    public String strToDate;
+
+    @SerializedName("NoofDays")
     public int NoofDays;
 
+    @SerializedName("RequestRemarks")
     public String RequestRemarks;
 
+    @SerializedName("Session")
     public String Session;
 
+    @SerializedName("LeaveRequestStatusID")
     public int LeaveRequestStatusID;
 
+    @SerializedName("RequestStatus")
     public String RequestStatus;
 
+    @SerializedName("ApprovedBy")
     public String ApprovedBy;
 
+    @SerializedName("ApprovedRemarks")
     public String ApprovedRemarks;
 
+    @SerializedName("ApprovedDate")
     public String ApprovedDate;
 
+    @SerializedName("strApprovedDate")
+    public String strApprovedDate;
+
+    @SerializedName("Created_Date")
     public String Created_Date;
 
+    @SerializedName("Created_By")
     public String Created_By;
 
+    @SerializedName("Modified_Date")
     public String Modified_Date;
 
+    @SerializedName("Modified_By")
     public String Modified_By;
 
+    @SerializedName("LeaveTypeText")
     public String LeaveTypeText;
 
+    @SerializedName("EditStatus")
     public boolean EditStatus;
 
+    @SerializedName("LeaveType")
     public String LeaveType;
 
+    @SerializedName("SessionList")
     public String SessionList;
 
+    @SerializedName("SessionId")
     public int SessionId;
 
+    @SerializedName("SessionTime")
     public String SessionTime;
 
+    @SerializedName("ID")
     public String ID;
 
+    @SerializedName("LeaveStatus")
     public int LeaveStatus;
 
+    @SerializedName("LeaveAppliedCount")
     public int LeaveAppliedCount;
 
+    @SerializedName("LeaveTaken")
     public int LeaveTaken;
 
+    @SerializedName("LeaveAvailability")
     public int LeaveAvailability;
 
+    @SerializedName("FirstName")
     public String FirstName;
 
+    @SerializedName("LastName")
     public String LastName;
 
+    @SerializedName("ApprovalFlag")
     public boolean ApprovalFlag;
 
+    @SerializedName("Title")
     public String Title;
 
+    @SerializedName("TotalDays")
     public int TotalDays;
 
+    @SerializedName("LeaveTypeDetails")
     public String LeaveTypeDetails;
 
+    @SerializedName("LeaveApplied")
     public String LeaveApplied;
 
+    @SerializedName("LeaveDetails")
     public String LeaveDetails;
 
+    @SerializedName("EmployeeDetails")
     public String EmployeeDetails;
 
+    @SerializedName("StateList")
     public String StateList;
 
+    @SerializedName("HolidayList")
     public String HolidayList;
 
+    @SerializedName("LeaveDate")
     public String LeaveDate;
 
+    @SerializedName("description")
     public String description;
 
+    @SerializedName("LocationID")
     public int LocationID;
 
+    @SerializedName("Location")
     public String Location;
 
+    @SerializedName("PrimaryApprover")
     public String PrimaryApprover;
 
+    @SerializedName("SecondaryApprover")
     public String SecondaryApprover;
 
+    @SerializedName("EmployeeSearch")
     public String EmployeeSearch;
 
+    @SerializedName("LeaveBalanceYear")
     public String LeaveBalanceYear;
 
+    @SerializedName("LeaveBalanceYearID")
     public int LeaveBalanceYearID;
 
+    @SerializedName("PreviousDays")
     public int PreviousDays;
 
+    @SerializedName("NextDays")
     public int NextDays;
 
+    @SerializedName("LeaveAppliedDate")
     public String LeaveAppliedDate;
 
+    @SerializedName("lstLeave")
     public String lstLeave;
 
+    @SerializedName("lstLocation")
     public String lstLocation;
 
+    @SerializedName("lstBranch")
     public String lstBranch;
 
+    @SerializedName("BranchID")
     public int BranchID;
 
+    @SerializedName("Branch")
     public String Branch;
 
+    @SerializedName("lstStatus")
     public String lstStatus;
 
+    @SerializedName("StatusID")
     public int StatusID;
 
+    @SerializedName("Status")
     public String Status;
 
+    @SerializedName("Month")
     public int Month;
 
+    @SerializedName("Year")
     public int Year;
 
+    @SerializedName("lstMonth")
     public String lstMonth;
 
+    @SerializedName("lstYear")
     public String lstYear;
+
+    public String getStrFromDate() {
+        return strFromDate;
+    }
+
+    public void setStrFromDate(String strFromDate) {
+        this.strFromDate = strFromDate;
+    }
+
+    public String getStrToDate() {
+        return strToDate;
+    }
+
+    public void setStrToDate(String strToDate) {
+        this.strToDate = strToDate;
+    }
+
+    public String getStrApprovedDate() {
+        return strApprovedDate;
+    }
+
+    public void setStrApprovedDate(String strApprovedDate) {
+        this.strApprovedDate = strApprovedDate;
+    }
 
     public int getLeaveRequestID() {
         return LeaveRequestID;

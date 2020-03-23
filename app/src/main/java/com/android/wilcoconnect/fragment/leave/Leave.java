@@ -41,7 +41,7 @@ public class Leave extends Fragment {
     private RecyclerView recyclerView;
     private FrameLayout frameLayout;
     private AddRequest addRequest = new AddRequest();
-    private static String MY_PREFS_NAME = "MyPrefsFile";
+    private static String MY_PREFS_NAME = "logininfo";
     private MyLeaveListDataAdapter leaveadapter;
 
     @Override
@@ -102,14 +102,12 @@ public class Leave extends Fragment {
     }
 
     private void get_list() {
-        ApiManager.getInstance().getMyleavelist(addRequest, new Callback<Myleave>() {
+        ApiManager.getInstance().getMyLeaveList(addRequest, new Callback<Myleave>() {
             @Override
             public void onResponse(Call<Myleave> call, Response<Myleave> response) {
                 if(response.body()!=null && response.isSuccessful()){
                     leavedata = response.body().getData().get(0).getLeaveList();
-                    if (leavedata.size() > 0) {
                         setleavelist();
-                    }
                 }
             }
 

@@ -4,11 +4,14 @@ import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.MenuList.Menu;
 import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.leave.Myleave;
+import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.profile.EducationDetails;
+import com.android.wilcoconnect.model.profile.EmergencyDetails;
 import com.android.wilcoconnect.model.profile.ExperienceDetails;
 import com.android.wilcoconnect.model.profile.FamilyDetails;
 import com.android.wilcoconnect.model.profile.LastPositionDetails;
+import com.android.wilcoconnect.model.profile.PassportDetails;
 import com.android.wilcoconnect.model.profile.ReferenceDetails;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.model.wilcoconnect.IssueTracking;
@@ -176,32 +179,32 @@ public class ApiManager {
         /*
         * Get the Profile Basic information
         * */
-        public void getBasicDetail(String EmployeeId, Callback<BasicDetails> callback){
-            Call<BasicDetails> information = service.get_ProfileData(EmployeeId);
+        public void getBasicDetail(AddRequest request, Callback<BasicDetails> callback){
+            Call<BasicDetails> information = service.get_ProfileData(request.Email,request.companyCode,request.EmployeeID);
             information.enqueue(callback);
         }
 
         /*
-         * Get the Profile Basic information
+         * Get the Profile Family Details
          * */
-        public void getFamilyDetail(String EmployeeId, Callback<FamilyDetails> callback){
-            Call<FamilyDetails> information = service.get_FamilyData(EmployeeId);
+        public void getFamilyDetail(AddRequest request, Callback<FamilyDetails> callback){
+            Call<FamilyDetails> information = service.get_FamilyData(request.Email,request.companyCode,request.EmployeeID);
             information.enqueue(callback);
         }
 
         /*
          * Get the Profile Education Details
          * */
-        public void getEducationDetail(String EmployeeId, Callback<EducationDetails> callback){
-            Call<EducationDetails> information = service.get_EducationData(EmployeeId);
+        public void getEducationDetail(AddRequest request, Callback<EducationDetails> callback){
+            Call<EducationDetails> information = service.get_EducationData(request.Email,request.companyCode,request.EmployeeID);
             information.enqueue(callback);
         }
 
         /*
          * Get the Profile Last Position Details
          * */
-        public void getLastPostionDetail(String EmployeeId, Callback<LastPositionDetails> callback){
-            Call<LastPositionDetails> information = service.get_LastPositionData(EmployeeId);
+        public void getLastPostionDetail(AddRequest request, Callback<LastPositionDetails> callback){
+            Call<LastPositionDetails> information = service.get_LastPositionData(request.Email,request.companyCode,request.EmployeeID);
             information.enqueue(callback);
         }
 
@@ -222,17 +225,41 @@ public class ApiManager {
         }
 
         /*
+        * Get the Profile Additional Details
+        * */
+        public void getAdditionalDetail(AddRequest request, Callback<AdditionalDetails> callback){
+            Call<AdditionalDetails> additionalDetail = service.getAdditionalDetail(request.Email,request.companyCode,request.EmployeeID);
+            additionalDetail.enqueue(callback);
+        }
+
+        /*
+        * Get the Profile Emergency Details
+        * */
+        public void getEmergencyDetail(AddRequest request, Callback<EmergencyDetails> callback){
+            Call<EmergencyDetails> emergencyDetail = service.getEmergencyDetail(request.Email,request.companyCode,request.EmployeeID);
+            emergencyDetail.enqueue(callback);
+        }
+
+        /*
+        * Get the Profile Passport Details
+        * */
+        public void getPassportDetail(AddRequest request, Callback<PassportDetails> callback){
+            Call<PassportDetails> passportDetailsData = service.getPassportDetail(request.Email,request.companyCode,request.EmployeeID);
+            passportDetailsData.enqueue(callback);
+        }
+
+        /*
         * Get the Holiday List
         * */
-        public void getholidaylist(AddRequest request, Callback<HolidayData> callback) {
-            Call<HolidayData> holidaylist = service.getholidaylist(request.Email, request.companyCode, request.EmployeeID);
+        public void getHolidayList(AddRequest request, Callback<HolidayData> callback) {
+            Call<HolidayData> holidaylist = service.getHolidayList(request.Email, request.companyCode, request.EmployeeID);
             holidaylist.enqueue(callback);
         }
 
         /*
         * Get the MyLeave List
         * */
-        public void getMyleavelist(AddRequest request, Callback<Myleave> callback){
+        public void getMyLeaveList(AddRequest request, Callback<Myleave> callback){
             Call<Myleave> leavelist = service.getMyLeaveList(request.Email, request.companyCode, request.EmployeeID);
             leavelist.enqueue(callback);
         }

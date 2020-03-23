@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class ReferenceDetails {
+public class EmergencyDetails {
 
     @SerializedName("code")
     public int code;
@@ -20,15 +20,15 @@ public class ReferenceDetails {
 
     public class Data{
 
-        @SerializedName("referenceInfo")
-        public ArrayList<ReferenceDetailData> referenceInfo;
+        @SerializedName("emergencyInfo")
+        public EmergencyDetailData emergencyInfo;
 
-        public ArrayList<ReferenceDetailData> getReferenceInfo() {
-            return referenceInfo;
+        public EmergencyDetailData getEmergencyInfo() {
+            return emergencyInfo;
         }
 
-        public void setReferenceInfo(ArrayList<ReferenceDetailData> referenceInfo) {
-            this.referenceInfo = referenceInfo;
+        public void setEmergencyInfo(EmergencyDetailData emergencyInfo) {
+            this.emergencyInfo = emergencyInfo;
         }
     }
 

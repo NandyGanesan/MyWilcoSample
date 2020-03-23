@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button login;
     private UserData user;
     private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    private static String MYPREFS_NAME = "logininfo";
     private String TAG = "LoginActivity";
 
     @Override
@@ -122,9 +123,12 @@ public class LoginActivity extends AppCompatActivity {
                                     if (response.isSuccessful() && user.getData().getEmail() != null) {
                                         Log.d(TAG, "Login Success");
                                         Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
-                                        Gson gson = new Gson();
-                                        String s = gson.toJson(user);
-                                        homeIntent.putExtra("key", s);
+
+                                        SharedPreferences.Editor editor = getSharedPreferences(MYPREFS_NAME, Context.MODE_PRIVATE).edit();
+                                        editor.putString("Email", user.getData().getEmail());
+                                        editor.putString("CompanyCode",user.getData().getCompanyCode());
+                                        editor.putString("EmployeeID",user.getData().getEmployeeID());
+                                        editor.apply();
                                         startActivity(homeIntent);
                                         Toast.makeText(getApplicationContext(),
                                                 "Successfully Logged in",

@@ -25,7 +25,7 @@ public class MenuFragment extends Fragment {
 
     private String TAG = "MenuFragment";
     private Toolbar menu_toolbar;
-    private static String MY_PREFS_NAME = "MyPrefsFile";
+    private static String MY_PREFS_NAME = "logininfo";
     private ExpandableListView expandable_ListView;
     private MyExtendableListAdapter adapter;
     private HashMap<String, List<String>> item;

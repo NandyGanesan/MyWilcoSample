@@ -40,19 +40,19 @@ public class MyLeaveListDataAdapter extends RecyclerView.Adapter<MyLeaveListData
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.leavetype.setText(myLeaveData.get(position).getLeaveTypeText());
         holder.status.setText(myLeaveData.get(position).getRequestStatus());
-        holder.fromdate.setText(myLeaveData.get(position).getFromDate());
-        holder.Todate.setText(myLeaveData.get(position).getToDate());
+        holder.fromdate.setText(myLeaveData.get(position).getStrFromDate());
+        holder.Todate.setText(myLeaveData.get(position).getStrToDate());
 
         holder.cardView.setOnClickListener(v -> {
             MyLeaveData particularleavedata = new MyLeaveData();
             particularleavedata.setLeaveTypeText(myLeaveData.get(position).getLeaveTypeText());
             particularleavedata.setLeaveAppliedDate(myLeaveData.get(position).getLeaveAppliedDate());
-            particularleavedata.setFromDate(myLeaveData.get(position).getFromDate());
-            particularleavedata.setToDate(myLeaveData.get(position).getToDate());
+            particularleavedata.setStrFromDate(myLeaveData.get(position).getStrFromDate());
+            particularleavedata.setStrToDate(myLeaveData.get(position).getStrToDate());
             particularleavedata.setNoofDays(myLeaveData.get(position).getNoofDays());
             particularleavedata.setRequestStatus(myLeaveData.get(position).getRequestStatus());
             particularleavedata.setRequestRemarks(myLeaveData.get(position).getRequestRemarks());
-            particularleavedata.setApprovedDate(myLeaveData.get(position).getApprovedDate());
+            particularleavedata.setStrApprovedDate(myLeaveData.get(position).getStrApprovedDate());
             particularleavedata.setApprovedRemarks(myLeaveData.get(position).getApprovedRemarks());
             particularleavedata.setPrimaryApprover(myLeaveData.get(position).getPrimaryApprover());
             /**

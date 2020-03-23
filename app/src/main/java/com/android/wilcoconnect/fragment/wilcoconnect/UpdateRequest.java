@@ -63,7 +63,7 @@ public class UpdateRequest extends Fragment {
     private TextView attach, status, tv_closure, tv_error, tv_latest, tv_attachments;
     private ImageView iv_attachments;
     private LinearLayout mylayout;
-    private static final String MY_PREFS_NAME = "MyPrefsFile";
+    private static final String MY_PREFS_NAME = "logininfo";
     private String TAG = "NewService";
     private int checkItem = -1;
     private List<IssueTrackingData> trackdata;

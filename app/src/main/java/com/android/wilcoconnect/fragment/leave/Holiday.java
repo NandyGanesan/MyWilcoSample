@@ -45,7 +45,7 @@ public class Holiday extends Fragment {
     private RecyclerView recyclerView;
     private ConstraintLayout layout;
     private AddRequest addRequest = new AddRequest();
-    private static String MY_PREFS_NAME = "MyPrefsFile";
+    private static String MY_PREFS_NAME = "logininfo";
     private HolidayListAdapter holidayadapter;
 
     @Override
@@ -107,7 +107,7 @@ public class Holiday extends Fragment {
     }
 
     private void getlist() {
-        ApiManager.getInstance().getholidaylist(addRequest, new Callback<HolidayData>() {
+        ApiManager.getInstance().getHolidayList(addRequest, new Callback<HolidayData>() {
             @Override
             public void onResponse(Call<HolidayData> call, Response<HolidayData> response) {
                 if(response.body()!=null && response.isSuccessful()){

@@ -3,11 +3,14 @@ package com.android.wilcoconnect.api;
 import com.android.wilcoconnect.model.MenuList.Menu;
 import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.leave.Myleave;
+import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.profile.EducationDetails;
+import com.android.wilcoconnect.model.profile.EmergencyDetails;
 import com.android.wilcoconnect.model.profile.ExperienceDetails;
 import com.android.wilcoconnect.model.profile.FamilyDetails;
 import com.android.wilcoconnect.model.profile.LastPositionDetails;
+import com.android.wilcoconnect.model.profile.PassportDetails;
 import com.android.wilcoconnect.model.profile.ReferenceDetails;
 import com.android.wilcoconnect.model.wilcoconnect.IssueTracking;
 import com.android.wilcoconnect.model.login.Login;
@@ -100,25 +103,33 @@ public interface ApiInterface {
     * Get the Profile Module BasicInformation and Address
     * */
     @GET("api/ProfileRequest/GetBasicDetails")
-    Call<BasicDetails> get_ProfileData( @Query("employeeID") String EmployeeID);
+    Call<BasicDetails> get_ProfileData(@Query("eMail") String Email,
+                                       @Query("companyCode") String companyCode,
+                                       @Query("employeeID") String employeeID);
 
     /*
     * Get the Profile Module Family Details
     * */
     @GET("api/ProfileRequest/GetFamilyDetails")
-    Call<FamilyDetails> get_FamilyData( @Query("employeeID") String EmployeeID);
+    Call<FamilyDetails> get_FamilyData(@Query("eMail") String Email,
+                                       @Query("companyCode") String companyCode,
+                                       @Query("employeeID") String employeeID);
 
     /*
      * Get the Profile Module Education Details
      * */
     @GET("api/ProfileRequest/GetEducationDetails")
-    Call<EducationDetails> get_EducationData(@Query("employeeID") String EmployeeID);
+    Call<EducationDetails> get_EducationData(@Query("eMail") String Email,
+                                             @Query("companyCode") String companyCode,
+                                             @Query("employeeID") String employeeID);
 
     /*
      * Get the Profile Module Last Position Details
      * */
     @GET("api/ProfileRequest/GetLastPositionDetails")
-    Call<LastPositionDetails> get_LastPositionData(@Query("employeeID") String EmployeeID);
+    Call<LastPositionDetails> get_LastPositionData(@Query("eMail") String Email,
+                                                   @Query("companyCode") String companyCode,
+                                                   @Query("employeeID") String employeeID);
 
     /*
     * Get the Profile Module Experience Details
@@ -131,15 +142,40 @@ public interface ApiInterface {
     /*
     * Get the Profile Module Reference Details
     * */
+    @GET("api/ProfileRequest/GetReferenceDetailsOfAnEmployee")
     Call<ReferenceDetails> getReferenceDetails(@Query("eMail") String Email,
                                                @Query("companyCode") String companyCode,
                                                @Query("employeeID") String employeeID);
 
     /*
+     * Get the Profile Module Additional Detail
+     * */
+    @GET("api/ProfileRequest/GetAdditionalDetailsOfAnEmployee")
+    Call<AdditionalDetails> getAdditionalDetail(@Query("eMail") String Email,
+                                                @Query("companyCode") String companyCode,
+                                                @Query("employeeID") String employeeID);
+
+    /*
+    * Get the Profile Module Emergency Detail
+    * */
+    @GET("api/ProfileRequest/getEmergencyDetailsofAnEmployee")
+    Call<EmergencyDetails> getEmergencyDetail(@Query("eMail") String Email,
+                                              @Query("companyCode") String companyCode,
+                                              @Query("employeeID") String employeeID);
+
+    /*
+    * Get the Profile Module Passport Detail
+    * */
+    @GET("api/ProfileRequest/getPassportDetailsofAnEmployee")
+    Call<PassportDetails> getPassportDetail(@Query("eMail") String Email,
+                                            @Query("companyCode") String companyCode,
+                                            @Query("employeeID") String employeeID);
+
+    /*
      * Get the holiday list
      * */
     @GET("api/Leave/getHolidayList")
-    Call<HolidayData> getholidaylist(@Query("Email") String Email,
+    Call<HolidayData> getHolidayList(@Query("Email") String Email,
                                      @Query("companyCode") String companyCode,
                                      @Query("employeeID") String employeeID);
 

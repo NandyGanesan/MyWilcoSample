@@ -60,7 +60,7 @@ public class NewService extends Fragment {
      * Initialize the all variables and attributes....
      */
 
-    private static String MY_PREFS_NAME = "MyPrefsFile";
+    private static String MY_PREFS_NAME = "logininfo";
     private String TAG = "NewService";
     private int checkItem = -1;
     private static int RESULT_LOAD_FILE = 1;

@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
+import com.android.wilcoconnect.model.profile.AdditionalDetailData;
+import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.profile.BasicInformation;
 import com.android.wilcoconnect.model.profile.EducationDetailData;
@@ -64,17 +66,29 @@ public class ProfileInformation extends DialogFragment {
     private List<ReferenceDetailData> referenceDetailDataList;
     private ExperienceDetails experienceDetails = new ExperienceDetails();
     private List<ExperienceDetailData> experienceDetailList;
-    private static final String MYPREFS_NAME = "MyPrefsFile";
-    private String EmployeeId;
+    private AdditionalDetails additionalDetails = new AdditionalDetails();
+    private AdditionalDetailData additionalDetailData = new AdditionalDetailData();
+    private static final String MYPREFS_NAME = "logininfo";
     private RecyclerView recyclerView;
     private ProfileMenu menu;
-    private AddRequest request;
+    private AddRequest request = new AddRequest();
 
     @Override
     public View onCreateView(LayoutInflater  inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile_information, container, false);
+
+
+        /*
+         * Get the shared preference data to assign the another object..
+         * */
+        SharedPreferences prefs = getActivity().getSharedPreferences(MYPREFS_NAME, MODE_PRIVATE);
+        if(prefs!=null) {
+            request.setEmail(prefs.getString("Email", "No name defined"));
+            request.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
+            request.setEmployeeID(prefs.getString("EmployeeId","No name defined"));
+        }
 
         recyclerView = view.findViewById(R.id.profile_menu_data);
 
@@ -98,16 +112,7 @@ public class ProfileInformation extends DialogFragment {
             MainApplication.token_data = preferences.getString("header", "No name defined");
         }
 
-        /*
-         * Get the shared preference data to assign the another object..
-         * */
-        SharedPreferences prefs = getActivity().getSharedPreferences(MYPREFS_NAME, MODE_PRIVATE);
-        EmployeeId = prefs.getString("EmployeeID", "No name defined");
-        request.setEmail(prefs.getString("Email", "No name defined"));
-        request.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
-        request.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
-
-        if(menu.getValues().equals("Basic information")||menu.getValues().equals("Address")||menu.getValues().equals("Last Position")){
+        if(menu.getValues().equals("Basic information")||menu.getValues().equals("Address")){
             get_value();
         }
         else if(menu.getValues().equals("Education")){
@@ -116,13 +121,44 @@ public class ProfileInformation extends DialogFragment {
         else if(menu.getValues().equals("Family")){
             get_family_value();
         }
+        else if(menu.getValues().equals("Last Position")){
+            get_last_position_data();
+        }
         else if(menu.getValues().equals("Experience")){
             get_experience_value();
         }
         else if(menu.getValues().equals("Reference")){
             get_reference_value();
         }
+        else if(menu.getValues().equals("Additional")){
+            get_additional_value();
+        }
         return view;
+    }
+
+    private void get_additional_value() {
+        /*
+        * Get the Additional Detail
+        * */
+        ApiManager.getInstance().getAdditionalDetail(request, new Callback<AdditionalDetails>() {
+            /*
+             * Get the Api success..
+             * */
+            @Override
+            public void onResponse(Call<AdditionalDetails> call, Response<AdditionalDetails> response) {
+                additionalDetails = response.body();
+                if(additionalDetails!=null && response.isSuccessful()){
+                    additionalDetailData = additionalDetails.getData().get(0).getAdditionalInfo();
+                }
+            }
+            /*
+             * Get Api Call Failure
+             * */
+            @Override
+            public void onFailure(Call<AdditionalDetails> call, Throwable t) {
+                Log.e(TAG,t.getLocalizedMessage());
+            }
+        });
     }
 
     private void get_reference_value() {
@@ -132,9 +168,7 @@ public class ProfileInformation extends DialogFragment {
                 referenceDetails = response.body();
                 if(response.isSuccessful() && response.body().getData()!=null){
                     referenceDetailDataList = referenceDetails.getData().get(0).getReferenceInfo();
-                    if(referenceDetailDataList.size()>0){
-                        display_reference_Detail();
-                    }
+                    display_reference_Detail();
                 }
             }
 
@@ -177,9 +211,14 @@ public class ProfileInformation extends DialogFragment {
     private void display_experience_data() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        ExperienceAdapter adapter;
         if(experienceDetailList.size()>0){
-            ExperienceAdapter adapter = new ExperienceAdapter(experienceDetailList,getActivity());
+            adapter = new ExperienceAdapter(experienceDetailList,getActivity());
             recyclerView.setAdapter(adapter);
+        }
+        else {
+           adapter = null;
+           recyclerView.setAdapter(adapter);
         }
     }
 
@@ -187,7 +226,7 @@ public class ProfileInformation extends DialogFragment {
         /*
          * Get the overall profile Family Detail
          * */
-        ApiManager.getInstance().getFamilyDetail(EmployeeId, new Callback<FamilyDetails>() {
+        ApiManager.getInstance().getFamilyDetail(request, new Callback<FamilyDetails>() {
             /*
              * Get the Api success..
              * */
@@ -223,7 +262,7 @@ public class ProfileInformation extends DialogFragment {
         /*
          * Get the overall Education Detail
          * */
-        ApiManager.getInstance().getEducationDetail(EmployeeId, new Callback<EducationDetails>() {
+        ApiManager.getInstance().getEducationDetail(request, new Callback<EducationDetails>() {
             /*
              * Get the Api success..
              * */
@@ -442,6 +481,72 @@ public class ProfileInformation extends DialogFragment {
 
         item.put("Address",AddressDetail);
 
+        if (item.containsKey(menu.getValues())) {
+            selectedList = new ArrayList<>();
+            selectedList = new ArrayList<>(item.get(menu.getValues()));
+            selectedList.retainAll(item.get(menu.getValues()));
+        }
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        if(selectedList.size()>0){
+            ProfileInformationDisplayAdapter adapter = new ProfileInformationDisplayAdapter(selectedList,getActivity());
+            recyclerView.setAdapter(adapter);
+        }
+    }
+
+    private void get_value() {
+        /*
+         * Get the overall profile Basic Detail
+         * */
+        ApiManager.getInstance().getBasicDetail(request, new Callback<BasicDetails>() {
+            /*
+             * Get the Api success..
+             * */
+            @Override
+            public void onResponse(Call<BasicDetails> call, Response<BasicDetails> response) {
+                basicinformationdata = response.body();
+                if(basicinformationdata!=null){
+                    get_Hashmap_value();
+                }
+            }
+
+            /*
+             * Get the Api Failure
+             * */
+            @Override
+            public void onFailure(Call<BasicDetails> call, Throwable t) {
+                Log.e(TAG, Objects.requireNonNull(t.getLocalizedMessage()));
+            }
+        });
+    }
+
+    private void get_last_position_data(){
+        /*
+         * Get the overall Last Position Detail
+         * */
+        ApiManager.getInstance().getLastPostionDetail(request, new Callback<LastPositionDetails>() {
+            /*
+             * Get the Api success..
+             * */
+            @Override
+            public void onResponse(Call<LastPositionDetails> call, Response<LastPositionDetails> response) {
+                lastPositionDetailsdata = response.body();
+                if(lastPositionDetailsdata!=null){
+                    set_last_position_data();
+                }
+            }
+            /*
+            * Get Api Call Failure
+            * */
+            @Override
+            public void onFailure(Call<LastPositionDetails> call, Throwable t) {
+                Log.e(TAG, Objects.requireNonNull(t.getLocalizedMessage()));
+            }
+        });
+    }
+
+    private void set_last_position_data(){
+
         ArrayList<BasicInformation> lastpositiondetail=new ArrayList<>();
 
         BasicInformation lastposition = new BasicInformation();
@@ -504,63 +609,12 @@ public class ProfileInformation extends DialogFragment {
         lastposition00.setDataDetail(lastPositionDetailsdata.getData().getLastPosCity());
         lastpositiondetail.add(lastposition00);
 
-        item.put("Last Position",lastpositiondetail);
-
-        if (item.containsKey(menu.getValues())) {
-            selectedList = new ArrayList<>();
-            selectedList = new ArrayList<>(item.get(menu.getValues()));
-            selectedList.retainAll(item.get(menu.getValues()));
-        }
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        if(selectedList.size()>0){
-            ProfileInformationDisplayAdapter adapter = new ProfileInformationDisplayAdapter(selectedList,getActivity());
+        if(lastpositiondetail.size()>0){
+            ProfileInformationDisplayAdapter adapter = new ProfileInformationDisplayAdapter(lastpositiondetail,getActivity());
             recyclerView.setAdapter(adapter);
         }
     }
 
-    private void get_value() {
-        /*
-         * Get the overall profile Basic Detail
-         * */
-        ApiManager.getInstance().getBasicDetail(EmployeeId, new Callback<BasicDetails>() {
-            /*
-             * Get the Api success..
-             * */
-            @Override
-            public void onResponse(Call<BasicDetails> call, Response<BasicDetails> response) {
-                basicinformationdata = response.body();
-                if(basicinformationdata!=null){
-                    /*
-                     * Get the overall Last Position Detail
-                     * */
-                    ApiManager.getInstance().getLastPostionDetail(EmployeeId, new Callback<LastPositionDetails>() {
-                        /*
-                         * Get the Api success..
-                         * */
-                        @Override
-                        public void onResponse(Call<LastPositionDetails> call, Response<LastPositionDetails> response) {
-                            lastPositionDetailsdata = response.body();
-                            if(lastPositionDetailsdata!=null){
-                                get_Hashmap_value();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<LastPositionDetails> call, Throwable t) {
-                            Log.e(TAG, Objects.requireNonNull(t.getLocalizedMessage()));
-                        }
-                    });
-                }
-            }
-
-            /*
-             * Get the Api Failure
-             * */
-            @Override
-            public void onFailure(Call<BasicDetails> call, Throwable t) {
-                Log.e(TAG, Objects.requireNonNull(t.getLocalizedMessage()));
-            }
-        });
-    }
 }

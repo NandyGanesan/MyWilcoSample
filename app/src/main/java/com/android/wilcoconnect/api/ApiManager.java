@@ -171,7 +171,7 @@ public class ApiManager {
         /**
          * Get the IssueTracking Details
          * */
-        public void getIssueTraking(SendRequest request, Callback<IssueTracking> callback) {
+        public void getIssueTracking(SendRequest request, Callback<IssueTracking> callback) {
             Call<IssueTracking> myRequest = service.IssueTracking(request.Email, request.companyCode, request.employeeID, request.statusCode, request.masterID);
             myRequest.enqueue(callback);
         }
@@ -180,7 +180,7 @@ public class ApiManager {
         * Get the Profile Basic information
         * */
         public void getBasicDetail(AddRequest request, Callback<BasicDetails> callback){
-            Call<BasicDetails> information = service.get_ProfileData(request.Email,request.companyCode,request.EmployeeID);
+            Call<BasicDetails> information = service.getProfileData(request.Email,request.companyCode,request.EmployeeID);
             information.enqueue(callback);
         }
 
@@ -188,7 +188,7 @@ public class ApiManager {
          * Get the Profile Family Details
          * */
         public void getFamilyDetail(AddRequest request, Callback<FamilyDetails> callback){
-            Call<FamilyDetails> information = service.get_FamilyData(request.Email,request.companyCode,request.EmployeeID);
+            Call<FamilyDetails> information = service.getFamilyData(request.Email,request.companyCode,request.EmployeeID);
             information.enqueue(callback);
         }
 
@@ -196,7 +196,7 @@ public class ApiManager {
          * Get the Profile Education Details
          * */
         public void getEducationDetail(AddRequest request, Callback<EducationDetails> callback){
-            Call<EducationDetails> information = service.get_EducationData(request.Email,request.companyCode,request.EmployeeID);
+            Call<EducationDetails> information = service.getEducationData(request.Email,request.companyCode,request.EmployeeID);
             information.enqueue(callback);
         }
 
@@ -204,7 +204,7 @@ public class ApiManager {
          * Get the Profile Last Position Details
          * */
         public void getLastPostionDetail(AddRequest request, Callback<LastPositionDetails> callback){
-            Call<LastPositionDetails> information = service.get_LastPositionData(request.Email,request.companyCode,request.EmployeeID);
+            Call<LastPositionDetails> information = service.getLastPositionData(request.Email,request.companyCode,request.EmployeeID);
             information.enqueue(callback);
         }
 
@@ -220,8 +220,8 @@ public class ApiManager {
         * Get the Profile Reference Details
         * */
         public void getReferenceDetail(AddRequest request, Callback<ReferenceDetails> callback){
-            Call<ReferenceDetails> referenceDetailslist = service.getReferenceDetails(request.Email,request.companyCode,request.EmployeeID);
-            referenceDetailslist.enqueue(callback);
+            Call<ReferenceDetails> referenceDetailsList = service.getReferenceDetails(request.Email,request.companyCode,request.EmployeeID);
+            referenceDetailsList.enqueue(callback);
         }
 
         /*
@@ -252,24 +252,24 @@ public class ApiManager {
         * Get the Holiday List
         * */
         public void getHolidayList(AddRequest request, Callback<HolidayData> callback) {
-            Call<HolidayData> holidaylist = service.getHolidayList(request.Email, request.companyCode, request.EmployeeID);
-            holidaylist.enqueue(callback);
+            Call<HolidayData> holidayList = service.getHolidayList(request.Email, request.companyCode, request.EmployeeID);
+            holidayList.enqueue(callback);
         }
 
         /*
         * Get the MyLeave List
         * */
         public void getMyLeaveList(AddRequest request, Callback<Myleave> callback){
-            Call<Myleave> leavelist = service.getMyLeaveList(request.Email, request.companyCode, request.EmployeeID);
-            leavelist.enqueue(callback);
+            Call<Myleave> leaveList = service.getMyLeaveList(request.Email, request.companyCode, request.EmployeeID);
+            leaveList.enqueue(callback);
         }
 
         /*
         * Get the Menu List
         * */
         public void getMenuList(AddRequest request, Callback<Menu> callback){
-            Call<Menu> menulist = service.getmobilemenulist(request.Email,request.companyCode,request.EmployeeID);
-            menulist.enqueue(callback);
+            Call<Menu> menuList = service.getMobileMenuList(request.Email,request.companyCode,request.EmployeeID);
+            menuList.enqueue(callback);
         }
 
 }

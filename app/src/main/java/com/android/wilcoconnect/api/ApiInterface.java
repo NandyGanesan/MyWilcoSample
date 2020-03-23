@@ -103,7 +103,7 @@ public interface ApiInterface {
     * Get the Profile Module BasicInformation and Address
     * */
     @GET("api/ProfileRequest/GetBasicDetails")
-    Call<BasicDetails> get_ProfileData(@Query("eMail") String Email,
+    Call<BasicDetails> getProfileData(@Query("eMail") String Email,
                                        @Query("companyCode") String companyCode,
                                        @Query("employeeID") String employeeID);
 
@@ -111,7 +111,7 @@ public interface ApiInterface {
     * Get the Profile Module Family Details
     * */
     @GET("api/ProfileRequest/GetFamilyDetails")
-    Call<FamilyDetails> get_FamilyData(@Query("eMail") String Email,
+    Call<FamilyDetails> getFamilyData(@Query("eMail") String Email,
                                        @Query("companyCode") String companyCode,
                                        @Query("employeeID") String employeeID);
 
@@ -119,7 +119,7 @@ public interface ApiInterface {
      * Get the Profile Module Education Details
      * */
     @GET("api/ProfileRequest/GetEducationDetails")
-    Call<EducationDetails> get_EducationData(@Query("eMail") String Email,
+    Call<EducationDetails> getEducationData(@Query("eMail") String Email,
                                              @Query("companyCode") String companyCode,
                                              @Query("employeeID") String employeeID);
 
@@ -127,7 +127,7 @@ public interface ApiInterface {
      * Get the Profile Module Last Position Details
      * */
     @GET("api/ProfileRequest/GetLastPositionDetails")
-    Call<LastPositionDetails> get_LastPositionData(@Query("eMail") String Email,
+    Call<LastPositionDetails> getLastPositionData(@Query("eMail") String Email,
                                                    @Query("companyCode") String companyCode,
                                                    @Query("employeeID") String employeeID);
 
@@ -191,7 +191,7 @@ public interface ApiInterface {
      * Get Overall menu list
      * */
     @GET("api/Menu/mobileMenuList")
-    Call<Menu> getmobilemenulist(@Query("Email") String Email,
+    Call<Menu> getMobileMenuList(@Query("Email") String Email,
                                  @Query("companyCode") String companyCode,
                                  @Query("employeeID") String employeeID);
 

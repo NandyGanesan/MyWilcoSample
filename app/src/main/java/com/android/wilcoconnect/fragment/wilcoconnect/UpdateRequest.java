@@ -185,7 +185,7 @@ public class UpdateRequest extends Fragment {
         /*
          * Get the Overall IssueTracking for the particular Request
          * */
-        ApiManager.getInstance().getIssueTraking(sendRequest, new Callback<IssueTracking>() {
+        ApiManager.getInstance().getIssueTracking(sendRequest, new Callback<IssueTracking>() {
             /*
              * Api call success..
              * */

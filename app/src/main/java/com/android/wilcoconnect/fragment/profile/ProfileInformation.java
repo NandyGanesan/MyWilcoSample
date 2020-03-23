@@ -19,15 +19,21 @@ import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.profile.AdditionalDetailData;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
+import com.android.wilcoconnect.model.profile.AttachmentDetailData;
+import com.android.wilcoconnect.model.profile.AttachmentDetails;
 import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.profile.BasicInformation;
 import com.android.wilcoconnect.model.profile.EducationDetailData;
 import com.android.wilcoconnect.model.profile.EducationDetails;
+import com.android.wilcoconnect.model.profile.EmergencyDetailData;
+import com.android.wilcoconnect.model.profile.EmergencyDetails;
 import com.android.wilcoconnect.model.profile.ExperienceDetailData;
 import com.android.wilcoconnect.model.profile.ExperienceDetails;
 import com.android.wilcoconnect.model.profile.FamilyDetailData;
 import com.android.wilcoconnect.model.profile.FamilyDetails;
 import com.android.wilcoconnect.model.profile.LastPositionDetails;
+import com.android.wilcoconnect.model.profile.PassportDetailData;
+import com.android.wilcoconnect.model.profile.PassportDetails;
 import com.android.wilcoconnect.model.profile.ProfileMenu;
 import com.android.wilcoconnect.model.profile.ReferenceDetailData;
 import com.android.wilcoconnect.model.profile.ReferenceDetails;
@@ -68,10 +74,16 @@ public class ProfileInformation extends DialogFragment {
     private List<ExperienceDetailData> experienceDetailList;
     private AdditionalDetails additionalDetails = new AdditionalDetails();
     private AdditionalDetailData additionalDetailData = new AdditionalDetailData();
+    private EmergencyDetails emergencyDetail = new EmergencyDetails();
+    private EmergencyDetailData emergencyDetailDataList = new EmergencyDetailData();
+    private PassportDetails passportDetail = new PassportDetails();
+    private PassportDetailData passportDetailData = new PassportDetailData();
+    private AttachmentDetails attachmentDetail = new AttachmentDetails();
+    private AttachmentDetailData attachmentDetailData = new AttachmentDetailData();
     private static final String MYPREFS_NAME = "logininfo";
     private RecyclerView recyclerView;
     private ProfileMenu menu;
-    private AddRequest request = new AddRequest();
+    private AddRequest addRequest = new AddRequest();
 
     @Override
     public View onCreateView(LayoutInflater  inflater, ViewGroup container,
@@ -79,15 +91,22 @@ public class ProfileInformation extends DialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile_information, container, false);
 
+        /*
+         * Get the Header
+         * */
+        SharedPreferences preferences = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        if (preferences != null) {
+            MainApplication.token_data = preferences.getString("header", "No name defined");
+        }
 
         /*
          * Get the shared preference data to assign the another object..
          * */
         SharedPreferences prefs = getActivity().getSharedPreferences(MYPREFS_NAME, MODE_PRIVATE);
         if(prefs!=null) {
-            request.setEmail(prefs.getString("Email", "No name defined"));
-            request.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
-            request.setEmployeeID(prefs.getString("EmployeeId","No name defined"));
+            addRequest.setEmail(prefs.getString("Email", "No name defined"));
+            addRequest.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
+            addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
         recyclerView = view.findViewById(R.id.profile_menu_data);
@@ -103,14 +122,6 @@ public class ProfileInformation extends DialogFragment {
         profile_toolbar.setTitle(menu.getValues());
         profile_toolbar.setNavigationIcon(R.drawable.close);
         profile_toolbar.setNavigationOnClickListener(v -> dismiss());
-
-        /*
-         * Get the Header
-         * */
-        SharedPreferences preferences = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        if (preferences != null) {
-            MainApplication.token_data = preferences.getString("header", "No name defined");
-        }
 
         if(menu.getValues().equals("Basic information")||menu.getValues().equals("Address")){
             get_value();
@@ -133,14 +144,49 @@ public class ProfileInformation extends DialogFragment {
         else if(menu.getValues().equals("Additional")){
             get_additional_value();
         }
+        else if(menu.getValues().equals("Emergency")){
+            get_Emergency_detail();
+        }
+        else if(menu.getValues().equals("Passport")){
+            get_Passport_detail();
+        }
+        else if(menu.getValues().equals("Attachments")){
+            get_Attachment_Detail();
+        }
         return view;
+    }
+
+    private void get_Attachment_Detail() {
+        /*
+        * Get the Attachment Details
+        * */
+        ApiManager.getInstance().getAttachmentDetails(addRequest, new Callback<AttachmentDetails>() {
+            /*
+            * Api Call Success
+            * */
+            @Override
+            public void onResponse(Call<AttachmentDetails> call, Response<AttachmentDetails> response) {
+                attachmentDetail = response.body();
+                if(attachmentDetail!=null && response.isSuccessful()){
+                    attachmentDetailData = attachmentDetail.getData().get(0).getObjAttachement();
+                }
+            }
+            /*
+            * Api Call Failure
+            * */
+            @Override
+            public void onFailure(Call<AttachmentDetails> call, Throwable t) {
+                Log.e(TAG,t.getLocalizedMessage());
+            }
+        });
+
     }
 
     private void get_additional_value() {
         /*
         * Get the Additional Detail
         * */
-        ApiManager.getInstance().getAdditionalDetail(request, new Callback<AdditionalDetails>() {
+        ApiManager.getInstance().getAdditionalDetail(addRequest, new Callback<AdditionalDetails>() {
             /*
              * Get the Api success..
              * */
@@ -162,7 +208,7 @@ public class ProfileInformation extends DialogFragment {
     }
 
     private void get_reference_value() {
-        ApiManager.getInstance().getReferenceDetail(request, new Callback<ReferenceDetails>() {
+        ApiManager.getInstance().getReferenceDetail(addRequest, new Callback<ReferenceDetails>() {
             @Override
             public void onResponse(Call<ReferenceDetails> call, Response<ReferenceDetails> response) {
                 referenceDetails = response.body();
@@ -190,7 +236,7 @@ public class ProfileInformation extends DialogFragment {
 
     private void get_experience_value() {
 
-        ApiManager.getInstance().getExperienceDetail(request, new Callback<ExperienceDetails>() {
+        ApiManager.getInstance().getExperienceDetail(addRequest, new Callback<ExperienceDetails>() {
             @Override
             public void onResponse(Call<ExperienceDetails> call, Response<ExperienceDetails> response) {
                 experienceDetails = response.body();
@@ -226,7 +272,7 @@ public class ProfileInformation extends DialogFragment {
         /*
          * Get the overall profile Family Detail
          * */
-        ApiManager.getInstance().getFamilyDetail(request, new Callback<FamilyDetails>() {
+        ApiManager.getInstance().getFamilyDetail(addRequest, new Callback<FamilyDetails>() {
             /*
              * Get the Api success..
              * */
@@ -262,7 +308,7 @@ public class ProfileInformation extends DialogFragment {
         /*
          * Get the overall Education Detail
          * */
-        ApiManager.getInstance().getEducationDetail(request, new Callback<EducationDetails>() {
+        ApiManager.getInstance().getEducationDetail(addRequest, new Callback<EducationDetails>() {
             /*
              * Get the Api success..
              * */
@@ -306,7 +352,7 @@ public class ProfileInformation extends DialogFragment {
         }
     }
 
-    private void get_Hashmap_value(){
+    private void get_HashMap_value(){
         item = new HashMap<>();
         ArrayList<BasicInformation> basicInformations=new ArrayList<>();
 
@@ -498,7 +544,7 @@ public class ProfileInformation extends DialogFragment {
         /*
          * Get the overall profile Basic Detail
          * */
-        ApiManager.getInstance().getBasicDetail(request, new Callback<BasicDetails>() {
+        ApiManager.getInstance().getBasicDetail(addRequest, new Callback<BasicDetails>() {
             /*
              * Get the Api success..
              * */
@@ -506,7 +552,7 @@ public class ProfileInformation extends DialogFragment {
             public void onResponse(Call<BasicDetails> call, Response<BasicDetails> response) {
                 basicinformationdata = response.body();
                 if(basicinformationdata!=null){
-                    get_Hashmap_value();
+                    get_HashMap_value();
                 }
             }
 
@@ -524,7 +570,7 @@ public class ProfileInformation extends DialogFragment {
         /*
          * Get the overall Last Position Detail
          * */
-        ApiManager.getInstance().getLastPostionDetail(request, new Callback<LastPositionDetails>() {
+        ApiManager.getInstance().getLastPostionDetail(addRequest, new Callback<LastPositionDetails>() {
             /*
              * Get the Api success..
              * */
@@ -615,6 +661,56 @@ public class ProfileInformation extends DialogFragment {
             ProfileInformationDisplayAdapter adapter = new ProfileInformationDisplayAdapter(lastpositiondetail,getActivity());
             recyclerView.setAdapter(adapter);
         }
+    }
+
+    private void get_Emergency_detail(){
+        /*
+         * Get the Emergency Detail
+         * */
+        ApiManager.getInstance().getEmergencyDetail(addRequest, new Callback<EmergencyDetails>() {
+            /*
+            * Api Call Success
+            * */
+            @Override
+            public void onResponse(Call<EmergencyDetails> call, Response<EmergencyDetails> response) {
+                emergencyDetail = response.body();
+                if(emergencyDetail!=null && response.isSuccessful()){
+                    emergencyDetailDataList = emergencyDetail.getData().get(0).getEmergencyInfo();
+                }
+            }
+            /*
+            * Api Call Failure
+            * */
+            @Override
+            public void onFailure(Call<EmergencyDetails> call, Throwable t) {
+                Log.e(TAG,t.getLocalizedMessage());
+            }
+        });
+    }
+
+    private void get_Passport_detail(){
+        /*
+        * Get the Passport Detail
+        * */
+        ApiManager.getInstance().getPassportDetail(addRequest, new Callback<PassportDetails>() {
+            /*
+            * Api Call Success
+            * */
+            @Override
+            public void onResponse(Call<PassportDetails> call, Response<PassportDetails> response) {
+                    passportDetail = response.body();
+                    if(passportDetail!=null && response.isSuccessful()){
+                        passportDetailData = passportDetail.getData().get(0).getEmergencyInfo();
+                    }
+            }
+            /*
+            * Api call Failure
+            * */
+            @Override
+            public void onFailure(Call<PassportDetails> call, Throwable t) {
+                  Log.e(TAG,t.getLocalizedMessage());
+            }
+        });
     }
 
 }

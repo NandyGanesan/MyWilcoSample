@@ -5,6 +5,7 @@ import com.android.wilcoconnect.model.MenuList.Menu;
 import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.leave.Myleave;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
+import com.android.wilcoconnect.model.profile.AttachmentDetails;
 import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.profile.EducationDetails;
 import com.android.wilcoconnect.model.profile.EmergencyDetails;
@@ -212,8 +213,8 @@ public class ApiManager {
         * Get the Profile Experience Details
         * */
         public void getExperienceDetail(AddRequest request, Callback<ExperienceDetails> callback){
-            Call<ExperienceDetails> experienceDetailslist = service.getExperienceDetails(request.Email,request.companyCode,request.EmployeeID);
-            experienceDetailslist.enqueue(callback);
+            Call<ExperienceDetails> experienceDetails = service.getExperienceDetails(request.Email,request.companyCode,request.EmployeeID);
+            experienceDetails.enqueue(callback);
         }
 
         /*
@@ -246,6 +247,14 @@ public class ApiManager {
         public void getPassportDetail(AddRequest request, Callback<PassportDetails> callback){
             Call<PassportDetails> passportDetailsData = service.getPassportDetail(request.Email,request.companyCode,request.EmployeeID);
             passportDetailsData.enqueue(callback);
+        }
+
+        /*
+        * Get the Profile Attachment Details
+        * */
+        public void getAttachmentDetails(AddRequest request, Callback<AttachmentDetails> callback){
+            Call<AttachmentDetails> attachmentDetail = service.getAttachmentDetail(request.Email,request.companyCode,request.EmployeeID);
+            attachmentDetail.enqueue(callback);
         }
 
         /*

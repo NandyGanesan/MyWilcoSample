@@ -4,6 +4,7 @@ import com.android.wilcoconnect.model.MenuList.Menu;
 import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.leave.Myleave;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
+import com.android.wilcoconnect.model.profile.AttachmentDetails;
 import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.profile.EducationDetails;
 import com.android.wilcoconnect.model.profile.EmergencyDetails;
@@ -170,6 +171,14 @@ public interface ApiInterface {
     Call<PassportDetails> getPassportDetail(@Query("eMail") String Email,
                                             @Query("companyCode") String companyCode,
                                             @Query("employeeID") String employeeID);
+
+    /*
+    * Get the Profile Module Attachment Detail
+    * */
+    @GET("api/ProfileRequest/getAttachmentDetailsofAnEmployee")
+    Call<AttachmentDetails> getAttachmentDetail(@Query("eMail") String Email,
+                                                @Query("companyCode") String companyCode,
+                                                @Query("employeeID") String employeeID);
 
     /*
      * Get the holiday list

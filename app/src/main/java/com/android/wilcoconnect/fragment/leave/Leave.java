@@ -41,7 +41,7 @@ public class Leave extends Fragment {
     private RecyclerView recyclerView;
     private FrameLayout frameLayout;
     private AddRequest addRequest = new AddRequest();
-    private static String MY_PREFS_NAME = "logininfo";
+    private static String MYPREFS_NAME = "logininfo";
     private MyLeaveListDataAdapter leaveadapter;
 
     @Override
@@ -63,7 +63,7 @@ public class Leave extends Fragment {
         /*
          * Get the shared preference data to assign the another object..
          * */
-        SharedPreferences prefs = getActivity().getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences prefs = getActivity().getSharedPreferences(MYPREFS_NAME, MODE_PRIVATE);
         if(prefs!=null) {
             addRequest.setEmail(prefs.getString("Email", "No name defined"));
             addRequest.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
@@ -74,11 +74,6 @@ public class Leave extends Fragment {
          * Get the List of Data
          * */
         get_list();
-
-        /*
-         * When append the list of data into the RecyclerView within the CardView
-         * */
-        setleavelist();
         return view;
     }
 

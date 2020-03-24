@@ -2,7 +2,9 @@ package com.android.wilcoconnect.api;
 
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.MenuList.Menu;
+import com.android.wilcoconnect.model.leave.ApplyLeavePost;
 import com.android.wilcoconnect.model.leave.HolidayData;
+import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.Myleave;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetails;
@@ -271,6 +273,22 @@ public class ApiManager {
         public void getMyLeaveList(AddRequest request, Callback<Myleave> callback){
             Call<Myleave> leaveList = service.getMyLeaveList(request.Email, request.companyCode, request.EmployeeID);
             leaveList.enqueue(callback);
+        }
+
+        /*
+        * Get the LeaveType
+        * */
+        public void getLeaveType(AddRequest request, Callback<LeaveType> callback){
+            Call<LeaveType> leaveType = service.getLeaveType(request.Email,request.companyCode,request.EmployeeID);
+            leaveType.enqueue(callback);
+        }
+
+        /*
+         * Store the Leave Request
+        * */
+        public void storeleavedetail(ApplyLeavePost leavePost, Callback<Success> callback){
+            Call<Success> reply = service.storeLeaveRequest(leavePost);
+            reply.enqueue(callback);
         }
 
         /*

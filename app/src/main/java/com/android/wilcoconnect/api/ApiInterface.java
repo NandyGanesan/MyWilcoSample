@@ -1,7 +1,9 @@
 package com.android.wilcoconnect.api;
 
 import com.android.wilcoconnect.model.MenuList.Menu;
+import com.android.wilcoconnect.model.leave.ApplyLeavePost;
 import com.android.wilcoconnect.model.leave.HolidayData;
+import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.Myleave;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetails;
@@ -203,5 +205,20 @@ public interface ApiInterface {
     Call<Menu> getMobileMenuList(@Query("Email") String Email,
                                  @Query("companyCode") String companyCode,
                                  @Query("employeeID") String employeeID);
+
+    /*
+    * Get the Leave Types
+    * */
+    @GET("api/Leave/GetLeaveType")
+    Call<LeaveType> getLeaveType(@Query("Email") String Email,
+                                 @Query("companyCode") String companyCode,
+                                 @Query("employeeID") String employeeID);
+
+    /*
+    * Store the Leave Request
+    * */
+    @POST("api/Leave/StoreApplyLeave")
+    Call<Success> storeLeaveRequest(@Body ApplyLeavePost data);
+
 
 }

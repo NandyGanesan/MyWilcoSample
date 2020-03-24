@@ -25,7 +25,7 @@ public class MenuFragment extends Fragment {
 
     private String TAG = "MenuFragment";
     private Toolbar menu_toolbar;
-    private static String MY_PREFS_NAME = "logininfo";
+    private static String MYPREFS_NAME = "logininfo";
     private ExpandableListView expandable_ListView;
     private MyExtendableListAdapter adapter;
     private HashMap<String, List<String>> item;
@@ -62,7 +62,7 @@ public class MenuFragment extends Fragment {
                 if(adapter.getGroupId(groupPosition)==2){
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
-                    SharedPreferences preferences = getActivity().getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
+                    SharedPreferences preferences = getActivity().getSharedPreferences(MYPREFS_NAME, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.clear();
                     editor.apply();

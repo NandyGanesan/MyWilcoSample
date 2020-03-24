@@ -41,6 +41,7 @@ import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.shared.EducationAdapter;
 import com.android.wilcoconnect.shared.ExperienceAdapter;
 import com.android.wilcoconnect.shared.FamilyAdapter;
+import com.android.wilcoconnect.shared.PassportDetailAdapter;
 import com.android.wilcoconnect.shared.ProfileInformationDisplayAdapter;
 import com.android.wilcoconnect.shared.ReferenceAdapter;
 import com.google.gson.Gson;
@@ -77,7 +78,7 @@ public class ProfileInformation extends DialogFragment {
     private EmergencyDetails emergencyDetail = new EmergencyDetails();
     private EmergencyDetailData emergencyDetailDataList = new EmergencyDetailData();
     private PassportDetails passportDetail = new PassportDetails();
-    private PassportDetailData passportDetailData = new PassportDetailData();
+    private List<PassportDetailData> passportDetailData;
     private AttachmentDetails attachmentDetail = new AttachmentDetails();
     private AttachmentDetailData attachmentDetailData = new AttachmentDetailData();
     private static final String MYPREFS_NAME = "logininfo";
@@ -745,7 +746,8 @@ public class ProfileInformation extends DialogFragment {
             public void onResponse(Call<EmergencyDetails> call, Response<EmergencyDetails> response) {
                 emergencyDetail = response.body();
                 if(emergencyDetail!=null && response.isSuccessful()){
-                    emergencyDetailDataList = emergencyDetail.getData().get(0).getEmergencyInfo();
+                    emergencyDetailDataList = emergencyDetail.getData().get(0).getObjEmergencyInfo();
+                    set_emergency_detail();
                 }
             }
             /*
@@ -756,6 +758,108 @@ public class ProfileInformation extends DialogFragment {
                 Log.e(TAG,t.getLocalizedMessage());
             }
         });
+    }
+
+    private void set_emergency_detail(){
+        ArrayList<BasicInformation> emergency = new ArrayList<>();
+
+        BasicInformation information = new BasicInformation();
+        information.setDataLabel("Blood Group");
+        information.setDataDetail(emergencyDetailDataList.getBloodGroup());
+        emergency.add(information);
+
+        BasicInformation information0 = new BasicInformation();
+        information0.setDataLabel("AllergicTo");
+        information0.setDataDetail(emergencyDetailDataList.getAllergicTo());
+        emergency.add(information0);
+
+        BasicInformation information1 = new BasicInformation();
+        information1.setDataLabel("Blood Pressure");
+        information1.setDataDetail(emergencyDetailDataList.getBloodPressure());
+        emergency.add(information1);
+
+        BasicInformation information2 = new BasicInformation();
+        information2.setDataLabel("Sugar ");
+        information2.setDataDetail(emergencyDetailDataList.getSugar());
+        emergency.add(information2);
+
+        BasicInformation information3 = new BasicInformation();
+        information3.setDataLabel("Eye Sight (Left) ");
+        information3.setDataDetail(emergencyDetailDataList.getEyeSightLeft());
+        emergency.add(information3);
+
+        BasicInformation information4 = new BasicInformation();
+        information4.setDataLabel("Eye Sight (right)");
+        information4.setDataDetail(emergencyDetailDataList.getEyeSightRight());
+        emergency.add(information4);
+
+        BasicInformation information5 = new BasicInformation();
+        information5.setDataLabel("Major Illness ");
+        information5.setDataDetail(emergencyDetailDataList.getMajorIllness());
+        emergency.add(information5);
+
+        BasicInformation information6 = new BasicInformation();
+        information6.setDataLabel("Contact Info- 1:");
+        information6.setDataDetail("");
+        emergency.add(information6);
+
+        BasicInformation information7 = new BasicInformation();
+        information7.setDataLabel("Contact Person-1 ");
+        information7.setDataDetail(emergencyDetailDataList.getContactPerson1());
+        emergency.add(information7);
+
+        BasicInformation information8 = new BasicInformation();
+        information8.setDataLabel("Contact Number-1 ");
+        information8.setDataDetail(emergencyDetailDataList.getContactNumber1());
+        emergency.add(information8);
+
+        BasicInformation information9 = new BasicInformation();
+        information9.setDataLabel("Contact Relationship-1 ");
+        information9.setDataDetail(emergencyDetailDataList.getContactRelationship1());
+        emergency.add(information9);
+
+        BasicInformation information10 = new BasicInformation();
+        information10.setDataLabel("Country ");
+        information10.setDataDetail(emergencyDetailDataList.getCountryName());
+        emergency.add(information10);
+
+        BasicInformation information11 = new BasicInformation();
+        information11.setDataLabel("State");
+        information11.setDataDetail(emergencyDetailDataList.getStateName());
+        emergency.add(information11);
+
+        BasicInformation information12 = new BasicInformation();
+        information12.setDataLabel("City ");
+        information12.setDataDetail(emergencyDetailDataList.getCityName());
+        emergency.add(information12);
+
+        BasicInformation information13 = new BasicInformation();
+        information13.setDataLabel("Contact Info- 2:");
+        information13.setDataDetail("");
+        emergency.add(information13);
+
+        BasicInformation information14 = new BasicInformation();
+        information14.setDataLabel("Contact Person-2");
+        information14.setDataDetail(emergencyDetailDataList.getContactPerson2());
+        emergency.add(information14);
+
+        BasicInformation information15 = new BasicInformation();
+        information15.setDataLabel("Contact Number-2");
+        information15.setDataDetail(emergencyDetailDataList.getContactNumber2());
+        emergency.add(information15);
+
+        BasicInformation information16 = new BasicInformation();
+        information16.setDataLabel("Contact Relationship-2 ");
+        information16.setDataDetail(emergencyDetailDataList.getContactRelationship2());
+        emergency.add(information16);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        if(emergency.size()>0){
+            ProfileInformationDisplayAdapter adapter = new ProfileInformationDisplayAdapter(emergency,getActivity());
+            recyclerView.setAdapter(adapter);
+        }
+
     }
 
     private void get_Passport_detail(){
@@ -770,7 +874,8 @@ public class ProfileInformation extends DialogFragment {
             public void onResponse(Call<PassportDetails> call, Response<PassportDetails> response) {
                     passportDetail = response.body();
                     if(passportDetail!=null && response.isSuccessful()){
-                        passportDetailData = passportDetail.getData().get(0).getEmergencyInfo();
+                        passportDetailData = passportDetail.getData().get(0).getPassportInfo();
+                        set_Passport_detail();
                     }
             }
             /*
@@ -781,6 +886,15 @@ public class ProfileInformation extends DialogFragment {
                   Log.e(TAG,t.getLocalizedMessage());
             }
         });
+    }
+
+    private void set_Passport_detail(){
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        if(passportDetailData.size()>0) {
+            PassportDetailAdapter adapter = new PassportDetailAdapter(getActivity(),passportDetailData);
+            recyclerView.setAdapter(adapter);
+        }
     }
 
 }

@@ -26,12 +26,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_marginTop="8dp"
-            android:text="Organization"
+            android:text="Given Name"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.5"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -43,8 +43,8 @@
             android:text="Test"
             android:textColor="@color/black"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.5"
             app:layout_constraintTop_toBottomOf="@+id/label_organization" />
 
 
@@ -53,13 +53,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:layout_marginTop="8dp"
-            android:text="From Date"
+            android:text="Surname"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_organization"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="0.5" />
 
 
@@ -68,12 +67,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="13-5-2020"
             android:textColor="@color/black"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label_fromdate"
             app:layout_constraintWidth_percent="0.5" />
 
@@ -82,14 +80,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="To Date"
+            android:text="Passport Number"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/label_fromdate"
-            app:layout_constraintTop_toBottomOf="@+id/tv_organization"
-            app:layout_constraintWidth_percent="0.5" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_organization" />
 
         <TextView
             android:id="@+id/tv_todate"
@@ -101,9 +98,8 @@
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_fromdate"
-            app:layout_constraintTop_toBottomOf="@+id/label_todate"
-            app:layout_constraintWidth_percent="0.5" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/label_todate"/>
 
         <TextView
             android:id="@+id/label_lastposition"
@@ -111,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_marginTop="8dp"
-            android:text="Last Position Held"
+            android:text="Issue Date"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -137,7 +133,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Initial Position"
+            android:text="Issue Place"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -163,11 +159,11 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_marginTop="8dp"
-            android:text="Job Responsibilities"
+            android:text="Country"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_lastposition" />
 
@@ -180,7 +176,7 @@
             android:text="Test Association"
             android:textColor="@color/black"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label_jobresponsibilities" />
 
@@ -189,14 +185,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Designation Of Immediate Supervisor"
+            android:text="Nationality"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_jobresponsibilities" />
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/tv_initialposition" />
 
         <TextView
             android:id="@+id/tv_supervisor"
@@ -207,8 +202,8 @@
             android:text="test"
             android:textColor="@color/black"
             android:textSize="18sp"
+            app:layout_constraintWidth_percent="0.5"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label_supervisor" />
 
         <TextView
@@ -217,13 +212,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_marginTop="8dp"
-            android:text="Gross Salary"
+            android:text="Place Of Birth"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_supervisor"
-            app:layout_constraintWidth_percent="0.3" />
+            app:layout_constraintWidth_percent="0.4" />
 
 
         <TextView
@@ -238,20 +233,20 @@
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/label_grosssalary"
-            app:layout_constraintWidth_percent="0.3" />
+            app:layout_constraintWidth_percent="0.4" />
 
         <TextView
             android:id="@+id/label_leaving"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="Reason For Leaving"
+            android:text="Valid Upto"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/label_grosssalary"
             app:layout_constraintTop_toBottomOf="@+id/tv_supervisor"
-            app:layout_constraintWidth_percent="0.5" />
+            app:layout_constraintWidth_percent="0.3" />
 
         <TextView
             android:id="@+id/tv_leaving"
@@ -263,7 +258,7 @@
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/tv_grosssalary"
             app:layout_constraintTop_toBottomOf="@+id/label_grosssalary"
-            app:layout_constraintWidth_percent="0.5" />
+            app:layout_constraintWidth_percent="0.3" />
 
         <TextView
             android:id="@+id/label_file"
@@ -271,14 +266,14 @@
             android:layout_height="match_parent"
             android:layout_margin="8dp"
             android:text="File"
-            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/label_leaving"
             app:layout_constraintTop_toBottomOf="@+id/tv_supervisor"
-            app:layout_constraintWidth_percent="0.2" />
+            app:layout_constraintWidth_percent="0.3" />
 
         <ImageView
             android:id="@+id/tv_file"
@@ -291,7 +286,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_leaving"
             app:layout_constraintTop_toBottomOf="@+id/label_grosssalary"
-            app:layout_constraintWidth_percent="0.2" />
+            app:layout_constraintWidth_percent="0.3" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

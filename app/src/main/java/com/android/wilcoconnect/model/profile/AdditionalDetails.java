@@ -20,15 +20,15 @@ public class AdditionalDetails {
 
     public class Data{
 
-        @SerializedName("additionalInfo")
-        public AdditionalDetailData additionalInfo;
+        @SerializedName("objAdditional")
+        public AdditionalDetailData objAdditional;
 
         public AdditionalDetailData getAdditionalInfo() {
-            return additionalInfo;
+            return objAdditional;
         }
 
         public void setAdditionalInfo(AdditionalDetailData additionalInfo) {
-            this.additionalInfo = additionalInfo;
+            this.objAdditional = additionalInfo;
         }
     }
 

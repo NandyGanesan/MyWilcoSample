@@ -20,15 +20,15 @@ public class PassportDetails {
 
     public class Data{
 
-        @SerializedName("emergencyInfo")
-        public PassportDetailData emergencyInfo;
+        @SerializedName("passportInfo")
+        public ArrayList<PassportDetailData> passportInfo;
 
-        public PassportDetailData getEmergencyInfo() {
-            return emergencyInfo;
+        public ArrayList<PassportDetailData> getPassportInfo() {
+            return passportInfo;
         }
 
-        public void setEmergencyInfo(PassportDetailData emergencyInfo) {
-            this.emergencyInfo = emergencyInfo;
+        public void setPassportInfo(ArrayList<PassportDetailData> passportInfo) {
+            this.passportInfo = passportInfo;
         }
     }
 

@@ -20,15 +20,15 @@ public class EmergencyDetails {
 
     public class Data{
 
-        @SerializedName("emergencyInfo")
-        public EmergencyDetailData emergencyInfo;
+        @SerializedName("objEmergencyInfo")
+        public EmergencyDetailData objEmergencyInfo;
 
-        public EmergencyDetailData getEmergencyInfo() {
-            return emergencyInfo;
+        public EmergencyDetailData getObjEmergencyInfo() {
+            return objEmergencyInfo;
         }
 
-        public void setEmergencyInfo(EmergencyDetailData emergencyInfo) {
-            this.emergencyInfo = emergencyInfo;
+        public void setObjEmergencyInfo(EmergencyDetailData objEmergencyInfo) {
+            this.objEmergencyInfo = objEmergencyInfo;
         }
     }
 

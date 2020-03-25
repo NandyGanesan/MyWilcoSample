@@ -33,11 +33,11 @@ public class CalenderListAdapter extends RecyclerView.Adapter<CalenderListAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.title.setText("NAME : " +approveLists.get(position).getEmployeeName());
-        holder.detail.setText("Leave Type : "+approveLists.get(position).getLeaveType() +"\n"+
+        holder.title.setText("NAME : " +approveLists.get(position).getFirstName());
+        holder.detail.setText("Leave Type : "+approveLists.get(position).getLeaveTypeText() +"\n"+
                 "From Date : "+approveLists.get(position).getFromDate() +"\n"+
                 "To Date : "+approveLists.get(position).getToDate()+"\n"+
-                "Description : "+approveLists.get(position).getRemarks());
+                "Description : "+approveLists.get(position).getRequestRemarks());
     }
 
     @Override

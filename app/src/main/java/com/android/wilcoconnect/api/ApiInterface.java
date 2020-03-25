@@ -5,6 +5,7 @@ import com.android.wilcoconnect.model.leave.ApplyLeavePost;
 import com.android.wilcoconnect.model.leave.ApproveLeaveData;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.HolidayData;
+import com.android.wilcoconnect.model.leave.LeaveCalender;
 import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.Myleave;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
@@ -55,6 +56,14 @@ public interface ApiInterface {
     * */
     @POST("api/Login/Post")
     Call<UserData> login(@Body Login data);
+
+    /*
+     * Get Overall menu list
+     * */
+    @GET("api/Menu/mobileMenuList")
+    Call<Menu> getMobileMenuList(@Query("Email") String Email,
+                                 @Query("companyCode") String companyCode,
+                                 @Query("employeeID") String employeeID);
 
     /*
     * Get the overall service request based
@@ -201,14 +210,6 @@ public interface ApiInterface {
                                  @Query("employeeID") String employeeID);
 
     /*
-     * Get Overall menu list
-     * */
-    @GET("api/Menu/mobileMenuList")
-    Call<Menu> getMobileMenuList(@Query("Email") String Email,
-                                 @Query("companyCode") String companyCode,
-                                 @Query("employeeID") String employeeID);
-
-    /*
     * Get the Leave Types
     * */
     @GET("api/Leave/GetLeaveType")
@@ -235,6 +236,14 @@ public interface ApiInterface {
     * */
     @POST("api/Leave/LeaveApproveStore")
     Call<Success> storeApproveList(@Body ApprovePost data);
+
+    /*
+    * Get the Leave details for Calender For Team
+    * */
+    @GET("api/Leave/GetEmployeeLeaveListCalender")
+    Call<LeaveCalender> getCalenderDetail(@Query("Email") String Email,
+                                          @Query("companyCode") String companyCode,
+                                          @Query("employeeID") String employeeID);
 
 
 }

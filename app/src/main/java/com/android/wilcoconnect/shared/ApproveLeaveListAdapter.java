@@ -55,13 +55,13 @@ public class ApproveLeaveListAdapter extends RecyclerView.Adapter<ApproveLeaveLi
 
         holder.approve.setOnClickListener(v -> {
             ApproveList approveList = new ApproveList();
-            approveList.setEmployeeId(approveLists.get(position).getEmployeeID());
-            approveList.setEmployeeName(approveLists.get(position).getFirstName());
+            approveList.setEmployeeID(approveLists.get(position).getEmployeeID());
+            approveList.setFirstName(approveLists.get(position).getFirstName());
             approveList.setFromDate(approveLists.get(position).getFromDate());
             approveList.setToDate(approveLists.get(position).getToDate());
             approveList.setNo_of_days(approveLists.get(position).getNoofDays());
-            approveList.setRemarks(approveLists.get(position).getRequestRemarks());
-            approveList.setLeaveRequestID(approveLists.get(position).getLeaveRequestID());
+            approveList.setRequestRemarks(approveLists.get(position).getRequestRemarks());
+            approveList.setLeaveRequestStatusID(approveLists.get(position).getLeaveRequestID());
 
             /**
              * Show the data in New Update View

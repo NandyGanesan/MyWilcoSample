@@ -6,6 +6,7 @@ import com.android.wilcoconnect.model.leave.ApplyLeavePost;
 import com.android.wilcoconnect.model.leave.ApproveLeaveData;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.HolidayData;
+import com.android.wilcoconnect.model.leave.LeaveCalender;
 import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.Myleave;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
@@ -122,6 +123,14 @@ public class ApiManager {
         public void createUser(Login data, Callback<UserData> callback) {
             Call<UserData> userCall = service.login(data);
             userCall.enqueue(callback);
+        }
+
+        /*
+         * Get the Menu List
+         * */
+        public void getMenuList(AddRequest request, Callback<Menu> callback){
+            Call<Menu> menuList = service.getMobileMenuList(request.Email,request.companyCode,request.EmployeeID);
+            menuList.enqueue(callback);
         }
 
         /**
@@ -310,11 +319,10 @@ public class ApiManager {
         }
 
         /*
-        * Get the Menu List
+        * Get the Leave details for Calender For Team
         * */
-        public void getMenuList(AddRequest request, Callback<Menu> callback){
-            Call<Menu> menuList = service.getMobileMenuList(request.Email,request.companyCode,request.EmployeeID);
-            menuList.enqueue(callback);
+        public void getLeaveDetailforCalender(AddRequest request, Callback<LeaveCalender> callback){
+            Call<LeaveCalender> calender = service.getCalenderDetail(request.Email,request.companyCode,request.EmployeeID);
+            calender.enqueue(callback);
         }
-
 }

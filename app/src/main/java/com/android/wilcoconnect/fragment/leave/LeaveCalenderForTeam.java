@@ -1,6 +1,8 @@
 package com.android.wilcoconnect.fragment.leave;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +11,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.android.wilcoconnect.R;
+import com.android.wilcoconnect.api.ApiManager;
+import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.leave.ApproveList;
+import com.android.wilcoconnect.model.leave.LeaveCalender;
+import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.google.gson.Gson;
@@ -19,10 +25,19 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
+
 public class LeaveCalenderForTeam extends Fragment {
 
     private CalendarView calendarview;
+    private static String TAG = "LeaveCalenderForTeam";
     private ArrayList<ApproveList> leavelist = new ArrayList<>();
+    private AddRequest addRequest = new AddRequest();
+    private static String MYPREFS_NAME = "logininfo";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,6 +46,24 @@ public class LeaveCalenderForTeam extends Fragment {
         View view = inflater.inflate(R.layout.fragment_leave_calender_for_team, container, false);
 
         calendarview = view.findViewById(R.id.custom_calender);
+
+        /*
+         * Get the Header
+         * */
+        SharedPreferences preferences = getActivity().getSharedPreferences(MainApplication.MY_PREFS_NAME, MODE_PRIVATE);
+        if (preferences != null) {
+            MainApplication.token_data = preferences.getString("header", "No name defined");
+        }
+
+        /*
+         * Get the shared preference data to assign the another object..
+         * */
+        SharedPreferences prefs = getActivity().getSharedPreferences(MYPREFS_NAME, MODE_PRIVATE);
+        if(prefs!=null) {
+            addRequest.setEmail(prefs.getString("Email", "No name defined"));
+            addRequest.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
+            addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
+        }
 
         set_leave_list();
         calendarview.setOnDayClickListener(eventDay -> {
@@ -44,11 +77,11 @@ public class LeaveCalenderForTeam extends Fragment {
             for(int i=0;i<leavelist.size();i++){
                 if(leavelist.get(i).getFromDate().equals(formatted)){
                     ApproveList approveList = new ApproveList();
-                    approveList.setEmployeeName(leavelist.get(i).getEmployeeName());
-                    approveList.setLeaveType(leavelist.get(i).getLeaveType());
+                    approveList.setFirstName(leavelist.get(i).getFirstName());
+                    approveList.setLeaveTypeText(leavelist.get(i).getLeaveTypeText());
                     approveList.setFromDate(leavelist.get(i).getFromDate());
                     approveList.setToDate(leavelist.get(i).getToDate());
-                    approveList.setRemarks(leavelist.get(i).getRemarks());
+                    approveList.setRequestRemarks(leavelist.get(i).getRequestRemarks());
                     leavedetail.add(approveList);
                 }
             }
@@ -68,53 +101,20 @@ public class LeaveCalenderForTeam extends Fragment {
     private void set_leave_list() {
         leavelist = new ArrayList<>();
 
-        ApproveList list = new ApproveList();
-        list.setEmployeeName("Ranjith Senthilvel");
-        list.setLeaveType("Casual Leave");
-        list.setFromDate("12-2-2020");
-        list.setToDate("12-2-2020");
-        list.setRemarks("Need Leave");
-        leavelist.add(list);
+        ApiManager.getInstance().getLeaveDetailforCalender(addRequest, new Callback<LeaveCalender>() {
+            @Override
+            public void onResponse(Call<LeaveCalender> call, Response<LeaveCalender> response) {
+                if(response.body()!=null && response.isSuccessful()){
+                    leavelist = response.body().getData();
+                }
+            }
 
-        ApproveList list1 = new ApproveList();
-        list1.setEmployeeName("Nandhini Ganesan");
-        list1.setLeaveType("Sick Leave");
-        list1.setFromDate("24-2-2020");
-        list1.setToDate("24-2-2020");
-        list1.setRemarks("Native");
-        leavelist.add(list1);
+            @Override
+            public void onFailure(Call<LeaveCalender> call, Throwable t) {
+                Log.e(TAG,t.getLocalizedMessage());
+            }
+        });
 
-        ApproveList list2 = new ApproveList();
-        list2.setEmployeeName("Pooja Madhanagopal");
-        list2.setLeaveType("Compensatory Off");
-        list2.setFromDate("15-3-2020");
-        list2.setToDate("15-3-2020");
-        list2.setRemarks("Emergency");
-        leavelist.add(list2);
-
-        ApproveList list3 = new ApproveList();
-        list3.setEmployeeName("Bavadharini Asokan");
-        list3.setLeaveType("Casual Leave");
-        list3.setFromDate("20-1-2020");
-        list3.setToDate("20-1-2020");
-        list3.setRemarks("Native");
-        leavelist.add(list3);
-
-        ApproveList list4 = new ApproveList();
-        list4.setEmployeeName("Pooja Madhanagopal");
-        list4.setLeaveType("Sick Leave");
-        list4.setFromDate("20-12-2019");
-        list4.setToDate("20-12-2019");
-        list4.setRemarks("Need permission");
-        leavelist.add(list4);
-
-        ApproveList list5 = new ApproveList();
-        list5.setEmployeeName("Bavadharini Asokan");
-        list5.setLeaveType("Casual Leave");
-        list5.setFromDate("20-12-2019");
-        list5.setToDate("20-12-2019");
-        list5.setRemarks("Native");
-        leavelist.add(list5);
         add_events();
     }
 

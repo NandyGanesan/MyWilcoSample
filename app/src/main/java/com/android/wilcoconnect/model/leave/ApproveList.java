@@ -1,26 +1,54 @@
 package com.android.wilcoconnect.model.leave;
 
+import com.google.gson.annotations.SerializedName;
+
 public class ApproveList {
 
-    public String EmployeeId;
+    @SerializedName("EmployeeID")
+    public String EmployeeID;
 
-    public String EmployeeName;
+    @SerializedName("FirstName")
+    public String FirstName;
 
+    @SerializedName("email")
     public String email;
 
+    @SerializedName("FromDate")
     public String FromDate;
 
+    @SerializedName("ToDate")
     public String ToDate;
 
-    public String LeaveType;
+    @SerializedName("LeaveTypeText")
+    public String LeaveTypeText;
 
-    public String LeaveStatus;
+    @SerializedName("RequestStatus")
+    public String RequestStatus;
 
+    @SerializedName("No_of_days")
     public String No_of_days;
 
-    public String Remarks;
+    @SerializedName("RequestRemarks")
+    public String RequestRemarks;
 
-    public int LeaveRequestID;
+    @SerializedName("LeaveRequestStatusID")
+    public int LeaveRequestStatusID;
+
+    public String getEmployeeID() {
+        return EmployeeID;
+    }
+
+    public void setEmployeeID(String employeeID) {
+        EmployeeID = employeeID;
+    }
+
+    public String getFirstName() {
+        return FirstName;
+    }
+
+    public void setFirstName(String firstName) {
+        FirstName = firstName;
+    }
 
     public String getEmail() {
         return email;
@@ -28,46 +56,6 @@ public class ApproveList {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public int getLeaveRequestID() {
-        return LeaveRequestID;
-    }
-
-    public void setLeaveRequestID(int leaveRequestID) {
-        LeaveRequestID = leaveRequestID;
-    }
-
-    public String getNo_of_days() {
-        return No_of_days;
-    }
-
-    public void setNo_of_days(String no_of_days) {
-        No_of_days = no_of_days;
-    }
-
-    public String getRemarks() {
-        return Remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        Remarks = remarks;
-    }
-
-    public String getEmployeeId() {
-        return EmployeeId;
-    }
-
-    public void setEmployeeId(String employeeId) {
-        EmployeeId = employeeId;
-    }
-
-    public String getEmployeeName() {
-        return EmployeeName;
-    }
-
-    public void setEmployeeName(String employeeName) {
-        EmployeeName = employeeName;
     }
 
     public String getFromDate() {
@@ -86,19 +74,43 @@ public class ApproveList {
         ToDate = toDate;
     }
 
-    public String getLeaveType() {
-        return LeaveType;
+    public String getLeaveTypeText() {
+        return LeaveTypeText;
     }
 
-    public void setLeaveType(String leaveType) {
-        LeaveType = leaveType;
+    public void setLeaveTypeText(String leaveTypeText) {
+        LeaveTypeText = leaveTypeText;
     }
 
-    public String getLeaveStatus() {
-        return LeaveStatus;
+    public String getRequestStatus() {
+        return RequestStatus;
     }
 
-    public void setLeaveStatus(String leaveStatus) {
-        LeaveStatus = leaveStatus;
+    public void setRequestStatus(String requestStatus) {
+        RequestStatus = requestStatus;
+    }
+
+    public String getNo_of_days() {
+        return No_of_days;
+    }
+
+    public void setNo_of_days(String no_of_days) {
+        No_of_days = no_of_days;
+    }
+
+    public String getRequestRemarks() {
+        return RequestRemarks;
+    }
+
+    public void setRequestRemarks(String requestRemarks) {
+        RequestRemarks = requestRemarks;
+    }
+
+    public int getLeaveRequestStatusID() {
+        return LeaveRequestStatusID;
+    }
+
+    public void setLeaveRequestStatusID(int leaveRequestStatusID) {
+        LeaveRequestStatusID = leaveRequestStatusID;
     }
 }

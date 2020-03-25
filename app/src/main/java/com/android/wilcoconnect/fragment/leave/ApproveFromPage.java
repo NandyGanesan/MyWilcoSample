@@ -95,7 +95,7 @@ public class ApproveFromPage extends DialogFragment {
 
         approvePost.setEmployeeCode(request.getEmployeeID());
         approvePost.setEmail(request.getEmail());
-        approvePost.setLeaveRequestID(approveList.getLeaveRequestID());
+        approvePost.setLeaveRequestID(approveList.getLeaveRequestStatusID());
 
         /*
         * Show and Hide the Some unwanted views in XML
@@ -130,12 +130,12 @@ public class ApproveFromPage extends DialogFragment {
         * */
         labelid.setText("EMPLOYEE ID");
         labelname.setText("EMPLOYEE NAME");
-        tv_View_leavetype.setText(approveList.getEmployeeId());
-        tv_View_applieddate.setText(approveList.getEmployeeName());
+        tv_View_leavetype.setText(approveList.getLeaveTypeText());
+        tv_View_applieddate.setText(approveList.getFirstName());
         tv_View_fromdate.setText(approveList.getFromDate());
         tv_View_todate.setText(approveList.getToDate());
         tv_View_no_of_counts.setText(""+approveList.getNo_of_days());
-        tv_View_remarks.setText(approveList.getRemarks());
+        tv_View_remarks.setText(approveList.getRequestRemarks());
 
         setTableData();
 

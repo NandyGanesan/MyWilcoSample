@@ -2,6 +2,8 @@ package com.android.wilcoconnect.api;
 
 import com.android.wilcoconnect.model.MenuList.Menu;
 import com.android.wilcoconnect.model.leave.ApplyLeavePost;
+import com.android.wilcoconnect.model.leave.ApproveLeaveData;
+import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.Myleave;
@@ -219,6 +221,20 @@ public interface ApiInterface {
     * */
     @POST("api/Leave/StoreApplyLeave")
     Call<Success> storeLeaveRequest(@Body ApplyLeavePost data);
+
+    /*
+    * Get the Approve Leave list
+    * */
+    @GET("api/Leave/GetLeaveRequestList")
+    Call<ApproveLeaveData> getApproveLeaveList(@Query("Email") String Email,
+                                               @Query("companyCode") String companyCode,
+                                               @Query("employeeID") String employeeID);
+
+    /*
+    * Store the Approve List based on the click
+    * */
+    @POST("api/Leave/LeaveApproveStore")
+    Call<Success> storeApproveList(@Body ApprovePost data);
 
 
 }

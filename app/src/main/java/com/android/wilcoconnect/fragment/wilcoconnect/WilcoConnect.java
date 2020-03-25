@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
@@ -81,13 +82,21 @@ public class WilcoConnect extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         recycleStatus.setLayoutManager(layoutManager);
-        statusAdapter = new StatusAdapter(getActivity(), statusType, (view, value) -> {
-            if (!value.equals("")) {
-                sendRequest.setStatusLink(value);
-                call_recycler_view(sendRequest);
-            } else {
-                sendRequest.setStatusLink("all");
-                call_recycler_view(sendRequest);
+        statusAdapter = new StatusAdapter(getActivity(), statusType, new RecyclerViewListener() {
+            @Override
+            public void onClick(View view, String value) {
+                if (!value.equals("")) {
+                    sendRequest.setStatusLink(value);
+                    call_recycler_view(sendRequest);
+                } else {
+                    sendRequest.setStatusLink("all");
+                    call_recycler_view(sendRequest);
+                }
+            }
+
+            @Override
+            public void onClick(View view, ApprovePost post) {
+
             }
         });
         recycleStatus.setAdapter(statusAdapter);
@@ -136,7 +145,17 @@ public class WilcoConnect extends Fragment {
                  * Pass the data into the Adapter..
                  * */
                 if (request.size() != 0) {
-                    adapter = new MyAdapter(getActivity(), request, (view, value) -> replaceFragment(newInstance(value)));
+                    adapter = new MyAdapter(getActivity(), request, new RecyclerViewListener() {
+                        @Override
+                        public void onClick(View view, String value) {
+                            replaceFragment(newInstance(value));
+                        }
+
+                        @Override
+                        public void onClick(View view, ApprovePost post) {
+
+                        }
+                    });
                     recyclerView.setAdapter(adapter);
                 } else {
                     adapter=null;

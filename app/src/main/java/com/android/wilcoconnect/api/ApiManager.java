@@ -3,6 +3,8 @@ package com.android.wilcoconnect.api;
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.MenuList.Menu;
 import com.android.wilcoconnect.model.leave.ApplyLeavePost;
+import com.android.wilcoconnect.model.leave.ApproveLeaveData;
+import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.Myleave;
@@ -286,8 +288,24 @@ public class ApiManager {
         /*
          * Store the Leave Request
         * */
-        public void storeleavedetail(ApplyLeavePost leavePost, Callback<Success> callback){
+        public void storeLeaveDetail(ApplyLeavePost leavePost, Callback<Success> callback){
             Call<Success> reply = service.storeLeaveRequest(leavePost);
+            reply.enqueue(callback);
+        }
+
+        /*
+        * Get the overall approve list
+        * */
+        public void getApproveList(AddRequest request, Callback<ApproveLeaveData> callback){
+            Call<ApproveLeaveData> approveLeaveData = service.getApproveLeaveList(request.Email,request.companyCode,request.EmployeeID);
+            approveLeaveData.enqueue(callback);
+        }
+
+        /*
+        * Store the Approve leave list based on the click
+        * */
+        public void storeApproveLeave(ApprovePost post,Callback<Success> callback){
+            Call<Success> reply = service.storeApproveList(post);
             reply.enqueue(callback);
         }
 

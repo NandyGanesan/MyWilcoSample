@@ -6,6 +6,8 @@ public class ApproveList {
 
     public String EmployeeName;
 
+    public String email;
+
     public String FromDate;
 
     public String ToDate;
@@ -14,15 +16,33 @@ public class ApproveList {
 
     public String LeaveStatus;
 
-    public int No_of_days;
+    public String No_of_days;
 
     public String Remarks;
 
-    public int getNo_of_days() {
+    public int LeaveRequestID;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public int getLeaveRequestID() {
+        return LeaveRequestID;
+    }
+
+    public void setLeaveRequestID(int leaveRequestID) {
+        LeaveRequestID = leaveRequestID;
+    }
+
+    public String getNo_of_days() {
         return No_of_days;
     }
 
-    public void setNo_of_days(int no_of_days) {
+    public void setNo_of_days(String no_of_days) {
         No_of_days = no_of_days;
     }
 

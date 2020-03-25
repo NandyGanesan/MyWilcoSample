@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.wilcoconnect.R;
+import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.profile.ProfileMenu;
+import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.ProfileAdapter;
 
 import java.util.ArrayList;
@@ -41,7 +43,17 @@ public class Profile extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         getmenu();
         if (menu.size()>0) {
-            ProfileAdapter adapter = new ProfileAdapter(getActivity(), menu, (view, value) -> newInstance(value));
+            ProfileAdapter adapter = new ProfileAdapter(getActivity(), menu, new RecyclerViewListener() {
+                @Override
+                public void onClick(View view, String value) {
+                    newInstance(value);
+                }
+
+                @Override
+                public void onClick(View view, ApprovePost post) {
+
+                }
+            });
             recyclerView.setAdapter(adapter);
         } else {
             ProfileAdapter adapter = null;

@@ -1,17 +1,24 @@
 package com.android.wilcoconnect.shared;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.wilcoconnect.R;
+import com.android.wilcoconnect.fragment.leave.ApproveFromPage;
 import com.android.wilcoconnect.model.leave.ApproveList;
+import com.android.wilcoconnect.model.leave.ApprovePost;
+import com.android.wilcoconnect.model.leave.MyLeaveData;
+import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.google.gson.Gson;
 
@@ -21,12 +28,14 @@ public class ApproveLeaveListAdapter extends RecyclerView.Adapter<ApproveLeaveLi
 
     RecyclerViewListener listener;
     private Context c;
-    private ArrayList<ApproveList> approveLists;
+    private ArrayList<MyLeaveData> approveLists;
+    private AddRequest request;
 
-    public ApproveLeaveListAdapter( Context c, ArrayList<ApproveList> approveLists, RecyclerViewListener listener) {
+    public ApproveLeaveListAdapter(Context c, ArrayList<MyLeaveData> approveLists,AddRequest request, RecyclerViewListener listener) {
         this.listener = listener;
         this.c = c;
         this.approveLists = approveLists;
+        this.request = request;
     }
     @NonNull
     @Override
@@ -37,33 +46,54 @@ public class ApproveLeaveListAdapter extends RecyclerView.Adapter<ApproveLeaveLi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-        holder.employeeid.setText(approveLists.get(position).getEmployeeId());
-        holder.employeename.setText(approveLists.get(position).getEmployeeName());
-        holder.leavetype.setText(approveLists.get(position).getLeaveType());
-        holder.status.setText(approveLists.get(position).getLeaveStatus());
-        holder.fromdate.setText(approveLists.get(position).getFromDate());
-        holder.todate.setText(approveLists.get(position).getToDate());
+            holder.employeeid.setText(approveLists.get(position).getEmployeeID());
+            holder.employeename.setText(approveLists.get(position).getFirstName());
+            holder.leavetype.setText(approveLists.get(position).getLeaveTypeText());
+            holder.status.setText(approveLists.get(position).getRequestStatus());
+            holder.fromdate.setText(approveLists.get(position).getFromDate());
+            holder.todate.setText(approveLists.get(position).getToDate());
 
-        holder.approve.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ApproveList approveList = new ApproveList();
-                approveList.setEmployeeId(approveLists.get(position).getEmployeeId());
-                approveList.setEmployeeName(approveLists.get(position).getEmployeeName());
-                approveList.setFromDate(approveLists.get(position).getFromDate());
-                approveList.setToDate(approveLists.get(position).getToDate());
-                approveList.setNo_of_days(approveLists.get(position).getNo_of_days());
-                approveList.setRemarks(approveLists.get(position).getRemarks());
+        holder.approve.setOnClickListener(v -> {
+            ApproveList approveList = new ApproveList();
+            approveList.setEmployeeId(approveLists.get(position).getEmployeeID());
+            approveList.setEmployeeName(approveLists.get(position).getFirstName());
+            approveList.setFromDate(approveLists.get(position).getFromDate());
+            approveList.setToDate(approveLists.get(position).getToDate());
+            approveList.setNo_of_days(approveLists.get(position).getNoofDays());
+            approveList.setRemarks(approveLists.get(position).getRequestRemarks());
+            approveList.setLeaveRequestID(approveLists.get(position).getLeaveRequestID());
 
-                /**
-                 * Show the data in New Update View
-                 * and perform respective operations
-                 * */
-                Gson gson = new Gson();
-                String data = gson.toJson(approveList);
-                if (listener != null)
-                    listener.onClick(v, data);
-            }
+            /**
+             * Show the data in New Update View
+             * and perform respective operations
+             * */
+            Gson gson = new Gson();
+            String data = gson.toJson(approveList);
+            if (listener != null)
+                listener.onClick(v, data);
+        });
+
+        holder.accept.setOnClickListener(v -> {
+            ApprovePost post = new ApprovePost();
+            post.setEmployeeCode(request.getEmployeeID());
+            post.setEmail(request.getEmail());
+            post.setLeaveRequestID(approveLists.get(position).getLeaveRequestID());
+            post.setApproveStatus("Approved");
+
+            if (listener != null)
+                listener.onClick(v, post);
+
+        });
+
+        holder.reject.setOnClickListener(v -> {
+            ApprovePost post = new ApprovePost();
+            post.setEmployeeCode(request.getEmployeeID());
+            post.setEmail(request.getEmail());
+            post.setLeaveRequestID(approveLists.get(position).getLeaveRequestID());
+            post.setApproveStatus("Rejected");
+
+            if (listener != null)
+                listener.onClick(v, post);
         });
     }
 
@@ -76,6 +106,7 @@ public class ApproveLeaveListAdapter extends RecyclerView.Adapter<ApproveLeaveLi
 
         TextView leavetype,status,fromdate,todate,employeeid,employeename;
         CardView approve;
+        Button accept,reject;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,6 +117,9 @@ public class ApproveLeaveListAdapter extends RecyclerView.Adapter<ApproveLeaveLi
             employeeid = itemView.findViewById(R.id.tv_employeeid);
             employeename = itemView.findViewById(R.id.tv_employeename);
             approve = itemView.findViewById(R.id.approverequest);
+
+            accept = itemView.findViewById(R.id.btn_accept);
+            reject = itemView.findViewById(R.id.btn_reject);
 
         }
     }

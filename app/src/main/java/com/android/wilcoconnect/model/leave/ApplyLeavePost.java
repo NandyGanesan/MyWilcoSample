@@ -20,6 +20,26 @@ public class ApplyLeavePost {
 
     public String requestRemarks;
 
+    public String approveStatus;
+
+    public String approvedRemarks;
+
+    public String getApproveStatus() {
+        return approveStatus;
+    }
+
+    public void setApproveStatus(String approveStatus) {
+        this.approveStatus = approveStatus;
+    }
+
+    public String getApprovedRemarks() {
+        return approvedRemarks;
+    }
+
+    public void setApprovedRemarks(String approvedRemarks) {
+        this.approvedRemarks = approvedRemarks;
+    }
+
     public String getEmail() {
         return email;
     }

@@ -17,10 +17,13 @@ import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.model.leave.ApproveList;
+import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.LeaveAvailableTable;
+import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -39,6 +42,8 @@ public class ApproveFromPage extends DialogFragment {
     private View view;
     private HorizontalScrollView scrollView;
     public static String TAG = "ApproveFromPage";
+    private ApprovePost approvePost = new ApprovePost();
+    private AddRequest request = new AddRequest();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,6 +56,9 @@ public class ApproveFromPage extends DialogFragment {
         String value = this.getArguments().getString("leave");
         Gson gson = new Gson();
         approveList = gson.fromJson(value, ApproveList.class);
+
+        String value1 = this.getArguments().getString("email");
+        request = gson.fromJson(value1,AddRequest.class);
 
         /*
         * Define the Toolbar and set title
@@ -85,6 +93,10 @@ public class ApproveFromPage extends DialogFragment {
         label4 = view.findViewById(R.id.tv_View_approver);
         scrollView = view.findViewById(R.id.scroll);
 
+        approvePost.setEmployeeCode(request.getEmployeeID());
+        approvePost.setEmail(request.getEmail());
+        approvePost.setLeaveRequestID(approveList.getLeaveRequestID());
+
         /*
         * Show and Hide the Some unwanted views in XML
         * */
@@ -100,6 +112,16 @@ public class ApproveFromPage extends DialogFragment {
         reject.setVisibility(View.VISIBLE);
         tableLayout.setVisibility(View.VISIBLE);
         scrollView.setVisibility(View.VISIBLE);
+
+        accept.setOnClickListener(v -> {
+            approvePost.setApproveStatus("Approved");
+            get_remarks();
+        });
+
+        reject.setOnClickListener(v -> {
+            approvePost.setApproveStatus("Rejected");
+            get_remarks();
+        });
 
         getTableData();
 
@@ -231,4 +253,14 @@ public class ApproveFromPage extends DialogFragment {
         availableTableArrayList.add(table3);
     }
 
+    private void get_remarks(){
+        Gson gson = new Gson();
+        String value = gson.toJson(approvePost);
+        Bundle bundle = new Bundle();
+        bundle.putString("Submit",value);
+        Remarks remarks = new Remarks();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        remarks.setArguments(bundle);
+        remarks.show(transaction,remarks.TAG);
+    }
 }

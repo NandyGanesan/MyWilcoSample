@@ -10,6 +10,9 @@ public class MyLeaveData {
     @SerializedName("EmployeeID")
     public String EmployeeID;
 
+    @SerializedName("email")
+    public String email;
+
     @SerializedName("LeaveTypeID")
     public int LeaveTypeID;
 
@@ -201,6 +204,14 @@ public class MyLeaveData {
 
     @SerializedName("lstYear")
     public String lstYear;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getStrFromDate() {
         return strFromDate;

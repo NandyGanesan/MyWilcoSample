@@ -17,9 +17,11 @@ import android.widget.FrameLayout;
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
+import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.MyLeaveData;
 import com.android.wilcoconnect.model.leave.Myleave;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
+import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.MyLeaveListDataAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -104,7 +106,17 @@ public class Leave extends Fragment {
             snackbar.show();
         }
         else{
-            leaveadapter = new MyLeaveListDataAdapter(getActivity(), leavedata, (view, value) -> newInstance(value));
+            leaveadapter = new MyLeaveListDataAdapter(getActivity(), leavedata, new RecyclerViewListener() {
+                @Override
+                public void onClick(View view, String value) {
+                    newInstance(value);
+                }
+
+                @Override
+                public void onClick(View view, ApprovePost post) {
+
+                }
+            });
             recyclerView.setAdapter(leaveadapter);
         }
     }

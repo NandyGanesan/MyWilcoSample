@@ -11,10 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -264,7 +262,7 @@ public class ApplyLeave extends Fragment {
                 leavepost.setSession(leavelevel);
                 leavepost.setLeaveRequestID(0);
 
-                ApiManager.getInstance().storeleavedetail(leavepost, new Callback<Success>() {
+                ApiManager.getInstance().storeLeaveDetail(leavepost, new Callback<Success>() {
                     @Override
                     public void onResponse(Call<Success> call, Response<Success> response) {
                         assert response.body() != null;

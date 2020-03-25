@@ -265,7 +265,8 @@ public class ApplyLeave extends Fragment {
                 ApiManager.getInstance().storeleavedetail(leavepost, new Callback<Success>() {
                     @Override
                     public void onResponse(Call<Success> call, Response<Success> response) {
-                        if(response.isSuccessful() && response.body() != null){
+                        assert response.body() != null;
+                        if(response.isSuccessful() && response.body().getStatus().equals("true")){
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                             builder.setTitle("Data Submitted Successfully..!!");
                             builder.setPositiveButton("Ok",null);

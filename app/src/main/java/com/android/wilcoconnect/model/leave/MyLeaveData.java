@@ -26,7 +26,7 @@ public class MyLeaveData {
     public String strToDate;
 
     @SerializedName("NoofDays")
-    public int NoofDays;
+    public String NoofDays;
 
     @SerializedName("RequestRemarks")
     public String RequestRemarks;
@@ -266,11 +266,11 @@ public class MyLeaveData {
         ToDate = toDate;
     }
 
-    public int getNoofDays() {
+    public String getNoofDays() {
         return NoofDays;
     }
 
-    public void setNoofDays(int noofDays) {
+    public void setNoofDays(String noofDays) {
         NoofDays = noofDays;
     }
 

@@ -58,6 +58,7 @@ public class ApplyLeave extends Fragment {
     private String leavelevel;
     private ArrayList<LeaveType.Data> type = new ArrayList<>();
     private ApplyLeavePost leavepost = new ApplyLeavePost();
+    private String from_date,to_date;
 
     //Session: F->Fullday, A->After Noon,M ->Morning
 
@@ -164,8 +165,9 @@ public class ApplyLeave extends Fragment {
             fromYear = c.get(Calendar.YEAR);
             fromMonth = c.get(Calendar.MONTH);
             fromDay = c.get(Calendar.DAY_OF_MONTH);
-            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view1, year, monthOfYear, dayOfMonth) -> {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view1, year, monthOfYear, dayOfMonth) -> {
                    btn_from_date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                   from_date = (year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                    if(btn_to_date.getText().toString()!="" && btn_from_date.getText().toString()!="" &&
                       btn_to_date.getText().toString()!=null && btn_from_date.getText().toString()!=null){
                          getCount();
@@ -184,7 +186,7 @@ public class ApplyLeave extends Fragment {
             toMonth = c.get(Calendar.MONTH);
             toDay = c.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view12, year, monthOfYear, dayOfMonth) -> {
-
+                to_date = (year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                 btn_to_date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                 if(btn_to_date.getText().toString()!=""&& btn_from_date.getText().toString()!=""
                         && btn_to_date.getText().toString()!=null && btn_from_date.getText().toString()!=null){
@@ -255,8 +257,8 @@ public class ApplyLeave extends Fragment {
                 get_radiobutton_value();
                 leavepost.setEmail(addRequest.getEmail());
                 leavepost.setEmployeeCode(addRequest.getEmployeeID());
-                leavepost.setFromDate(btn_from_date.getText().toString());
-                leavepost.setToDate(btn_to_date.getText().toString());
+                leavepost.setFromDate(from_date);
+                leavepost.setToDate(to_date);
                 leavepost.setNoofDays(Integer.parseInt(tv_no_of_days_count.getText().toString()));
                 leavepost.setRequestRemarks(et_remarks.getText().toString());
                 leavepost.setSession(leavelevel);
@@ -268,7 +270,7 @@ public class ApplyLeave extends Fragment {
                         assert response.body() != null;
                         if(response.isSuccessful() && response.body().getStatus().equals("true")){
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                            builder.setTitle("Data Submitted Successfully..!!");
+                            builder.setTitle(response.body().getMessage());
                             builder.setPositiveButton("Ok",null);
                             AlertDialog dialog = builder.create();
                             dialog.show();
@@ -329,7 +331,7 @@ public class ApplyLeave extends Fragment {
     * Count the Number of days from the from and to date
     * */
     private void getCount(){
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/M/yyyy");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
             try {
                 Date fromdate = simpleDateFormat.parse(btn_from_date.getText().toString());
                 Date todate = simpleDateFormat.parse(btn_to_date.getText().toString());
@@ -343,7 +345,8 @@ public class ApplyLeave extends Fragment {
                else{
                    tv_date_error.setVisibility(View.GONE);
                    long different = todate.getTime() - fromdate.getTime();
-                   long daysInMilli = 1000 * 60 * 60* 24;                   long elapsedDays = different / daysInMilli;
+                    long daysInMilli = 1000 * 60 * 60* 24;
+                    long elapsedDays = different / daysInMilli;
                    tv_no_of_days_count.setText(Integer.toString((int)(elapsedDays+1)));
                    if(elapsedDays+1 == 1){
                        fullandhalf.setVisibility(View.VISIBLE);

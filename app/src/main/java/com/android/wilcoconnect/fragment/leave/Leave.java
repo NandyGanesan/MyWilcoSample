@@ -70,10 +70,23 @@ public class Leave extends Fragment {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
-        /*
-         * Get the List of Data
-         * */
-        get_list();
+        ApiManager.getInstance().getMyLeaveList(addRequest, new Callback<Myleave>() {
+            @Override
+            public void onResponse(Call<Myleave> call, Response<Myleave> response) {
+                if(response.body()!=null && response.isSuccessful()){
+                    leavedata = response.body().getData().get(0).getLeaveList();
+                    if(leavedata!=null) {
+                        setleavelist();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Myleave> call, Throwable t) {
+                Log.d(TAG,t.getLocalizedMessage());
+            }
+        });
+
         return view;
     }
 
@@ -94,23 +107,6 @@ public class Leave extends Fragment {
             leaveadapter = new MyLeaveListDataAdapter(getActivity(), leavedata, (view, value) -> newInstance(value));
             recyclerView.setAdapter(leaveadapter);
         }
-    }
-
-    private void get_list() {
-        ApiManager.getInstance().getMyLeaveList(addRequest, new Callback<Myleave>() {
-            @Override
-            public void onResponse(Call<Myleave> call, Response<Myleave> response) {
-                if(response.body()!=null && response.isSuccessful()){
-                    leavedata = response.body().getData().get(0).getLeaveList();
-                        setleavelist();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Myleave> call, Throwable t) {
-                Log.d(TAG,t.getLocalizedMessage());
-            }
-        });
     }
 
     private void newInstance(String s) {

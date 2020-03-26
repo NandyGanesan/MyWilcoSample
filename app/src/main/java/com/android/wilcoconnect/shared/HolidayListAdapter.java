@@ -9,17 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.wilcoconnect.R;
-import com.android.wilcoconnect.model.leave.HolidayDate;
+import com.android.wilcoconnect.model.leave.HolidayData;
 import java.util.ArrayList;
 
 public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.ViewHolder> {
 
     private Context c;
-    private ArrayList<HolidayDate> holidayDates;
+    private ArrayList<HolidayData> holidayData;
 
-    public HolidayListAdapter(Context c, ArrayList<HolidayDate> holidayDates) {
+    public HolidayListAdapter(Context c, ArrayList<HolidayData> holidayData) {
         this.c = c;
-        this.holidayDates = holidayDates;
+        this.holidayData = holidayData;
     }
 
     @NonNull
@@ -31,14 +31,14 @@ public class HolidayListAdapter extends RecyclerView.Adapter<HolidayListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            holder.holiday.setText(holidayDates.get(position).getDescription());
-            holder.holidaydate.setText(holidayDates.get(position).getLeaveDate());
-            holder.day.setText(holidayDates.get(position).getLeaveDay());
+            holder.holiday.setText(holidayData.get(position).getDescription());
+            holder.holidaydate.setText(holidayData.get(position).getLeaveDate());
+            holder.day.setText(holidayData.get(position).getLeaveDay());
     }
 
     @Override
     public int getItemCount() {
-        return holidayDates.size();
+        return holidayData.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

@@ -18,7 +18,6 @@ import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.leave.HolidayData;
-import com.android.wilcoconnect.model.leave.HolidayDate;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.shared.HolidayListAdapter;
 import com.google.android.material.snackbar.Snackbar;
@@ -39,8 +38,8 @@ public class Holiday extends Fragment {
     private String TAG = "Holiday";
     private Button btn_location;
     private String[] location={"All","Tamil Nadu","California","Telangana"};
-    private ArrayList<HolidayDate> holidayDateList = new ArrayList<>();
-    private ArrayList<HolidayDate> selectedholidaylist = new ArrayList<>();
+    private ArrayList<HolidayData> holidayDataList = new ArrayList<>();
+    private ArrayList<HolidayData> selectedholidaylist = new ArrayList<>();
     private int checkItem=0;
     private RecyclerView recyclerView;
     private ConstraintLayout layout;
@@ -107,19 +106,19 @@ public class Holiday extends Fragment {
     }
 
     private void getlist() {
-        ApiManager.getInstance().getHolidayList(addRequest, new Callback<HolidayData>() {
+        ApiManager.getInstance().getHolidayList(addRequest, new Callback<com.android.wilcoconnect.model.leave.Holiday>() {
             @Override
-            public void onResponse(Call<HolidayData> call, Response<HolidayData> response) {
+            public void onResponse(Call<com.android.wilcoconnect.model.leave.Holiday> call, Response<com.android.wilcoconnect.model.leave.Holiday> response) {
                 if(response.body()!=null && response.isSuccessful()){
-                    holidayDateList = response.body().getData();
-                    if(holidayDateList.size()>0) {
+                    holidayDataList = response.body().getData();
+                    if(holidayDataList.size()>0) {
                         set_holiday_list();
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<HolidayData> call, Throwable t) {
+            public void onFailure(Call<com.android.wilcoconnect.model.leave.Holiday> call, Throwable t) {
                 Log.d(TAG , t.getLocalizedMessage());
             }
         });
@@ -131,21 +130,21 @@ public class Holiday extends Fragment {
     private void set_holiday_list() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        if(holidayDateList.size()>0) {
+        if(holidayDataList.size()>0) {
             if (btn_location.getText().equals("All")) {
-                holidayadapter = new HolidayListAdapter(getActivity(), holidayDateList);
+                holidayadapter = new HolidayListAdapter(getActivity(), holidayDataList);
                 recyclerView.setAdapter(holidayadapter);
             } else {
                 selectedholidaylist = new ArrayList<>();
-                for(int i=0;i<holidayDateList.size();i++){
-                    if(btn_location.getText().equals(holidayDateList.get(i).getStateName())){
-                        HolidayDate data = new HolidayDate();
-                        data.setStateID(holidayDateList.get(i).getStateID());
-                        data.setHolidayID(holidayDateList.get(i).getHolidayID());
-                        data.setLeaveDate(holidayDateList.get(i).getLeaveDate());
-                        data.setLeaveDay(holidayDateList.get(i).getLeaveDay());
-                        data.setStateName(holidayDateList.get(i).getStateName());
-                        data.setDescription(holidayDateList.get(i).getDescription());
+                for(int i = 0; i< holidayDataList.size(); i++){
+                    if(btn_location.getText().equals(holidayDataList.get(i).getStateName())){
+                        HolidayData data = new HolidayData();
+                        data.setStateID(holidayDataList.get(i).getStateID());
+                        data.setHolidayID(holidayDataList.get(i).getHolidayID());
+                        data.setLeaveDate(holidayDataList.get(i).getLeaveDate());
+                        data.setLeaveDay(holidayDataList.get(i).getLeaveDay());
+                        data.setStateName(holidayDataList.get(i).getStateName());
+                        data.setDescription(holidayDataList.get(i).getDescription());
                         selectedholidaylist.add(data);
                     }
                 }

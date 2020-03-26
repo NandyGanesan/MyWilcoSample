@@ -2,51 +2,71 @@ package com.android.wilcoconnect.model.leave;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-
 public class HolidayData {
 
-    @SerializedName("code")
-    public int code;
+    @SerializedName("HolidayID")
+    public int HolidayID;
 
-    @SerializedName("Status")
-    public String Status;
+    @SerializedName("LeaveDate")
+    public String LeaveDate;
 
-    @SerializedName("message")
-    public String message;
+    @SerializedName("LeaveDay")
+    public String LeaveDay;
 
-    @SerializedName("data")
-    public ArrayList<HolidayDate> data;
+    @SerializedName("Description")
+    public String Description;
 
-    public int getCode() {
-        return code;
+    @SerializedName("StateName")
+    public String StateName;
+
+    @SerializedName("StateID")
+    public int StateID;
+
+    public int getHolidayID() {
+        return HolidayID;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public void setHolidayID(int holidayID) {
+        HolidayID = holidayID;
     }
 
-    public String getStatus() {
-        return Status;
+    public String getLeaveDate() {
+        return LeaveDate;
     }
 
-    public void setStatus(String status) {
-        Status = status;
+    public void setLeaveDate(String leaveDate) {
+        LeaveDate = leaveDate;
     }
 
-    public String getMessage() {
-        return message;
+    public String getLeaveDay() {
+        return LeaveDay;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setLeaveDay(String leaveDay) {
+        LeaveDay = leaveDay;
     }
 
-    public ArrayList<HolidayDate> getData() {
-        return data;
+    public String getDescription() {
+        return Description;
     }
 
-    public void setData(ArrayList<HolidayDate> data) {
-        this.data = data;
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public String getStateName() {
+        return StateName;
+    }
+
+    public void setStateName(String stateName) {
+        StateName = stateName;
+    }
+
+    public int getStateID() {
+        return StateID;
+    }
+
+    public void setStateID(int stateID) {
+        StateID = stateID;
     }
 }

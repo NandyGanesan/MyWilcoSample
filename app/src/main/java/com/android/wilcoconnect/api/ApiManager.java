@@ -5,10 +5,10 @@ import com.android.wilcoconnect.model.MenuList.Menu;
 import com.android.wilcoconnect.model.leave.ApplyLeavePost;
 import com.android.wilcoconnect.model.leave.ApproveLeaveData;
 import com.android.wilcoconnect.model.leave.ApprovePost;
-import com.android.wilcoconnect.model.leave.HolidayData;
+import com.android.wilcoconnect.model.leave.Holiday;
 import com.android.wilcoconnect.model.leave.LeaveCalender;
 import com.android.wilcoconnect.model.leave.LeaveType;
-import com.android.wilcoconnect.model.leave.Myleave;
+import com.android.wilcoconnect.model.leave.MyLeave;
 import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetails;
@@ -138,8 +138,8 @@ public class ApiManager {
          * Get the Overall Dropdown Data
          * */
         public void getDropdownData(AddRequest request, Callback<RequestType> callback) {
-            Call<RequestType> dropdowndata = service.getDropdownData(request.Email, request.companyCode, request.EmployeeID);
-            dropdowndata.enqueue(callback);
+            Call<RequestType> dropDownData = service.getDropdownData(request.Email, request.companyCode, request.EmployeeID);
+            dropDownData.enqueue(callback);
         }
 
         /**
@@ -274,16 +274,16 @@ public class ApiManager {
         /*
         * Get the Holiday List
         * */
-        public void getHolidayList(AddRequest request, Callback<HolidayData> callback) {
-            Call<HolidayData> holidayList = service.getHolidayList(request.Email, request.companyCode, request.EmployeeID);
+        public void getHolidayList(AddRequest request, Callback<Holiday> callback) {
+            Call<Holiday> holidayList = service.getHolidayList(request.Email, request.companyCode, request.EmployeeID);
             holidayList.enqueue(callback);
         }
 
         /*
         * Get the MyLeave List
         * */
-        public void getMyLeaveList(AddRequest request, Callback<Myleave> callback){
-            Call<Myleave> leaveList = service.getMyLeaveList(request.Email, request.companyCode, request.EmployeeID);
+        public void getMyLeaveList(AddRequest request, Callback<MyLeave> callback){
+            Call<MyLeave> leaveList = service.getMyLeaveList(request.Email, request.companyCode, request.EmployeeID);
             leaveList.enqueue(callback);
         }
 

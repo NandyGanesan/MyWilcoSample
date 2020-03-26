@@ -19,7 +19,7 @@ import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.MyLeaveData;
-import com.android.wilcoconnect.model.leave.Myleave;
+import com.android.wilcoconnect.model.leave.MyLeave;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.MyLeaveListDataAdapter;
@@ -72,9 +72,9 @@ public class Leave extends Fragment {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
-        ApiManager.getInstance().getMyLeaveList(addRequest, new Callback<Myleave>() {
+        ApiManager.getInstance().getMyLeaveList(addRequest, new Callback<MyLeave>() {
             @Override
-            public void onResponse(Call<Myleave> call, Response<Myleave> response) {
+            public void onResponse(Call<MyLeave> call, Response<MyLeave> response) {
                 if(response.body()!=null && response.isSuccessful()){
                     leavedata = response.body().getData().get(0).getLeaveList();
                     if(leavedata!=null) {
@@ -84,7 +84,7 @@ public class Leave extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Myleave> call, Throwable t) {
+            public void onFailure(Call<MyLeave> call, Throwable t) {
                 Log.d(TAG,t.getLocalizedMessage());
             }
         });

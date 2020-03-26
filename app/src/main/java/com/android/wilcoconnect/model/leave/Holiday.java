@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class Myleave {
+public class Holiday {
 
     @SerializedName("code")
     public int code;
@@ -16,7 +16,7 @@ public class Myleave {
     public String message;
 
     @SerializedName("data")
-    public ArrayList<Data> data;
+    public ArrayList<HolidayData> data;
 
     public int getCode() {
         return code;
@@ -42,12 +42,11 @@ public class Myleave {
         this.message = message;
     }
 
-    public ArrayList<Data> getData() {
+    public ArrayList<HolidayData> getData() {
         return data;
     }
 
-    public void setData(ArrayList<Data> data) {
+    public void setData(ArrayList<HolidayData> data) {
         this.data = data;
     }
 }
-

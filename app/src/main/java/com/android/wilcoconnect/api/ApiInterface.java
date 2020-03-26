@@ -4,10 +4,10 @@ import com.android.wilcoconnect.model.MenuList.Menu;
 import com.android.wilcoconnect.model.leave.ApplyLeavePost;
 import com.android.wilcoconnect.model.leave.ApproveLeaveData;
 import com.android.wilcoconnect.model.leave.ApprovePost;
-import com.android.wilcoconnect.model.leave.HolidayData;
+import com.android.wilcoconnect.model.leave.Holiday;
 import com.android.wilcoconnect.model.leave.LeaveCalender;
 import com.android.wilcoconnect.model.leave.LeaveType;
-import com.android.wilcoconnect.model.leave.Myleave;
+import com.android.wilcoconnect.model.leave.MyLeave;
 import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetails;
@@ -198,15 +198,15 @@ public interface ApiInterface {
      * Get the holiday list
      * */
     @GET("api/Leave/getHolidayList")
-    Call<HolidayData> getHolidayList(@Query("Email") String Email,
-                                     @Query("companyCode") String companyCode,
-                                     @Query("employeeID") String employeeID);
+    Call<Holiday> getHolidayList(@Query("Email") String Email,
+                                 @Query("companyCode") String companyCode,
+                                 @Query("employeeID") String employeeID);
 
     /*
     * Get My leave list
     * */
     @GET("api/Leave/myleaveList")
-    Call<Myleave> getMyLeaveList(@Query("Email") String Email,
+    Call<MyLeave> getMyLeaveList(@Query("Email") String Email,
                                  @Query("companyCode") String companyCode,
                                  @Query("employeeID") String employeeID);
 

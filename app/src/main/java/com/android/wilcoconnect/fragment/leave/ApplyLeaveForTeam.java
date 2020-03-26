@@ -58,6 +58,7 @@ public class ApplyLeaveForTeam extends Fragment {
     private int fromYear, fromMonth, fromDay, toYear, toMonth, toDay;
     private RadioGroup fullandhalf,mrngandevening;
     private String[] employee;
+    private String leavelevel;
     private List<TeamLeaveAutoList.Data> teamlist;
     private String from_date,to_date;
 
@@ -337,6 +338,26 @@ public class ApplyLeaveForTeam extends Fragment {
             }
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void get_radiobutton_value() {
+        int radioButtonID = fullandhalf.getCheckedRadioButtonId();
+        View radioButton = fullandhalf.findViewById(radioButtonID);
+        int idx = fullandhalf.indexOfChild(radioButton);
+        if(idx==0){
+            leavelevel = "F";
+        }
+        else {
+            int radio = mrngandevening.getCheckedRadioButtonId();
+            View radioButtons = mrngandevening.findViewById(radio);
+            int index = mrngandevening.indexOfChild(radioButtons);
+            if(index==0){
+                leavelevel = "M";
+            }
+            else {
+                leavelevel = "A";
+            }
         }
     }
 

@@ -115,11 +115,13 @@ public class ApproveFromPage extends DialogFragment {
 
         accept.setOnClickListener(v -> {
             approvePost.setApproveStatus("Approved");
+            dismiss();
             get_remarks();
         });
 
         reject.setOnClickListener(v -> {
             approvePost.setApproveStatus("Rejected");
+            dismiss();
             get_remarks();
         });
 

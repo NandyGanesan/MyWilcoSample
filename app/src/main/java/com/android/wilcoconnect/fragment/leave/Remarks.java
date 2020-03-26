@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,6 @@ import static android.content.Context.MODE_PRIVATE;
 public class Remarks extends DialogFragment {
 
     public static final String TAG = "Remarks";
-    private TextView tv_remarks;
     private EditText et_remarks;
     private AddRequest addRequest = new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
@@ -69,7 +69,6 @@ public class Remarks extends DialogFragment {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
-        tv_remarks = view.findViewById(R.id.tv_remarks);
         et_remarks = view.findViewById(R.id.et_remarks);
         submit = view.findViewById(R.id.btn_submit);
 
@@ -87,16 +86,14 @@ public class Remarks extends DialogFragment {
                             dismiss();
                         }
                     }
-
                     @Override
                     public void onFailure(Call<Success> call, Throwable t) {
-
+                        Log.e(TAG,t.getLocalizedMessage());
                     }
                 });
 
             }
         });
-
         return view;
     }
 
@@ -110,5 +107,4 @@ public class Remarks extends DialogFragment {
             dialog.getWindow().setLayout(width, height);
         }
     }
-
 }

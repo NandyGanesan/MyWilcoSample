@@ -1,7 +1,9 @@
 package com.android.wilcoconnect.fragment.leave;
 
 import android.app.DatePickerDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +19,24 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.android.wilcoconnect.R;
+import com.android.wilcoconnect.api.ApiManager;
+import com.android.wilcoconnect.app.MainApplication;
+import com.android.wilcoconnect.model.leave.LeaveType;
+import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
+import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ApplyLeaveForTeam extends Fragment {
 
@@ -29,16 +44,22 @@ public class ApplyLeaveForTeam extends Fragment {
      * Initialize the variables to access the Module
      * */
     private String TAG = "ApplyLeave";
-    private String[] LeaveType = {"Casual Leave", "Sick Leave", "Loss Of Pay"};
+    private String[] LeaveType;
     private Button btn_leaveType, btn_from_date, btn_to_date, btn_clear, btn_submit;
     private AutoCompleteTextView employeename;
     private ImageView iv_from_date, iv_to_date;
     private EditText et_remarks;
     private TextView tv_no_of_days_count, tv_date_error, tv_employee;
     private int checkItem = 0;
+    private AddRequest addRequest = new AddRequest();
+    private static String MYPREFS_NAME = "logininfo";
+    private LeaveType leaveType = new LeaveType();
+    private ArrayList<LeaveType.Data> type = new ArrayList<>();
     private int fromYear, fromMonth, fromDay, toYear, toMonth, toDay;
     private RadioGroup fullandhalf,mrngandevening;
-    private String[] employee = {"Ranjith Senthilvel - WSPLE153", "Nandhini Ganesan - WSPLE212", "Pooja Madhanagopal - WSPLE215","Bavadharini Asokan - WSPLE216"};
+    private String[] employee;
+    private List<TeamLeaveAutoList.Data> teamlist;
+    private String from_date,to_date;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,14 +88,72 @@ public class ApplyLeaveForTeam extends Fragment {
         mrngandevening.setVisibility(View.GONE);
 
         /*
-        * Define the value for AutocompleteTextView
-        * */
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_item, employee);
-        tv_employee.setVisibility(View.VISIBLE);
-        employeename.setVisibility(View.VISIBLE);
-        employeename.setThreshold(1);
-        employeename.setAdapter(adapter);
-        employeename.setTextColor(getActivity().getColor(R.color.blue));
+         * Get the Header
+         * */
+        SharedPreferences preferences = getActivity().getSharedPreferences(MainApplication.MY_PREFS_NAME, MODE_PRIVATE);
+        if (preferences != null) {
+            MainApplication.token_data = preferences.getString("header", "No name defined");
+        }
+
+        /*
+         * Get the shared preference data to assign the another object..
+         * */
+        SharedPreferences prefs = getActivity().getSharedPreferences(MYPREFS_NAME, MODE_PRIVATE);
+        if(prefs!=null) {
+            addRequest.setEmail(prefs.getString("Email", "No name defined"));
+            addRequest.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
+            addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
+        }
+
+        ApiManager.getInstance().getEmployeeNameList(addRequest, new Callback<TeamLeaveAutoList>() {
+            @Override
+            public void onResponse(Call<TeamLeaveAutoList> call, Response<TeamLeaveAutoList> response) {
+                if(response.body() != null && response.isSuccessful()){
+                    teamlist = response.body().getData();
+                    if(teamlist.size()>0){
+                        employee = new String[teamlist.size()];
+                        for(int i=0;i<teamlist.size();i++){
+                            employee[i] = teamlist.get(i).getEmployeeName();
+                        }
+                        /*
+                         * Define the value for AutocompleteTextView
+                         * */
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_item, employee);
+                        tv_employee.setVisibility(View.VISIBLE);
+                        employeename.setVisibility(View.VISIBLE);
+                        employeename.setThreshold(1);
+                        employeename.setAdapter(adapter);
+                        employeename.setTextColor(getActivity().getColor(R.color.blue));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TeamLeaveAutoList> call, Throwable t) {
+                Log.e(TAG,t.getLocalizedMessage());
+            }
+        });
+
+        ApiManager.getInstance().getLeaveTypeforTeam(addRequest, new Callback<LeaveType>() {
+            @Override
+            public void onResponse(Call<LeaveType> call, Response<LeaveType> response) {
+                if(response.body()!=null && response.isSuccessful()){
+                    leaveType = response.body();
+                    if(leaveType!=null && response.isSuccessful()){
+                        type = leaveType.getData();
+                        if(type.size()>0){
+                            get_dropdown_value();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LeaveType> call, Throwable t) {
+                Log.e(TAG,t.getLocalizedMessage());
+            }
+        });
+
 
         /*
          * Select the Particular leave type to enable the From and To date
@@ -121,6 +200,7 @@ public class ApplyLeaveForTeam extends Fragment {
             fromDay = c.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view1, year, monthOfYear, dayOfMonth) -> {
                 btn_from_date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                from_date = (year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                 if (btn_to_date.getText().toString() != "" && btn_from_date.getText().toString() != "" &&
                         btn_to_date.getText().toString() != null && btn_from_date.getText().toString() != null) {
                     getCount();
@@ -139,6 +219,7 @@ public class ApplyLeaveForTeam extends Fragment {
             toMonth = c.get(Calendar.MONTH);
             toDay = c.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view12, year, monthOfYear, dayOfMonth) -> {
+                to_date = (year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                 btn_to_date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                 if (btn_to_date.getText().toString() != "" && btn_from_date.getText().toString() != ""
                         && btn_to_date.getText().toString() != null && btn_from_date.getText().toString() != null) {
@@ -256,6 +337,15 @@ public class ApplyLeaveForTeam extends Fragment {
             }
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void get_dropdown_value() {
+        if(type.size()>0) {
+            LeaveType = new String[type.size()];
+            for (int i = 0; i < type.size(); i++) {
+                LeaveType[i] = type.get(i).getLeaveType();
+            }
         }
     }
 }

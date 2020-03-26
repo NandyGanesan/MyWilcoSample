@@ -9,6 +9,7 @@ import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.leave.LeaveCalender;
 import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.Myleave;
+import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetails;
 import com.android.wilcoconnect.model.profile.BasicDetails;
@@ -324,5 +325,21 @@ public class ApiManager {
         public void getLeaveDetailforCalender(AddRequest request, Callback<LeaveCalender> callback){
             Call<LeaveCalender> calender = service.getCalenderDetail(request.Email,request.companyCode,request.EmployeeID);
             calender.enqueue(callback);
+        }
+
+        /*
+        * Get the Employee Name List for Apply Leave For Team Module
+        * */
+        public void getEmployeeNameList(AddRequest request, Callback<TeamLeaveAutoList> callback){
+            Call<TeamLeaveAutoList> teamlist = service.getEmployeeNameList(request.Email,request.companyCode,request.EmployeeID);
+            teamlist.enqueue(callback);
+        }
+
+        /*
+        * Get the LeaveType for Apply Leave For Team
+        * */
+        public void getLeaveTypeforTeam(AddRequest request,Callback<LeaveType> callback){
+            Call<LeaveType> leaveType = service.getTeamLeaveType(request.Email,request.companyCode,request.EmployeeID);
+            leaveType.enqueue(callback);
         }
 }

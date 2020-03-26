@@ -8,6 +8,7 @@ import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.leave.LeaveCalender;
 import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.Myleave;
+import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetails;
 import com.android.wilcoconnect.model.profile.BasicDetails;
@@ -245,5 +246,19 @@ public interface ApiInterface {
                                           @Query("companyCode") String companyCode,
                                           @Query("employeeID") String employeeID);
 
+    /*
+    * Get the Employee Name List To select the Apply Leave for Team
+    * */
+    @GET("api/Leave/GetTeamEmployeeList")
+    Call<TeamLeaveAutoList> getEmployeeNameList(@Query("Email") String Email,
+                                                @Query("companyCode") String companyCode,
+                                                @Query("employeeID") String employeeID);
 
+    /*
+    * Get the LeaveType for ApplyLeave For Team
+    * */
+    @GET("api/Leave/GetTeamLeaveType")
+    Call<LeaveType> getTeamLeaveType(@Query("Email") String Email,
+                                    @Query("companyCode") String companyCode,
+                                    @Query("employeeID") String employeeID);
 }

@@ -130,7 +130,7 @@ public class ApproveFromPage extends DialogFragment {
         * */
         labelid.setText("EMPLOYEE ID");
         labelname.setText("EMPLOYEE NAME");
-        tv_View_leavetype.setText(approveList.getLeaveTypeText());
+        tv_View_leavetype.setText(approveList.getEmployeeID());
         tv_View_applieddate.setText(approveList.getFirstName());
         tv_View_fromdate.setText(approveList.getFromDate());
         tv_View_todate.setText(approveList.getToDate());

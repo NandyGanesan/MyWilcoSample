@@ -101,7 +101,7 @@ public class LeaveCalenderForTeam extends Fragment {
     private void set_leave_list() {
         leavelist = new ArrayList<>();
 
-        ApiManager.getInstance().getLeaveDetailforCalender(addRequest, new Callback<LeaveCalender>() {
+        ApiManager.getInstance().getLeaveDetailForCalender(addRequest, new Callback<LeaveCalender>() {
             @Override
             public void onResponse(Call<LeaveCalender> call, Response<LeaveCalender> response) {
                 if(response.body()!=null && response.isSuccessful()){

@@ -641,7 +641,7 @@ public class ProfileInformation extends DialogFragment {
         /*
          * Get the overall Last Position Detail
          * */
-        ApiManager.getInstance().getLastPostionDetail(addRequest, new Callback<LastPositionDetails>() {
+        ApiManager.getInstance().getLastPositionDetail(addRequest, new Callback<LastPositionDetails>() {
             /*
              * Get the Api success..
              * */

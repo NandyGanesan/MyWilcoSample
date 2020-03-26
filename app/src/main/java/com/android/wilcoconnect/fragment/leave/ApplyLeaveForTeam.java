@@ -135,7 +135,7 @@ public class ApplyLeaveForTeam extends Fragment {
             }
         });
 
-        ApiManager.getInstance().getLeaveTypeforTeam(addRequest, new Callback<LeaveType>() {
+        ApiManager.getInstance().getLeaveTypeForTeam(addRequest, new Callback<LeaveType>() {
             @Override
             public void onResponse(Call<LeaveType> call, Response<LeaveType> response) {
                 if(response.body()!=null && response.isSuccessful()){

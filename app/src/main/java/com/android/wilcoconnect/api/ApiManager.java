@@ -218,7 +218,7 @@ public class ApiManager {
         /*
          * Get the Profile Last Position Details
          * */
-        public void getLastPostionDetail(AddRequest request, Callback<LastPositionDetails> callback){
+        public void getLastPositionDetail(AddRequest request, Callback<LastPositionDetails> callback){
             Call<LastPositionDetails> information = service.getLastPositionData(request.Email,request.companyCode,request.EmployeeID);
             information.enqueue(callback);
         }
@@ -322,7 +322,7 @@ public class ApiManager {
         /*
         * Get the Leave details for Calender For Team
         * */
-        public void getLeaveDetailforCalender(AddRequest request, Callback<LeaveCalender> callback){
+        public void getLeaveDetailForCalender(AddRequest request, Callback<LeaveCalender> callback){
             Call<LeaveCalender> calender = service.getCalenderDetail(request.Email,request.companyCode,request.EmployeeID);
             calender.enqueue(callback);
         }
@@ -338,8 +338,9 @@ public class ApiManager {
         /*
         * Get the LeaveType for Apply Leave For Team
         * */
-        public void getLeaveTypeforTeam(AddRequest request,Callback<LeaveType> callback){
+        public void getLeaveTypeForTeam(AddRequest request, Callback<LeaveType> callback){
             Call<LeaveType> leaveType = service.getTeamLeaveType(request.Email,request.companyCode,request.EmployeeID);
             leaveType.enqueue(callback);
         }
+
 }

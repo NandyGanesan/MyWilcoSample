@@ -257,7 +257,7 @@ public class ApplyLeave extends Fragment {
                 leavepost.setEmployeeCode(addRequest.getEmployeeID());
                 leavepost.setFromDate(from_date);
                 leavepost.setToDate(to_date);
-                leavepost.setNoOfDays(Integer.parseInt(tv_no_of_days_count.getText().toString()));
+                leavepost.setNoofDays(Integer.parseInt(tv_no_of_days_count.getText().toString()));
                 leavepost.setRequestRemarks(et_remarks.getText().toString());
                 leavepost.setSession(leavelevel);
                 leavepost.setLeaveRequestID(0);

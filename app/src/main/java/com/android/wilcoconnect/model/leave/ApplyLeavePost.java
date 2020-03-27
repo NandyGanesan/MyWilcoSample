@@ -10,7 +10,7 @@ public class ApplyLeavePost {
 
     public int leaveTypeID;
 
-    public long NoOfDays;
+    public long noofDays;
 
     public String fromDate;
 
@@ -20,24 +20,14 @@ public class ApplyLeavePost {
 
     public String requestRemarks;
 
-    public String approveStatus;
+    public String leaveforEmployeeID;
 
-    public String approvedRemarks;
-
-    public String getApproveStatus() {
-        return approveStatus;
+    public String getLeaveforEmployeeID() {
+        return leaveforEmployeeID;
     }
 
-    public void setApproveStatus(String approveStatus) {
-        this.approveStatus = approveStatus;
-    }
-
-    public String getApprovedRemarks() {
-        return approvedRemarks;
-    }
-
-    public void setApprovedRemarks(String approvedRemarks) {
-        this.approvedRemarks = approvedRemarks;
+    public void setLeaveforEmployeeID(String leaveforEmployeeID) {
+        this.leaveforEmployeeID = leaveforEmployeeID;
     }
 
     public String getEmail() {
@@ -72,12 +62,12 @@ public class ApplyLeavePost {
         this.leaveTypeID = leaveTypeID;
     }
 
-    public long getNoOfDays() {
-        return NoOfDays;
+    public long getNoofDays() {
+        return noofDays;
     }
 
-    public void setNoOfDays(long noOfDays) {
-        this.NoOfDays = noOfDays;
+    public void setNoofDays(long noofDays) {
+        this.noofDays = noofDays;
     }
 
     public String getFromDate() {

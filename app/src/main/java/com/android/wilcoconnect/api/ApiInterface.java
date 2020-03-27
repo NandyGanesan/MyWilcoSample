@@ -261,4 +261,10 @@ public interface ApiInterface {
     Call<LeaveType> getTeamLeaveType(@Query("Email") String Email,
                                     @Query("companyCode") String companyCode,
                                     @Query("employeeID") String employeeID);
+
+    /*
+    * Store Apply leave for Team
+    * */
+    @POST("api/Leave/StoreLeaveForTeam")
+    Call<Success> storeLeaveForTeam(@Body ApplyLeavePost data);
 }

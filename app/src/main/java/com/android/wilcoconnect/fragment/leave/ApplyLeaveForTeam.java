@@ -21,6 +21,8 @@ import androidx.fragment.app.Fragment;
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
+import com.android.wilcoconnect.model.common.Success;
+import com.android.wilcoconnect.model.leave.ApplyLeavePost;
 import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
@@ -60,7 +62,9 @@ public class ApplyLeaveForTeam extends Fragment {
     private String[] employee;
     private String leavelevel;
     private List<TeamLeaveAutoList.Data> teamlist;
+    private ApplyLeavePost leavepost = new ApplyLeavePost();
     private String from_date,to_date;
+    private String employeeId,employeee;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -128,7 +132,6 @@ public class ApplyLeaveForTeam extends Fragment {
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<TeamLeaveAutoList> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
@@ -165,6 +168,7 @@ public class ApplyLeaveForTeam extends Fragment {
             builder.setItems(LeaveType, (dialog, which) -> {
                 checkItem = which;
                 btn_leaveType.setText(LeaveType[which]);
+                leavepost.setLeaveTypeID(type.get(which).getLeaveTypeID());
                 iv_from_date.setEnabled(true);
                 iv_to_date.setEnabled(true);
             }).setNegativeButton("Cancel", (dialog, which) -> {
@@ -189,7 +193,10 @@ public class ApplyLeaveForTeam extends Fragment {
             iv_from_date.setEnabled(true);
             iv_to_date.setEnabled(true);
         }
-        employeename.setOnItemClickListener((parent, view13, position, id) -> btn_leaveType.setEnabled(true));
+        employeename.setOnItemClickListener((parent, view13, position, id) -> {
+            employeee = (String)parent.getItemAtPosition(position);
+            btn_leaveType.setEnabled(true);
+        });
 
         /*
          * Select the From Date
@@ -289,29 +296,56 @@ public class ApplyLeaveForTeam extends Fragment {
                 AlertDialog dialog = builder.create();
                 dialog.show();
             } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Data Submitted Successfully..!!");
-                builder.setPositiveButton("Ok",null);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                btn_leaveType.setText("--- SELECT ---");
-                btn_leaveType.setEnabled(false);
-                btn_from_date.setText("");
-                iv_from_date.setEnabled(false);
-                btn_to_date.setText("");
-                iv_to_date.setEnabled(false);
-                tv_date_error.setVisibility(View.GONE);
-                tv_no_of_days_count.setText("");
-                employeename.setText("");
-                et_remarks.setText("");
-                mrngandevening.setVisibility(View.GONE);
-                fullandhalf.setVisibility(View.GONE);
+                for(int i=0;i<teamlist.size();i++) {
+                    if (teamlist.get(i).getEmployeeName().equals(employeee)) {
+                        employeeId = teamlist.get(i).getEmployeeCode();
+                    }
+                }
+                get_radiobutton_value();
+                leavepost.setEmail(addRequest.getEmail());
+                leavepost.setEmployeeCode(addRequest.getEmployeeID());
+                leavepost.setLeaveforEmployeeID(employeeId);
+                leavepost.setFromDate(from_date);
+                leavepost.setToDate(to_date);
+                leavepost.setNoofDays(Integer.parseInt(tv_no_of_days_count.getText().toString()));
+                leavepost.setRequestRemarks(et_remarks.getText().toString());
+                leavepost.setSession(leavelevel);
+                leavepost.setLeaveRequestID(0);
+
+                ApiManager.getInstance().storeLeaveForTeam(leavepost, new Callback<Success>() {
+                    @Override
+                    public void onResponse(Call<Success> call, Response<Success> response) {
+                            if(response.isSuccessful() && response.body().getStatus().equals("true")){
+                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                builder.setTitle(response.body().getMessage());
+                                builder.setPositiveButton("Ok",null);
+                                AlertDialog dialog = builder.create();
+                                dialog.show();
+                                btn_leaveType.setText("--- SELECT ---");
+                                btn_leaveType.setEnabled(false);
+                                btn_from_date.setText("");
+                                iv_from_date.setEnabled(false);
+                                btn_to_date.setText("");
+                                iv_to_date.setEnabled(false);
+                                tv_date_error.setVisibility(View.GONE);
+                                tv_no_of_days_count.setText("");
+                                employeename.setText("");
+                                et_remarks.setText("");
+                                mrngandevening.setVisibility(View.GONE);
+                                fullandhalf.setVisibility(View.GONE);
+                            }
+                    }
+                    @Override
+                    public void onFailure(Call<Success> call, Throwable t) {
+                        Log.e(TAG,t.getLocalizedMessage());
+                    }
+                });
             }
         });
         return view;
     }
 
-    /*
+     /*
      * Count the Number of days from the from and to date
      * */
     private void getCount() {
@@ -319,7 +353,6 @@ public class ApplyLeaveForTeam extends Fragment {
         try {
             Date from_date = simpleDateFormat.parse(btn_from_date.getText().toString());
             Date to_date = simpleDateFormat.parse(btn_to_date.getText().toString());
-
             assert to_date != null;
             assert from_date != null;
             if (from_date.after(to_date) || to_date.before(from_date)) {

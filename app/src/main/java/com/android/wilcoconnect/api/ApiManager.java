@@ -343,4 +343,12 @@ public class ApiManager {
             leaveType.enqueue(callback);
         }
 
+        /*
+        * Store Apply leave for Team
+        * */
+        public void storeLeaveForTeam(ApplyLeavePost post,Callback<Success> callback){
+            Call<Success> reply = service.storeLeaveForTeam(post);
+            reply.enqueue(callback);
+        }
+
 }

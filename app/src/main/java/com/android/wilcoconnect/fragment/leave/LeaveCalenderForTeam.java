@@ -65,9 +65,26 @@ public class LeaveCalenderForTeam extends Fragment {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
-        set_leave_list();
+        leavelist = new ArrayList<>();
+
+        ApiManager.getInstance().getLeaveDetailForCalender(addRequest, new Callback<LeaveCalender>() {
+            @Override
+            public void onResponse(Call<LeaveCalender> call, Response<LeaveCalender> response) {
+                if(response.body()!=null && response.isSuccessful()){
+                    leavelist = response.body().getData();
+                    if(leavelist.size()>0){
+                        add_events();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LeaveCalender> call, Throwable t) {
+                Log.e(TAG,t.getLocalizedMessage());
+            }
+        });
+
         calendarview.setOnDayClickListener(eventDay -> {
-            set_leave_list();
             Calendar clickedDayCalendar = eventDay.getCalendar();
             SimpleDateFormat format1 = new SimpleDateFormat("dd-M-yyyy");
             clickedDayCalendar.add(Calendar.DATE,0);
@@ -79,8 +96,8 @@ public class LeaveCalenderForTeam extends Fragment {
                     ApproveList approveList = new ApproveList();
                     approveList.setFirstName(leavelist.get(i).getFirstName());
                     approveList.setLeaveTypeText(leavelist.get(i).getLeaveTypeText());
-                    approveList.setFromDate(leavelist.get(i).getFromDate());
-                    approveList.setToDate(leavelist.get(i).getToDate());
+                    approveList.setStrFromDate(leavelist.get(i).getStrFromDate());
+                    approveList.setStrToDate(leavelist.get(i).getStrToDate());
                     approveList.setRequestRemarks(leavelist.get(i).getRequestRemarks());
                     leavedetail.add(approveList);
                 }
@@ -90,39 +107,16 @@ public class LeaveCalenderForTeam extends Fragment {
                 String s = gson.toJson(leavedetail);
                 newInstance(s);
             }
-            else{
-
-            }
         });
 
         return view;
-    }
-
-    private void set_leave_list() {
-        leavelist = new ArrayList<>();
-
-        ApiManager.getInstance().getLeaveDetailForCalender(addRequest, new Callback<LeaveCalender>() {
-            @Override
-            public void onResponse(Call<LeaveCalender> call, Response<LeaveCalender> response) {
-                if(response.body()!=null && response.isSuccessful()){
-                    leavelist = response.body().getData();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LeaveCalender> call, Throwable t) {
-                Log.e(TAG,t.getLocalizedMessage());
-            }
-        });
-
-        add_events();
     }
 
     private void add_events(){
         List<EventDay> events = new ArrayList<>();
         String[] datedata;
         for(int data=0;data<leavelist.size();data++){
-            String date = leavelist.get(data).getFromDate();
+            String date = leavelist.get(data).getStrFromDate();
             datedata = date.split("-");
             int[] dataintarray = new int[datedata.length];
             for(int j=0;j<datedata.length;j++){

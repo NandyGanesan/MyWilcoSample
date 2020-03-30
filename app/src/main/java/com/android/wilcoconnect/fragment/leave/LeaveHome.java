@@ -90,6 +90,7 @@ public class LeaveHome extends Fragment {
         fragments.add(new ApplyLeave());
         fragments.add(new Holiday());
         fragments.add(new ApproveLeaveFromGrid());
+        fragments.add(new ApprovedList());
         fragments.add(new ApplyLeaveForTeam());
         fragments.add(new LeaveCalenderForTeam());
 
@@ -98,7 +99,7 @@ public class LeaveHome extends Fragment {
          * */
         final FragmentAdapter pagerAdapter = new FragmentAdapter(getActivity().getSupportFragmentManager(), getActivity().getApplicationContext(), fragments);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(5);
+        viewPager.setOffscreenPageLimit(6);
         tabLayout.setupWithViewPager(viewPager);
 
         /*
@@ -108,8 +109,9 @@ public class LeaveHome extends Fragment {
         tabLayout.getTabAt(1).setText("APPLY LEAVE");
         tabLayout.getTabAt(2).setText("HOLIDAY");
         tabLayout.getTabAt(3).setText("APPROVE LEAVE");
-        tabLayout.getTabAt(4).setText("APPLY LEAVE FOR TEAM");
-        tabLayout.getTabAt(5).setText("LEAVE CALENDER");
+        tabLayout.getTabAt(4).setText("APPROVED LEAVE");
+        tabLayout.getTabAt(5).setText("APPLY LEAVE FOR TEAM");
+        tabLayout.getTabAt(6).setText("LEAVE CALENDER");
 
         /*
          * Define the Tab Layout Action

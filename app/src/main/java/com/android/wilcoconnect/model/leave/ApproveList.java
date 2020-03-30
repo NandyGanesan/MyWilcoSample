@@ -16,8 +16,14 @@ public class ApproveList {
     @SerializedName("FromDate")
     public String FromDate;
 
+    @SerializedName("strFromDate")
+    public String strFromDate;
+
     @SerializedName("ToDate")
     public String ToDate;
+
+    @SerializedName("strFromDate")
+    public String strToDate;
 
     @SerializedName("LeaveTypeText")
     public String LeaveTypeText;
@@ -33,6 +39,22 @@ public class ApproveList {
 
     @SerializedName("LeaveRequestStatusID")
     public int LeaveRequestStatusID;
+
+    public String getStrFromDate() {
+        return strFromDate;
+    }
+
+    public void setStrFromDate(String strFromDate) {
+        this.strFromDate = strFromDate;
+    }
+
+    public String getStrToDate() {
+        return strToDate;
+    }
+
+    public void setStrToDate(String strToDate) {
+        this.strToDate = strToDate;
+    }
 
     public String getEmployeeID() {
         return EmployeeID;

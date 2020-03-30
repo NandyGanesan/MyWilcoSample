@@ -9,6 +9,7 @@ import com.android.wilcoconnect.model.leave.Holiday;
 import com.android.wilcoconnect.model.leave.LeaveCalender;
 import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.MyLeave;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
 import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetails;
@@ -312,6 +313,14 @@ public class ApiManager {
         }
 
         /*
+        * Get the Approved List Data Only
+        * */
+        public void getApprovedListDetail(AddRequest request, Callback<ApproveLeaveData> callback){
+            Call<ApproveLeaveData> detail = service.getApprovedList(request.Email,request.companyCode,request.EmployeeID);
+            detail.enqueue(callback);
+        }
+
+        /*
         * Store the Approve leave list based on the click
         * */
         public void storeApproveLeave(ApprovePost post,Callback<Success> callback){
@@ -349,6 +358,22 @@ public class ApiManager {
         public void storeLeaveForTeam(ApplyLeavePost post,Callback<Success> callback){
             Call<Success> reply = service.storeLeaveForTeam(post);
             reply.enqueue(callback);
+        }
+
+        /*
+        * Get the On- Duty Details
+        * */
+        public void getMyOnDutyDetails(AddRequest request, Callback<OnDutyDetails> callback){
+            Call<OnDutyDetails> detail = service.getMyOnDutyDetails(request.Email,request.companyCode,request.EmployeeID);
+            detail.enqueue(callback);
+        }
+
+        /*
+        * Get the Approved List in On - Duty
+        * */
+        public void getOnDutyApprovedList(AddRequest request,Callback<OnDutyDetails> callback){
+            Call<OnDutyDetails> detail = service.getApproveOnDutyDetail(request.Email,request.companyCode,request.EmployeeID);
+            detail.enqueue(callback);
         }
 
 }

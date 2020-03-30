@@ -8,6 +8,7 @@ import com.android.wilcoconnect.model.leave.Holiday;
 import com.android.wilcoconnect.model.leave.LeaveCalender;
 import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.MyLeave;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
 import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetails;
@@ -233,6 +234,14 @@ public interface ApiInterface {
                                                @Query("employeeID") String employeeID);
 
     /*
+    * Get the Approved List Data
+    * */
+    @GET("api/Leave/GetLeaveRequestApprovedList")
+    Call<ApproveLeaveData> getApprovedList(@Query("Email") String Email,
+                                           @Query("companyCode") String companyCode,
+                                           @Query("employeeID") String employeeID);
+
+    /*
     * Store the Approve List based on the click
     * */
     @POST("api/Leave/LeaveApproveStore")
@@ -267,4 +276,20 @@ public interface ApiInterface {
     * */
     @POST("api/Leave/StoreLeaveForTeam")
     Call<Success> storeLeaveForTeam(@Body ApplyLeavePost data);
+
+    /*
+    * Get the On-Duty Data Details
+    * */
+    @GET("api/WorkFromHome/GetmyOnDutyList")
+    Call<OnDutyDetails> getMyOnDutyDetails(@Query("Email") String Email,
+                                         @Query("companyCode") String companyCode,
+                                         @Query("employeeID") String employeeID);
+
+    /*
+     * Get the Approved List in On - Duty
+     * */
+    @GET("api/workfromhome/GetOnDutyApprovedList")
+    Call<OnDutyDetails> getApproveOnDutyDetail(@Query("Email") String Email,
+                                               @Query("companyCode") String companyCode,
+                                               @Query("employeeID") String employeeID);
 }

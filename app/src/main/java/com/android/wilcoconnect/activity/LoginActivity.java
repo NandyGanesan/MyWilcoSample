@@ -129,6 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                                         editor.putString("CompanyCode",user.getData().getCompanyCode());
                                         editor.putString("EmployeeID",user.getData().getEmployeeID());
                                         editor.apply();
+
                                         startActivity(homeIntent);
                                         Toast.makeText(getApplicationContext(),
                                                 "Successfully Logged in",

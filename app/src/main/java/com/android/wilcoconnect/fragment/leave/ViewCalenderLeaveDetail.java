@@ -19,6 +19,7 @@ import com.android.wilcoconnect.shared.CalenderListAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class ViewCalenderLeaveDetail extends DialogFragment {
         String value = this.getArguments().getString("leavecalender");
         Gson gson = new Gson();
         leaveData = new ArrayList<>();
-        leaveData = gson.fromJson(value, new TypeToken<List<ApproveList>>(){}.getType());
+        leaveData = gson.fromJson(value, (Type) ApproveList.class);
 
         recyclerView = view.findViewById(R.id.calender_recycler_view);
         recyclerView.setHasFixedSize(true);

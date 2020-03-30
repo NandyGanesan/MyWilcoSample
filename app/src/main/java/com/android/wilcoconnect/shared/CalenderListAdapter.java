@@ -35,8 +35,8 @@ public class CalenderListAdapter extends RecyclerView.Adapter<CalenderListAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.title.setText("NAME : " +approveLists.get(position).getFirstName());
         holder.detail.setText("Leave Type : "+approveLists.get(position).getLeaveTypeText() +"\n"+
-                "From Date : "+approveLists.get(position).getFromDate() +"\n"+
-                "To Date : "+approveLists.get(position).getToDate()+"\n"+
+                "From Date : "+approveLists.get(position).getStrFromDate() +"\n"+
+                "To Date : "+approveLists.get(position).getStrToDate()+"\n"+
                 "Description : "+approveLists.get(position).getRequestRemarks());
     }
 

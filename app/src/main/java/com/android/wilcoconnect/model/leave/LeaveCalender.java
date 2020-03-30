@@ -16,7 +16,7 @@ public class LeaveCalender {
     public String message;
 
     @SerializedName("data")
-    public ArrayList<ApproveList> data;
+    public ArrayList<MyLeaveData> data;
 
     public int getCode() {
         return code;
@@ -42,11 +42,11 @@ public class LeaveCalender {
         this.message = message;
     }
 
-    public ArrayList<ApproveList> getData() {
+    public ArrayList<MyLeaveData> getData() {
         return data;
     }
 
-    public void setData(ArrayList<ApproveList> data) {
+    public void setData(ArrayList<MyLeaveData> data) {
         this.data = data;
     }
 }

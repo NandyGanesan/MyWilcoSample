@@ -14,7 +14,9 @@ import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.leave.ApproveList;
+import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.LeaveCalender;
+import com.android.wilcoconnect.model.leave.MyLeaveData;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
@@ -35,7 +37,7 @@ public class LeaveCalenderForTeam extends Fragment {
 
     private CalendarView calendarview;
     private static String TAG = "LeaveCalenderForTeam";
-    private ArrayList<ApproveList> leavelist = new ArrayList<>();
+    private ArrayList<MyLeaveData> leavelist = new ArrayList<>();
     private AddRequest addRequest = new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
 
@@ -86,13 +88,13 @@ public class LeaveCalenderForTeam extends Fragment {
 
         calendarview.setOnDayClickListener(eventDay -> {
             Calendar clickedDayCalendar = eventDay.getCalendar();
-            SimpleDateFormat format1 = new SimpleDateFormat("dd-M-yyyy");
+            SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
             clickedDayCalendar.add(Calendar.DATE,0);
             String formatted = format1.format(clickedDayCalendar.getTime());
             System.out.println(formatted);
             ArrayList<ApproveList> leavedetail = new ArrayList<>();
             for(int i=0;i<leavelist.size();i++){
-                if(leavelist.get(i).getFromDate().equals(formatted)){
+                if(leavelist.get(i).getStrFromDate().equals(formatted)){
                     ApproveList approveList = new ApproveList();
                     approveList.setFirstName(leavelist.get(i).getFirstName());
                     approveList.setLeaveTypeText(leavelist.get(i).getLeaveTypeText());

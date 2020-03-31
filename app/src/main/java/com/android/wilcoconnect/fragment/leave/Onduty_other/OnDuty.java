@@ -102,7 +102,7 @@ public class OnDuty extends Fragment {
             adapter = new OnDutyListAdapter(getActivity(), dutyData, new RecyclerViewListener() {
                 @Override
                 public void onClick(View view, String value) {
-                    newInstance(value);
+                    Instance(value);
                 }
                 @Override
                 public void onClick(View view, ApprovePost post) {  }
@@ -111,7 +111,7 @@ public class OnDuty extends Fragment {
         }
     }
 
-    private void newInstance(String s) {
+    private void Instance(String s) {
         OnDutyListDisplayDetail detail = new OnDutyListDisplayDetail();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();

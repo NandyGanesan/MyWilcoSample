@@ -12,10 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.model.leave.ApproveList;
 import com.android.wilcoconnect.shared.leave.CalenderListAdapter;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -60,7 +62,9 @@ public class ViewCalenderLeaveDetail extends DialogFragment {
             recyclerView.setAdapter(calenderListAdapter);
         }
         else {
-
+            calenderListAdapter = null;
+            recyclerView.setAdapter(calenderListAdapter);
+            Toast.makeText(getActivity(),"No data found",Toast.LENGTH_SHORT).show();
         }
         return view;
     }

@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import retrofit2.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 public class ApprovedList extends Fragment {
+
     View view;
     private static final String MYPREFS_NAME = "logininfo";
     private AddRequest addRequest = new AddRequest();
@@ -40,8 +42,8 @@ public class ApprovedList extends Fragment {
     private RecyclerView recyclerView;
     private FrameLayout frameLayout;
     private ApproveLeaveData data = new ApproveLeaveData();
-    private ArrayList<MyLeaveData> approvedlist;
-    private MyLeaveListDataAdapter leaveadapter;
+    private ArrayList<MyLeaveData> approvedList;
+    private MyLeaveListDataAdapter leaveAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,19 +76,17 @@ public class ApprovedList extends Fragment {
             public void onResponse(Call<ApproveLeaveData> call, Response<ApproveLeaveData> response) {
                 if(response.isSuccessful() && response.body()!=null){
                     data = response.body();
-                    approvedlist = data.getData();
-                    if(approvedlist.size()>0){
+                    approvedList = data.getData();
+                    if(approvedList.size()>0){
                         set_list();
                     }
                 }
             }
-
             @Override
             public void onFailure(Call<ApproveLeaveData> call, Throwable t) {
-
+                Log.e(TAG,t.getLocalizedMessage());
             }
         });
-
 
         return view;
     }
@@ -94,26 +94,23 @@ public class ApprovedList extends Fragment {
     private void set_list() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        if(approvedlist.size()<0){
-            leaveadapter =null;
-            recyclerView.setAdapter(leaveadapter);
+        if(approvedList.size()<0){
+            leaveAdapter =null;
+            recyclerView.setAdapter(leaveAdapter);
             Snackbar snackbar = Snackbar
                     .make(frameLayout, "No Data Found", Snackbar.LENGTH_LONG);
             snackbar.show();
         }
         else{
-            leaveadapter = new MyLeaveListDataAdapter(getActivity(), approvedlist, new RecyclerViewListener() {
+            leaveAdapter = new MyLeaveListDataAdapter(getActivity(), approvedList, new RecyclerViewListener() {
                 @Override
                 public void onClick(View view, String value) {
                     newInstance(value);
                 }
-
                 @Override
-                public void onClick(View view, ApprovePost post) {
-
-                }
+                public void onClick(View view, ApprovePost post) {}
             });
-            recyclerView.setAdapter(leaveadapter);
+            recyclerView.setAdapter(leaveAdapter);
         }
     }
 

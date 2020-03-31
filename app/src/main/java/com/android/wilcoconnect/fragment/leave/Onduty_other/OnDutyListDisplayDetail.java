@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 public class OnDutyListDisplayDetail extends DialogFragment {
 
     public static final String TAG = "OnDutyListDisplayDetail";
-    View view;
+    private View view;
     private TextView tv_View_type;
     private TextView tv_View_fromdate;
     private TextView tv_View_todate;
@@ -28,6 +28,7 @@ public class OnDutyListDisplayDetail extends DialogFragment {
     private TextView tv_View_approveddate;
     private TextView tv_View_approvedremarks;
     private TextView tv_View_approver;
+    private Gson gson = new Gson();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,7 +45,6 @@ public class OnDutyListDisplayDetail extends DialogFragment {
          * Retrieve the Intent Value
          * */
         String value = this.getArguments().getString("OnDuty");
-        Gson gson = new Gson();
         OnDutyData dutyData = gson.fromJson(value, OnDutyData.class);
 
         tv_View_type = view.findViewById(R.id.et_View_type);

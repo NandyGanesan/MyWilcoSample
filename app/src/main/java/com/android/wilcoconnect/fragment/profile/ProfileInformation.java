@@ -38,12 +38,12 @@ import com.android.wilcoconnect.model.profile.ProfileMenu;
 import com.android.wilcoconnect.model.profile.ReferenceDetailData;
 import com.android.wilcoconnect.model.profile.ReferenceDetails;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
-import com.android.wilcoconnect.shared.EducationAdapter;
-import com.android.wilcoconnect.shared.ExperienceAdapter;
-import com.android.wilcoconnect.shared.FamilyAdapter;
-import com.android.wilcoconnect.shared.PassportDetailAdapter;
-import com.android.wilcoconnect.shared.ProfileInformationDisplayAdapter;
-import com.android.wilcoconnect.shared.ReferenceAdapter;
+import com.android.wilcoconnect.shared.profile.EducationAdapter;
+import com.android.wilcoconnect.shared.profile.ExperienceAdapter;
+import com.android.wilcoconnect.shared.profile.FamilyAdapter;
+import com.android.wilcoconnect.shared.profile.PassportDetailAdapter;
+import com.android.wilcoconnect.shared.profile.ProfileInformationDisplayAdapter;
+import com.android.wilcoconnect.shared.profile.ReferenceAdapter;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

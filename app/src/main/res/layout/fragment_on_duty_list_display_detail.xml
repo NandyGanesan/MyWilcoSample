@@ -29,94 +29,29 @@
                 android:background="@color/white">
 
                 <TextView
-                    android:id="@+id/tv_View_employeeid"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/white"
-                    android:padding="4dp"
-                    android:text="EMPLOYEE ID"
-                    android:textColor="#0A0606"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/et_View_employeeid"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/white"
-                    android:padding="4dp"
-                    android:text="WSPLE153"
-                    android:textColor="#0A0606"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_View_employeeid" />
-
-                <TextView
-                    android:id="@+id/tv_View_employeename"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/white"
-                    android:padding="4dp"
-                    android:text="NAME"
-                    android:textStyle="bold"
-                    android:textColor="#0A0606"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_View_employeeid" />
-
-                <TextView
-                    android:id="@+id/et_View_employeename"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/white"
-                    android:padding="4dp"
-                    android:text="Ranjith"
-                    android:textColor="#0A0606"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_View_employeename" />
-
-                <TextView
                     android:id="@+id/tv_View_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:padding="4dp"
-                    android:text="LEAVE TYPE"
+                    android:text="TYPE"
                     android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
                     android:layout_margin="8dp"
                     android:textColor="#0A0606"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_View_employeename"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
                 <TextView
-                    android:id="@+id/et_View_leavetype"
+                    android:id="@+id/et_View_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:layout_marginTop="8dp"
                     android:background="@color/white"
                     android:padding="4dp"
-                    android:text="Sick Leave"
+                    android:text="Casual Leave"
                     android:textColor="#0A0606"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -125,22 +60,22 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_View_type" />
 
                 <TextView
-                    android:id="@+id/tv_View_applieddate"
+                    android:id="@+id/tv_View_fromdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:padding="4dp"
-                    android:text="APPLIED DATE"
+                    android:text="FROM DATE"
                     android:textStyle="bold"
                     android:layout_margin="8dp"
                     android:textColor="#0A0606"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_View_leavetype"/>
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_type"/>
 
                 <TextView
-                    android:id="@+id/et_View_applieddate"
+                    android:id="@+id/et_View_fromdate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -153,47 +88,16 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_View_applieddate" />
-
-                <TextView
-                    android:id="@+id/tv_View_fromdate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="FROM DATE"
-                    android:textStyle="bold"
-                    android:padding="4dp"
-                    android:background="@color/white"
-                    android:layout_margin="8dp"
-                    android:textColor="#0A0606"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_View_applieddate"/>
-
-                <TextView
-                    android:id="@+id/et_View_fromdate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/white"
-                    android:padding="4dp"
-                    android:text="25-02-2020"
-                    android:textColor="#0A0606"
-                    android:textSize="18sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_View_fromdate" />
 
                 <TextView
                     android:id="@+id/tv_View_todate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="4dp"
                     android:text="TO DATE"
                     android:textStyle="bold"
-                    android:padding="4dp"
-                    android:background="@color/white"
                     android:layout_margin="8dp"
                     android:textColor="#0A0606"
                     android:textSize="18sp"
@@ -209,7 +113,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@color/white"
                     android:padding="4dp"
-                    android:text="25-02-2020"
+                    android:text="24-02-2020"
                     android:textColor="#0A0606"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -218,13 +122,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_View_todate" />
 
                 <TextView
-                    android:id="@+id/tv_View_noofday"
+                    android:id="@+id/tv_View_no_of_counts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="NO OF DAY(S)"
+                    android:text="NUMBER OF DAY(S)"
                     android:textStyle="bold"
-                    android:background="@color/white"
                     android:padding="4dp"
+                    android:background="@color/white"
                     android:layout_margin="8dp"
                     android:textColor="#0A0606"
                     android:textSize="18sp"
@@ -233,7 +137,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/et_View_todate"/>
 
                 <TextView
-                    android:id="@+id/et_View_noofday"
+                    android:id="@+id/et_View_no_of_counts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -246,13 +150,13 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_View_noofday" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_no_of_counts" />
 
                 <TextView
-                    android:id="@+id/tv_View_remarks"
+                    android:id="@+id/tv_View_reason"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="REMARKS"
+                    android:text="REASON"
                     android:textStyle="bold"
                     android:padding="4dp"
                     android:background="@color/white"
@@ -261,10 +165,10 @@
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_View_noofday"/>
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_no_of_counts"/>
 
                 <TextView
-                    android:id="@+id/et_View_remarks"
+                    android:id="@+id/et_View_reason"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -277,7 +181,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_View_remarks" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_reason" />
 
                 <TextView
                     android:id="@+id/tv_View_status"
@@ -285,14 +189,14 @@
                     android:layout_height="wrap_content"
                     android:text="STATUS"
                     android:textStyle="bold"
-                    android:padding="4dp"
                     android:background="@color/white"
+                    android:padding="4dp"
                     android:layout_margin="8dp"
                     android:textColor="#0A0606"
                     android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_View_remarks"/>
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_reason"/>
 
                 <TextView
                     android:id="@+id/et_View_status"
@@ -302,7 +206,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@color/white"
                     android:padding="4dp"
-                    android:text="Applied"
+                    android:text="Approved"
                     android:textColor="#0A0606"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -342,7 +246,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_View_approveddate" />
 
                 <TextView
-                    android:id="@+id/tv_View_approvedremarks"
+                    android:id="@+id/tv_View_remarksbyapprover"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="APPROVED REMARKS"
@@ -357,20 +261,51 @@
                     app:layout_constraintTop_toBottomOf="@+id/et_View_approveddate"/>
 
                 <TextView
-                    android:id="@+id/et_View_approvedremarks"
+                    android:id="@+id/et_View_remarksbyapprover"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:layout_marginTop="8dp"
                     android:background="@color/white"
                     android:padding="4dp"
-                    android:text=""
+                    android:text="done"
                     android:textColor="#0A0606"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_View_approvedremarks" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_remarksbyapprover" />
+
+                <TextView
+                    android:id="@+id/tv_View_approver"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="APPROVED BY"
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_remarksbyapprover"/>
+
+                <TextView
+                    android:id="@+id/et_View_approver"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="done"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_approver" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

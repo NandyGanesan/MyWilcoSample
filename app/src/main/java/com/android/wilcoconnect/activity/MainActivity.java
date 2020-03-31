@@ -22,10 +22,8 @@ import com.android.wilcoconnect.fragment.wilcoconnect.WilcoConnect;
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.model.MenuList.MainMenu;
 import com.android.wilcoconnect.model.MenuList.Menu;
-import com.android.wilcoconnect.model.MenuList.SubMenu;
-import com.android.wilcoconnect.model.common.UserData;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
-import com.android.wilcoconnect.shared.FragmentAdapter;
+import com.android.wilcoconnect.shared.common.FragmentAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;

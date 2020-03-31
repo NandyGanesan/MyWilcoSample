@@ -22,7 +22,7 @@ import com.android.wilcoconnect.model.leave.MyLeaveData;
 import com.android.wilcoconnect.model.leave.MyLeave;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
-import com.android.wilcoconnect.shared.MyLeaveListDataAdapter;
+import com.android.wilcoconnect.shared.leave.MyLeaveListDataAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;

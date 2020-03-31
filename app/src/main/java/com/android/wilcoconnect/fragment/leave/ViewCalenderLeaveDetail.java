@@ -15,11 +15,10 @@ import android.widget.Button;
 
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.model.leave.ApproveList;
-import com.android.wilcoconnect.shared.CalenderListAdapter;
+import com.android.wilcoconnect.shared.leave.CalenderListAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 

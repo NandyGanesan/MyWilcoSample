@@ -15,7 +15,7 @@ import android.widget.ExpandableListView;
 
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.activity.LoginActivity;
-import com.android.wilcoconnect.shared.MyExtendableListAdapter;
+import com.android.wilcoconnect.shared.common.MyExtendableListAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;

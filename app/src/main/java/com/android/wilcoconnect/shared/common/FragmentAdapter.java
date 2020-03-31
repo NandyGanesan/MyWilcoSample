@@ -1,4 +1,4 @@
-package com.android.wilcoconnect.shared;
+package com.android.wilcoconnect.shared.common;
 
 import android.content.Context;
 

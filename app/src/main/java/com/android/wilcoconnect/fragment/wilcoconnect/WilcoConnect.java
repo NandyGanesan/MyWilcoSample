@@ -1,7 +1,6 @@
 package com.android.wilcoconnect.fragment.wilcoconnect;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -25,11 +24,10 @@ import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.model.wilcoconnect.MyRequestData;
 import com.android.wilcoconnect.model.wilcoconnect.SendRequest;
 import com.android.wilcoconnect.model.common.UserData;
-import com.android.wilcoconnect.shared.MyAdapter;
-import com.android.wilcoconnect.shared.StatusAdapter;
+import com.android.wilcoconnect.shared.wilcoconnect.MyAdapter;
+import com.android.wilcoconnect.shared.wilcoconnect.StatusAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;

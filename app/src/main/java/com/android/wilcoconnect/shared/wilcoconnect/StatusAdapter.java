@@ -1,4 +1,4 @@
-package com.android.wilcoconnect.shared;
+package com.android.wilcoconnect.shared.wilcoconnect;
 
 import android.content.Context;
 import android.util.Log;

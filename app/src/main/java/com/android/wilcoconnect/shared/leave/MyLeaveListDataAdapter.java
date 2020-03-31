@@ -1,4 +1,4 @@
-package com.android.wilcoconnect.shared;
+package com.android.wilcoconnect.shared.leave;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -19,7 +19,7 @@ import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
-import com.android.wilcoconnect.shared.HolidayListAdapter;
+import com.android.wilcoconnect.shared.leave.HolidayListAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;

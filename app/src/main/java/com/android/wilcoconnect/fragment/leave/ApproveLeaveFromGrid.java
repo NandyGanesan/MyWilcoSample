@@ -16,16 +16,14 @@ import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.leave.ApproveLeaveData;
-import com.android.wilcoconnect.model.leave.ApproveList;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.MyLeaveData;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
-import com.android.wilcoconnect.shared.ApproveLeaveListAdapter;
+import com.android.wilcoconnect.shared.leave.ApproveLeaveListAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
-import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 
 import retrofit2.Call;

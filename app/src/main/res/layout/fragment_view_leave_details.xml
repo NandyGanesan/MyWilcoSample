@@ -29,7 +29,7 @@
             android:background="@color/white">
 
             <TextView
-                android:id="@+id/tv_View_leavetype"
+                android:id="@+id/tv_View_type"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="LEAVE TYPE"
@@ -57,7 +57,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_View_leavetype" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_type" />
 
                 <TextView
                     android:id="@+id/tv_View_applieddate"
@@ -217,7 +217,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_View_remarks" />
 
             <TextView
-                android:id="@+id/tv_View_leavestatus"
+                android:id="@+id/tv_View_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="LEAVE STATUS"
@@ -232,7 +232,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_View_remarks"/>
 
                 <TextView
-                    android:id="@+id/et_View_leavestatus"
+                    android:id="@+id/et_View_status"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
@@ -245,7 +245,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_View_leavestatus" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_status" />
 
             <TextView
                 android:id="@+id/tv_View_approveddate"
@@ -260,7 +260,7 @@
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_View_leavestatus"/>
+                app:layout_constraintTop_toBottomOf="@+id/et_View_status"/>
 
                 <TextView
                     android:id="@+id/et_View_approveddate"

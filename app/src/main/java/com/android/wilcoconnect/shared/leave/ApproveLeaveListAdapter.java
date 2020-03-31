@@ -1,7 +1,6 @@
-package com.android.wilcoconnect.shared;
+package com.android.wilcoconnect.shared.leave;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.wilcoconnect.R;
-import com.android.wilcoconnect.fragment.leave.ApproveFromPage;
 import com.android.wilcoconnect.model.leave.ApproveList;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.MyLeaveData;

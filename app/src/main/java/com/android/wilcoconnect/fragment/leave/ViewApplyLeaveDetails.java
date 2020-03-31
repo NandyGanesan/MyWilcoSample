@@ -53,7 +53,7 @@ public class ViewApplyLeaveDetails extends DialogFragment {
         tv_View_todate = view.findViewById(R.id.et_View_todate);
         tv_View_no_of_counts = view.findViewById(R.id.et_View_no_of_counts);
         tv_View_remarks = view.findViewById(R.id.et_View_remarks);
-        tv_View_leavestatus = view.findViewById(R.id.et_View_leavestatus);
+        tv_View_leavestatus = view.findViewById(R.id.et_View_status);
         tv_View_approveddate = view.findViewById(R.id.et_View_approveddate);
         tv_View_remarksbyapprover = view.findViewById(R.id.et_View_remarksbyapprover);
         tv_View_approver = view.findViewById(R.id.et_View_approver);

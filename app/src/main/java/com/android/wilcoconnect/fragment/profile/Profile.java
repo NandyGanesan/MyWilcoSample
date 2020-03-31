@@ -16,7 +16,7 @@ import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.profile.ProfileMenu;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
-import com.android.wilcoconnect.shared.ProfileAdapter;
+import com.android.wilcoconnect.shared.profile.ProfileAdapter;
 
 import java.util.ArrayList;
 

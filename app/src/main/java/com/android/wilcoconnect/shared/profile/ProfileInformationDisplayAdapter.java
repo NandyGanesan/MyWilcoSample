@@ -1,4 +1,4 @@
-package com.android.wilcoconnect.shared;
+package com.android.wilcoconnect.shared.profile;
 
 import android.content.Context;
 import android.view.LayoutInflater;

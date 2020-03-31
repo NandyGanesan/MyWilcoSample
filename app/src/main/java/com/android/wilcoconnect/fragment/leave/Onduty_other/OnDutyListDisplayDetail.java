@@ -19,7 +19,6 @@ public class OnDutyListDisplayDetail extends DialogFragment {
 
     public static final String TAG = "OnDutyListDisplayDetail";
     View view;
-    private OnDutyData dutyData = new OnDutyData();
     private TextView tv_View_type;
     private TextView tv_View_fromdate;
     private TextView tv_View_todate;
@@ -44,12 +43,9 @@ public class OnDutyListDisplayDetail extends DialogFragment {
         /*
          * Retrieve the Intent Value
          * */
-        /*
-         * Retrieve the Intent Value
-         * */
         String value = this.getArguments().getString("OnDuty");
         Gson gson = new Gson();
-        dutyData = gson.fromJson(value, OnDutyData.class);
+        OnDutyData dutyData = gson.fromJson(value, OnDutyData.class);
 
         tv_View_type = view.findViewById(R.id.et_View_type);
         tv_View_fromdate = view.findViewById(R.id.et_View_fromdate);

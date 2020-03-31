@@ -51,7 +51,7 @@ public class ViewCalenderLeaveDetail extends DialogFragment {
         String value = this.getArguments().getString("leavecalender");
         Gson gson = new Gson();
         leaveData = new ArrayList<>();
-        leaveData = gson.fromJson(value, (Type) ApproveList.class);
+        leaveData = gson.fromJson(value, new TypeToken<List<ApproveList>>(){}.getType());
 
         recyclerView = view.findViewById(R.id.calender_recycler_view);
         recyclerView.setHasFixedSize(true);

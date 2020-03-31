@@ -22,7 +22,7 @@ public class ApproveList {
     @SerializedName("ToDate")
     public String ToDate;
 
-    @SerializedName("strFromDate")
+    @SerializedName("strToDate")
     public String strToDate;
 
     @SerializedName("LeaveTypeText")

@@ -118,11 +118,11 @@ public class ApprovedList extends Fragment {
     }
 
     private void newInstance(String s) {
-        ViewApplyLeaveDetails viewApplyLeaveDetails = new ViewApplyLeaveDetails();
+        ApprovedListDisplay LeaveDetails = new ApprovedListDisplay();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
         bundle.putString("leave", s);
-        viewApplyLeaveDetails.setArguments(bundle);
-        viewApplyLeaveDetails.show(transaction,viewApplyLeaveDetails.TAG);
+        LeaveDetails.setArguments(bundle);
+        LeaveDetails.show(transaction,LeaveDetails.TAG);
     }
 }

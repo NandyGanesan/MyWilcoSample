@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        tools:ignore="UselessParent">
+
+        <include
+            layout="@layout/toolbar_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tv_View_employeeid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="EMPLOYEE ID"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/et_View_employeeid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="WSPLE153"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_employeeid" />
+
+                <TextView
+                    android:id="@+id/tv_View_employeename"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="NAME"
+                    android:textStyle="bold"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_employeeid" />
+
+                <TextView
+                    android:id="@+id/et_View_employeename"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="Ranjith"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_employeename" />
+
+                <TextView
+                    android:id="@+id/tv_View_leavetype"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="LEAVE TYPE"
+                    android:textStyle="bold"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_employeename"/>
+
+                <TextView
+                    android:id="@+id/et_View_leavetype"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="Sick Leave"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_leavetype" />
+
+                <TextView
+                    android:id="@+id/tv_View_applieddate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="APPLIED DATE"
+                    android:textStyle="bold"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_leavetype"/>
+
+                <TextView
+                    android:id="@+id/et_View_applieddate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="24-02-2020"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_applieddate" />
+
+                <TextView
+                    android:id="@+id/tv_View_fromdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="FROM DATE"
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_applieddate"/>
+
+                <TextView
+                    android:id="@+id/et_View_fromdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="25-02-2020"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_fromdate" />
+
+                <TextView
+                    android:id="@+id/tv_View_todate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TO DATE"
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_fromdate"/>
+
+                <TextView
+                    android:id="@+id/et_View_todate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="25-02-2020"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_todate" />
+
+                <TextView
+                    android:id="@+id/tv_View_noofday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="NO OF DAY(S)"
+                    android:textStyle="bold"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_todate"/>
+
+                <TextView
+                    android:id="@+id/et_View_noofday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="1"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_noofday" />
+
+                <TextView
+                    android:id="@+id/tv_View_remarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="REMARKS"
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_noofday"/>
+
+                <TextView
+                    android:id="@+id/et_View_remarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="Native"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_remarks" />
+
+                <TextView
+                    android:id="@+id/tv_View_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="STATUS"
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_remarks"/>
+
+                <TextView
+                    android:id="@+id/et_View_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="Applied"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_status" />
+
+                <TextView
+                    android:id="@+id/tv_View_approveddate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="APPROVED DATE"
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_status"/>
+
+                <TextView
+                    android:id="@+id/et_View_approveddate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="25-02-2020"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_approveddate" />
+
+                <TextView
+                    android:id="@+id/tv_View_approvedremarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="APPROVED REMARKS"
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_approveddate"/>
+
+                <TextView
+                    android:id="@+id/et_View_approvedremarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text=""
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_approvedremarks" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+    </LinearLayout>
+</FrameLayout>

@@ -44,23 +44,25 @@ public class MyLeaveListDataAdapter extends RecyclerView.Adapter<MyLeaveListData
         holder.Todate.setText(myLeaveData.get(position).getStrToDate());
 
         holder.cardView.setOnClickListener(v -> {
-            MyLeaveData particularleavedata = new MyLeaveData();
-            particularleavedata.setLeaveTypeText(myLeaveData.get(position).getLeaveTypeText());
-            particularleavedata.setLeaveAppliedDate(myLeaveData.get(position).getLeaveAppliedDate());
-            particularleavedata.setStrFromDate(myLeaveData.get(position).getStrFromDate());
-            particularleavedata.setStrToDate(myLeaveData.get(position).getStrToDate());
-            particularleavedata.setNoofDays(myLeaveData.get(position).getNoofDays());
-            particularleavedata.setRequestStatus(myLeaveData.get(position).getRequestStatus());
-            particularleavedata.setRequestRemarks(myLeaveData.get(position).getRequestRemarks());
-            particularleavedata.setStrApprovedDate(myLeaveData.get(position).getStrApprovedDate());
-            particularleavedata.setApprovedRemarks(myLeaveData.get(position).getApprovedRemarks());
-            particularleavedata.setPrimaryApprover(myLeaveData.get(position).getPrimaryApprover());
+            MyLeaveData data = new MyLeaveData();
+            data.setEmployeeID(myLeaveData.get(position).getEmployeeID());
+            data.setFirstName(myLeaveData.get(position).getFirstName());
+            data.setLeaveTypeText(myLeaveData.get(position).getLeaveTypeText());
+            data.setLeaveAppliedDate(myLeaveData.get(position).getLeaveAppliedDate());
+            data.setStrFromDate(myLeaveData.get(position).getStrFromDate());
+            data.setStrToDate(myLeaveData.get(position).getStrToDate());
+            data.setNoofDays(myLeaveData.get(position).getNoofDays());
+            data.setRequestStatus(myLeaveData.get(position).getRequestStatus());
+            data.setRequestRemarks(myLeaveData.get(position).getRequestRemarks());
+            data.setStrApprovedDate(myLeaveData.get(position).getStrApprovedDate());
+            data.setApprovedRemarks(myLeaveData.get(position).getApprovedRemarks());
+            data.setPrimaryApprover(myLeaveData.get(position).getPrimaryApprover());
             /**
              * Show the data in New Update View
              * and perform respective operations
              * */
             Gson gson = new Gson();
-            String s = gson.toJson(particularleavedata);
+            String s = gson.toJson(data);
             if (listener != null)
                 listener.onClick(v, s);
         });

@@ -50,15 +50,15 @@ public class ApproveLeaveListAdapter extends RecyclerView.Adapter<ApproveLeaveLi
             holder.employeename.setText(approveLists.get(position).getFirstName());
             holder.leavetype.setText(approveLists.get(position).getLeaveTypeText());
             holder.status.setText(approveLists.get(position).getRequestStatus());
-            holder.fromdate.setText(approveLists.get(position).getFromDate());
-            holder.todate.setText(approveLists.get(position).getToDate());
+            holder.fromdate.setText(approveLists.get(position).getStrFromDate());
+            holder.todate.setText(approveLists.get(position).getStrToDate());
 
         holder.approve.setOnClickListener(v -> {
             ApproveList approveList = new ApproveList();
             approveList.setEmployeeID(approveLists.get(position).getEmployeeID());
             approveList.setFirstName(approveLists.get(position).getFirstName());
-            approveList.setFromDate(approveLists.get(position).getFromDate());
-            approveList.setToDate(approveLists.get(position).getToDate());
+            approveList.setStrFromDate(approveLists.get(position).getStrFromDate());
+            approveList.setStrToDate(approveLists.get(position).getStrToDate());
             approveList.setNo_of_days(approveLists.get(position).getNoofDays());
             approveList.setRequestRemarks(approveLists.get(position).getRequestRemarks());
             approveList.setLeaveRequestStatusID(approveLists.get(position).getLeaveRequestID());

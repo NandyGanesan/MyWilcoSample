@@ -109,8 +109,6 @@ public class ApproveLeaveFromGrid extends Fragment {
                 data.setStrApprovedDate(approveList.get(i).getStrApprovedDate());
                 data.setLeaveRequestID(approveList.get(i).getLeaveRequestID());
                 data.setEmployeeID(approveList.get(i).getEmployeeID());
-                data.setFromDate(approveList.get(i).getFromDate());
-                data.setToDate(approveList.get(i).getToDate());
                 data.setNoofDays(approveList.get(i).getNoofDays());
                 data.setRequestRemarks(approveList.get(i).getRequestRemarks());
                 data.setRequestStatus(approveList.get(i).getRequestStatus());
@@ -126,8 +124,6 @@ public class ApproveLeaveFromGrid extends Fragment {
                 data.setStrApprovedDate(approveList.get(i).getStrApprovedDate());
                 data.setLeaveRequestID(approveList.get(i).getLeaveRequestID());
                 data.setEmployeeID(approveList.get(i).getEmployeeID());
-                data.setFromDate(approveList.get(i).getFromDate());
-                data.setToDate(approveList.get(i).getToDate());
                 data.setNoofDays(approveList.get(i).getNoofDays());
                 data.setRequestRemarks(approveList.get(i).getRequestRemarks());
                 data.setRequestStatus(approveList.get(i).getRequestStatus());

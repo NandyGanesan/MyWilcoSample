@@ -54,7 +54,7 @@ public class MyLeaveListDataAdapter extends RecyclerView.Adapter<MyLeaveListData
             data.setNoofDays(myLeaveData.get(position).getNoofDays());
             data.setRequestStatus(myLeaveData.get(position).getRequestStatus());
             data.setRequestRemarks(myLeaveData.get(position).getRequestRemarks());
-            data.setStrApprovedDate(myLeaveData.get(position).getStrApprovedDate());
+            data.setApprovedDate(myLeaveData.get(position).getApprovedDate());
             data.setApprovedRemarks(myLeaveData.get(position).getApprovedRemarks());
             data.setPrimaryApprover(myLeaveData.get(position).getPrimaryApprover());
             /**

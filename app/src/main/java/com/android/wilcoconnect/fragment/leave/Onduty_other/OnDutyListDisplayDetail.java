@@ -28,7 +28,7 @@ public class OnDutyListDisplayDetail extends DialogFragment {
     private TextView tv_View_approveddate;
     private TextView tv_View_approvedremarks;
     private TextView tv_View_approver;
-    private Gson gson = new Gson();
+    private OnDutyData dutyData = new OnDutyData();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +45,8 @@ public class OnDutyListDisplayDetail extends DialogFragment {
          * Retrieve the Intent Value
          * */
         String value = this.getArguments().getString("OnDuty");
-        OnDutyData dutyData = gson.fromJson(value, OnDutyData.class);
+        Gson gson = new Gson();
+        dutyData = gson.fromJson(value, OnDutyData.class);
 
         tv_View_type = view.findViewById(R.id.et_View_type);
         tv_View_fromdate = view.findViewById(R.id.et_View_fromdate);
@@ -54,7 +55,7 @@ public class OnDutyListDisplayDetail extends DialogFragment {
         tv_View_reason = view.findViewById(R.id.et_View_reason);
         tv_View_status = view.findViewById(R.id.et_View_status);
         tv_View_approveddate = view.findViewById(R.id.et_View_approveddate);
-        tv_View_approvedremarks = view.findViewById(R.id.tv_View_approvedremarks);
+        tv_View_approvedremarks = view.findViewById(R.id.et_View_remarksbyapprover);
         tv_View_approver = view.findViewById(R.id.et_View_approver);
 
         tv_View_type.setText(dutyData.getOnDutyName());

@@ -16,6 +16,7 @@ import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.fragment.leave.Onduty_other.OnDuty;
+import com.android.wilcoconnect.fragment.leave.Onduty_other.OnDutyApprovedList;
 import com.android.wilcoconnect.model.MenuList.MainMenu;
 import com.android.wilcoconnect.model.MenuList.Menu;
 import com.android.wilcoconnect.model.MenuList.SubMenu;
@@ -95,13 +96,14 @@ public class LeaveHome extends Fragment {
         fragments.add(new ApplyLeaveForTeam());
         fragments.add(new LeaveCalenderForTeam());
         fragments.add(new OnDuty());
+        fragments.add(new OnDutyApprovedList());
 
         /*
          * Set the FragmentAdapter with the Fragment
          * */
         final FragmentAdapter pagerAdapter = new FragmentAdapter(getActivity().getSupportFragmentManager(), getActivity().getApplicationContext(), fragments);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(7);
+        viewPager.setOffscreenPageLimit(8);
         tabLayout.setupWithViewPager(viewPager);
 
         /*
@@ -115,6 +117,7 @@ public class LeaveHome extends Fragment {
         tabLayout.getTabAt(5).setText("APPLY LEAVE FOR TEAM");
         tabLayout.getTabAt(6).setText("LEAVE CALENDER");
         tabLayout.getTabAt(7).setText("ON DUTY");
+        tabLayout.getTabAt(8).setText("ON DUTY APPROVED LIST");
 
         /*
          * Define the Tab Layout Action

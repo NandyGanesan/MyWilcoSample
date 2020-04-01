@@ -72,7 +72,7 @@ public class ApprovedListDisplay extends DialogFragment {
         et_View_noofday.setText(""+leaveData.getNoofDays());
         et_View_remarks.setText(leaveData.getRequestRemarks());
         et_View_status.setText(leaveData.getRequestStatus());
-        et_View_approveddate.setText(leaveData.getStrApprovedDate());
+        et_View_approveddate.setText(leaveData.getApprovedDate());
         et_View_approvedremarks.setText(leaveData.getApprovedRemarks());
 
         return view;

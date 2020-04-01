@@ -1,6 +1,7 @@
 package com.android.wilcoconnect.shared.leave.onduty_other;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class OnDutyListAdapter extends RecyclerView.Adapter<OnDutyListAdapter.My
              * and perform respective operations
              * */
             Gson gson = new Gson();
-            String s = gson.toJson(data);
+            String s = gson.toJson(onDutyData);
             if (listener != null)
                 listener.onClick(v, s);
         });

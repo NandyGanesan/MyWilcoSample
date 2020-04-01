@@ -37,7 +37,7 @@ public class OnDutyListDisplayDetail extends DialogFragment {
         view = inflater.inflate(R.layout.fragment_on_duty_list_display_detail, container, false);
 
         Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
-        detail_toolbar.setTitle("VIEW LEAVE DETAILS");
+        detail_toolbar.setTitle("VIEW ON-DUTY DETAILS");
         detail_toolbar.setNavigationIcon(R.drawable.close);
         detail_toolbar.setNavigationOnClickListener(v -> dismiss());
 

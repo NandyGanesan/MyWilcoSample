@@ -75,7 +75,7 @@ public class ApplyLeaveForTeam extends Fragment {
         /*
          * Assign the Values for the Particular View Elements
          * */
-        btn_leaveType = view.findViewById(R.id.btn_leavetype);
+        btn_leaveType = view.findViewById(R.id.btn_type);
         btn_from_date = view.findViewById(R.id.btn_fromdate);
         btn_to_date = view.findViewById(R.id.btn_todate);
         btn_clear = view.findViewById(R.id.btn_clear);

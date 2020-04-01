@@ -1,11 +1,12 @@
-package com.android.wilcoconnect.fragment.leave;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
+package com.android.wilcoconnect.fragment.leave.Onduty_other;
 
 import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,8 @@ import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.common.Success;
 import com.android.wilcoconnect.model.leave.ApplyLeavePost;
 import com.android.wilcoconnect.model.leave.LeaveType;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyMasterData;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyPost;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 
 import java.text.ParseException;
@@ -36,26 +39,24 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class ApplyLeave extends Fragment {
+public class ApplyOnDuty extends Fragment {
 
     /*
      * Initialize the variables to access the Module
      * */
-    private String TAG = "ApplyLeave";
-    private String[] LeaveType;
-    private Button btn_leaveType, btn_from_date, btn_to_date,btn_clear,btn_submit;
+    private String TAG = "ApplyOnDuty";
+    private String[] Type;
+    private Button btn_Type, btn_from_date, btn_to_date,btn_clear,btn_submit;
     private ImageView iv_from_date, iv_to_date;
     private EditText et_remarks;
     private TextView tv_no_of_days_count, tv_date_error;
     private int checkItem =0;
     private int fromYear,fromMonth,fromDay,toYear,toMonth,toDay;
-    private RadioGroup fullandhalf,mrngandevening;
     private AddRequest addRequest= new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
-    private LeaveType leaveType = new LeaveType();
-    private String leavelevel;
-    private ArrayList<LeaveType.Data> type = new ArrayList<>();
-    private ApplyLeavePost leavepost = new ApplyLeavePost();
+    private OnDutyMasterData onDutyType = new OnDutyMasterData();
+    private ArrayList<OnDutyMasterData.Data> type = new ArrayList<>();
+    private OnDutyPost post = new OnDutyPost();
     private String from_date,to_date;
 
     //Session: F->Fullday, A->After Noon,M ->Morning
@@ -64,7 +65,7 @@ public class ApplyLeave extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_apply_leave, container, false);
+        View view = inflater.inflate(R.layout.fragment_apply_on_duty, container, false);
 
         /*
          * Get the Header
@@ -84,20 +85,18 @@ public class ApplyLeave extends Fragment {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
-        ApiManager.getInstance().getLeaveType(addRequest, new Callback<LeaveType>() {
+        ApiManager.getInstance().getMasterList(addRequest, new Callback<OnDutyMasterData>() {
             @Override
-            public void onResponse(Call<LeaveType> call, Response<LeaveType> response) {
-                leaveType = response.body();
-                if(leaveType!=null && response.isSuccessful()){
-                    type = leaveType.getData();
-                    if(type.size()>0){
-                        get_dropdown_value();
-                    }
+            public void onResponse(Call<OnDutyMasterData> call, Response<OnDutyMasterData> response) {
+                onDutyType = response.body();
+                if(onDutyType!=null && response.isSuccessful()){
+                    type = onDutyType.getData();
+                    get_dropdown_value();
                 }
             }
 
             @Override
-            public void onFailure(Call<LeaveType> call, Throwable t) {
+            public void onFailure(Call<OnDutyMasterData> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
             }
         });
@@ -105,36 +104,33 @@ public class ApplyLeave extends Fragment {
         /*
          * Assign the Values for the Particular View Elements
          * */
-        btn_leaveType = view.findViewById(R.id.btn_type);
+        btn_Type = view.findViewById(R.id.btn_type);
         btn_from_date = view.findViewById(R.id.btn_fromdate);
         btn_to_date = view.findViewById(R.id.btn_todate);
         btn_clear = view.findViewById(R.id.btn_clear);
         btn_submit = view.findViewById(R.id.btn_submit);
         iv_from_date = view.findViewById(R.id.iv_fromdate);
         iv_to_date = view.findViewById(R.id.iv_todate);
-        et_remarks = view.findViewById(R.id.et_remarks);
+        et_remarks = view.findViewById(R.id.et_reason);
         tv_no_of_days_count = view.findViewById(R.id.tv_noofdayscount);
         tv_date_error = view.findViewById(R.id.tv_dateerror);
-        fullandhalf = view.findViewById(R.id.radioGroupleave);
-        mrngandevening = view.findViewById(R.id.radioGroup);
-        mrngandevening.setVisibility(View.GONE);
 
         /*
-        * Select the Particular leave type to enable the From and To date
-        * */
-        btn_leaveType.setOnClickListener(v -> {
+         * Select the Particular leave type to enable the From and To date
+         * */
+        btn_Type.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle("Select the Leave Type:");
-            builder.setItems(LeaveType, (dialog, which) -> {
+            builder.setItems(Type, (dialog, which) -> {
                 checkItem = which;
-                btn_leaveType.setText(LeaveType[which]);
-                leavepost.setLeaveTypeID(type.get(which).getLeaveTypeID());
+                btn_Type.setText(Type[which]);
+                post.setOnDutyID(type.get(which).getOnDutyID());
                 iv_from_date.setEnabled(true);
                 iv_to_date.setEnabled(true);
             }).setNegativeButton("Cancel", (dialog, which) -> {
                 checkItem=-1;
                 if (checkItem < 0) {
-                    btn_leaveType.setText("--- SELECT ---");
+                    btn_Type.setText("--- SELECT ---");
                     iv_from_date.setEnabled(false);
                     iv_to_date.setEnabled(false);
                 }
@@ -144,9 +140,9 @@ public class ApplyLeave extends Fragment {
         });
 
         /*
-        * Enable the From and To date
-        * */
-        if(btn_leaveType.getText().toString().equals("--- SELECT ---")){
+         * Enable the From and To date
+         * */
+        if(btn_Type.getText().toString().equals("--- SELECT ---")){
             iv_from_date.setEnabled(false);
             iv_to_date.setEnabled(false);
         }
@@ -156,28 +152,28 @@ public class ApplyLeave extends Fragment {
         }
 
         /*
-        * Select the From Date
-        * */
+         * Select the From Date
+         * */
         iv_from_date.setOnClickListener(v -> {
             Calendar c = Calendar.getInstance();
             fromYear = c.get(Calendar.YEAR);
             fromMonth = c.get(Calendar.MONTH);
             fromDay = c.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view1, year, monthOfYear, dayOfMonth) -> {
-                   btn_from_date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                   from_date = (year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-                   if(btn_to_date.getText().toString()!="" && btn_from_date.getText().toString()!="" &&
-                      btn_to_date.getText().toString()!=null && btn_from_date.getText().toString()!=null){
-                         getCount();
-                   }
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view1, year, monthOfYear, dayOfMonth) -> {
+                btn_from_date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                from_date = (year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                if(btn_to_date.getText().toString()!="" && btn_from_date.getText().toString()!="" &&
+                        btn_to_date.getText().toString()!=null && btn_from_date.getText().toString()!=null){
+                    getCount();
+                }
             }, fromYear, fromMonth, fromDay);
             datePickerDialog.show();
         });
 
 
         /*
-        * Select the To date
-        * */
+         * Select the To date
+         * */
         iv_to_date.setOnClickListener(v -> {
             Calendar c = Calendar.getInstance();
             toYear = c.get(Calendar.YEAR);
@@ -194,25 +190,11 @@ public class ApplyLeave extends Fragment {
             datePickerDialog.show();
         });
 
-        fullandhalf.setOnCheckedChangeListener((group, checkedId) -> {
-            int radioButtonID = fullandhalf.getCheckedRadioButtonId();
-            View radioButton = fullandhalf.findViewById(radioButtonID);
-            int idx = fullandhalf.indexOfChild(radioButton);
-            if(idx==0){
-                tv_no_of_days_count.setText(""+1);
-                mrngandevening.setVisibility(View.GONE);
-            }
-            else {
-                mrngandevening.setVisibility(View.VISIBLE);
-                tv_no_of_days_count.setText(""+0.5);
-            }
-        });
-
         /*
-        * Clear all the Field values
-        * */
+         * Clear all the Field values
+         * */
         btn_clear.setOnClickListener(v -> {
-            btn_leaveType.setText("--- SELECT ---");
+            btn_Type.setText("--- SELECT ---");
             btn_from_date.setText("");
             iv_from_date.setEnabled(false);
             btn_to_date.setText("");
@@ -220,22 +202,20 @@ public class ApplyLeave extends Fragment {
             tv_date_error.setVisibility(View.GONE);
             tv_no_of_days_count.setText("");
             et_remarks.setText("");
-            mrngandevening.setVisibility(View.GONE);
-            fullandhalf.setVisibility(View.GONE);
         });
 
         /*
-        * When submit the leave request
-        * */
+         * When submit the leave request
+         * */
         btn_submit.setOnClickListener(v -> {
-            if(btn_leaveType.getText().toString().equals("--- SELECT ---")||
-                btn_from_date.getText().toString().equals("")||
-                btn_to_date.getText().toString().equals("")||
-                et_remarks.getText().toString().equals(""))
+            if(btn_Type.getText().toString().equals("--- SELECT ---")||
+                    btn_from_date.getText().toString().equals("")||
+                    btn_to_date.getText().toString().equals("")||
+                    et_remarks.getText().toString().equals(""))
             {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Error:");
-                if (btn_leaveType.getText().toString().equals("--- SELECT ---")) {
+                if (btn_Type.getText().toString().equals("--- SELECT ---")) {
                     builder.setMessage("Select the valid Leave Type");
                 }
                 else  if(btn_from_date.getText().toString().equals("")){
@@ -252,17 +232,15 @@ public class ApplyLeave extends Fragment {
                 dialog.show();
             }
             else{
-                get_radiobutton_value();
-                leavepost.setEmail(addRequest.getEmail());
-                leavepost.setEmployeeCode(addRequest.getEmployeeID());
-                leavepost.setFromDate(from_date);
-                leavepost.setToDate(to_date);
-                leavepost.setNoofDays(Integer.parseInt(tv_no_of_days_count.getText().toString()));
-                leavepost.setRequestRemarks(et_remarks.getText().toString());
-                leavepost.setSession(leavelevel);
-                leavepost.setLeaveRequestID(0);
+                post.setEmail(addRequest.getEmail());
+                post.setEmployeeCode(addRequest.getEmployeeID());
+                post.setFromDate(from_date);
+                post.setToDate(to_date);
+                post.setNoofDays(Integer.parseInt(tv_no_of_days_count.getText().toString()));
+                post.setReason(et_remarks.getText().toString());
+                post.setWorkFromHomeEmployeeRequestID(0);
 
-                ApiManager.getInstance().storeLeaveDetail(leavepost, new Callback<Success>() {
+                ApiManager.getInstance().storeOnDuty(post, new Callback<Success>() {
                     @Override
                     public void onResponse(Call<Success> call, Response<Success> response) {
                         assert response.body() != null;
@@ -272,7 +250,7 @@ public class ApplyLeave extends Fragment {
                             builder.setPositiveButton("Ok",null);
                             AlertDialog dialog = builder.create();
                             dialog.show();
-                            btn_leaveType.setText("--- SELECT ---");
+                            btn_Type.setText("--- SELECT ---");
                             btn_from_date.setText("");
                             iv_from_date.setEnabled(false);
                             btn_to_date.setText("");
@@ -280,8 +258,6 @@ public class ApplyLeave extends Fragment {
                             tv_date_error.setVisibility(View.GONE);
                             tv_no_of_days_count.setText("");
                             et_remarks.setText("");
-                            mrngandevening.setVisibility(View.GONE);
-                            fullandhalf.setVisibility(View.GONE);
                         }
                     }
 
@@ -296,63 +272,39 @@ public class ApplyLeave extends Fragment {
         return view;
     }
 
-    private void get_radiobutton_value() {
-        int radioButtonID = fullandhalf.getCheckedRadioButtonId();
-        View radioButton = fullandhalf.findViewById(radioButtonID);
-        int idx = fullandhalf.indexOfChild(radioButton);
-        if(idx==0){
-            leavelevel = "F";
-        }
-        else {
-            int radio = mrngandevening.getCheckedRadioButtonId();
-            View radioButtons = mrngandevening.findViewById(radio);
-            int index = mrngandevening.indexOfChild(radioButtons);
-            if(index==0){
-                leavelevel = "M";
-            }
-            else {
-                leavelevel = "A";
-            }
-        }
-    }
-
     private void get_dropdown_value() {
         if(type.size()>0) {
-            LeaveType = new String[type.size()];
+            Type = new String[type.size()];
             for (int i = 0; i < type.size(); i++) {
-                LeaveType[i] = type.get(i).getLeaveType();
+                Type[i] = type.get(i).getOnDutyName();
             }
         }
     }
 
     /*
-    * Count the Number of days from the from and to date
-    * */
+     * Count the Number of days from the from and to date
+     * */
     private void getCount(){
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            try {
-                Date fromdate = simpleDateFormat.parse(btn_from_date.getText().toString());
-                Date todate = simpleDateFormat.parse(btn_to_date.getText().toString());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date fromdate = simpleDateFormat.parse(btn_from_date.getText().toString());
+            Date todate = simpleDateFormat.parse(btn_to_date.getText().toString());
 
-                assert fromdate != null;
-                assert todate != null;
-                if(fromdate.after(todate) || todate.before(fromdate)){
-                  tv_date_error.setText("From Date must Lower than the To Date");
-                  tv_date_error.setVisibility(View.VISIBLE);
-               }
-               else{
-                   tv_date_error.setVisibility(View.GONE);
-                   long different = todate.getTime() - fromdate.getTime();
-                    long daysInMilli = 1000 * 60 * 60* 24;
-                    long elapsedDays = different / daysInMilli;
-                   tv_no_of_days_count.setText(Integer.toString((int)(elapsedDays+1)));
-                   if(elapsedDays+1 == 1){
-                       fullandhalf.setVisibility(View.VISIBLE);
-                       mrngandevening.setVisibility(View.GONE);
-                   }
-               }
-            } catch (ParseException e) {
-                e.printStackTrace();
+            assert fromdate != null;
+            assert todate != null;
+            if(fromdate.after(todate) || todate.before(fromdate)){
+                tv_date_error.setText("From Date must Lower than the To Date");
+                tv_date_error.setVisibility(View.VISIBLE);
             }
+            else{
+                tv_date_error.setVisibility(View.GONE);
+                long different = todate.getTime() - fromdate.getTime();
+                long daysInMilli = 1000 * 60 * 60* 24;
+                long elapsedDays = different / daysInMilli;
+                tv_no_of_days_count.setText(Integer.toString((int)(elapsedDays+1)));
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -9,6 +9,8 @@ import com.android.wilcoconnect.model.leave.LeaveCalender;
 import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.MyLeave;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyMasterData;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyPost;
 import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetails;
@@ -292,4 +294,18 @@ public interface ApiInterface {
     Call<OnDutyDetails> getApproveOnDutyDetail(@Query("Email") String Email,
                                                @Query("companyCode") String companyCode,
                                                @Query("employeeID") String employeeID);
+
+    /*
+    * Get the Master Detail for Apply On-Duty Dropdown Data
+    * */
+    @GET("api/WorkFromHome/GetOnDutyMaster")
+    Call<OnDutyMasterData> getMasterList(@Query("Email") String Email,
+                                         @Query("companyCode") String companyCode,
+                                         @Query("employeeID") String employeeID);
+
+    /*
+    * Apply On-Duty Store
+    * */
+    @POST("api/WorkFromHome/StoreOD")
+    Call<Success> storeOnDuty(@Body OnDutyPost data);
 }

@@ -10,6 +10,8 @@ import com.android.wilcoconnect.model.leave.LeaveCalender;
 import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.MyLeave;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyMasterData;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyPost;
 import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetails;
@@ -376,4 +378,19 @@ public class ApiManager {
             detail.enqueue(callback);
         }
 
+        /*
+        * Get Apply On-Duty Dropdown data
+        * */
+        public void getMasterList(AddRequest request, Callback<OnDutyMasterData> callback){
+            Call<OnDutyMasterData> reply = service.getMasterList(request.Email,request.companyCode,request.EmployeeID);
+            reply.enqueue(callback);
+        }
+
+        /*
+        * Store the Apply On-Duty Detail
+        * */
+        public void storeOnDuty(OnDutyPost post,Callback<Success> callback){
+            Call<Success> reply = service.storeOnDuty(post);
+            reply.enqueue(callback);
+        }
 }

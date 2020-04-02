@@ -18,6 +18,7 @@ import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.leave.ApprovePost;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyData;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
@@ -105,7 +106,9 @@ public class OnDuty extends Fragment {
                     Instance(value);
                 }
                 @Override
-                public void onClick(View view, ApprovePost post) {  }
+                public void OnStore(View view, OnDutyApprovePost postData) {}
+                @Override
+                public void onClick(View view, ApprovePost post) {}
             });
             recyclerView.setAdapter(adapter);
         }

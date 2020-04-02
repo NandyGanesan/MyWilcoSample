@@ -8,6 +8,7 @@ import com.android.wilcoconnect.model.leave.Holiday;
 import com.android.wilcoconnect.model.leave.LeaveCalender;
 import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.MyLeave;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyMasterData;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyPost;
@@ -308,4 +309,18 @@ public interface ApiInterface {
     * */
     @POST("api/WorkFromHome/StoreOD")
     Call<Success> storeOnDuty(@Body OnDutyPost data);
+
+    /*
+    * Get the Applied Detail to Display Approve List Page
+    * */
+    @GET("api/workfromhome/GetOnDutyRequest")
+    Call<OnDutyDetails> getAppliedOnDutyDetail(@Query("Email") String Email,
+                                               @Query("companyCode") String companyCode,
+                                               @Query("employeeID") String employeeID);
+
+    /*
+    * Store the Approve or Reject Details
+    * */
+    @POST("api/WorkFromHome/UpdateStatus")
+    Call<Success> storeApproveOrRejectOnDuty(@Body OnDutyApprovePost post);
 }

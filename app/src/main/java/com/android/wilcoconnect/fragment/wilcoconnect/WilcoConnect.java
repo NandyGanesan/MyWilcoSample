@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.wilcoconnect.model.leave.ApprovePost;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
@@ -91,11 +92,10 @@ public class WilcoConnect extends Fragment {
                     call_recycler_view(sendRequest);
                 }
             }
-
             @Override
-            public void onClick(View view, ApprovePost post) {
-
-            }
+            public void OnStore(View view, OnDutyApprovePost postData) {}
+            @Override
+            public void onClick(View view, ApprovePost post) {}
         });
         recycleStatus.setAdapter(statusAdapter);
 
@@ -148,11 +148,10 @@ public class WilcoConnect extends Fragment {
                         public void onClick(View view, String value) {
                             replaceFragment(newInstance(value));
                         }
-
                         @Override
-                        public void onClick(View view, ApprovePost post) {
-
-                        }
+                        public void onClick(View view, ApprovePost post) {}
+                        @Override
+                        public void OnStore(View view, OnDutyApprovePost postData) {}
                     });
                     recyclerView.setAdapter(adapter);
                 } else {

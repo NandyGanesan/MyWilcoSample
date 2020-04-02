@@ -9,6 +9,7 @@ import com.android.wilcoconnect.model.leave.Holiday;
 import com.android.wilcoconnect.model.leave.LeaveCalender;
 import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.MyLeave;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyMasterData;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyPost;
@@ -391,6 +392,22 @@ public class ApiManager {
         * */
         public void storeOnDuty(OnDutyPost post,Callback<Success> callback){
             Call<Success> reply = service.storeOnDuty(post);
+            reply.enqueue(callback);
+        }
+
+        /*
+         * Get the Applied Detail to Display Approve List Page
+         * */
+        public void getAppliedOnDutyDetail(AddRequest request,Callback<OnDutyDetails> callback){
+            Call<OnDutyDetails> reply = service.getAppliedOnDutyDetail(request.Email,request.companyCode,request.EmployeeID);
+            reply.enqueue(callback);
+        }
+
+        /*
+         * Store the Approve or Reject Details
+         * */
+        public void storeApproveOrRejectOnDuty(OnDutyApprovePost post,Callback<Success> callback){
+            Call<Success> reply = service.storeApproveOrRejectOnDuty(post);
             reply.enqueue(callback);
         }
 }

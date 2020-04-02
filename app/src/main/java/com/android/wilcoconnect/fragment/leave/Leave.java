@@ -20,6 +20,7 @@ import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.MyLeaveData;
 import com.android.wilcoconnect.model.leave.MyLeave;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.leave.MyLeaveListDataAdapter;
@@ -111,11 +112,10 @@ public class Leave extends Fragment {
                 public void onClick(View view, String value) {
                     newInstance(value);
                 }
-
                 @Override
-                public void onClick(View view, ApprovePost post) {
-
-                }
+                public void OnStore(View view, OnDutyApprovePost postData) {}
+                @Override
+                public void onClick(View view, ApprovePost post) {}
             });
             recyclerView.setAdapter(leaveadapter);
         }

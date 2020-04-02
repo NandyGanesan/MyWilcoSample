@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.model.leave.ApprovePost;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.model.profile.ProfileMenu;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.profile.ProfileAdapter;
@@ -48,11 +49,10 @@ public class Profile extends Fragment {
                 public void onClick(View view, String value) {
                     newInstance(value);
                 }
-
                 @Override
-                public void onClick(View view, ApprovePost post) {
-
-                }
+                public void OnStore(View view, OnDutyApprovePost postData) {}
+                @Override
+                public void onClick(View view, ApprovePost post) {}
             });
             recyclerView.setAdapter(adapter);
         } else {

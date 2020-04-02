@@ -1,27 +1,34 @@
-package com.android.wilcoconnect.fragment.leave;
+package com.android.wilcoconnect.fragment.leave.Onduty_other;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
+import com.android.wilcoconnect.fragment.leave.ApproveFromPage;
+import com.android.wilcoconnect.fragment.leave.Remarks;
 import com.android.wilcoconnect.model.leave.ApproveLeaveData;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.MyLeaveData;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyData;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.leave.ApproveLeaveListAdapter;
+import com.android.wilcoconnect.shared.leave.onduty_other.ApproveOnDutyAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -33,7 +40,7 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class ApproveLeaveFromGrid extends Fragment {
+public class ApproveOnDutyGrid extends Fragment {
 
     /*
      * Initialize the XML element or views
@@ -42,11 +49,10 @@ public class ApproveLeaveFromGrid extends Fragment {
     private String TAG = "ApproveLeaveFromGrid";
     private FrameLayout frameLayout;
     private static String MYPREFS_NAME = "logininfo";
-    private ArrayList<MyLeaveData> approveList = new ArrayList<>();
-    private ArrayList<MyLeaveData> appliedList = new ArrayList<>();
-    private ArrayList<MyLeaveData> otherList = new ArrayList<>();
+    private ArrayList<OnDutyData> onDutyDataArrayList = new ArrayList<>();
     private AddRequest request = new AddRequest();
     private String data;
+    private ApproveOnDutyAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,83 +84,49 @@ public class ApproveLeaveFromGrid extends Fragment {
         Gson gson = new Gson();
         data = gson.toJson(request);
 
-        ApiManager.getInstance().getApproveList(request, new Callback<ApproveLeaveData>() {
+        ApiManager.getInstance().getAppliedOnDutyDetail(request, new Callback<OnDutyDetails>() {
             @Override
-            public void onResponse(Call<ApproveLeaveData> call, Response<ApproveLeaveData> response) {
+            public void onResponse(Call<OnDutyDetails> call, Response<OnDutyDetails> response) {
                 if(response.body()!=null && response.isSuccessful()){
-                    approveList = response.body().getData();
-                    if(approveList.size()>0) {
-                        set_Approve_leave_list();
-                    }
+                    onDutyDataArrayList = response.body().getData();
                 }
             }
 
             @Override
-            public void onFailure(Call<ApproveLeaveData> call, Throwable t) {
+            public void onFailure(Call<OnDutyDetails> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
             }
         });
+
 
         return view;
     }
 
     private void set_Approve_leave_list() {
-        for (int i=0;i<approveList.size();i++){
-            if(approveList.get(i).getRequestStatus().equals("Applied")){
-                MyLeaveData data = new MyLeaveData();
-                data.setEmail(approveList.get(i).getEmail());
-                data.setStrFromDate(approveList.get(i).getStrFromDate());
-                data.setStrToDate(approveList.get(i).getStrToDate());
-                data.setStrApprovedDate(approveList.get(i).getStrApprovedDate());
-                data.setLeaveRequestID(approveList.get(i).getLeaveRequestID());
-                data.setEmployeeID(approveList.get(i).getEmployeeID());
-                data.setNoofDays(approveList.get(i).getNoofDays());
-                data.setRequestRemarks(approveList.get(i).getRequestRemarks());
-                data.setRequestStatus(approveList.get(i).getRequestStatus());
-                data.setFirstName(approveList.get(i).getFirstName());
-                data.setLeaveTypeText(approveList.get(i).getLeaveTypeText());
-                appliedList.add(data);
-            }
-            else {
-                MyLeaveData data = new MyLeaveData();
-                data.setEmail(approveList.get(i).getEmail());
-                data.setStrFromDate(approveList.get(i).getStrFromDate());
-                data.setStrToDate(approveList.get(i).getStrToDate());
-                data.setStrApprovedDate(approveList.get(i).getStrApprovedDate());
-                data.setLeaveRequestID(approveList.get(i).getLeaveRequestID());
-                data.setEmployeeID(approveList.get(i).getEmployeeID());
-                data.setNoofDays(approveList.get(i).getNoofDays());
-                data.setRequestRemarks(approveList.get(i).getRequestRemarks());
-                data.setRequestStatus(approveList.get(i).getRequestStatus());
-                data.setFirstName(approveList.get(i).getFirstName());
-                data.setLeaveTypeText(approveList.get(i).getLeaveTypeText());
-                otherList.add(data);
-            }
-        }
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        ApproveLeaveListAdapter approve_adapter;
-        if(appliedList.size()<0){
-            approve_adapter =null;
-            recyclerView.setAdapter(approve_adapter);
+        if(onDutyDataArrayList.size()<0){
+            adapter =null;
+            recyclerView.setAdapter(adapter);
             Snackbar snackbar = Snackbar
                     .make(frameLayout, "No Data Found", Snackbar.LENGTH_LONG);
             snackbar.show();
         }
         else {
-            approve_adapter = new ApproveLeaveListAdapter(getActivity(), appliedList, request, new RecyclerViewListener() {
-                @Override
-                public void onClick(View view, String value) {
-                    newInstance(value);
-                }
-                @Override
-                public void OnStore(View view, OnDutyApprovePost postData) {}
-                @Override
-                public void onClick(View view, ApprovePost post) {
-                    getNewInstance(post);
-                }
-            });
-            recyclerView.setAdapter(approve_adapter);
+            adapter = new ApproveOnDutyAdapter(new RecyclerViewListener() {
+                            @Override
+                            public void onClick(View view, String value) {
+                                newInstance(value);
+                            }
+                            @Override
+                            public void OnStore(View view, OnDutyApprovePost postData) {}
+                            @Override
+                            public void onClick(View view, ApprovePost post) {
+                                getNewInstance(post);
+                            }
+                        }, getActivity(), onDutyDataArrayList, request);
+            recyclerView.setAdapter(adapter);
         }
     }
 
@@ -162,7 +134,7 @@ public class ApproveLeaveFromGrid extends Fragment {
         ApproveFromPage approve = new ApproveFromPage();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
-        bundle.putString("leave", s);
+        bundle.putString("onDutyApprove", s);
         bundle.putString("email", data);
         approve.setArguments(bundle);
         approve.show(transaction,approve.TAG);

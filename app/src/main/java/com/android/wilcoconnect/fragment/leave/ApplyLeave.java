@@ -90,9 +90,7 @@ public class ApplyLeave extends Fragment {
                 leaveType = response.body();
                 if(leaveType!=null && response.isSuccessful()){
                     type = leaveType.getData();
-                    if(type.size()>0){
                         get_dropdown_value();
-                    }
                 }
             }
 

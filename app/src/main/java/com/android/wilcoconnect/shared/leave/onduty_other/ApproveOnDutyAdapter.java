@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.wilcoconnect.R;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyData;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
@@ -47,8 +48,31 @@ public class ApproveOnDutyAdapter extends RecyclerView.Adapter<ApproveOnDutyAdap
         holder.tv_status.setText(appliedlist.get(position).getRequestStatus());
         holder.tv_fromdate.setText(appliedlist.get(position).getFromDate());
         holder.tv_todate.setText(appliedlist.get(position).getToDate());
-        holder.tv_noofdays.setText(appliedlist.get(position).getNumberOfDays());
+        holder.tv_noofdays.setText(""+appliedlist.get(position).getNumberOfDays());
         holder.tv_reason.setText(appliedlist.get(position).getReason());
+
+        holder.btn_accept.setOnClickListener(v -> {
+            OnDutyApprovePost post = new OnDutyApprovePost();
+            post.setEmployeeCode(request.getEmployeeID());
+            post.setEmail(request.getEmail());
+            post.setWorkFromHomeEmployeeRequestID(appliedlist.get(position).getWorkFromHomeEmployeeRequestID());
+            post.setRequeststatus("approved");
+
+            if (listener != null)
+                listener.OnStore(v, post);
+
+        });
+
+        holder.btn_reject.setOnClickListener(v -> {
+            OnDutyApprovePost post = new OnDutyApprovePost();
+            post.setEmployeeCode(request.getEmployeeID());
+            post.setEmail(request.getEmail());
+            post.setWorkFromHomeEmployeeRequestID(appliedlist.get(position).getWorkFromHomeEmployeeRequestID());
+            post.setRequeststatus("rejected");
+
+            if (listener != null)
+                listener.OnStore(v, post);
+        });
     }
 
     @Override

@@ -89,6 +89,7 @@ public class ApproveOnDutyGrid extends Fragment {
             public void onResponse(Call<OnDutyDetails> call, Response<OnDutyDetails> response) {
                 if(response.body()!=null && response.isSuccessful()){
                     onDutyDataArrayList = response.body().getData();
+                    set_Approve_onDuty_list();
                 }
             }
 
@@ -102,7 +103,7 @@ public class ApproveOnDutyGrid extends Fragment {
         return view;
     }
 
-    private void set_Approve_leave_list() {
+    private void set_Approve_onDuty_list() {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
@@ -117,35 +118,24 @@ public class ApproveOnDutyGrid extends Fragment {
             adapter = new ApproveOnDutyAdapter(new RecyclerViewListener() {
                             @Override
                             public void onClick(View view, String value) {
-                                newInstance(value);
                             }
                             @Override
-                            public void OnStore(View view, OnDutyApprovePost postData) {}
-                            @Override
-                            public void onClick(View view, ApprovePost post) {
-                                getNewInstance(post);
+                            public void OnStore(View view, OnDutyApprovePost postData) {
+                                getNewInstance(postData);
                             }
+                            @Override
+                            public void onClick(View view, ApprovePost post) {}
                         }, getActivity(), onDutyDataArrayList, request);
             recyclerView.setAdapter(adapter);
         }
     }
 
-    private void newInstance(String s) {
-        ApproveFromPage approve = new ApproveFromPage();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        Bundle bundle = new Bundle();
-        bundle.putString("onDutyApprove", s);
-        bundle.putString("email", data);
-        approve.setArguments(bundle);
-        approve.show(transaction,approve.TAG);
-    }
-
-    private void getNewInstance(ApprovePost post){
+    private void getNewInstance(OnDutyApprovePost post){
         Gson gson = new Gson();
         String value = gson.toJson(post);
         Bundle bundle = new Bundle();
-        bundle.putString("Submit",value);
-        Remarks remarks = new Remarks();
+        bundle.putString("SubmitOnDuty",value);
+        OnDutyRemarks remarks = new OnDutyRemarks();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         remarks.setArguments(bundle);
         remarks.show(transaction,remarks.TAG);

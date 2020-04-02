@@ -75,7 +75,7 @@ public class ApproveLeaveListAdapter extends RecyclerView.Adapter<ApproveLeaveLi
             post.setEmployeeCode(request.getEmployeeID());
             post.setEmail(request.getEmail());
             post.setLeaveRequestID(approveLists.get(position).getLeaveRequestID());
-            post.setApproveStatus("Approved");
+            post.setApproveStatus("approved");
 
             if (listener != null)
                 listener.onClick(v, post);
@@ -87,7 +87,7 @@ public class ApproveLeaveListAdapter extends RecyclerView.Adapter<ApproveLeaveLi
             post.setEmployeeCode(request.getEmployeeID());
             post.setEmail(request.getEmail());
             post.setLeaveRequestID(approveLists.get(position).getLeaveRequestID());
-            post.setApproveStatus("Rejected");
+            post.setApproveStatus("rejected");
 
             if (listener != null)
                 listener.onClick(v, post);

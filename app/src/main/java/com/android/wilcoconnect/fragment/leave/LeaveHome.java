@@ -96,7 +96,7 @@ public class LeaveHome extends Fragment {
         fragments.add(new ApprovedList());
         fragments.add(new ApplyLeaveForTeam());
         fragments.add(new LeaveCalenderForTeam());
-        fragments.add(new OnDuty());
+        //fragments.add(new OnDuty());
         fragments.add(new OnDutyApprovedList());
         fragments.add(new ApplyOnDuty());
         fragments.add(new ApproveOnDutyGrid());
@@ -106,7 +106,7 @@ public class LeaveHome extends Fragment {
          * */
         final FragmentAdapter pagerAdapter = new FragmentAdapter(getActivity().getSupportFragmentManager(), getActivity().getApplicationContext(), fragments);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(9);
+        viewPager.setOffscreenPageLimit(8);
         tabLayout.setupWithViewPager(viewPager);
 
         /*
@@ -118,10 +118,10 @@ public class LeaveHome extends Fragment {
         tabLayout.getTabAt(3).setText("APPROVED LEAVE");
         tabLayout.getTabAt(4).setText("APPLY LEAVE FOR TEAM");
         tabLayout.getTabAt(5).setText("LEAVE CALENDER");
-        tabLayout.getTabAt(6).setText("ON DUTY");
-        tabLayout.getTabAt(7).setText("ON DUTY APPROVED LIST");
-        tabLayout.getTabAt(8).setText("APPLY ON DUTY");
-        tabLayout.getTabAt(9).setText("APPROVE ON DUTY");
+        //tabLayout.getTabAt(6).setText("ON DUTY");
+        tabLayout.getTabAt(6).setText("ON DUTY APPROVED LIST");
+        tabLayout.getTabAt(7).setText("APPLY ON DUTY");
+        tabLayout.getTabAt(8).setText("APPROVE ON DUTY");
 
         /*
          * Define the Tab Layout Action

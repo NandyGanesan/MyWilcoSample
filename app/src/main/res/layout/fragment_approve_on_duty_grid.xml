@@ -259,7 +259,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@drawable/button_style"
-            android:text="ACCEPT"
+            android:text="APPROVE"
             android:textColor="@color/orange"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"

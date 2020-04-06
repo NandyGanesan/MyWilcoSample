@@ -46,8 +46,8 @@ public class ApproveOnDutyAdapter extends RecyclerView.Adapter<ApproveOnDutyAdap
         holder.tv_name.setText(appliedlist.get(position).getEmployeeName());
         holder.tv_type.setText(appliedlist.get(position).getOnDutyName());
         holder.tv_status.setText(appliedlist.get(position).getRequestStatus());
-        holder.tv_fromdate.setText(appliedlist.get(position).getFromDate());
-        holder.tv_todate.setText(appliedlist.get(position).getToDate());
+        holder.tv_fromdate.setText(appliedlist.get(position).getStrFromDate());
+        holder.tv_todate.setText(appliedlist.get(position).getStrToDate());
         holder.tv_noofdays.setText(""+appliedlist.get(position).getNumberOfDays());
         holder.tv_reason.setText(appliedlist.get(position).getReason());
 

@@ -40,14 +40,14 @@ public class OnDutyListAdapter extends RecyclerView.Adapter<OnDutyListAdapter.My
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.type.setText(data.get(position).getOnDutyName());
         holder.status.setText(data.get(position).getRequestStatus());
-        holder.fromdate.setText(data.get(position).getFromDate());
-        holder.Todate.setText(data.get(position).getToDate());
+        holder.fromdate.setText(data.get(position).getStrFromDate());
+        holder.Todate.setText(data.get(position).getStrToDate());
 
         holder.cardView.setOnClickListener(v -> {
             OnDutyData onDutyData = new OnDutyData();
             onDutyData.setOnDutyName(data.get(position).getOnDutyName());
-            onDutyData.setFromDate(data.get(position).getFromDate());
-            onDutyData.setToDate(data.get(position).getToDate());
+            onDutyData.setStrFromDate(data.get(position).getStrFromDate());
+            onDutyData.setStrToDate(data.get(position).getStrToDate());
             onDutyData.setNumberOfDays(data.get(position).getNumberOfDays());
             onDutyData.setReason(data.get(position).getReason());
             onDutyData.setRequestStatus(data.get(position).getRequestStatus());

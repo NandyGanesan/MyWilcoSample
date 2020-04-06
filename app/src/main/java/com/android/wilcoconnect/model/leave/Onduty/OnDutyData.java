@@ -82,6 +82,39 @@ public class OnDutyData {
     @SerializedName("NextDays")
     public int NextDays;
 
+    @SerializedName("strFromDate")
+    public String strFromDate;
+
+    @SerializedName("strToDate")
+    public String strToDate;
+
+    @SerializedName("strApprovedDate")
+    public String strApprovedDate;
+
+    public String getStrApprovedDate() {
+        return strApprovedDate;
+    }
+
+    public void setStrApprovedDate(String strApprovedDate) {
+        this.strApprovedDate = strApprovedDate;
+    }
+
+    public String getStrFromDate() {
+        return strFromDate;
+    }
+
+    public void setStrFromDate(String strFromDate) {
+        this.strFromDate = strFromDate;
+    }
+
+    public String getStrToDate() {
+        return strToDate;
+    }
+
+    public void setStrToDate(String strToDate) {
+        this.strToDate = strToDate;
+    }
+
     public int getWorkFromHomeEmployeeRequestID() {
         return WorkFromHomeEmployeeRequestID;
     }

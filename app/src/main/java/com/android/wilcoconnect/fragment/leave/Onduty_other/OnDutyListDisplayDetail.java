@@ -59,8 +59,8 @@ public class OnDutyListDisplayDetail extends DialogFragment {
         tv_View_approver = view.findViewById(R.id.et_View_approver);
 
         tv_View_type.setText(dutyData.getOnDutyName());
-        tv_View_fromdate.setText(dutyData.getFromDate());
-        tv_View_todate.setText(dutyData.getToDate());
+        tv_View_fromdate.setText(dutyData.getStrFromDate());
+        tv_View_todate.setText(dutyData.getStrToDate());
         tv_View_no_of_counts.setText(""+dutyData.getNumberOfDays());
         tv_View_reason.setText(dutyData.getReason());
         tv_View_status.setText(dutyData.getRequestStatus());

@@ -41,25 +41,14 @@ public class MenuFragment extends Fragment {
 
         expandable_ListView = view.findViewById(R.id.elv_data);
 
-        item = new HashMap<>();
-
-        ArrayList<String> organization = new ArrayList<>();
-        organization.add("Employee Directory");
-        item.put("Organization", organization);
-
-        ArrayList<String> training = new ArrayList<>();
-        training.add("My Training");
-        item.put("Training", training);
-
-        ArrayList<String> logout = new ArrayList<>();
-        item.put("Logout",logout);
+        get_item_value();
 
         adapter = new MyExtendableListAdapter(item);
         expandable_ListView.setAdapter(adapter);
 
         expandable_ListView.setOnGroupClickListener((parent, v, groupPosition, id) -> {
             if(adapter.getChildrenCount(groupPosition)==0){
-                if(adapter.getGroupId(groupPosition)==2){
+                if(adapter.getGroupId(groupPosition)==1){
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
                     SharedPreferences preferences = getActivity().getSharedPreferences(MYPREFS_NAME, Context.MODE_PRIVATE);
@@ -72,5 +61,20 @@ public class MenuFragment extends Fragment {
             return false;
         });
         return view;
+    }
+
+    private void get_item_value() {
+        item = new HashMap<>();
+
+        ArrayList<String> logout = new ArrayList<>();
+        item.put("Logout",logout);
+
+        ArrayList<String> organization = new ArrayList<>();
+        organization.add("Employee Directory");
+        item.put("Organization", organization);
+
+        ArrayList<String> training = new ArrayList<>();
+        training.add("My Training");
+        item.put("Training", training);
     }
 }

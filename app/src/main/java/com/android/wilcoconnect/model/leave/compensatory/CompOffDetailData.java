@@ -23,7 +23,7 @@ public class CompOffDetailData {
     public String strToDate;
 
     @SerializedName("NoOfDays")
-    public long NoOfDays;
+    public double NoOfDays;
 
     @SerializedName("RequestRemarks")
     public String RequestRemarks;
@@ -130,11 +130,11 @@ public class CompOffDetailData {
         this.strToDate = strToDate;
     }
 
-    public long getNoOfDays() {
+    public double getNoOfDays() {
         return NoOfDays;
     }
 
-    public void setNoOfDays(long noOfDays) {
+    public void setNoOfDays(double noOfDays) {
         NoOfDays = noOfDays;
     }
 

@@ -19,6 +19,8 @@ import com.android.wilcoconnect.fragment.leave.Onduty_other.ApplyOnDuty;
 import com.android.wilcoconnect.fragment.leave.Onduty_other.ApproveOnDutyGrid;
 import com.android.wilcoconnect.fragment.leave.Onduty_other.OnDuty;
 import com.android.wilcoconnect.fragment.leave.Onduty_other.OnDutyApprovedList;
+import com.android.wilcoconnect.fragment.leave.compensatory.ApplyCompensatory;
+import com.android.wilcoconnect.fragment.leave.compensatory.CompensatoryDetail;
 import com.android.wilcoconnect.model.MenuList.MainMenu;
 import com.android.wilcoconnect.model.MenuList.Menu;
 import com.android.wilcoconnect.model.MenuList.SubMenu;
@@ -101,13 +103,15 @@ public class LeaveHome extends Fragment {
         fragments.add(new OnDutyApprovedList());
         fragments.add(new ApplyOnDuty());
         fragments.add(new ApproveOnDutyGrid());
+        fragments.add(new CompensatoryDetail());
+        fragments.add(new ApplyCompensatory());
 
         /*
          * Set the FragmentAdapter with the Fragment
          * */
         final FragmentAdapter pagerAdapter = new FragmentAdapter(getActivity().getSupportFragmentManager(), getActivity().getApplicationContext(), fragments);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(11);
+        viewPager.setOffscreenPageLimit(13);
         tabLayout.setupWithViewPager(viewPager);
 
         /*
@@ -124,6 +128,8 @@ public class LeaveHome extends Fragment {
         tabLayout.getTabAt(8).setText("ON DUTY APPROVED LIST");
         tabLayout.getTabAt(9).setText("APPLY ON DUTY");
         tabLayout.getTabAt(10).setText("APPROVE ON DUTY");
+        tabLayout.getTabAt(11).setText("COMPENSATORY");
+        tabLayout.getTabAt(12).setText("ADD COMP-OFF");
 
         /*
          * Define the Tab Layout Action

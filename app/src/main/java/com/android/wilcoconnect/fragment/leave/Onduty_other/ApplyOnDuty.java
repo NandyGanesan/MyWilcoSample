@@ -216,7 +216,7 @@ public class ApplyOnDuty extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Error:");
                 if (btn_Type.getText().toString().equals("--- SELECT ---")) {
-                    builder.setMessage("Select the valid Leave Type");
+                    builder.setMessage("Select the valid Type");
                 }
                 else  if(btn_from_date.getText().toString().equals("")){
                     builder.setMessage("Select the valid From Date");
@@ -225,7 +225,7 @@ public class ApplyOnDuty extends Fragment {
                     builder.setMessage("Select the valid To Date");
                 }
                 else  if(et_remarks.getText().toString().equals("")){
-                    builder.setMessage("Enter the valid Remarks");
+                    builder.setMessage("Enter the valid Reason");
                 }
                 builder.setPositiveButton("OK",null);
                 AlertDialog dialog = builder.create();
@@ -258,6 +258,13 @@ public class ApplyOnDuty extends Fragment {
                             tv_date_error.setVisibility(View.GONE);
                             tv_no_of_days_count.setText("");
                             et_remarks.setText("");
+                        }
+                        else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setTitle(response.body().getMessage());
+                            builder.setPositiveButton("Ok",null);
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
                         }
                     }
 

@@ -281,6 +281,13 @@ public class ApplyLeave extends Fragment {
                             mrngandevening.setVisibility(View.GONE);
                             fullandhalf.setVisibility(View.GONE);
                         }
+                        else{
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setTitle(response.body().getMessage());
+                            builder.setPositiveButton("Ok",null);
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
                     }
 
                     @Override

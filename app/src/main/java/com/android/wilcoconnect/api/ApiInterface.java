@@ -13,6 +13,8 @@ import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyMasterData;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyPost;
 import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
+import com.android.wilcoconnect.model.leave.compensatory.CompOffDetail;
+import com.android.wilcoconnect.model.leave.compensatory.CompOffPost;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetails;
 import com.android.wilcoconnect.model.profile.BasicDetails;
@@ -323,4 +325,18 @@ public interface ApiInterface {
     * */
     @POST("api/WorkFromHome/UpdateStatus")
     Call<Success> storeApproveOrRejectOnDuty(@Body OnDutyApprovePost post);
+
+    /*
+    * Get my Comp-Off Details
+    * */
+    @GET("api/compoff/GetmyCompoffList")
+    Call<CompOffDetail> getMyCompOffDetail(@Query("Email") String Email,
+                                           @Query("companyCode") String companyCode,
+                                           @Query("employeeID") String employeeID);
+
+    /*
+    * Store the Comp-Off Detail
+    * */
+    @POST("api/compoff/StoreCompoff")
+    Call<Success> storeCompOffDetail(@Body CompOffPost post);
 }

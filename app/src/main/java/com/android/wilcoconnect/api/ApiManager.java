@@ -14,6 +14,8 @@ import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyMasterData;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyPost;
 import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
+import com.android.wilcoconnect.model.leave.compensatory.CompOffDetail;
+import com.android.wilcoconnect.model.leave.compensatory.CompOffPost;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetails;
 import com.android.wilcoconnect.model.profile.BasicDetails;
@@ -408,6 +410,22 @@ public class ApiManager {
          * */
         public void storeApproveOrRejectOnDuty(OnDutyApprovePost post,Callback<Success> callback){
             Call<Success> reply = service.storeApproveOrRejectOnDuty(post);
+            reply.enqueue(callback);
+        }
+
+        /*
+         * Get my Comp-Off Details
+         * */
+        public void getMyCompOffDetail(AddRequest request, Callback<CompOffDetail> callback){
+            Call<CompOffDetail> detail = service.getMyCompOffDetail(request.Email,request.companyCode,request.EmployeeID);
+            detail.enqueue(callback);
+        }
+
+        /*
+        * Store the Comp-Off Detail
+        * */
+        public void storeCompOffDetail(CompOffPost post,Callback<Success> callback){
+            Call<Success> reply = service.storeCompOffDetail(post);
             reply.enqueue(callback);
         }
 }

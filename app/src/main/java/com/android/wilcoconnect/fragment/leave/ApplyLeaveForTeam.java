@@ -301,69 +301,77 @@ public class ApplyLeaveForTeam extends Fragment {
                 builder.setPositiveButton("OK", null);
                 AlertDialog dialog = builder.create();
                 dialog.show();
-            }else if(availableBalance < Integer.parseInt(tv_no_of_days_count.getText().toString())){
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("LOP?");
-                builder.setPositiveButton("YES", null);
-                builder.setNegativeButton("NO", null);
-                AlertDialog dialog = builder.create();
-                dialog.show();
             }else {
-                for(int i=0;i<teamlist.size();i++) {
-                    if (teamlist.get(i).getEmployeeName().equals(employeee)) {
-                        employeeId = teamlist.get(i).getEmployeeCode();
-                    }
+                if (availableBalance < Integer.parseInt(tv_no_of_days_count.getText().toString())) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("LOP?");
+                    builder.setPositiveButton("YES", (dialog ,which)->{
+                        store_value();
+                    });
+                    builder.setNegativeButton("NO", null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                } else {
+                    store_value();
                 }
-                get_radiobutton_value();
-                leavepost.setEmail(addRequest.getEmail());
-                leavepost.setEmployeeCode(addRequest.getEmployeeID());
-                leavepost.setLeaveforEmployeeID(employeeId);
-                leavepost.setFromDate(from_date);
-                leavepost.setToDate(to_date);
-                leavepost.setNoofDays(Integer.parseInt(tv_no_of_days_count.getText().toString()));
-                leavepost.setRequestRemarks(et_remarks.getText().toString());
-                leavepost.setSession(leavelevel);
-                leavepost.setLeaveRequestID(0);
-
-                ApiManager.getInstance().storeLeaveForTeam(leavepost, new Callback<Success>() {
-                    @Override
-                    public void onResponse(Call<Success> call, Response<Success> response) {
-                            if(response.isSuccessful() && response.body().getStatus().equals("true")){
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                builder.setTitle(response.body().getMessage());
-                                builder.setPositiveButton("Ok",null);
-                                AlertDialog dialog = builder.create();
-                                dialog.show();
-                                btn_leaveType.setText("--- SELECT ---");
-                                btn_leaveType.setEnabled(false);
-                                btn_from_date.setText("");
-                                iv_from_date.setEnabled(false);
-                                btn_to_date.setText("");
-                                iv_to_date.setEnabled(false);
-                                tv_date_error.setVisibility(View.GONE);
-                                tv_no_of_days_count.setText("");
-                                employeename.setText("");
-                                et_remarks.setText("");
-                                balanceFrame.setVisibility(View.GONE);
-                                mrngandevening.setVisibility(View.GONE);
-                                fullandhalf.setVisibility(View.GONE);
-                            }
-                            else {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                builder.setTitle(response.body().getMessage());
-                                builder.setPositiveButton("Ok",null);
-                                AlertDialog dialog = builder.create();
-                                dialog.show();
-                            }
-                    }
-                    @Override
-                    public void onFailure(Call<Success> call, Throwable t) {
-                        Log.e(TAG,t.getLocalizedMessage());
-                    }
-                });
             }
         });
         return view;
+    }
+
+    private void store_value(){
+        for(int i=0;i<teamlist.size();i++) {
+            if (teamlist.get(i).getEmployeeName().equals(employeee)) {
+                employeeId = teamlist.get(i).getEmployeeCode();
+            }
+        }
+        get_radiobutton_value();
+        leavepost.setEmail(addRequest.getEmail());
+        leavepost.setEmployeeCode(addRequest.getEmployeeID());
+        leavepost.setLeaveforEmployeeID(employeeId);
+        leavepost.setFromDate(from_date);
+        leavepost.setToDate(to_date);
+        leavepost.setNoofDays(Integer.parseInt(tv_no_of_days_count.getText().toString()));
+        leavepost.setRequestRemarks(et_remarks.getText().toString());
+        leavepost.setSession(leavelevel);
+        leavepost.setLeaveRequestID(0);
+
+        ApiManager.getInstance().storeLeaveForTeam(leavepost, new Callback<Success>() {
+            @Override
+            public void onResponse(Call<Success> call, Response<Success> response) {
+                if(response.isSuccessful() && response.body().getStatus().equals("true")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle(response.body().getMessage());
+                    builder.setPositiveButton("Ok",null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                    btn_leaveType.setText("--- SELECT ---");
+                    btn_leaveType.setEnabled(false);
+                    btn_from_date.setText("");
+                    iv_from_date.setEnabled(false);
+                    btn_to_date.setText("");
+                    iv_to_date.setEnabled(false);
+                    tv_date_error.setVisibility(View.GONE);
+                    tv_no_of_days_count.setText("");
+                    employeename.setText("");
+                    et_remarks.setText("");
+                    balanceFrame.setVisibility(View.GONE);
+                    mrngandevening.setVisibility(View.GONE);
+                    fullandhalf.setVisibility(View.GONE);
+                }
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle(response.body().getMessage());
+                    builder.setPositiveButton("Ok",null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            }
+            @Override
+            public void onFailure(Call<Success> call, Throwable t) {
+                Log.e(TAG,t.getLocalizedMessage());
+            }
+        });
     }
 
     private void get_leave_Balance() {

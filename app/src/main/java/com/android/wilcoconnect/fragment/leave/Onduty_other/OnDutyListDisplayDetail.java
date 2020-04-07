@@ -28,6 +28,7 @@ public class OnDutyListDisplayDetail extends DialogFragment {
     private TextView tv_View_approveddate;
     private TextView tv_View_approvedremarks;
     private TextView tv_View_approver;
+    private TextView label1,label2,label3;
     private OnDutyData dutyData = new OnDutyData();
 
     @Override
@@ -58,12 +59,24 @@ public class OnDutyListDisplayDetail extends DialogFragment {
         tv_View_approvedremarks = view.findViewById(R.id.et_View_remarksbyapprover);
         tv_View_approver = view.findViewById(R.id.et_View_approver);
 
+        label1 = view.findViewById(R.id.tv_View_approveddate);
+        label2 = view.findViewById(R.id.tv_View_remarksbyapprover);
+        label3 = view.findViewById(R.id.tv_View_approver);
+
         tv_View_type.setText(dutyData.getOnDutyName());
         tv_View_fromdate.setText(dutyData.getStrFromDate());
         tv_View_todate.setText(dutyData.getStrToDate());
         tv_View_no_of_counts.setText(""+dutyData.getNumberOfDays());
         tv_View_reason.setText(dutyData.getReason());
         tv_View_status.setText(dutyData.getRequestStatus());
+        if(dutyData.getRequestStatus().equals("Applied")){
+            tv_View_approveddate.setVisibility(View.GONE);
+            tv_View_approvedremarks.setVisibility(View.GONE);
+            tv_View_approver.setVisibility(View.GONE);
+            label1.setVisibility(View.GONE);
+            label2.setVisibility(View.GONE);
+            label3.setVisibility(View.GONE);
+        }
         tv_View_approveddate.setText(dutyData.getApprovedDate());
         tv_View_approvedremarks.setText(dutyData.getApprovedRemarks());
         tv_View_approver.setText(dutyData.getPrimaryApprover());

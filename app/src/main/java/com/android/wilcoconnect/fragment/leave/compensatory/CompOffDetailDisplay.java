@@ -27,6 +27,8 @@ public class CompOffDetailDisplay extends DialogFragment {
     private TextView tv_View_remarksbyapprover;
     private TextView tv_View_approver;
     private TextView tv_View_applieddate;
+    private TextView label1,label2,label3;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,12 +57,24 @@ public class CompOffDetailDisplay extends DialogFragment {
         tv_View_remarksbyapprover = view.findViewById(R.id.et_View_remarksbyapprover);
         tv_View_approver = view.findViewById(R.id.et_View_approver);
 
+        label1 = view.findViewById(R.id.tv_View_approveddate);
+        label2 = view.findViewById(R.id.tv_View_remarksbyapprover);
+        label3 = view.findViewById(R.id.tv_View_approver);
+
         tv_View_applieddate.setText(data.getAppliedDate());
         tv_View_fromdate.setText(data.getStrFromDate());
         tv_View_todate.setText(data.getStrToDate());
         tv_View_no_of_counts.setText(""+data.getNoOfDays());
         tv_View_remarks.setText(data.getRequestRemarks());
         tv_View_leavestatus.setText(data.getRequestStatus());
+        if(data.getRequestStatus().equals("Applied")){
+            tv_View_approveddate.setVisibility(View.GONE);
+            tv_View_remarksbyapprover.setVisibility(View.GONE);
+            tv_View_approver.setVisibility(View.GONE);
+            label1.setVisibility(View.GONE);
+            label2.setVisibility(View.GONE);
+            label3.setVisibility(View.GONE);
+        }
         tv_View_approveddate.setText(data.getStrApprovedDate());
         tv_View_remarksbyapprover.setText(data.getApprovedRemarks());
         tv_View_approver.setText(data.getPrimaryApprover());

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -22,6 +23,8 @@ import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.common.Success;
 import com.android.wilcoconnect.model.leave.ApplyLeavePost;
 import com.android.wilcoconnect.model.leave.LeaveType;
+import com.android.wilcoconnect.model.leave.leavebalance.GetLeaveBalance;
+import com.android.wilcoconnect.model.leave.leavebalance.LeaveDetails;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 
 import java.text.ParseException;
@@ -57,6 +60,13 @@ public class ApplyLeave extends Fragment {
     private ArrayList<LeaveType.Data> type = new ArrayList<>();
     private ApplyLeavePost leavepost = new ApplyLeavePost();
     private String from_date,to_date;
+    private ArrayList<LeaveDetails> leaveBalanceDetail = new ArrayList<>();
+    private LeaveDetails selectedLeaveBalance = new LeaveDetails();
+    private int availableBalance=0;
+
+    private String LeaveTypeName;
+    private LinearLayout balanceFrame;
+    private TextView title,content;
 
     //Session: F->Fullday, A->After Noon,M ->Morning
 
@@ -65,6 +75,10 @@ public class ApplyLeave extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_apply_leave, container, false);
+
+        balanceFrame = view.findViewById(R.id.leaveBalanceFrame);
+        title = view.findViewById(R.id.tv_leaveType);
+        content = view.findViewById(R.id.tv_leaveBalance);
 
         /*
          * Get the Header
@@ -83,6 +97,20 @@ public class ApplyLeave extends Fragment {
             addRequest.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
+
+        ApiManager.getInstance().getLeaveBalance(addRequest, new Callback<GetLeaveBalance>() {
+            @Override
+            public void onResponse(Call<GetLeaveBalance> call, Response<GetLeaveBalance> response) {
+                if(response.isSuccessful() && response.body()!=null){
+                    leaveBalanceDetail = response.body().getData().getLeaveDetails();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetLeaveBalance> call, Throwable t) {
+                Log.e(TAG,t.getLocalizedMessage());
+            }
+        });
 
         ApiManager.getInstance().getLeaveType(addRequest, new Callback<LeaveType>() {
             @Override
@@ -126,6 +154,8 @@ public class ApplyLeave extends Fragment {
             builder.setItems(LeaveType, (dialog, which) -> {
                 checkItem = which;
                 btn_leaveType.setText(LeaveType[which]);
+                LeaveTypeName = LeaveType[which];
+                display_balance();
                 leavepost.setLeaveTypeID(type.get(which).getLeaveTypeID());
                 iv_from_date.setEnabled(true);
                 iv_to_date.setEnabled(true);
@@ -133,6 +163,7 @@ public class ApplyLeave extends Fragment {
                 checkItem=-1;
                 if (checkItem < 0) {
                     btn_leaveType.setText("--- SELECT ---");
+                    balanceFrame.setVisibility(View.GONE);
                     iv_from_date.setEnabled(false);
                     iv_to_date.setEnabled(false);
                 }
@@ -218,6 +249,7 @@ public class ApplyLeave extends Fragment {
             tv_date_error.setVisibility(View.GONE);
             tv_no_of_days_count.setText("");
             et_remarks.setText("");
+            balanceFrame.setVisibility(View.GONE);
             mrngandevening.setVisibility(View.GONE);
             fullandhalf.setVisibility(View.GONE);
         });
@@ -245,7 +277,16 @@ public class ApplyLeave extends Fragment {
                 else  if(et_remarks.getText().toString().equals("")){
                     builder.setMessage("Enter the valid Remarks");
                 }
+
                 builder.setPositiveButton("OK",null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+            else if(availableBalance<Integer.parseInt(tv_no_of_days_count.getText().toString())){
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("LOP?");
+                builder.setPositiveButton("YES", null);
+                builder.setNegativeButton("NO", null);
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
@@ -278,6 +319,7 @@ public class ApplyLeave extends Fragment {
                             tv_date_error.setVisibility(View.GONE);
                             tv_no_of_days_count.setText("");
                             et_remarks.setText("");
+                            balanceFrame.setVisibility(View.GONE);
                             mrngandevening.setVisibility(View.GONE);
                             fullandhalf.setVisibility(View.GONE);
                         }
@@ -299,6 +341,25 @@ public class ApplyLeave extends Fragment {
         });
 
         return view;
+    }
+
+    private void display_balance() {
+
+        for(int i=0;i<leaveBalanceDetail.size();i++){
+            if(leaveBalanceDetail.get(i).getLeaveTypeText().equals(LeaveTypeName)){
+                title.setText(leaveBalanceDetail.get(i).getLeaveTypeText());
+                content.setText("Eligible:  "+leaveBalanceDetail.get(i).getLeaveEligible()+"\n"
+                        +"Taken:  "+leaveBalanceDetail.get(i).getLeaveTaken()+"\n"
+                        +"Leave Not Approved:  "+leaveBalanceDetail.get(i).getAppliedLeave()+"\n"
+                        +"Available:  "+leaveBalanceDetail.get(i).getLeaveAvailability());
+                availableBalance = (int)leaveBalanceDetail.get(i).getLeaveAvailability();
+                balanceFrame.setVisibility(View.VISIBLE);
+            }
+            else {
+                balanceFrame.setVisibility(View.GONE);
+            }
+        }
+
     }
 
     private void get_radiobutton_value() {

@@ -72,6 +72,38 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_type" />
 
+                <LinearLayout
+                    android:id="@+id/leaveBalanceFrame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/btn_type">
+
+                    <TextView
+                        android:id="@+id/tv_leaveType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text="Casual Leave"
+                        android:textColor="#0A0606"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_leaveBalance"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text=""
+                        android:textColor="#0A0606"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/tv_fromdate"
                     android:layout_width="0dp"
@@ -83,7 +115,7 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_type" />
+                    app:layout_constraintTop_toBottomOf="@+id/leaveBalanceFrame" />
 
                 <Button
                     android:id="@+id/btn_fromdate"

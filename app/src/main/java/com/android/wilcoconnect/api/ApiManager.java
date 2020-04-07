@@ -16,6 +16,7 @@ import com.android.wilcoconnect.model.leave.Onduty.OnDutyPost;
 import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffDetail;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffPost;
+import com.android.wilcoconnect.model.leave.leavebalance.GetLeaveBalance;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetails;
 import com.android.wilcoconnect.model.profile.BasicDetails;
@@ -299,6 +300,14 @@ public class ApiManager {
         public void getLeaveType(AddRequest request, Callback<LeaveType> callback){
             Call<LeaveType> leaveType = service.getLeaveType(request.Email,request.companyCode,request.EmployeeID);
             leaveType.enqueue(callback);
+        }
+
+        /*
+         * Get the Leave Balance Detail
+         * */
+        public void getLeaveBalance(AddRequest request, Callback<GetLeaveBalance> callback){
+            Call<GetLeaveBalance> balance =  service.getLeaveBalance(request.Email,request.companyCode,request.EmployeeID);
+            balance.enqueue(callback);
         }
 
         /*

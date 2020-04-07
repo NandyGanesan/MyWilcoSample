@@ -15,6 +15,7 @@ import com.android.wilcoconnect.model.leave.Onduty.OnDutyPost;
 import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffDetail;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffPost;
+import com.android.wilcoconnect.model.leave.leavebalance.GetLeaveBalance;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetails;
 import com.android.wilcoconnect.model.profile.BasicDetails;
@@ -223,6 +224,14 @@ public interface ApiInterface {
     Call<LeaveType> getLeaveType(@Query("Email") String Email,
                                  @Query("companyCode") String companyCode,
                                  @Query("employeeID") String employeeID);
+
+    /*
+    * Get the Leave Balance Detail
+    * */
+    @GET("api/Leave/GetLeaveBalanceList")
+    Call<GetLeaveBalance> getLeaveBalance(@Query("Email") String Email,
+                                          @Query("companyCode") String companyCode,
+                                          @Query("employeeID") String employeeID);
 
     /*
     * Store the Leave Request

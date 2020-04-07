@@ -12,6 +12,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -25,6 +26,9 @@ import com.android.wilcoconnect.model.common.Success;
 import com.android.wilcoconnect.model.leave.ApplyLeavePost;
 import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
+import com.android.wilcoconnect.model.leave.leavebalance.GetLeaveBalance;
+import com.android.wilcoconnect.model.leave.leavebalance.LeaveDetails;
+import com.android.wilcoconnect.model.leave.leavebalance.LeaveTypeDetails;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 
 import java.text.ParseException;
@@ -55,8 +59,6 @@ public class ApplyLeaveForTeam extends Fragment {
     private int checkItem = 0;
     private AddRequest addRequest = new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
-    private LeaveType leaveType = new LeaveType();
-    private ArrayList<LeaveType.Data> type = new ArrayList<>();
     private int fromYear, fromMonth, fromDay, toYear, toMonth, toDay;
     private RadioGroup fullandhalf,mrngandevening;
     private String[] employee;
@@ -65,12 +67,24 @@ public class ApplyLeaveForTeam extends Fragment {
     private ApplyLeavePost leavepost = new ApplyLeavePost();
     private String from_date,to_date;
     private String employeeId,employeee;
+    private ArrayList<LeaveDetails> leaveBalanceDetail = new ArrayList<>();
+    private ArrayList<LeaveTypeDetails> leaveTypeDetail = new ArrayList<>();
+    private String LeaveTypeName;
+    private AddRequest sendRequest = new AddRequest();
+    private int availableBalance=0;
+
+    private LinearLayout balanceFrame;
+    private TextView title,content;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_apply_leave, container, false);
+
+        balanceFrame = view.findViewById(R.id.leaveBalanceFrame);
+        title = view.findViewById(R.id.tv_leaveType);
+        content = view.findViewById(R.id.tv_leaveBalance);
 
         /*
          * Assign the Values for the Particular View Elements
@@ -110,6 +124,7 @@ public class ApplyLeaveForTeam extends Fragment {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
+
         ApiManager.getInstance().getEmployeeNameList(addRequest, new Callback<TeamLeaveAutoList>() {
             @Override
             public void onResponse(Call<TeamLeaveAutoList> call, Response<TeamLeaveAutoList> response) {
@@ -138,27 +153,6 @@ public class ApplyLeaveForTeam extends Fragment {
             }
         });
 
-        ApiManager.getInstance().getLeaveTypeForTeam(addRequest, new Callback<LeaveType>() {
-            @Override
-            public void onResponse(Call<LeaveType> call, Response<LeaveType> response) {
-                if(response.body()!=null && response.isSuccessful()){
-                    leaveType = response.body();
-                    if(leaveType!=null && response.isSuccessful()){
-                        type = leaveType.getData();
-                        if(type.size()>0){
-                            get_dropdown_value();
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LeaveType> call, Throwable t) {
-                Log.e(TAG,t.getLocalizedMessage());
-            }
-        });
-
-
         /*
          * Select the Particular leave type to enable the From and To date
          * */
@@ -168,7 +162,9 @@ public class ApplyLeaveForTeam extends Fragment {
             builder.setItems(LeaveType, (dialog, which) -> {
                 checkItem = which;
                 btn_leaveType.setText(LeaveType[which]);
-                leavepost.setLeaveTypeID(type.get(which).getLeaveTypeID());
+                LeaveTypeName = LeaveType[which];
+                display_balance();
+                leavepost.setLeaveTypeID(leaveTypeDetail.get(which).getLeaveTypeID());
                 iv_from_date.setEnabled(true);
                 iv_to_date.setEnabled(true);
             }).setNegativeButton("Cancel", (dialog, which) -> {
@@ -177,6 +173,7 @@ public class ApplyLeaveForTeam extends Fragment {
                     btn_leaveType.setText("--- SELECT ---");
                     iv_from_date.setEnabled(false);
                     iv_to_date.setEnabled(false);
+                    balanceFrame.setVisibility(View.GONE);
                 }
             });
             AlertDialog dialog = builder.create();
@@ -194,7 +191,15 @@ public class ApplyLeaveForTeam extends Fragment {
             iv_to_date.setEnabled(true);
         }
         employeename.setOnItemClickListener((parent, view13, position, id) -> {
+            sendRequest.setCompanyCode(addRequest.getCompanyCode());
+            sendRequest.setEmail(addRequest.getEmail());
             employeee = (String)parent.getItemAtPosition(position);
+            for(int i=0;i<teamlist.size();i++){
+                if(teamlist.get(i).getEmployeeName().equals(employeee)){
+                    sendRequest.setEmployeeID(teamlist.get(i).getEmployeeCode());
+                }
+            }
+            get_leave_Balance();
             btn_leaveType.setEnabled(true);
         });
 
@@ -265,6 +270,7 @@ public class ApplyLeaveForTeam extends Fragment {
             tv_no_of_days_count.setText("");
             et_remarks.setText("");
             employeename.setText("");
+            balanceFrame.setVisibility(View.GONE);
             mrngandevening.setVisibility(View.GONE);
             fullandhalf.setVisibility(View.GONE);
         });
@@ -295,7 +301,14 @@ public class ApplyLeaveForTeam extends Fragment {
                 builder.setPositiveButton("OK", null);
                 AlertDialog dialog = builder.create();
                 dialog.show();
-            } else {
+            }else if(availableBalance < Integer.parseInt(tv_no_of_days_count.getText().toString())){
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("LOP?");
+                builder.setPositiveButton("YES", null);
+                builder.setNegativeButton("NO", null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }else {
                 for(int i=0;i<teamlist.size();i++) {
                     if (teamlist.get(i).getEmployeeName().equals(employeee)) {
                         employeeId = teamlist.get(i).getEmployeeCode();
@@ -331,6 +344,7 @@ public class ApplyLeaveForTeam extends Fragment {
                                 tv_no_of_days_count.setText("");
                                 employeename.setText("");
                                 et_remarks.setText("");
+                                balanceFrame.setVisibility(View.GONE);
                                 mrngandevening.setVisibility(View.GONE);
                                 fullandhalf.setVisibility(View.GONE);
                             }
@@ -352,7 +366,43 @@ public class ApplyLeaveForTeam extends Fragment {
         return view;
     }
 
-     /*
+    private void get_leave_Balance() {
+        leaveTypeDetail = new ArrayList<>();
+        leaveBalanceDetail = new ArrayList<>();
+        ApiManager.getInstance().getLeaveBalance(sendRequest, new Callback<GetLeaveBalance>() {
+            @Override
+            public void onResponse(Call<GetLeaveBalance> call, Response<GetLeaveBalance> response) {
+                if(response.isSuccessful() && response.body()!=null){
+                    leaveBalanceDetail = response.body().getData().getLeaveDetails();
+                    leaveTypeDetail = response.body().getData().getLeaveTypeDetails();
+                    get_dropdown_value();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetLeaveBalance> call, Throwable t) {
+                Log.e(TAG,t.getLocalizedMessage());
+            }
+        });
+    }
+
+    private void display_balance() {
+
+        for(int i=0;i<leaveBalanceDetail.size();i++){
+            if(leaveBalanceDetail.get(i).getLeaveTypeText().equals(LeaveTypeName)){
+                title.setText(leaveBalanceDetail.get(i).getLeaveTypeText());
+                content.setText("Eligible:  "+leaveBalanceDetail.get(i).getLeaveEligible()+"\n"
+                        +"Taken:  "+leaveBalanceDetail.get(i).getLeaveTaken()+"\n"
+                        +"Leave Not Approved:  "+leaveBalanceDetail.get(i).getAppliedLeave()+"\n"
+                        +"Available:  "+leaveBalanceDetail.get(i).getLeaveAvailability());
+                availableBalance = (int)leaveBalanceDetail.get(i).getLeaveAvailability();
+                balanceFrame.setVisibility(View.VISIBLE);
+            }
+        }
+
+    }
+
+    /*
      * Count the Number of days from the from and to date
      * */
     private void getCount() {
@@ -402,10 +452,10 @@ public class ApplyLeaveForTeam extends Fragment {
     }
 
     private void get_dropdown_value() {
-        if(type.size()>0) {
-            LeaveType = new String[type.size()];
-            for (int i = 0; i < type.size(); i++) {
-                LeaveType[i] = type.get(i).getLeaveType();
+        if(leaveTypeDetail.size()>0) {
+            LeaveType = new String[leaveTypeDetail.size()];
+            for (int i = 0; i < leaveTypeDetail.size(); i++) {
+                LeaveType[i] = leaveTypeDetail.get(i).getLeaveTypeText();
             }
         }
     }

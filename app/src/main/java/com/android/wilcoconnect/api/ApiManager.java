@@ -14,6 +14,7 @@ import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyMasterData;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyPost;
 import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
+import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffDetail;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffPost;
 import com.android.wilcoconnect.model.leave.leavebalance.GetLeaveBalance;
@@ -359,14 +360,6 @@ public class ApiManager {
         }
 
         /*
-        * Get the LeaveType for Apply Leave For Team
-        * */
-        public void getLeaveTypeForTeam(AddRequest request, Callback<LeaveType> callback){
-            Call<LeaveType> leaveType = service.getTeamLeaveType(request.Email,request.companyCode,request.EmployeeID);
-            leaveType.enqueue(callback);
-        }
-
-        /*
         * Store Apply leave for Team
         * */
         public void storeLeaveForTeam(ApplyLeavePost post,Callback<Success> callback){
@@ -435,6 +428,22 @@ public class ApiManager {
         * */
         public void storeCompOffDetail(CompOffPost post,Callback<Success> callback){
             Call<Success> reply = service.storeCompOffDetail(post);
+            reply.enqueue(callback);
+        }
+
+        /*
+         * Get the Approve Comp-Off Detail
+         * */
+        public void getApproveCompOffDetail(AddRequest request, Callback<CompOffDetail> callback){
+            Call<CompOffDetail> detail = service.getApproveCompOffDetail(request.Email,request.companyCode,request.EmployeeID);
+            detail.enqueue(callback);
+        }
+
+        /*
+        * Store Approve CompOff Detail
+        * */
+        public void storeCompOffApprove(CompOffApprovePost post, Callback<Success> callback){
+            Call<Success> reply = service.storeApproveOrRejectCompOff(post);
             reply.enqueue(callback);
         }
 }

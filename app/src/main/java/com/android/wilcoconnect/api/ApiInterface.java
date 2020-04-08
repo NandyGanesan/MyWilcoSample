@@ -13,6 +13,7 @@ import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyMasterData;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyPost;
 import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
+import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffDetail;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffPost;
 import com.android.wilcoconnect.model.leave.leavebalance.GetLeaveBalance;
@@ -278,14 +279,6 @@ public interface ApiInterface {
                                                 @Query("employeeID") String employeeID);
 
     /*
-    * Get the LeaveType for ApplyLeave For Team
-    * */
-    @GET("api/Leave/GetTeamLeaveType")
-    Call<LeaveType> getTeamLeaveType(@Query("Email") String Email,
-                                    @Query("companyCode") String companyCode,
-                                    @Query("employeeID") String employeeID);
-
-    /*
     * Store Apply leave for Team
     * */
     @POST("api/Leave/StoreLeaveForTeam")
@@ -348,4 +341,18 @@ public interface ApiInterface {
     * */
     @POST("api/compoff/StoreCompoff")
     Call<Success> storeCompOffDetail(@Body CompOffPost post);
+
+    /*
+    * Get the Approve Comp-Off Detail
+    * */
+    @GET("api/compoff/GetApproverCompoffList")
+    Call<CompOffDetail> getApproveCompOffDetail(@Query("Email") String Email,
+                                         @Query("companyCode") String companyCode,
+                                         @Query("employeeID") String employeeID);
+
+    /*
+    * Store Approve or Reject (Applied Comp-Off)
+    * */
+    @POST("api/compoff/StoreApprovedCompoff")
+    Call<Success> storeApproveOrRejectCompOff(@Body CompOffApprovePost post);
 }

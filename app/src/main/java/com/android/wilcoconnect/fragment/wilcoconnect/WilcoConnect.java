@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
+import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
@@ -94,6 +95,12 @@ public class WilcoConnect extends Fragment {
             }
             @Override
             public void OnStore(View view, OnDutyApprovePost postData) {}
+
+            @Override
+            public void OnCompOffStore(View view, CompOffApprovePost post) {
+
+            }
+
             @Override
             public void onClick(View view, ApprovePost post) {}
         });
@@ -152,6 +159,11 @@ public class WilcoConnect extends Fragment {
                         public void onClick(View view, ApprovePost post) {}
                         @Override
                         public void OnStore(View view, OnDutyApprovePost postData) {}
+
+                        @Override
+                        public void OnCompOffStore(View view, CompOffApprovePost post) {
+
+                        }
                     });
                     recyclerView.setAdapter(adapter);
                 } else {
@@ -185,7 +197,7 @@ public class WilcoConnect extends Fragment {
     }
 
     /*
-     * When replace the fragemnt for particular user action
+     * When replace the fragment for particular user action
      * */
     private void replaceFragment(Fragment someFragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();

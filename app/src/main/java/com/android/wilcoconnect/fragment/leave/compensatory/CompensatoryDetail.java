@@ -19,6 +19,7 @@ import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
+import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffDetail;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffDetailData;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
@@ -107,6 +108,12 @@ public class CompensatoryDetail extends Fragment {
                 @Override
                 public void OnStore(View view, OnDutyApprovePost postData) {
                 }
+
+                @Override
+                public void OnCompOffStore(View view, CompOffApprovePost post) {
+
+                }
+
                 @Override
                 public void onClick(View view, ApprovePost post) {
                 }

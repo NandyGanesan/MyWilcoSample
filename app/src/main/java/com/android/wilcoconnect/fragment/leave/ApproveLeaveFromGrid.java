@@ -19,6 +19,7 @@ import com.android.wilcoconnect.model.leave.ApproveLeaveData;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.MyLeaveData;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
+import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.leave.ApproveLeaveListAdapter;
@@ -149,6 +150,10 @@ public class ApproveLeaveFromGrid extends Fragment {
                 }
                 @Override
                 public void OnStore(View view, OnDutyApprovePost postData) {}
+
+                @Override
+                public void OnCompOffStore(View view, CompOffApprovePost post) {}
+
                 @Override
                 public void onClick(View view, ApprovePost post) {
                     getNewInstance(post);

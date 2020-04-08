@@ -1,35 +1,29 @@
-package com.android.wilcoconnect.fragment.leave.Onduty_other;
+package com.android.wilcoconnect.fragment.leave.compensatory;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
-import com.android.wilcoconnect.fragment.leave.ApproveFromPage;
-import com.android.wilcoconnect.fragment.leave.Remarks;
-import com.android.wilcoconnect.model.leave.ApproveLeaveData;
 import com.android.wilcoconnect.model.leave.ApprovePost;
-import com.android.wilcoconnect.model.leave.MyLeaveData;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
-import com.android.wilcoconnect.model.leave.Onduty.OnDutyData;
-import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
+import com.android.wilcoconnect.model.leave.compensatory.CompOffDetail;
+import com.android.wilcoconnect.model.leave.compensatory.CompOffDetailData;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
-import com.android.wilcoconnect.shared.leave.ApproveLeaveListAdapter;
-import com.android.wilcoconnect.shared.leave.onduty_other.ApproveOnDutyAdapter;
+import com.android.wilcoconnect.shared.leave.compensatory.ApproveCompOffAdapter;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
@@ -41,18 +35,19 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class ApproveOnDutyGrid extends Fragment {
+public class ApproveCompOff extends Fragment {
 
     /*
      * Initialize the XML element or views
      * */
     private RecyclerView recyclerView;
-    private String TAG = "ApproveLeaveFromGrid";
+    private String TAG = "ApproveCompOff";
     private FrameLayout frameLayout;
     private static String MYPREFS_NAME = "logininfo";
-    private ArrayList<OnDutyData> onDutyDataArrayList = new ArrayList<>();
+    private ArrayList<CompOffDetailData> compOffArrayList = new ArrayList<>();
     private AddRequest request = new AddRequest();
-    private ApproveOnDutyAdapter adapter;
+    private String data;
+    private ApproveCompOffAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,21 +76,20 @@ public class ApproveOnDutyGrid extends Fragment {
             request.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
-        ApiManager.getInstance().getAppliedOnDutyDetail(request, new Callback<OnDutyDetails>() {
+        ApiManager.getInstance().getApproveCompOffDetail(request, new Callback<CompOffDetail>() {
             @Override
-            public void onResponse(Call<OnDutyDetails> call, Response<OnDutyDetails> response) {
-                if(response.body()!=null && response.isSuccessful()){
-                    onDutyDataArrayList = response.body().getData();
+            public void onResponse(Call<CompOffDetail> call, Response<CompOffDetail> response) {
+                if(response.body() != null && response.isSuccessful()){
+                    compOffArrayList = response.body().getData();
                     set_Approve_onDuty_list();
                 }
             }
 
             @Override
-            public void onFailure(Call<OnDutyDetails> call, Throwable t) {
+            public void onFailure(Call<CompOffDetail> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
             }
         });
-
 
         return view;
     }
@@ -104,7 +98,7 @@ public class ApproveOnDutyGrid extends Fragment {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        if(onDutyDataArrayList.size()<0){
+        if(compOffArrayList.size()<0){
             adapter =null;
             recyclerView.setAdapter(adapter);
             Snackbar snackbar = Snackbar
@@ -112,33 +106,28 @@ public class ApproveOnDutyGrid extends Fragment {
             snackbar.show();
         }
         else {
-            adapter = new ApproveOnDutyAdapter(new RecyclerViewListener() {
+            adapter = new ApproveCompOffAdapter(getActivity(), compOffArrayList, request, new RecyclerViewListener() {
                             @Override
-                            public void onClick(View view, String value) {
+                            public void onClick(View view, String value) {}
+                            @Override
+                            public void OnStore(View view, OnDutyApprovePost postData) { }
+                            @Override
+                            public void OnCompOffStore(View view, CompOffApprovePost post) {
+                                getNewInstance(post);
                             }
                             @Override
-                            public void OnStore(View view, OnDutyApprovePost postData) {
-                                getNewInstance(postData);
-                            }
-
-                @Override
-                public void OnCompOffStore(View view, CompOffApprovePost post) {
-
-                }
-
-                @Override
                             public void onClick(View view, ApprovePost post) {}
-                        }, getActivity(), onDutyDataArrayList, request);
+                        });
             recyclerView.setAdapter(adapter);
         }
     }
 
-    private void getNewInstance(OnDutyApprovePost post){
+    private void getNewInstance(CompOffApprovePost post) {
         Gson gson = new Gson();
         String value = gson.toJson(post);
         Bundle bundle = new Bundle();
-        bundle.putString("SubmitOnDuty",value);
-        OnDutyRemarks remarks = new OnDutyRemarks();
+        bundle.putString("SubmitCompOff",value);
+        CompOffRemarks remarks = new CompOffRemarks();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         remarks.setArguments(bundle);
         remarks.show(transaction,remarks.TAG);

@@ -20,6 +20,7 @@ import com.android.wilcoconnect.fragment.leave.Onduty_other.ApproveOnDutyGrid;
 import com.android.wilcoconnect.fragment.leave.Onduty_other.OnDuty;
 import com.android.wilcoconnect.fragment.leave.Onduty_other.OnDutyApprovedList;
 import com.android.wilcoconnect.fragment.leave.compensatory.ApplyCompensatory;
+import com.android.wilcoconnect.fragment.leave.compensatory.ApproveCompOff;
 import com.android.wilcoconnect.fragment.leave.compensatory.CompensatoryDetail;
 import com.android.wilcoconnect.model.MenuList.MainMenu;
 import com.android.wilcoconnect.model.MenuList.Menu;
@@ -101,17 +102,18 @@ public class LeaveHome extends Fragment {
         fragments.add(new LeaveCalenderForTeam());
         fragments.add(new OnDuty());
         fragments.add(new OnDutyApprovedList());
-        //fragments.add(new ApplyOnDuty());
+        fragments.add(new ApplyOnDuty());
         fragments.add(new ApproveOnDutyGrid());
         fragments.add(new CompensatoryDetail());
         fragments.add(new ApplyCompensatory());
+        fragments.add(new ApproveCompOff());
 
         /*
          * Set the FragmentAdapter with the Fragment
          * */
         final FragmentAdapter pagerAdapter = new FragmentAdapter(getActivity().getSupportFragmentManager(), getActivity().getApplicationContext(), fragments);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(12);
+        viewPager.setOffscreenPageLimit(13);
         tabLayout.setupWithViewPager(viewPager);
 
         /*
@@ -126,10 +128,11 @@ public class LeaveHome extends Fragment {
         tabLayout.getTabAt(6).setText("LEAVE CALENDER");
         tabLayout.getTabAt(7).setText("ON DUTY");
         tabLayout.getTabAt(8).setText("ON DUTY APPROVED LIST");
-       // tabLayout.getTabAt(9).setText("APPLY ON DUTY");
-        tabLayout.getTabAt(9).setText("APPROVE ON DUTY");
-        tabLayout.getTabAt(10).setText("COMPENSATORY");
-        tabLayout.getTabAt(11).setText("ADD COMP-OFF");
+        tabLayout.getTabAt(9).setText("APPLY ON DUTY");
+        tabLayout.getTabAt(10).setText("APPROVE ON DUTY");
+        tabLayout.getTabAt(11).setText("COMPENSATORY");
+        tabLayout.getTabAt(12).setText("ADD COMP-OFF");
+        tabLayout.getTabAt(13).setText("APPROVE COMP-OFF");
 
         /*
          * Define the Tab Layout Action

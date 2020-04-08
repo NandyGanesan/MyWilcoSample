@@ -75,6 +75,24 @@ public class ApplyCompensatory extends Fragment {
         tv_no_of_days_count = view.findViewById(R.id.tv_noofdayscount);
         tv_date_error = view.findViewById(R.id.tv_dateerror);
 
+        /*
+         * Get the Header
+         * */
+        SharedPreferences preferences = getActivity().getSharedPreferences(MainApplication.MY_PREFS_NAME, MODE_PRIVATE);
+        if (preferences != null) {
+            MainApplication.token_data = preferences.getString("header", "No name defined");
+        }
+
+        /*
+         * Get the shared preference data to assign the another object..
+         * */
+        SharedPreferences prefs = getActivity().getSharedPreferences(MYPREFS_NAME, MODE_PRIVATE);
+        if(prefs!=null) {
+            addRequest.setEmail(prefs.getString("Email", "No name defined"));
+            addRequest.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
+            addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
+        }
+
          /*
          * Select the From Date
          * */
@@ -131,9 +149,7 @@ public class ApplyCompensatory extends Fragment {
          * When submit the leave request
          * */
         btn_submit.setOnClickListener(v -> {
-            if(btn_from_date.getText().toString().equals("")||
-                    btn_to_date.getText().toString().equals("")||
-                    et_remarks.getText().toString().equals(""))
+            if(btn_from_date.getText().toString().equals("")||btn_to_date.getText().toString().equals("")||et_remarks.getText().toString().equals(""))
             {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Error:");
@@ -185,7 +201,6 @@ public class ApplyCompensatory extends Fragment {
                             dialog.show();
                         }
                     }
-
                     @Override
                     public void onFailure(Call<Success> call, Throwable t) {
                         Log.e(TAG,t.getLocalizedMessage());
@@ -193,7 +208,6 @@ public class ApplyCompensatory extends Fragment {
                 });
             }
         });
-
         return view;
     }
 

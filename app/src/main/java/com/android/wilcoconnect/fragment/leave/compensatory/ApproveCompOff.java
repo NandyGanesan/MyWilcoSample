@@ -45,8 +45,8 @@ public class ApproveCompOff extends Fragment {
     private FrameLayout frameLayout;
     private static String MYPREFS_NAME = "logininfo";
     private ArrayList<CompOffDetailData> compOffArrayList = new ArrayList<>();
+    private ArrayList<CompOffDetailData> selectedList = new ArrayList<>();
     private AddRequest request = new AddRequest();
-    private String data;
     private ApproveCompOffAdapter adapter;
 
     @Override
@@ -95,6 +95,21 @@ public class ApproveCompOff extends Fragment {
     }
 
     private void set_Approve_onDuty_list() {
+        selectedList = new ArrayList<>();
+        for (int i=0;i<compOffArrayList.size();i++){
+            if(compOffArrayList.get(i).getRequestStatus().equals("Applied")){
+                CompOffDetailData data = new CompOffDetailData();
+                data.setEmployeeID(compOffArrayList.get(i).getEmployeeID());
+                data.setFirstName(compOffArrayList.get(i).getFirstName());
+                data.setAppliedDate(compOffArrayList.get(i).getAppliedDate());
+                data.setFromDate(compOffArrayList.get(i).getFromDate());
+                data.setToDate(compOffArrayList.get(i).getToDate());
+                data.setRequestStatus(compOffArrayList.get(i).getRequestStatus());
+                data.setNoOfDays(compOffArrayList.get(i).getNoOfDays());
+                data.setRequestRemarks(compOffArrayList.get(i).getRequestRemarks());
+                selectedList.add(data);
+            }
+        }
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
@@ -106,7 +121,7 @@ public class ApproveCompOff extends Fragment {
             snackbar.show();
         }
         else {
-            adapter = new ApproveCompOffAdapter(getActivity(), compOffArrayList, request, new RecyclerViewListener() {
+            adapter = new ApproveCompOffAdapter(getActivity(), selectedList, request, new RecyclerViewListener() {
                             @Override
                             public void onClick(View view, String value) {}
                             @Override

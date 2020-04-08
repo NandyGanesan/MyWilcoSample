@@ -56,7 +56,7 @@ public class ApproveCompOffAdapter extends RecyclerView.Adapter<ApproveCompOffAd
             post.setEmployeeCode(request.getEmployeeID());
             post.setEmail(request.getEmail());
             post.setEmpCompensatoryID(appliedlist.get(position).getEmpCompensatoryID());
-            post.setStatus("approved");
+            post.setStatus("Approve");
 
             if (listener != null)
                 listener.OnCompOffStore(v, post);
@@ -68,7 +68,7 @@ public class ApproveCompOffAdapter extends RecyclerView.Adapter<ApproveCompOffAd
             post.setEmployeeCode(request.getEmployeeID());
             post.setEmail(request.getEmail());
             post.setEmpCompensatoryID(appliedlist.get(position).getEmpCompensatoryID());
-            post.setStatus("rejected");
+            post.setStatus("Reject");
 
             if (listener != null)
                 listener.OnCompOffStore(v, post);

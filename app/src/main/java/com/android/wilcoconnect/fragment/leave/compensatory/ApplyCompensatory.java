@@ -14,21 +14,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.common.Success;
-import com.android.wilcoconnect.model.leave.ApplyLeavePost;
-import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffPost;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -215,8 +211,9 @@ public class ApplyCompensatory extends Fragment {
      * Count the Number of days from the from and to date
      * */
     private void getCount(){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
             Date fromdate = simpleDateFormat.parse(btn_from_date.getText().toString());
             Date todate = simpleDateFormat.parse(btn_to_date.getText().toString());
 

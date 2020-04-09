@@ -50,8 +50,6 @@ public class ApplyCompensatory extends Fragment {
     private CompOffPost post = new CompOffPost();
     private String from_date,to_date;
 
-    //Session: F->Fullday, A->After Noon,M ->Morning
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -213,19 +211,17 @@ public class ApplyCompensatory extends Fragment {
     private void getCount(){
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-            Date fromdate = simpleDateFormat.parse(btn_from_date.getText().toString());
-            Date todate = simpleDateFormat.parse(btn_to_date.getText().toString());
-
-            assert fromdate != null;
-            assert todate != null;
-            if(fromdate.after(todate) || todate.before(fromdate)){
+            Date from_date = simpleDateFormat.parse(btn_from_date.getText().toString());
+            Date to_date = simpleDateFormat.parse(btn_to_date.getText().toString());
+            assert from_date != null;
+            assert to_date != null;
+            if(from_date.after(to_date) || to_date.before(from_date)){
                 tv_date_error.setText("From Date must Lower than the To Date");
                 tv_date_error.setVisibility(View.VISIBLE);
             }
             else{
                 tv_date_error.setVisibility(View.GONE);
-                long different = todate.getTime() - fromdate.getTime();
+                long different = to_date.getTime() - from_date.getTime();
                 long daysInMilli = 1000 * 60 * 60* 24;
                 long elapsedDays = different / daysInMilli;
                 tv_no_of_days_count.setText(Integer.toString((int)(elapsedDays+1)));

@@ -52,12 +52,8 @@ public class Profile extends Fragment {
                 }
                 @Override
                 public void OnStore(View view, OnDutyApprovePost postData) {}
-
                 @Override
-                public void OnCompOffStore(View view, CompOffApprovePost post) {
-
-                }
-
+                public void OnCompOffStore(View view, CompOffApprovePost post) {}
                 @Override
                 public void onClick(View view, ApprovePost post) {}
             });

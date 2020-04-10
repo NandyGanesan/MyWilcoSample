@@ -219,14 +219,6 @@ public interface ApiInterface {
                                  @Query("employeeID") String employeeID);
 
     /*
-    * Get the Leave Types
-    * */
-    @GET("api/Leave/GetLeaveType")
-    Call<LeaveType> getLeaveType(@Query("Email") String Email,
-                                 @Query("companyCode") String companyCode,
-                                 @Query("employeeID") String employeeID);
-
-    /*
     * Get the Leave Balance Detail
     * */
     @GET("api/Leave/GetLeaveBalanceList")

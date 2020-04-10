@@ -296,14 +296,6 @@ public class ApiManager {
         }
 
         /*
-        * Get the LeaveType
-        * */
-        public void getLeaveType(AddRequest request, Callback<LeaveType> callback){
-            Call<LeaveType> leaveType = service.getLeaveType(request.Email,request.companyCode,request.EmployeeID);
-            leaveType.enqueue(callback);
-        }
-
-        /*
          * Get the Leave Balance Detail
          * */
         public void getLeaveBalance(AddRequest request, Callback<GetLeaveBalance> callback){

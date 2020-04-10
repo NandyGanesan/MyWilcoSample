@@ -25,6 +25,7 @@ import com.android.wilcoconnect.model.leave.ApplyLeavePost;
 import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.leavebalance.GetLeaveBalance;
 import com.android.wilcoconnect.model.leave.leavebalance.LeaveDetails;
+import com.android.wilcoconnect.model.leave.leavebalance.LeaveTypeDetails;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 
 import java.text.ParseException;
@@ -55,13 +56,11 @@ public class ApplyLeave extends Fragment {
     private RadioGroup fullandhalf,mrngandevening;
     private AddRequest addRequest= new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
-    private LeaveType leaveType = new LeaveType();
     private String leavelevel;
-    private ArrayList<LeaveType.Data> type = new ArrayList<>();
     private ApplyLeavePost leavepost = new ApplyLeavePost();
     private String from_date,to_date;
     private ArrayList<LeaveDetails> leaveBalanceDetail = new ArrayList<>();
-    private LeaveDetails selectedLeaveBalance = new LeaveDetails();
+    private ArrayList<LeaveTypeDetails> leaveTypeDetail = new ArrayList<>();
     private int availableBalance=0;
 
     private String LeaveTypeName;
@@ -103,27 +102,13 @@ public class ApplyLeave extends Fragment {
             public void onResponse(Call<GetLeaveBalance> call, Response<GetLeaveBalance> response) {
                 if(response.isSuccessful() && response.body()!=null){
                     leaveBalanceDetail = response.body().getData().getLeaveDetails();
+                    leaveTypeDetail = response.body().getData().getLeaveTypeDetails();
+                    get_dropdown_value();
                 }
             }
 
             @Override
             public void onFailure(Call<GetLeaveBalance> call, Throwable t) {
-                Log.e(TAG,t.getLocalizedMessage());
-            }
-        });
-
-        ApiManager.getInstance().getLeaveType(addRequest, new Callback<LeaveType>() {
-            @Override
-            public void onResponse(Call<LeaveType> call, Response<LeaveType> response) {
-                leaveType = response.body();
-                if(leaveType!=null && response.isSuccessful()){
-                    type = leaveType.getData();
-                        get_dropdown_value();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LeaveType> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
             }
         });
@@ -156,7 +141,7 @@ public class ApplyLeave extends Fragment {
                 btn_leaveType.setText(LeaveType[which]);
                 LeaveTypeName = LeaveType[which];
                 display_balance();
-                leavepost.setLeaveTypeID(type.get(which).getLeaveTypeID());
+                leavepost.setLeaveTypeID(leaveTypeDetail.get(which).getLeaveTypeID());
                 iv_from_date.setEnabled(true);
                 iv_to_date.setEnabled(true);
             }).setNegativeButton("Cancel", (dialog, which) -> {
@@ -363,9 +348,6 @@ public class ApplyLeave extends Fragment {
                 availableBalance = (int)leaveBalanceDetail.get(i).getLeaveAvailability();
                 balanceFrame.setVisibility(View.VISIBLE);
             }
-            else {
-                balanceFrame.setVisibility(View.GONE);
-            }
         }
 
     }
@@ -391,10 +373,10 @@ public class ApplyLeave extends Fragment {
     }
 
     private void get_dropdown_value() {
-        if(type.size()>0) {
-            LeaveType = new String[type.size()];
-            for (int i = 0; i < type.size(); i++) {
-                LeaveType[i] = type.get(i).getLeaveType();
+        if(leaveTypeDetail.size()>0) {
+            LeaveType = new String[leaveTypeDetail.size()];
+            for (int i = 0; i < leaveTypeDetail.size(); i++) {
+                LeaveType[i] = leaveTypeDetail.get(i).getLeaveTypeText();
             }
         }
     }

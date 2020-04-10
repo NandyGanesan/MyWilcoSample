@@ -35,20 +35,7 @@ public class Attachment extends DialogFragment {
     private AddRequest addRequest = new AddRequest();
     private AttachmentDetails attachmentDetail = new AttachmentDetails();
     private AttachmentDetailData attachmentDetailData = new AttachmentDetailData();
-    private String[] adharCard;
-    private String[] panCard;
-    private String[] presentAddress;
-    private String[] dob;
-    private String[] passport;
-    private String[] edu1_degree;
-    private String[] edu1_provisional;
-    private String[] edu1_marksheet;
-    private String[] edu2_degree;
-    private String[] edu2_provisional;
-    private String[] edu2_marksheet;
-    private String[] experience_certificate;
-    private String[] payslips;
-    private String[] Experience;
+    private String[] adarCard,panCard,presentAddress,dob,passport,edu1_degree,edu1_provisional,edu1_marksheet,edu2_degree,edu2_provisional,edu2_marksheet,experience_certificate,payslips,Experience;
     private LinearLayout adharCard_layout,panCard_layout,presentAddress_layout,dob_layout,passport_layout,edu1degree_layout,edu1provisional_layout,edu1marksheet_layout,edu2degree_layout,edu2provisional_layout,edu2marksheet_layout,experiencecertificate_layout,payslips_layout,experience_layout;
 
     @Override
@@ -124,9 +111,9 @@ public class Attachment extends DialogFragment {
     private void get_array_data() {
         for (int i = 0; i < attachmentDetailData.getDocumentList().size(); i++) {
             if (attachmentDetailData.getDocumentList().get(i).getAttachmentFileName().equals("Aadhar Card")) {
-                adharCard = new String[attachmentDetailData.getDocumentList().get(i).getFilelist().size()];
+                adarCard = new String[attachmentDetailData.getDocumentList().get(i).getFilelist().size()];
                 for (int a = 0; a < attachmentDetailData.getDocumentList().get(i).getFilelist().size(); a++) {
-                    adharCard[a] = attachmentDetailData.getDocumentList().get(i).getFilelist().get(a);
+                    adarCard[a] = attachmentDetailData.getDocumentList().get(i).getFilelist().get(a);
                 }
             } else if (attachmentDetailData.getDocumentList().get(i).getAttachmentFileName().equals("PAN Card")) {
                 panCard = new String[attachmentDetailData.getDocumentList().get(i).getFilelist().size()];
@@ -199,7 +186,7 @@ public class Attachment extends DialogFragment {
     }
 
     private void set_attachment() {
-        for (int i=0; i<adharCard.length;i++){
+        for (int i = 0; i< adarCard.length; i++){
             ImageView imageView = new ImageView(getActivity());
             imageView.setLayoutParams(new LinearLayout.LayoutParams(50,50));
             imageView.setImageResource(R.drawable.attachment);

@@ -79,8 +79,6 @@ public class ProfileInformation extends DialogFragment {
     private EmergencyDetailData emergencyDetailDataList = new EmergencyDetailData();
     private PassportDetails passportDetail = new PassportDetails();
     private List<PassportDetailData> passportDetailData;
-    private AttachmentDetails attachmentDetail = new AttachmentDetails();
-    private AttachmentDetailData attachmentDetailData = new AttachmentDetailData();
     private static final String MYPREFS_NAME = "logininfo";
     private RecyclerView recyclerView;
     private ArrayList<BasicInformation> additionalDetail;
@@ -152,36 +150,7 @@ public class ProfileInformation extends DialogFragment {
         else if(menu.getValues().equals("Passport")){
             get_Passport_detail();
         }
-        else if(menu.getValues().equals("Attachments")){
-            get_Attachment_Detail();
-        }
         return view;
-    }
-
-    private void get_Attachment_Detail() {
-        /*
-        * Get the Attachment Details
-        * */
-        ApiManager.getInstance().getAttachmentDetails(addRequest, new Callback<AttachmentDetails>() {
-            /*
-            * Api Call Success
-            * */
-            @Override
-            public void onResponse(Call<AttachmentDetails> call, Response<AttachmentDetails> response) {
-                attachmentDetail = response.body();
-                if(attachmentDetail!=null && response.isSuccessful()){
-                    attachmentDetailData = attachmentDetail.getData().get(0).getObjAttachement();
-                }
-            }
-            /*
-            * Api Call Failure
-            * */
-            @Override
-            public void onFailure(Call<AttachmentDetails> call, Throwable t) {
-                Log.e(TAG,t.getLocalizedMessage());
-            }
-        });
-
     }
 
     private void get_additional_value() {

@@ -124,11 +124,18 @@ public class Profile extends Fragment {
     }
 
     private void newInstance(String s) {
-        ProfileInformation information = new ProfileInformation();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        Bundle bundle = new Bundle();
-        bundle.putString("selectedoption", s);
-        information.setArguments(bundle);
-        information.show(transaction,information.TAG);
+        if(s.equals("Attachments")){
+            Attachment attachment = new Attachment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            attachment.show(transaction, attachment.TAG);
+        }
+        else {
+            ProfileInformation information = new ProfileInformation();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            Bundle bundle = new Bundle();
+            bundle.putString("selectedoption", s);
+            information.setArguments(bundle);
+            information.show(transaction, information.TAG);
+        }
     }
 }

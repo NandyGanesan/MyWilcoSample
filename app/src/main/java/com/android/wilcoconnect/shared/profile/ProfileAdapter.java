@@ -48,15 +48,25 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ViewHold
             ProfileMenu selected_menu = new ProfileMenu();
             selected_menu.setValues(menu.get(position).getValues());
 
-            /**
-             * Show the data in New Update View
-             * and perform respective operations
-             * */
-            Gson gson = new Gson();
-            String data = gson.toJson(selected_menu);
-            if (listener != null)
-                listener.onClick(v, data);
-
+            if(menu.get(position).getValues().equals("Attachments")){
+                /**
+                 * Show the data in New Update View
+                 * and perform respective operations
+                 * */
+                String data = "Attachments";
+                if (listener != null)
+                    listener.onClick(v, data);
+            }
+            else {
+                /**
+                 * Show the data in New Update View
+                 * and perform respective operations
+                 * */
+                Gson gson = new Gson();
+                String data = gson.toJson(selected_menu);
+                if (listener != null)
+                    listener.onClick(v, data);
+            }
         });
     }
 

@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        tools:ignore="UselessParent">
+
+        <include
+            layout="@layout/toolbar_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:ignore="UselessParent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="16dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tv_View_aadhar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="Aadhar Card"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:id="@+id/et_View_aadhar"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_aadhar" />
+
+                <TextView
+                    android:id="@+id/tv_View_pan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="PAN Card"
+                    android:textStyle="bold"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_aadhar" />
+
+                <LinearLayout
+                    android:id="@+id/et_View_pan"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_pan" />
+
+                <TextView
+                    android:id="@+id/tv_View_addressproof"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="Present Address Proof "
+                    android:textStyle="bold"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_pan"/>
+
+                <LinearLayout
+                    android:id="@+id/et_View_addressproof"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_addressproof" />
+
+                <TextView
+                    android:id="@+id/tv_View_dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:text="Proof of Date of Birth "
+                    android:textStyle="bold"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_addressproof"/>
+
+                <LinearLayout
+                    android:id="@+id/et_View_dob"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_dob" />
+
+                <TextView
+                    android:id="@+id/tv_View_passport"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Passport "
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_dob"/>
+
+                <LinearLayout
+                    android:id="@+id/et_View_passport"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:src="@drawable/attachment"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_passport" />
+
+                <TextView
+                    android:id="@+id/tv_View_edu1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Education1 - Degree"
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_passport"/>
+
+                <LinearLayout
+                    android:id="@+id/et_View_edu1"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_edu1" />
+
+                <TextView
+                    android:id="@+id/tv_View_prov"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Education1 - Provisional Certificate"
+                    android:textStyle="bold"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_edu1"/>
+
+                <LinearLayout
+                    android:id="@+id/et_View_prov"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_prov" />
+
+                <TextView
+                    android:id="@+id/tv_View_marksheet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Education1 - Marksheets "
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_prov"/>
+
+                <LinearLayout
+                    android:id="@+id/et_View_marksheet"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_marksheet" />
+
+                <TextView
+                    android:id="@+id/tv_View_degree"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Degree "
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_marksheet"/>
+
+                <LinearLayout
+                    android:id="@+id/et_View_degree"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_degree" />
+
+                <TextView
+                    android:id="@+id/tv_View_provcert"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Provisional Certificate "
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_degree"/>
+
+                <LinearLayout
+                    android:id="@+id/et_View_provcert"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_provcert" />
+
+                <TextView
+                    android:id="@+id/tv_View_Marks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Marksheets "
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_provcert"/>
+
+                <LinearLayout
+                    android:id="@+id/et_View_Marks"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_Marks" />
+
+                <TextView
+                    android:id="@+id/tv_View_exper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Experience Certificate / Relieving Letter from Previous Employment "
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_Marks"/>
+
+                <LinearLayout
+                    android:id="@+id/et_View_exper"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_exper" />
+
+                <TextView
+                    android:id="@+id/tv_View_payslip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Payslips "
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_exper"/>
+
+                <LinearLayout
+                    android:id="@+id/et_View_payslip"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_payslip" />
+
+                <TextView
+                    android:id="@+id/tv_View_experience"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Experience "
+                    android:textStyle="bold"
+                    android:padding="4dp"
+                    android:background="@color/white"
+                    android:layout_margin="8dp"
+                    android:textColor="#0A0606"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/et_View_payslip"/>
+
+                <LinearLayout
+                    android:id="@+id/et_View_experience"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@color/white"
+                    android:padding="4dp"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_View_experience" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+    </LinearLayout>
+</FrameLayout>

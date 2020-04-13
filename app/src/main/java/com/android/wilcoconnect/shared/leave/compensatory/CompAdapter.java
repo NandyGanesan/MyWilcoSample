@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 public class CompAdapter extends RecyclerView.Adapter<CompAdapter.MyViewHolder> {
 
-
     Context c;
     RecyclerViewListener listener;
     ArrayList<CompOffDetailData> data;

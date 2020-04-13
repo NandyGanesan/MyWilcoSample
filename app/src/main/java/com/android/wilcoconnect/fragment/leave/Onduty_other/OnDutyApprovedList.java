@@ -24,6 +24,7 @@ import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.leave.onduty_other.OnDutyListAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class OnDutyApprovedList extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_on_duty, container, false);
+        view = inflater.inflate(R.layout.fragment_leave, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
         frameLayout = view.findViewById(R.id.leave_frame);
 
@@ -70,6 +71,9 @@ public class OnDutyApprovedList extends Fragment {
             addRequest.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
+
+        FloatingActionButton fab = view.findViewById(R.id.fab_add_task);
+        fab.setVisibility(View.GONE);
 
         ApiManager.getInstance().getOnDutyApprovedList(addRequest, new Callback<OnDutyDetails>() {
             @Override

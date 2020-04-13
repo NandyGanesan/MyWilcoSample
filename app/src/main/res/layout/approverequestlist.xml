@@ -93,7 +93,7 @@
             app:layout_constraintWidth_percent="0.5" />
 
         <Button
-            android:id="@+id/btn_accept"
+            android:id="@+id/btn_reject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -106,7 +106,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_ToDate"/>
 
         <Button
-            android:id="@+id/btn_reject"
+            android:id="@+id/btn_accept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -115,7 +115,7 @@
             android:textColor="@color/orange"
             android:textSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_accept" />
+            app:layout_constraintEnd_toStartOf="@id/btn_reject" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

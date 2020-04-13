@@ -49,6 +49,7 @@ public class LeaveHome extends Fragment {
     private ArrayList<MainMenu> mainMenus = new ArrayList<>();
     private ArrayList<SubMenu> subMenuArrayList = new ArrayList<>();
     View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,7 +73,6 @@ public class LeaveHome extends Fragment {
             addRequest.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
-
 
         getSubMenu();
 
@@ -98,11 +98,8 @@ public class LeaveHome extends Fragment {
         fragments.add(new LeaveCalenderForTeam());
         fragments.add(new Holiday());
         fragments.add(new ApproveLeaveFromGrid());
-        fragments.add(new ApprovedList());
         fragments.add(new ApplyLeaveForTeam());
         fragments.add(new OnDuty());
-        fragments.add(new OnDutyApprovedList());
-        fragments.add(new ApplyOnDuty());
         fragments.add(new ApproveOnDutyGrid());
         fragments.add(new CompensatoryDetail());
         fragments.add(new ApproveCompOff());
@@ -112,7 +109,7 @@ public class LeaveHome extends Fragment {
          * */
         final FragmentAdapter pagerAdapter = new FragmentAdapter(getActivity().getSupportFragmentManager(), getActivity().getApplicationContext(), fragments);
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(13);
+        viewPager.setOffscreenPageLimit(9);
         tabLayout.setupWithViewPager(viewPager);
 
         /*
@@ -122,20 +119,16 @@ public class LeaveHome extends Fragment {
         tabLayout.getTabAt(1).setText("LEAVE CALENDER");
         tabLayout.getTabAt(2).setText("HOLIDAY");
         tabLayout.getTabAt(3).setText("APPROVE LEAVE");
-        tabLayout.getTabAt(4).setText("APPROVED LEAVE");
-        tabLayout.getTabAt(5).setText("APPLY LEAVE FOR TEAM");
-        tabLayout.getTabAt(6).setText("ON DUTY");
-        tabLayout.getTabAt(7).setText("ON DUTY APPROVED LIST");
-        tabLayout.getTabAt(8).setText("APPLY ON DUTY");
-        tabLayout.getTabAt(9).setText("APPROVE ON DUTY");
-        tabLayout.getTabAt(10).setText("COMPENSATORY");
-        tabLayout.getTabAt(11).setText("APPROVE COMP-OFF");
+        tabLayout.getTabAt(4).setText("APPLY LEAVE FOR TEAM");
+        tabLayout.getTabAt(5).setText("ON DUTY");
+        tabLayout.getTabAt(6).setText("APPROVE ON DUTY");
+        tabLayout.getTabAt(7).setText("COMPENSATORY");
+        tabLayout.getTabAt(8).setText("APPROVE COMP-OFF");
 
         /*
          * Define the Tab Layout Action
          * */
-        tabLayout.addOnTabSelectedListener(
-                new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
                     /*
                      * Style for Selected Tab
                      * */

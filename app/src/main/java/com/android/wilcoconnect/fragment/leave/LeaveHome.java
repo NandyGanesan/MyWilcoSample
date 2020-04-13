@@ -74,8 +74,6 @@ public class LeaveHome extends Fragment {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
-        getSubMenu();
-
         /*
          * Toolbar Initialization
          * And set the Title color and title
@@ -89,41 +87,68 @@ public class LeaveHome extends Fragment {
          * */
         viewPager = view.findViewById(R.id.leavepager);
         tabLayout = view.findViewById(R.id.leavetabLayout);
-        fragments = new ArrayList<>();
 
-        /*
-         * Define the Fragment Array with Fragment
-         * */
-        fragments.add(new Leave());
-        fragments.add(new LeaveCalenderForTeam());
-        fragments.add(new Holiday());
-        fragments.add(new ApproveLeaveFromGrid());
-        fragments.add(new ApplyLeaveForTeam());
-        fragments.add(new OnDuty());
-        fragments.add(new ApproveOnDutyGrid());
-        fragments.add(new CompensatoryDetail());
-        fragments.add(new ApproveCompOff());
 
-        /*
-         * Set the FragmentAdapter with the Fragment
-         * */
-        final FragmentAdapter pagerAdapter = new FragmentAdapter(getActivity().getSupportFragmentManager(), getActivity().getApplicationContext(), fragments);
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(9);
-        tabLayout.setupWithViewPager(viewPager);
+        ApiManager.getInstance().getMenuList(addRequest, new Callback<Menu>() {
+            @Override
+            public void onResponse(Call<Menu> call, Response<Menu> response) {
+                menu= response.body();
+                if(response.isSuccessful() && menu!=null){
+                    mainMenus = menu.getData();
+                    for(int i=0;i<mainMenus.size();i++) {
+                        if (mainMenus.get(i).getMenuID() == 5){
+                            subMenuArrayList = mainMenus.get(i).getSubMenu();
+                        }
+                    }
+                    if(subMenuArrayList.size()>0){
+                        /*
+                         * Define the Fragment Array with Fragment
+                         * */
+                        fragments = new ArrayList<>();
+                        for (int i=0;i<subMenuArrayList.size();i++) {
+                            if (subMenuArrayList.get(i).getMenuName().equals("Apply Leave")){
+                                fragments.add(new Leave());
+                                fragments.add(new LeaveCalenderForTeam());
+                            }
+                            else if(subMenuArrayList.get(i).getMenuName().equals("Approve Leave")){
+                                fragments.add(new ApproveLeaveFromGrid());
+                                fragments.add(new ApplyLeaveForTeam());
+                            }
+                            else if(subMenuArrayList.get(i).getMenuName().equals("Approve On Duty")){
+                                fragments.add(new ApproveOnDutyGrid());
+                            }
+                            else if(subMenuArrayList.get(i).getMenuName().equals("Holiday")){
+                                fragments.add(new Holiday());
+                            }
+                            else if(subMenuArrayList.get(i).getMenuName().equals("Apply Comp-Off")){
+                                fragments.add(new CompensatoryDetail());
+                            }
+                            else if(subMenuArrayList.get(i).getMenuName().equals("Approve Comp-Off")){
+                                fragments.add(new ApproveCompOff());
+                            }
+                            else if(subMenuArrayList.get(i).getMenuName().equals("Apply On Duty")){
+                                fragments.add(new OnDuty());
+                            }
+                        }
 
-        /*
-         * Define the Tab Layout index based Icons
-         * */
-        tabLayout.getTabAt(0).setText("MY LEAVE");
-        tabLayout.getTabAt(1).setText("LEAVE CALENDER");
-        tabLayout.getTabAt(2).setText("HOLIDAY");
-        tabLayout.getTabAt(3).setText("APPROVE LEAVE");
-        tabLayout.getTabAt(4).setText("APPLY LEAVE FOR TEAM");
-        tabLayout.getTabAt(5).setText("ON DUTY");
-        tabLayout.getTabAt(6).setText("APPROVE ON DUTY");
-        tabLayout.getTabAt(7).setText("COMPENSATORY");
-        tabLayout.getTabAt(8).setText("APPROVE COMP-OFF");
+                        if(fragments.size()>0){
+                            /*
+                             * Set the FragmentAdapter with the Fragment
+                             * */
+                            final FragmentAdapter pagerAdapter = new FragmentAdapter(getActivity().getSupportFragmentManager(), getActivity().getApplicationContext(), fragments);
+                            viewPager.setAdapter(pagerAdapter);
+                            viewPager.setOffscreenPageLimit(fragments.size());
+                            tabLayout.setupWithViewPager(viewPager);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Menu> call, Throwable t) {
+                Log.e(TAG,t.getLocalizedMessage());
+            }
+        });
 
         /*
          * Define the Tab Layout Action
@@ -136,7 +161,6 @@ public class LeaveHome extends Fragment {
                     public void onTabSelected(@NonNull TabLayout.Tab tab) {
                         super.onTabSelected(tab);
                     }
-
                     /*
                      * Style for Unselected Tab
                      * */
@@ -144,7 +168,6 @@ public class LeaveHome extends Fragment {
                     public void onTabUnselected(TabLayout.Tab tab) {
                         super.onTabUnselected(tab);
                     }
-
                     /*
                      * Define the Reselected Tab Design
                      * */
@@ -155,27 +178,5 @@ public class LeaveHome extends Fragment {
                 });
 
         return view;
-    }
-
-    private void getSubMenu() {
-        ApiManager.getInstance().getMenuList(addRequest, new Callback<Menu>() {
-            @Override
-            public void onResponse(Call<Menu> call, Response<Menu> response) {
-                menu= response.body();
-                if(response.isSuccessful() && menu!=null){
-                    mainMenus = menu.getData();
-                    for(int i=0;i<mainMenus.size();i++) {
-                        if (mainMenus.get(i).getMenuID() == 5){
-                            subMenuArrayList = mainMenus.get(i).getSubMenu();
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Menu> call, Throwable t) {
-                Log.e(TAG,t.getLocalizedMessage());
-            }
-        });
     }
 }

@@ -104,30 +104,43 @@ public class LeaveHome extends Fragment {
                          * Define the Fragment Array with Fragment
                          * */
                         fragments = new ArrayList<>();
+                        int count = 0;
                         for (int i=0;i<subMenuArrayList.size();i++) {
                             if (subMenuArrayList.get(i).getMenuName().equals("Apply Leave")){
                                 fragments.add(new Leave());
+                                tabLayout.getTabAt(count).setText("MY LEAVE");
+                                count++;
                                 fragments.add(new LeaveCalenderForTeam());
+                                tabLayout.getTabAt(count).setText("LEAVE CALENDER");
                             }
                             else if(subMenuArrayList.get(i).getMenuName().equals("Approve Leave")){
                                 fragments.add(new ApproveLeaveFromGrid());
+                                tabLayout.getTabAt(count).setText("APPROVE LEAVE");
+                                count++;
                                 fragments.add(new ApplyLeaveForTeam());
+                                tabLayout.getTabAt(count).setText("APPLY LEAVE FOR TEAM");
                             }
                             else if(subMenuArrayList.get(i).getMenuName().equals("Approve On Duty")){
                                 fragments.add(new ApproveOnDutyGrid());
+                                tabLayout.getTabAt(count).setText("APPROVE ON DUTY");
                             }
                             else if(subMenuArrayList.get(i).getMenuName().equals("Holiday")){
                                 fragments.add(new Holiday());
+                                tabLayout.getTabAt(count).setText("HOLIDAY");
                             }
                             else if(subMenuArrayList.get(i).getMenuName().equals("Apply Comp-Off")){
                                 fragments.add(new CompensatoryDetail());
+                                tabLayout.getTabAt(count).setText("COMPENSATORY");
                             }
                             else if(subMenuArrayList.get(i).getMenuName().equals("Approve Comp-Off")){
                                 fragments.add(new ApproveCompOff());
+                                tabLayout.getTabAt(count).setText("APPROVE COMP-OFF");
                             }
                             else if(subMenuArrayList.get(i).getMenuName().equals("Apply On Duty")){
                                 fragments.add(new OnDuty());
+                                tabLayout.getTabAt(count).setText("ON DUTY");
                             }
+                            count++;
                         }
 
                         if(fragments.size()>0){

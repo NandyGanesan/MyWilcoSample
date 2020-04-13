@@ -88,7 +88,6 @@ public class LeaveHome extends Fragment {
         viewPager = view.findViewById(R.id.leavepager);
         tabLayout = view.findViewById(R.id.leavetabLayout);
 
-
         ApiManager.getInstance().getMenuList(addRequest, new Callback<Menu>() {
             @Override
             public void onResponse(Call<Menu> call, Response<Menu> response) {

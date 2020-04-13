@@ -99,6 +99,7 @@ public class ApproveCompOff extends Fragment {
         for (int i=0;i<compOffArrayList.size();i++){
             if(compOffArrayList.get(i).getRequestStatus().equals("Applied")){
                 CompOffDetailData data = new CompOffDetailData();
+                data.setEmpCompensatoryID(compOffArrayList.get(i).getEmpCompensatoryID());
                 data.setEmployeeID(compOffArrayList.get(i).getEmployeeID());
                 data.setFirstName(compOffArrayList.get(i).getFirstName());
                 data.setAppliedDate(compOffArrayList.get(i).getAppliedDate());

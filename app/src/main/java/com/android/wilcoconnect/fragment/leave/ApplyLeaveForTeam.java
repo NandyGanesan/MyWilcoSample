@@ -17,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.android.wilcoconnect.R;
@@ -85,6 +86,9 @@ public class ApplyLeaveForTeam extends Fragment {
         balanceFrame = view.findViewById(R.id.leaveBalanceFrame);
         title = view.findViewById(R.id.tv_leaveType);
         content = view.findViewById(R.id.tv_leaveBalance);
+
+        Toolbar tool = view.findViewById(R.id.main_withnav_toolbar);
+        tool.setVisibility(View.GONE);
 
         /*
          * Assign the Values for the Particular View Elements

@@ -1,10 +1,13 @@
 package com.android.wilcoconnect.fragment.leave.Onduty_other;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -39,12 +42,12 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class ApplyOnDuty extends Fragment {
+public class ApplyOnDuty extends DialogFragment {
 
     /*
      * Initialize the variables to access the Module
      * */
-    private String TAG = "ApplyOnDuty";
+    public static final String TAG = "ApplyOnDuty";
     private String[] Type;
     private Button btn_Type, btn_from_date, btn_to_date,btn_clear,btn_submit;
     private ImageView iv_from_date, iv_to_date;
@@ -58,8 +61,6 @@ public class ApplyOnDuty extends Fragment {
     private ArrayList<OnDutyMasterData.Data> type = new ArrayList<>();
     private OnDutyPost post = new OnDutyPost();
     private String from_date,to_date;
-
-    //Session: F->Fullday, A->After Noon,M ->Morning
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,6 +85,11 @@ public class ApplyOnDuty extends Fragment {
             addRequest.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
+
+        Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
+        detail_toolbar.setTitle("APPLY ON-DUTY");
+        detail_toolbar.setNavigationIcon(R.drawable.close);
+        detail_toolbar.setNavigationOnClickListener(v -> dismiss());
 
         ApiManager.getInstance().getMasterList(addRequest, new Callback<OnDutyMasterData>() {
             @Override
@@ -245,6 +251,7 @@ public class ApplyOnDuty extends Fragment {
                     public void onResponse(Call<Success> call, Response<Success> response) {
                         assert response.body() != null;
                         if(response.isSuccessful() && response.body().getStatus().equals("true")){
+                            dismiss();
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                             builder.setTitle(response.body().getMessage());
                             builder.setPositiveButton("Ok",null);
@@ -312,6 +319,17 @@ public class ApplyOnDuty extends Fragment {
             }
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            dialog.getWindow().setLayout(width, height);
         }
     }
 }

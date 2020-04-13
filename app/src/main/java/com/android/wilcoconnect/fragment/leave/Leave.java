@@ -3,6 +3,7 @@ package com.android.wilcoconnect.fragment.leave;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.leave.MyLeaveListDataAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ public class Leave extends Fragment {
     private FrameLayout frameLayout;
     private AddRequest addRequest = new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
+    private CoordinatorLayout coordinatorLayout;
     private MyLeaveListDataAdapter leaveadapter;
 
     @Override
@@ -54,6 +57,7 @@ public class Leave extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_leave, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
+        coordinatorLayout = view.findViewById(R.id.coordinatorLayout);
         frameLayout = view.findViewById(R.id.leave_frame);
 
         /*
@@ -91,7 +95,21 @@ public class Leave extends Fragment {
             }
         });
 
+        /*
+         * Click the FloatingActionButton Action or call another Activity
+         */
+        FloatingActionButton add_new_leave = view.findViewById(R.id.fab_add_task);
+        add_new_leave.setOnClickListener(v -> {
+            apply_Leave();
+        });
+
         return view;
+    }
+
+    private void apply_Leave() {
+        ApplyLeave leave = new ApplyLeave();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        leave.show(transaction,leave.TAG);
     }
 
     /*
@@ -104,7 +122,7 @@ public class Leave extends Fragment {
             leaveadapter =null;
             recyclerView.setAdapter(leaveadapter);
             Snackbar snackbar = Snackbar
-                    .make(frameLayout, "No Data Found", Snackbar.LENGTH_LONG);
+                    .make(coordinatorLayout, "No Data Found", Snackbar.LENGTH_LONG);
             snackbar.show();
         }
         else{

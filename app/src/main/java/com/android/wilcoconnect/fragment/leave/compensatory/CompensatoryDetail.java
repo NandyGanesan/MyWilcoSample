@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ import com.android.wilcoconnect.model.leave.compensatory.CompOffDetailData;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.leave.compensatory.CompAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class CompensatoryDetail extends Fragment {
     private static String MYPREFS_NAME = "logininfo";
     private RecyclerView recyclerView;
     private FrameLayout frameLayout;
+    private CoordinatorLayout coordinatorLayout;
     private ArrayList<CompOffDetailData> compOffDetailData;
     private CompAdapter adapter;
 
@@ -53,6 +56,7 @@ public class CompensatoryDetail extends Fragment {
         View view = inflater.inflate(R.layout.fragment_leave, container, false);
 
         recyclerView = view.findViewById(R.id.recycler_view);
+        coordinatorLayout = view.findViewById(R.id.coordinatorLayout);
         frameLayout = view.findViewById(R.id.leave_frame);
 
         /*
@@ -73,6 +77,14 @@ public class CompensatoryDetail extends Fragment {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
+        /*
+         * Click the FloatingActionButton Action or call another Activity
+         */
+        FloatingActionButton add_new_compOff = view.findViewById(R.id.fab_add_task);
+        add_new_compOff.setOnClickListener(v -> {
+            apply_compOff();
+        });
+
         ApiManager.getInstance().getMyCompOffDetail(addRequest, new Callback<CompOffDetail>() {
             @Override
             public void onResponse(Call<CompOffDetail> call, Response<CompOffDetail> response) {
@@ -90,6 +102,12 @@ public class CompensatoryDetail extends Fragment {
         return view;
     }
 
+    private void apply_compOff() {
+        ApplyCompensatory comp = new ApplyCompensatory();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        comp.show(transaction,comp.TAG);
+    }
+
     private void set_list() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
@@ -97,7 +115,7 @@ public class CompensatoryDetail extends Fragment {
             adapter = null;
             recyclerView.setAdapter(adapter);
             Snackbar snackbar = Snackbar
-                    .make(frameLayout, "No Data Found", Snackbar.LENGTH_LONG);
+                    .make(coordinatorLayout, "No Data Found", Snackbar.LENGTH_LONG);
             snackbar.show();
         } else {
             adapter = new CompAdapter(getActivity(), compOffDetailData, new RecyclerViewListener() {
@@ -108,12 +126,10 @@ public class CompensatoryDetail extends Fragment {
                 @Override
                 public void OnStore(View view, OnDutyApprovePost postData) {
                 }
-
                 @Override
                 public void OnCompOffStore(View view, CompOffApprovePost post) {
 
                 }
-
                 @Override
                 public void onClick(View view, ApprovePost post) {
                 }

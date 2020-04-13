@@ -1,9 +1,11 @@
 package com.android.wilcoconnect.fragment.leave;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +24,6 @@ import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.common.Success;
 import com.android.wilcoconnect.model.leave.ApplyLeavePost;
-import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.leavebalance.GetLeaveBalance;
 import com.android.wilcoconnect.model.leave.leavebalance.LeaveDetails;
 import com.android.wilcoconnect.model.leave.leavebalance.LeaveTypeDetails;
@@ -40,12 +41,11 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class ApplyLeave extends Fragment {
+public class ApplyLeave extends DialogFragment {
 
     /*
      * Initialize the variables to access the Module
      * */
-    private String TAG = "ApplyLeave";
     private String[] LeaveType;
     private Button btn_leaveType, btn_from_date, btn_to_date,btn_clear,btn_submit;
     private ImageView iv_from_date, iv_to_date;
@@ -59,6 +59,7 @@ public class ApplyLeave extends Fragment {
     private String leavelevel;
     private ApplyLeavePost leavepost = new ApplyLeavePost();
     private String from_date,to_date;
+    public static final String TAG = "ApplyLeave";
     private ArrayList<LeaveDetails> leaveBalanceDetail = new ArrayList<>();
     private ArrayList<LeaveTypeDetails> leaveTypeDetail = new ArrayList<>();
     private int availableBalance=0;
@@ -78,6 +79,11 @@ public class ApplyLeave extends Fragment {
         balanceFrame = view.findViewById(R.id.leaveBalanceFrame);
         title = view.findViewById(R.id.tv_leaveType);
         content = view.findViewById(R.id.tv_leaveBalance);
+
+        Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
+        detail_toolbar.setTitle("APPLY LEAVE");
+        detail_toolbar.setNavigationIcon(R.drawable.close);
+        detail_toolbar.setNavigationOnClickListener(v -> dismiss());
 
         /*
          * Get the Header
@@ -303,6 +309,7 @@ public class ApplyLeave extends Fragment {
             public void onResponse(Call<Success> call, Response<Success> response) {
                 assert response.body() != null;
                 if(response.isSuccessful() && response.body().getStatus().equals("true")){
+                    dismiss();
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle(response.body().getMessage());
                     builder.setPositiveButton("Ok",null);
@@ -410,5 +417,16 @@ public class ApplyLeave extends Fragment {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            dialog.getWindow().setLayout(width, height);
+        }
     }
 }

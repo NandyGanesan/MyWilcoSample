@@ -3,6 +3,7 @@ package com.android.wilcoconnect.fragment.leave.Onduty_other;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import android.widget.FrameLayout;
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
+import com.android.wilcoconnect.fragment.leave.compensatory.ApplyCompensatory;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyData;
@@ -26,6 +28,7 @@ import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.leave.MyLeaveListDataAdapter;
 import com.android.wilcoconnect.shared.leave.onduty_other.OnDutyListAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.lang.reflect.Array;
@@ -43,6 +46,7 @@ public class OnDuty extends Fragment {
     View view;
     private RecyclerView recyclerView;
     private FrameLayout frameLayout;
+    private CoordinatorLayout coordinatorLayout;
     private AddRequest addRequest = new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
     private ArrayList<OnDutyData> dutyData = new ArrayList<>();
@@ -52,8 +56,9 @@ public class OnDuty extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_on_duty, container, false);
+        view = inflater.inflate(R.layout.fragment_leave, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
+        coordinatorLayout = view.findViewById(R.id.coordinatorLayout);
         frameLayout = view.findViewById(R.id.leave_frame);
 
         /*
@@ -88,7 +93,22 @@ public class OnDuty extends Fragment {
                 Log.e(TAG,t.getLocalizedMessage());
             }
         });
+
+        /*
+         * Click the FloatingActionButton Action or call another Activity
+         */
+        FloatingActionButton add_new_compOff = view.findViewById(R.id.fab_add_task);
+        add_new_compOff.setOnClickListener(v -> {
+            apply_onDuty();
+        });
+
         return view;
+    }
+
+    private void apply_onDuty() {
+        ApplyOnDuty duty = new ApplyOnDuty();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        duty.show(transaction,duty.TAG);
     }
 
     private void set_list() {
@@ -98,7 +118,7 @@ public class OnDuty extends Fragment {
             adapter = null;
             recyclerView.setAdapter(adapter);
             Snackbar snackbar = Snackbar
-                    .make(frameLayout, "No Data Found", Snackbar.LENGTH_LONG);
+                    .make(coordinatorLayout, "No Data Found", Snackbar.LENGTH_LONG);
             snackbar.show();
         } else {
             adapter = new OnDutyListAdapter(getActivity(), dutyData, new RecyclerViewListener() {
@@ -108,12 +128,10 @@ public class OnDuty extends Fragment {
                 }
                 @Override
                 public void OnStore(View view, OnDutyApprovePost postData) {}
-
                 @Override
                 public void OnCompOffStore(View view, CompOffApprovePost post) {
 
                 }
-
                 @Override
                 public void onClick(View view, ApprovePost post) {}
             });

@@ -1,11 +1,13 @@
 package com.android.wilcoconnect.fragment.leave.compensatory;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,12 +36,12 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class ApplyCompensatory extends Fragment {
+public class ApplyCompensatory extends DialogFragment {
 
+    public static final String TAG = "ApplyCompensatory";
     /*
      * Initialize the variables to access the Module
      * */
-    private String TAG = "ApplyCompensatory";
     private Button btn_from_date, btn_to_date,btn_clear,btn_submit;
     private ImageView iv_from_date, iv_to_date;
     private EditText et_remarks;
@@ -68,6 +70,11 @@ public class ApplyCompensatory extends Fragment {
         et_remarks = view.findViewById(R.id.et_remarks);
         tv_no_of_days_count = view.findViewById(R.id.tv_noofdayscount);
         tv_date_error = view.findViewById(R.id.tv_dateerror);
+
+        Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
+        detail_toolbar.setTitle("ADD COMP-OFF");
+        detail_toolbar.setNavigationIcon(R.drawable.close);
+        detail_toolbar.setNavigationOnClickListener(v -> dismiss());
 
         /*
          * Get the Header
@@ -174,6 +181,7 @@ public class ApplyCompensatory extends Fragment {
                     public void onResponse(Call<Success> call, Response<Success> response) {
                         assert response.body() != null;
                         if(response.isSuccessful() && response.body().getStatus().equals("true")){
+                            dismiss();
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                             builder.setTitle(response.body().getMessage());
                             builder.setPositiveButton("Ok",null);
@@ -228,6 +236,18 @@ public class ApplyCompensatory extends Fragment {
             }
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            dialog.getWindow().setLayout(width, height);
         }
     }
 }

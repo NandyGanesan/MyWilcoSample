@@ -75,6 +75,7 @@ public class LeaveHome extends Fragment {
 
 
         getSubMenu();
+
         /*
          * Toolbar Initialization
          * And set the Title color and title
@@ -94,18 +95,16 @@ public class LeaveHome extends Fragment {
          * Define the Fragment Array with Fragment
          * */
         fragments.add(new Leave());
+        fragments.add(new LeaveCalenderForTeam());
         fragments.add(new Holiday());
-        fragments.add(new ApplyLeave());
         fragments.add(new ApproveLeaveFromGrid());
         fragments.add(new ApprovedList());
         fragments.add(new ApplyLeaveForTeam());
-        fragments.add(new LeaveCalenderForTeam());
         fragments.add(new OnDuty());
         fragments.add(new OnDutyApprovedList());
         fragments.add(new ApplyOnDuty());
         fragments.add(new ApproveOnDutyGrid());
         fragments.add(new CompensatoryDetail());
-        fragments.add(new ApplyCompensatory());
         fragments.add(new ApproveCompOff());
 
         /*
@@ -120,19 +119,17 @@ public class LeaveHome extends Fragment {
          * Define the Tab Layout index based Icons
          * */
         tabLayout.getTabAt(0).setText("MY LEAVE");
-        tabLayout.getTabAt(1).setText("HOLIDAY");
-        tabLayout.getTabAt(2).setText("APPLY LEAVE");
+        tabLayout.getTabAt(1).setText("LEAVE CALENDER");
+        tabLayout.getTabAt(2).setText("HOLIDAY");
         tabLayout.getTabAt(3).setText("APPROVE LEAVE");
         tabLayout.getTabAt(4).setText("APPROVED LEAVE");
         tabLayout.getTabAt(5).setText("APPLY LEAVE FOR TEAM");
-        tabLayout.getTabAt(6).setText("LEAVE CALENDER");
-        tabLayout.getTabAt(7).setText("ON DUTY");
-        tabLayout.getTabAt(8).setText("ON DUTY APPROVED LIST");
-        tabLayout.getTabAt(9).setText("APPLY ON DUTY");
-        tabLayout.getTabAt(10).setText("APPROVE ON DUTY");
-        tabLayout.getTabAt(11).setText("COMPENSATORY");
-        tabLayout.getTabAt(12).setText("ADD COMP-OFF");
-        tabLayout.getTabAt(13).setText("APPROVE COMP-OFF");
+        tabLayout.getTabAt(6).setText("ON DUTY");
+        tabLayout.getTabAt(7).setText("ON DUTY APPROVED LIST");
+        tabLayout.getTabAt(8).setText("APPLY ON DUTY");
+        tabLayout.getTabAt(9).setText("APPROVE ON DUTY");
+        tabLayout.getTabAt(10).setText("COMPENSATORY");
+        tabLayout.getTabAt(11).setText("APPROVE COMP-OFF");
 
         /*
          * Define the Tab Layout Action

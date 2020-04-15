@@ -43,7 +43,7 @@ public class Profile extends Fragment {
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
-        getmenu();
+        getMenu();
         if (menu.size()>0) {
             ProfileAdapter adapter = new ProfileAdapter(getActivity(), menu, new RecyclerViewListener() {
                 @Override
@@ -65,7 +65,7 @@ public class Profile extends Fragment {
         return view;
     }
 
-    private void getmenu() {
+    private void getMenu() {
         menu = new ArrayList<>();
         ProfileMenu menuobj = new ProfileMenu();
         menuobj.setValues("Basic information");

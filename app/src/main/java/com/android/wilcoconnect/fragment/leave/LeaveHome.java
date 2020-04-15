@@ -48,6 +48,7 @@ public class LeaveHome extends Fragment {
     private Menu menu;
     private ArrayList<MainMenu> mainMenus = new ArrayList<>();
     private ArrayList<SubMenu> subMenuArrayList = new ArrayList<>();
+    private String[] tabName = new String[30];
     View view;
 
     @Override
@@ -108,39 +109,45 @@ public class LeaveHome extends Fragment {
                         for (int i=0;i<subMenuArrayList.size();i++) {
                             if (subMenuArrayList.get(i).getMenuName().equals("Apply Leave")){
                                 fragments.add(new Leave());
-                                tabLayout.getTabAt(count).setText("MY LEAVE");
+                                tabName[count] = "MY LEAVE";
                                 count++;
                                 fragments.add(new LeaveCalenderForTeam());
-                                tabLayout.getTabAt(count).setText("LEAVE CALENDER");
+                                tabName[count] ="LEAVE CALENDER";
+                                count++;
                             }
                             else if(subMenuArrayList.get(i).getMenuName().equals("Approve Leave")){
                                 fragments.add(new ApproveLeaveFromGrid());
-                                tabLayout.getTabAt(count).setText("APPROVE LEAVE");
+                                tabName[count] = "APPROVE LEAVE";
                                 count++;
                                 fragments.add(new ApplyLeaveForTeam());
-                                tabLayout.getTabAt(count).setText("APPLY LEAVE FOR TEAM");
+                                tabName[count] = "APPLY LEAVE FOR TEAM";
+                                count++;
                             }
                             else if(subMenuArrayList.get(i).getMenuName().equals("Approve On Duty")){
                                 fragments.add(new ApproveOnDutyGrid());
-                                tabLayout.getTabAt(count).setText("APPROVE ON DUTY");
+                                tabName[count] = "APPROVE ON DUTY";
+                                count++;
                             }
                             else if(subMenuArrayList.get(i).getMenuName().equals("Holiday")){
                                 fragments.add(new Holiday());
-                                tabLayout.getTabAt(count).setText("HOLIDAY");
+                                tabName[count] = "HOLIDAY";
+                                count++;
                             }
                             else if(subMenuArrayList.get(i).getMenuName().equals("Apply Comp-Off")){
                                 fragments.add(new CompensatoryDetail());
-                                tabLayout.getTabAt(count).setText("COMPENSATORY");
+                                tabName[count] = "COMPENSATORY";
+                                count++;
                             }
                             else if(subMenuArrayList.get(i).getMenuName().equals("Approve Comp-Off")){
                                 fragments.add(new ApproveCompOff());
-                                tabLayout.getTabAt(count).setText("APPROVE COMP-OFF");
+                                tabName[count] = "APPROVE COMP-OFF";
+                                count++;
                             }
                             else if(subMenuArrayList.get(i).getMenuName().equals("Apply On Duty")){
                                 fragments.add(new OnDuty());
-                                tabLayout.getTabAt(count).setText("ON DUTY");
+                                tabName[count] = "ON DUTY";
+                                count++;
                             }
-                            count++;
                         }
 
                         if(fragments.size()>0){
@@ -151,6 +158,10 @@ public class LeaveHome extends Fragment {
                             viewPager.setAdapter(pagerAdapter);
                             viewPager.setOffscreenPageLimit(fragments.size());
                             tabLayout.setupWithViewPager(viewPager);
+                            for(int i = 0; i<fragments.size(); i++) {
+                                tabLayout.getTabAt(i).setText(tabName[i]);
+                            }
+
                         }
                     }
                 }

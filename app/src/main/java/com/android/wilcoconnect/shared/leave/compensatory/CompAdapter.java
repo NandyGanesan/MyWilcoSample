@@ -39,8 +39,8 @@ public class CompAdapter extends RecyclerView.Adapter<CompAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.status.setText(data.get(position).getRequestStatus());
-        holder.fromdate.setText(data.get(position).getStrFromDate());
-        holder.Todate.setText(data.get(position).getStrToDate());
+        holder.fromDate.setText(data.get(position).getStrFromDate());
+        holder.toDate.setText(data.get(position).getStrToDate());
 
         holder.cardView.setOnClickListener(v -> {
             CompOffDetailData compOffDetailData = new CompOffDetailData();
@@ -72,16 +72,15 @@ public class CompAdapter extends RecyclerView.Adapter<CompAdapter.MyViewHolder> 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView status,fromdate,Todate;
+        TextView status, fromDate, toDate;
         CardView cardView;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-
             cardView = itemView.findViewById(R.id.CardView_GridData);
             status = itemView.findViewById(R.id.tv_LeaveStatus);
-            fromdate = itemView.findViewById(R.id.tv_fromDate);
-            Todate = itemView.findViewById(R.id.tv_ToDate);
+            fromDate = itemView.findViewById(R.id.tv_fromDate);
+            toDate = itemView.findViewById(R.id.tv_ToDate);
         }
     }
 }

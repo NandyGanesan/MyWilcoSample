@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class Profile extends Fragment {
 
-    private String TAG = "Profile";
+    private static String TAG = "Profile";
     private Toolbar profile_toolbar;
     private View view;
     private ArrayList<ProfileMenu> menu = new ArrayList<>();

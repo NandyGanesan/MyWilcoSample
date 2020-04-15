@@ -40,7 +40,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class LeaveHome extends Fragment {
 
     private ArrayList<Fragment> fragments;
-    private String TAG = "LeaveHome";
+    private static String TAG = "LeaveHome";
     private ViewPager viewPager;
     private TabLayout tabLayout;
     private static final String MYPREFS_NAME = "logininfo";

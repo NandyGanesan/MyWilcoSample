@@ -75,7 +75,7 @@ public class CompOffDetailDisplay extends DialogFragment {
             label2.setVisibility(View.GONE);
             label3.setVisibility(View.GONE);
         }
-        tv_View_approveddate.setText(data.getStrApprovedDate());
+        tv_View_approveddate.setText(data.getApprovedDate());
         tv_View_remarksbyapprover.setText(data.getApprovedRemarks());
         tv_View_approver.setText(data.getPrimaryApprover());
 

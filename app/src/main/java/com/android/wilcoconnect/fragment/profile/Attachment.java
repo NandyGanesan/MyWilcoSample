@@ -188,86 +188,100 @@ public class Attachment extends DialogFragment {
     private void set_attachment() {
         for (int i = 0; i< adarCard.length; i++){
             ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(50,50));
-            imageView.setImageResource(R.drawable.attachment);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
+            imageView.setPadding(8,8,8,8);
+            imageView.setImageResource(R.drawable.attachmentblue);
             adharCard_layout.addView(imageView);
         }
         for (int i=0; i<panCard.length;i++){
             ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(50,50));
-            imageView.setImageResource(R.drawable.attachment);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
+            imageView.setPadding(8,8,8,8);
+            imageView.setImageResource(R.drawable.attachmentblue);
             panCard_layout.addView(imageView);
         }
         for (int i=0; i<presentAddress.length;i++){
             ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(50,50));
-            imageView.setImageResource(R.drawable.attachment);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
+            imageView.setPadding(8,8,8,8);
+            imageView.setImageResource(R.drawable.attachmentblue);
             presentAddress_layout.addView(imageView);
         }
         for (int i=0; i<passport.length;i++){
             ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(50,50));
-            imageView.setImageResource(R.drawable.attachment);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
+            imageView.setPadding(8,8,8,8);
+            imageView.setImageResource(R.drawable.attachmentblue);
             passport_layout.addView(imageView);
         }
         for (int i=0; i<dob.length;i++){
             ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(50,50));
-            imageView.setImageResource(R.drawable.attachment);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
+            imageView.setPadding(8,8,8,8);
+            imageView.setImageResource(R.drawable.attachmentblue);
             dob_layout.addView(imageView);
         }
         for (int i=0; i<edu1_degree.length;i++){
             ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(50,50));
-            imageView.setImageResource(R.drawable.attachment);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
+            imageView.setPadding(8,8,8,8);
+            imageView.setImageResource(R.drawable.attachmentblue);
             edu1degree_layout.addView(imageView);
         }
         for (int i=0; i<edu1_provisional.length;i++){
             ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(50,50));
-            imageView.setImageResource(R.drawable.attachment);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
+            imageView.setPadding(8,8,8,8);
+            imageView.setImageResource(R.drawable.attachmentblue);
             edu1provisional_layout.addView(imageView);
         }
         for (int i=0; i<edu1_marksheet.length;i++){
             ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(50,50));
-            imageView.setImageResource(R.drawable.attachment);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
+            imageView.setPadding(8,8,8,8);
+            imageView.setImageResource(R.drawable.attachmentblue);
             edu1marksheet_layout.addView(imageView);
         }
         for (int i=0; i<edu2_degree.length;i++){
             ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(50,50));
-            imageView.setImageResource(R.drawable.attachment);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
+            imageView.setPadding(8,8,8,8);
+            imageView.setImageResource(R.drawable.attachmentblue);
             edu2degree_layout.addView(imageView);
         }
         for (int i=0; i<edu2_provisional.length;i++){
             ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(50,50));
-            imageView.setImageResource(R.drawable.attachment);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
+            imageView.setPadding(8,8,8,8);
+            imageView.setImageResource(R.drawable.attachmentblue);
             edu2provisional_layout.addView(imageView);
         }
         for (int i=0; i<edu2_marksheet.length;i++){
             ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(50,50));
-            imageView.setImageResource(R.drawable.attachment);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
+            imageView.setPadding(8,8,8,8);
+            imageView.setImageResource(R.drawable.attachmentblue);
             edu2marksheet_layout.addView(imageView);
         }
         for (int i=0; i<experience_certificate.length;i++){
             ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(50,50));
-            imageView.setImageResource(R.drawable.attachment);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
+            imageView.setPadding(8,8,8,8);
+            imageView.setImageResource(R.drawable.attachmentblue);
             experiencecertificate_layout.addView(imageView);
         }
         for (int i=0; i<payslips.length;i++){
             ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(50,50));
-            imageView.setImageResource(R.drawable.attachment);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
+            imageView.setPadding(8,8,8,8);
+            imageView.setImageResource(R.drawable.attachmentblue);
             payslips_layout.addView(imageView);
         }
         for (int i=0; i<Experience.length;i++){
             ImageView imageView = new ImageView(getActivity());
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(50,50));
-            imageView.setImageResource(R.drawable.attachment);
+            imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
+            imageView.setPadding(8,8,8,8);
+            imageView.setImageResource(R.drawable.attachmentblue);
             experience_layout.addView(imageView);
         }
     }

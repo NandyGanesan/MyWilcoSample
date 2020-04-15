@@ -111,9 +111,6 @@ public class LeaveHome extends Fragment {
                                 fragments.add(new Leave());
                                 tabName[count] = "MY LEAVE";
                                 count++;
-                                fragments.add(new LeaveCalenderForTeam());
-                                tabName[count] ="LEAVE CALENDER";
-                                count++;
                             }
                             else if(subMenuArrayList.get(i).getMenuName().equals("Approve Leave")){
                                 fragments.add(new ApproveLeaveFromGrid());
@@ -121,6 +118,9 @@ public class LeaveHome extends Fragment {
                                 count++;
                                 fragments.add(new ApplyLeaveForTeam());
                                 tabName[count] = "APPLY LEAVE FOR TEAM";
+                                count++;
+                                fragments.add(new LeaveCalenderForTeam());
+                                tabName[count] ="LEAVE CALENDER";
                                 count++;
                             }
                             else if(subMenuArrayList.get(i).getMenuName().equals("Approve On Duty")){

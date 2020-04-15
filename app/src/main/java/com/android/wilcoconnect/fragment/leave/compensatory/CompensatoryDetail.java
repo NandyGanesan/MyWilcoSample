@@ -93,7 +93,6 @@ public class CompensatoryDetail extends Fragment {
                     set_list();
                 }
             }
-
             @Override
             public void onFailure(Call<CompOffDetail> call, Throwable t) {
                 Log.e(TAG, t.getLocalizedMessage());

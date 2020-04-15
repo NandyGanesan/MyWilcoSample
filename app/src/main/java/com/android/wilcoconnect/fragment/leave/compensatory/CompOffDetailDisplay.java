@@ -77,7 +77,7 @@ public class CompOffDetailDisplay extends DialogFragment {
         }
         tv_View_approvedDate.setText(data.getApprovedDate());
         tv_View_remarksByApprover.setText(data.getApprovedRemarks());
-        tv_View_approver.setText(data.getPrimaryApprover());
+        tv_View_approver.setText(data.getApproverName());
 
         return view;
     }

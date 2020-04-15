@@ -44,6 +44,7 @@ public class CompAdapter extends RecyclerView.Adapter<CompAdapter.MyViewHolder> 
 
         holder.cardView.setOnClickListener(v -> {
             CompOffDetailData compOffDetailData = new CompOffDetailData();
+            compOffDetailData.setEmpCompensatoryID(data.get(position).getEmpCompensatoryID());
             compOffDetailData.setAppliedDate(data.get(position).getAppliedDate());
             compOffDetailData.setStrFromDate(data.get(position).getStrFromDate());
             compOffDetailData.setStrToDate(data.get(position).getStrToDate());
@@ -52,7 +53,7 @@ public class CompAdapter extends RecyclerView.Adapter<CompAdapter.MyViewHolder> 
             compOffDetailData.setRequestStatus(data.get(position).getRequestStatus());
             compOffDetailData.setApprovedDate(data.get(position).getApprovedDate());
             compOffDetailData.setApprovedRemarks(data.get(position).getApprovedRemarks());
-            compOffDetailData.setPrimaryApprover(data.get(position).getPrimaryApprover());
+            compOffDetailData.setApproverName(data.get(position).getApproverName());
 
             /**
              * Show the data in New Update View

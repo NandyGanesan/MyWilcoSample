@@ -1,7 +1,9 @@
 package com.android.wilcoconnect.fragment.profile;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -28,7 +30,7 @@ import retrofit2.Response;
 import static android.content.Context.MODE_PRIVATE;
 import static com.android.wilcoconnect.app.MainApplication.MY_PREFS_NAME;
 
-public class Attachment extends DialogFragment {
+public class Attachment extends DialogFragment implements View.OnClickListener {
 
     public static String TAG = "Attachment";
     private static final String MYPREFS_NAME = "logininfo";
@@ -191,12 +193,16 @@ public class Attachment extends DialogFragment {
             imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
             imageView.setPadding(8,8,8,8);
             imageView.setImageResource(R.drawable.attachmentblue);
+            imageView.setTag(adarCard[i]);
+            imageView.setOnClickListener(this);
             adharCard_layout.addView(imageView);
         }
         for (int i=0; i<panCard.length;i++){
             ImageView imageView = new ImageView(getActivity());
             imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
             imageView.setPadding(8,8,8,8);
+            imageView.setTag(panCard[i]);
+            imageView.setOnClickListener(this);
             imageView.setImageResource(R.drawable.attachmentblue);
             panCard_layout.addView(imageView);
         }
@@ -204,6 +210,8 @@ public class Attachment extends DialogFragment {
             ImageView imageView = new ImageView(getActivity());
             imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
             imageView.setPadding(8,8,8,8);
+            imageView.setTag(presentAddress[i]);
+            imageView.setOnClickListener(this);
             imageView.setImageResource(R.drawable.attachmentblue);
             presentAddress_layout.addView(imageView);
         }
@@ -211,6 +219,8 @@ public class Attachment extends DialogFragment {
             ImageView imageView = new ImageView(getActivity());
             imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
             imageView.setPadding(8,8,8,8);
+            imageView.setTag(passport[i]);
+            imageView.setOnClickListener(this);
             imageView.setImageResource(R.drawable.attachmentblue);
             passport_layout.addView(imageView);
         }
@@ -218,6 +228,8 @@ public class Attachment extends DialogFragment {
             ImageView imageView = new ImageView(getActivity());
             imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
             imageView.setPadding(8,8,8,8);
+            imageView.setTag(dob[i]);
+            imageView.setOnClickListener(this);
             imageView.setImageResource(R.drawable.attachmentblue);
             dob_layout.addView(imageView);
         }
@@ -225,6 +237,8 @@ public class Attachment extends DialogFragment {
             ImageView imageView = new ImageView(getActivity());
             imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
             imageView.setPadding(8,8,8,8);
+            imageView.setTag(edu1_degree[i]);
+            imageView.setOnClickListener(this);
             imageView.setImageResource(R.drawable.attachmentblue);
             edu1degree_layout.addView(imageView);
         }
@@ -232,6 +246,8 @@ public class Attachment extends DialogFragment {
             ImageView imageView = new ImageView(getActivity());
             imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
             imageView.setPadding(8,8,8,8);
+            imageView.setTag(edu1_provisional[i]);
+            imageView.setOnClickListener(this);
             imageView.setImageResource(R.drawable.attachmentblue);
             edu1provisional_layout.addView(imageView);
         }
@@ -239,6 +255,8 @@ public class Attachment extends DialogFragment {
             ImageView imageView = new ImageView(getActivity());
             imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
             imageView.setPadding(8,8,8,8);
+            imageView.setTag(edu1_marksheet[i]);
+            imageView.setOnClickListener(this);
             imageView.setImageResource(R.drawable.attachmentblue);
             edu1marksheet_layout.addView(imageView);
         }
@@ -246,6 +264,8 @@ public class Attachment extends DialogFragment {
             ImageView imageView = new ImageView(getActivity());
             imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
             imageView.setPadding(8,8,8,8);
+            imageView.setTag(edu2_degree[i]);
+            imageView.setOnClickListener(this);
             imageView.setImageResource(R.drawable.attachmentblue);
             edu2degree_layout.addView(imageView);
         }
@@ -253,6 +273,8 @@ public class Attachment extends DialogFragment {
             ImageView imageView = new ImageView(getActivity());
             imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
             imageView.setPadding(8,8,8,8);
+            imageView.setTag(edu2_provisional[i]);
+            imageView.setOnClickListener(this);
             imageView.setImageResource(R.drawable.attachmentblue);
             edu2provisional_layout.addView(imageView);
         }
@@ -260,6 +282,8 @@ public class Attachment extends DialogFragment {
             ImageView imageView = new ImageView(getActivity());
             imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
             imageView.setPadding(8,8,8,8);
+            imageView.setTag(edu2_marksheet[i]);
+            imageView.setOnClickListener(this);
             imageView.setImageResource(R.drawable.attachmentblue);
             edu2marksheet_layout.addView(imageView);
         }
@@ -267,6 +291,8 @@ public class Attachment extends DialogFragment {
             ImageView imageView = new ImageView(getActivity());
             imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
             imageView.setPadding(8,8,8,8);
+            imageView.setTag(experience_certificate[i]);
+            imageView.setOnClickListener(this);
             imageView.setImageResource(R.drawable.attachmentblue);
             experiencecertificate_layout.addView(imageView);
         }
@@ -274,6 +300,8 @@ public class Attachment extends DialogFragment {
             ImageView imageView = new ImageView(getActivity());
             imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
             imageView.setPadding(8,8,8,8);
+            imageView.setTag(payslips[i]);
+            imageView.setOnClickListener(this);
             imageView.setImageResource(R.drawable.attachmentblue);
             payslips_layout.addView(imageView);
         }
@@ -281,6 +309,8 @@ public class Attachment extends DialogFragment {
             ImageView imageView = new ImageView(getActivity());
             imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
             imageView.setPadding(8,8,8,8);
+            imageView.setTag(Experience[i]);
+            imageView.setOnClickListener(this);
             imageView.setImageResource(R.drawable.attachmentblue);
             experience_layout.addView(imageView);
         }
@@ -297,4 +327,11 @@ public class Attachment extends DialogFragment {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        String url = this.getTag();
+        Uri uri = Uri.parse("http://192.168.1.50/hrdev/content/"+url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
 }

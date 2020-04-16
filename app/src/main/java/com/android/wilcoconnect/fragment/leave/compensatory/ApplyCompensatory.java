@@ -97,6 +97,19 @@ public class ApplyCompensatory extends DialogFragment {
             addRequest.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
+/*
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        String Date = formatter.format(date);
+        String[] datedata = Date.split("-");
+        int[] dataintarray = new int[datedata.length];
+        for(int j=0;j<datedata.length;j++){
+            dataintarray[j]=Integer.parseInt(datedata[j]);
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(dataintarray[2],dataintarray[1]-1,dataintarray[0]);
+*/
 
         ApiManager.getInstance().getDays(addRequest, new Callback<GetCompOffDays>() {
             @Override
@@ -122,6 +135,7 @@ public class ApplyCompensatory extends DialogFragment {
             fromYear = c.get(Calendar.YEAR);
             fromMonth = c.get(Calendar.MONTH);
             fromDay = c.get(Calendar.DAY_OF_MONTH);
+
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view1, year, monthOfYear, dayOfMonth) -> {
                 btn_from_date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                 from_date = (year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
@@ -132,7 +146,6 @@ public class ApplyCompensatory extends DialogFragment {
             }, fromYear, fromMonth, fromDay);
             datePickerDialog.show();
         });
-
 
         /*
          * Select the To date

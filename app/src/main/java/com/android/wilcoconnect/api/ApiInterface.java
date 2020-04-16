@@ -16,6 +16,7 @@ import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffDetail;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffPost;
+import com.android.wilcoconnect.model.leave.compensatory.GetCompOffDays;
 import com.android.wilcoconnect.model.leave.leavebalance.GetLeaveBalance;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetails;
@@ -347,4 +348,12 @@ public interface ApiInterface {
     * */
     @POST("api/compoff/StoreApprovedCompoff")
     Call<Success> storeApproveOrRejectCompOff(@Body CompOffApprovePost post);
+
+    /*
+    * Get the Days
+    * */
+    @GET("api/compoff/getNewcompoff")
+    Call<GetCompOffDays> getDays(@Query("Email") String Email,
+                                 @Query("companyCode") String companyCode,
+                                 @Query("employeeID") String employeeID);
 }

@@ -17,6 +17,7 @@ import com.android.wilcoconnect.model.leave.TeamLeaveAutoList;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffDetail;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffPost;
+import com.android.wilcoconnect.model.leave.compensatory.GetCompOffDays;
 import com.android.wilcoconnect.model.leave.leavebalance.GetLeaveBalance;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetails;
@@ -436,6 +437,14 @@ public class ApiManager {
         * */
         public void storeCompOffApprove(CompOffApprovePost post, Callback<Success> callback){
             Call<Success> reply = service.storeApproveOrRejectCompOff(post);
+            reply.enqueue(callback);
+        }
+
+        /*
+        * Get the Days
+        * */
+        public void getDays(AddRequest request, Callback<GetCompOffDays> callback){
+            Call<GetCompOffDays> reply = service.getDays(request.Email,request.companyCode,request.EmployeeID);
             reply.enqueue(callback);
         }
 }

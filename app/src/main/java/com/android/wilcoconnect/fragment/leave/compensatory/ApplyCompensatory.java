@@ -23,6 +23,7 @@ import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.common.Success;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffPost;
+import com.android.wilcoconnect.model.leave.compensatory.GetCompOffDays;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 
 import java.text.ParseException;
@@ -45,12 +46,13 @@ public class ApplyCompensatory extends DialogFragment {
     private Button btn_from_date, btn_to_date,btn_clear,btn_submit;
     private ImageView iv_from_date, iv_to_date;
     private EditText et_remarks;
-    private TextView tv_no_of_days_count, tv_date_error;
+    private TextView tv_no_of_days_count, tv_date_error,content1,content2;
     private int fromYear,fromMonth,fromDay,toYear,toMonth,toDay;
     private AddRequest addRequest= new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
     private CompOffPost post = new CompOffPost();
     private String from_date,to_date;
+    private GetCompOffDays.Data data;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,6 +72,8 @@ public class ApplyCompensatory extends DialogFragment {
         et_remarks = view.findViewById(R.id.et_remarks);
         tv_no_of_days_count = view.findViewById(R.id.tv_noofdayscount);
         tv_date_error = view.findViewById(R.id.tv_dateerror);
+        content1 = view.findViewById(R.id.content1);
+        content2 = view.findViewById(R.id.content2);
 
         Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
         detail_toolbar.setTitle("ADD COMP-OFF");
@@ -93,6 +97,22 @@ public class ApplyCompensatory extends DialogFragment {
             addRequest.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
+
+        ApiManager.getInstance().getDays(addRequest, new Callback<GetCompOffDays>() {
+            @Override
+            public void onResponse(Call<GetCompOffDays> call, Response<GetCompOffDays> response) {
+                if(response.body()!=null && response.isSuccessful()){
+                    data = response.body().getData();
+                    content1.setText("1.You have to Credit Before " + data.getCreateBefore() +" Days.");
+                    content2.setText("2.You Should Avail Before " + data.getAvailBefore() +" Days.");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GetCompOffDays> call, Throwable t) {
+                Log.e(TAG,t.getLocalizedMessage());
+            }
+        });
 
          /*
          * Select the From Date

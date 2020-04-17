@@ -168,6 +168,7 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
         Bundle bundle = new Bundle();
         bundle.putString("leave", s);
         bundle.putString("email", data);
+        approve.setTargetFragment(this, 0);
         approve.setArguments(bundle);
         approve.show(transaction,approve.TAG);
     }

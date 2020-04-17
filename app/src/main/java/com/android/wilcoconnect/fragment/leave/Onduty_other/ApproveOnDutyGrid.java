@@ -18,6 +18,7 @@ import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.fragment.leave.ApproveFromPage;
+import com.android.wilcoconnect.fragment.leave.Leave;
 import com.android.wilcoconnect.fragment.leave.Remarks;
 import com.android.wilcoconnect.model.leave.ApproveLeaveData;
 import com.android.wilcoconnect.model.leave.ApprovePost;
@@ -27,6 +28,7 @@ import com.android.wilcoconnect.model.leave.Onduty.OnDutyData;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
+import com.android.wilcoconnect.network_interface.DialogListener;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.leave.ApproveLeaveListAdapter;
 import com.android.wilcoconnect.shared.leave.onduty_other.ApproveOnDutyAdapter;
@@ -41,7 +43,7 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class ApproveOnDutyGrid extends Fragment {
+public class ApproveOnDutyGrid extends Fragment implements DialogListener {
 
     /*
      * Initialize the XML element or views
@@ -58,7 +60,7 @@ public class ApproveOnDutyGrid extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_approve_leave, container, false);
+        View view = inflater.inflate(R.layout.fragment_approve_on_duty, container, false);
 
         recyclerView = view.findViewById(R.id.recycler_view);
         frameLayout = view.findViewById(R.id.approve_frame);
@@ -139,8 +141,23 @@ public class ApproveOnDutyGrid extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString("SubmitOnDuty",value);
         OnDutyRemarks remarks = new OnDutyRemarks();
+        remarks.setTargetFragment(this, 0);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         remarks.setArguments(bundle);
         remarks.show(transaction,remarks.TAG);
+    }
+
+    @Override
+    public void onDialogClick(String value) {
+        if(value == "Success"){
+            replaceFragment();
+        }
+    }
+
+    private void replaceFragment() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.approve_on_duty_frame, new ApproveOnDutyGrid());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

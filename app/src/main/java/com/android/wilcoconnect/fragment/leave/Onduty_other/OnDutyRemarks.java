@@ -20,6 +20,7 @@ import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.common.Success;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
+import com.android.wilcoconnect.network_interface.DialogListener;
 import com.google.gson.Gson;
 
 import retrofit2.Call;
@@ -36,6 +37,14 @@ public class OnDutyRemarks extends DialogFragment {
     private static String MYPREFS_NAME = "logininfo";
     private Button submit;
     private OnDutyApprovePost post = new OnDutyApprovePost();
+    private DialogListener listener;
+    private String result;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        listener = (DialogListener) getTargetFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,11 +89,12 @@ public class OnDutyRemarks extends DialogFragment {
                 ApiManager.getInstance().storeApproveOrRejectOnDuty(post, new Callback<Success>() {
                     @Override
                     public void onResponse(Call<Success> call, Response<Success> response) {
-                        if(response.body()!=null && response.body().getStatus().equals("true")){
+                        if(response.body()!=null && response.body().getStatus().equals("true") && response.body().getMessage().equals("success")){
                             dismiss();
+                            result = "Success";
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                             builder.setTitle(response.body().getMessage());
-                            builder.setPositiveButton("Ok",null);
+                            builder.setPositiveButton("Ok", (dialog, which) -> listener.onDialogClick(result));
                             AlertDialog dialog = builder.create();
                             dialog.show();
                         }

@@ -25,6 +25,7 @@ import com.android.wilcoconnect.model.leave.Onduty.OnDutyData;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
+import com.android.wilcoconnect.network_interface.DialogListener;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.leave.MyLeaveListDataAdapter;
 import com.android.wilcoconnect.shared.leave.onduty_other.OnDutyListAdapter;
@@ -40,7 +41,7 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class OnDuty extends Fragment {
+public class OnDuty extends Fragment implements DialogListener {
 
     private String TAG = "OnDuty";
     View view;
@@ -56,7 +57,7 @@ public class OnDuty extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_leave, container, false);
+        view = inflater.inflate(R.layout.fragment_on_duty, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
         coordinatorLayout = view.findViewById(R.id.coordinatorLayout);
         frameLayout = view.findViewById(R.id.leave_frame);
@@ -107,6 +108,7 @@ public class OnDuty extends Fragment {
 
     private void apply_onDuty() {
         ApplyOnDuty duty = new ApplyOnDuty();
+        duty.setTargetFragment(this, 0);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         duty.show(transaction,duty.TAG);
     }
@@ -146,6 +148,20 @@ public class OnDuty extends Fragment {
         bundle.putString("OnDuty", s);
         detail.setArguments(bundle);
         detail.show(transaction,detail.TAG);
+    }
+
+    @Override
+    public void onDialogClick(String value) {
+        if(value == "Success"){
+            replaceFragment();
+        }
+    }
+
+    private void replaceFragment() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.on_duty_frame, new OnDuty());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
 }

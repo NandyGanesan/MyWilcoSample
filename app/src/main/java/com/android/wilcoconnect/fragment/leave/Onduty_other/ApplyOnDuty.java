@@ -29,6 +29,7 @@ import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyMasterData;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyPost;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
+import com.android.wilcoconnect.network_interface.DialogListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,6 +62,14 @@ public class ApplyOnDuty extends DialogFragment {
     private ArrayList<OnDutyMasterData.Data> type = new ArrayList<>();
     private OnDutyPost post = new OnDutyPost();
     private String from_date,to_date;
+    private DialogListener listener;
+    private String value;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        listener = (DialogListener) getTargetFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -250,11 +259,12 @@ public class ApplyOnDuty extends DialogFragment {
                     @Override
                     public void onResponse(Call<Success> call, Response<Success> response) {
                         assert response.body() != null;
-                        if(response.isSuccessful() && response.body().getStatus().equals("true")){
+                        if(response.isSuccessful() && response.body().getStatus().equals("true") && response.body().getMessage().equals("successfully Stored")){
                             dismiss();
+                            value = "Success";
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                             builder.setTitle(response.body().getMessage());
-                            builder.setPositiveButton("Ok",null);
+                            builder.setPositiveButton("Ok", (dialog, which) -> listener.onDialogClick(value));
                             AlertDialog dialog = builder.create();
                             dialog.show();
                             btn_Type.setText("--- SELECT ---");

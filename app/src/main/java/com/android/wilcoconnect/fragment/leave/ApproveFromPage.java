@@ -229,7 +229,7 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
     }
 
     /*
-    * Method to assign the Table Content in Arraylist
+    * Method to assign the Table Content in ArrayList
     * */
     private void getTableData() {
         availableTableArrayList = new ArrayList<>();
@@ -269,6 +269,7 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
         Bundle bundle = new Bundle();
         bundle.putString("Submit",value);
         Remarks remarks = new Remarks();
+        remarks.setTargetFragment(this, 0);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         remarks.setArguments(bundle);
         remarks.show(transaction,remarks.TAG);

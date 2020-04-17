@@ -53,7 +53,7 @@ public class CompensatoryDetail extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_leave, container, false);
+        View view = inflater.inflate(R.layout.fragment_comp_off, container, false);
 
         recyclerView = view.findViewById(R.id.recycler_view);
         coordinatorLayout = view.findViewById(R.id.coordinatorLayout);

@@ -1,7 +1,9 @@
 package com.android.wilcoconnect.fragment.profile;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -17,6 +19,9 @@ import android.view.ViewGroup;
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
+import com.android.wilcoconnect.model.leave.ApprovePost;
+import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
+import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.profile.AdditionalDetailData;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
 import com.android.wilcoconnect.model.profile.AttachmentDetailData;
@@ -38,6 +43,7 @@ import com.android.wilcoconnect.model.profile.ProfileMenu;
 import com.android.wilcoconnect.model.profile.ReferenceDetailData;
 import com.android.wilcoconnect.model.profile.ReferenceDetails;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
+import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.profile.EducationAdapter;
 import com.android.wilcoconnect.shared.profile.ExperienceAdapter;
 import com.android.wilcoconnect.shared.profile.FamilyAdapter;
@@ -299,7 +305,18 @@ public class ProfileInformation extends DialogFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         ExperienceAdapter adapter;
         if(experienceDetailList.size()>0){
-            adapter = new ExperienceAdapter(experienceDetailList,getActivity());
+            adapter = new ExperienceAdapter(experienceDetailList, getActivity(), new RecyclerViewListener() {
+                @Override
+                public void onClick(View view, String value) {
+                    openURL(value);
+                }
+                @Override
+                public void onClick(View view, ApprovePost post) {}
+                @Override
+                public void OnStore(View view, OnDutyApprovePost postData) {}
+                @Override
+                public void OnCompOffStore(View view, CompOffApprovePost post) {}
+            });
             recyclerView.setAdapter(adapter);
         }
         else {
@@ -861,9 +878,27 @@ public class ProfileInformation extends DialogFragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         if(passportDetailData.size()>0) {
-            PassportDetailAdapter adapter = new PassportDetailAdapter(getActivity(),passportDetailData);
+            PassportDetailAdapter adapter = new PassportDetailAdapter(getActivity(), passportDetailData, new RecyclerViewListener() {
+                @Override
+                public void onClick(View view, String value) {
+                    openURL(value);
+                }
+                @Override
+                public void onClick(View view, ApprovePost post) {}
+                @Override
+                public void OnStore(View view, OnDutyApprovePost postData) {}
+                @Override
+                public void OnCompOffStore(View view, CompOffApprovePost post) {}
+            });
             recyclerView.setAdapter(adapter);
         }
+    }
+
+    private void openURL(String value) {
+        String url = value;
+        Uri uri = Uri.parse("http://192.168.1.50/hrdev/content/"+url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 
 }

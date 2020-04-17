@@ -1,6 +1,8 @@
 package com.android.wilcoconnect.shared.profile;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.model.profile.PassportDetailData;
+import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 
 import java.util.List;
 
@@ -19,10 +22,12 @@ public class PassportDetailAdapter extends RecyclerView.Adapter<PassportDetailAd
 
     private Context c;
     private List<PassportDetailData> passportDetailData;
+    private RecyclerViewListener listener;
 
-    public PassportDetailAdapter(Context c, List<PassportDetailData> passportDetailData) {
+    public PassportDetailAdapter(Context c, List<PassportDetailData> passportDetailData, RecyclerViewListener listener) {
         this.c = c;
         this.passportDetailData = passportDetailData;
+        this.listener = listener;
     }
 
     @NonNull
@@ -43,6 +48,11 @@ public class PassportDetailAdapter extends RecyclerView.Adapter<PassportDetailAd
         holder.supervisor.setText(passportDetailData.get(position).getNationality());
         holder.grosssalary.setText(passportDetailData.get(position).getPlaceofBirth());
         holder.leaving.setText(passportDetailData.get(position).getStrValidUpTo());
+        holder.file.setTag(passportDetailData.get(position).getURL());
+
+        holder.file.setOnClickListener(v -> {
+            listener.onClick(v,passportDetailData.get(position).getURL());
+        });
     }
 
     @Override

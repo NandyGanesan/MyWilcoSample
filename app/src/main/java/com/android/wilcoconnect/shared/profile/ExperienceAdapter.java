@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.model.profile.ExperienceDetailData;
+import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 
 import java.util.List;
 
@@ -19,10 +20,12 @@ public class ExperienceAdapter extends RecyclerView.Adapter<ExperienceAdapter.My
 
     private List<ExperienceDetailData> experienceDetailList;
     private Context c;
+    private RecyclerViewListener listener;
 
-    public ExperienceAdapter(List<ExperienceDetailData> experienceDetailList, Context c) {
+    public ExperienceAdapter(List<ExperienceDetailData> experienceDetailList, Context c, RecyclerViewListener listener) {
         this.experienceDetailList = experienceDetailList;
         this.c = c;
+        this.listener = listener;
     }
 
     @NonNull
@@ -43,6 +46,11 @@ public class ExperienceAdapter extends RecyclerView.Adapter<ExperienceAdapter.My
         holder.supervisor.setText(experienceDetailList.get(position).getSuperiorPosition());
         holder.grosssalary.setText(""+experienceDetailList.get(position).getGrossSalary());
         holder.leaving.setText(experienceDetailList.get(position).getLeavingReason());
+        holder.file.setTag(experienceDetailList.get(position).getURL());
+
+        holder.file.setOnClickListener(v -> {
+            listener.onClick(v,experienceDetailList.get(position).getURL());
+        });
     }
 
     @Override

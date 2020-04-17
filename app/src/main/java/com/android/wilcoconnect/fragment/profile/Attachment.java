@@ -192,7 +192,7 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
             ImageView imageView = new ImageView(getActivity());
             imageView.setLayoutParams(new LinearLayout.LayoutParams(80,80));
             imageView.setPadding(8,8,8,8);
-            imageView.setImageResource(R.drawable.attachmentblue);
+            imageView.setImageResource(R.drawable.file_attachment);
             imageView.setTag(adarCard[i]);
             imageView.setOnClickListener(this);
             adharCard_layout.addView(imageView);
@@ -203,7 +203,7 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
             imageView.setPadding(8,8,8,8);
             imageView.setTag(panCard[i]);
             imageView.setOnClickListener(this);
-            imageView.setImageResource(R.drawable.attachmentblue);
+            imageView.setImageResource(R.drawable.file_attachment);
             panCard_layout.addView(imageView);
         }
         for (int i=0; i<presentAddress.length;i++){
@@ -212,7 +212,7 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
             imageView.setPadding(8,8,8,8);
             imageView.setTag(presentAddress[i]);
             imageView.setOnClickListener(this);
-            imageView.setImageResource(R.drawable.attachmentblue);
+            imageView.setImageResource(R.drawable.file_attachment);
             presentAddress_layout.addView(imageView);
         }
         for (int i=0; i<passport.length;i++){
@@ -221,7 +221,7 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
             imageView.setPadding(8,8,8,8);
             imageView.setTag(passport[i]);
             imageView.setOnClickListener(this);
-            imageView.setImageResource(R.drawable.attachmentblue);
+            imageView.setImageResource(R.drawable.file_attachment);
             passport_layout.addView(imageView);
         }
         for (int i=0; i<dob.length;i++){
@@ -230,7 +230,7 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
             imageView.setPadding(8,8,8,8);
             imageView.setTag(dob[i]);
             imageView.setOnClickListener(this);
-            imageView.setImageResource(R.drawable.attachmentblue);
+            imageView.setImageResource(R.drawable.file_attachment);
             dob_layout.addView(imageView);
         }
         for (int i=0; i<edu1_degree.length;i++){
@@ -239,7 +239,7 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
             imageView.setPadding(8,8,8,8);
             imageView.setTag(edu1_degree[i]);
             imageView.setOnClickListener(this);
-            imageView.setImageResource(R.drawable.attachmentblue);
+            imageView.setImageResource(R.drawable.file_attachment);
             edu1degree_layout.addView(imageView);
         }
         for (int i=0; i<edu1_provisional.length;i++){
@@ -248,7 +248,7 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
             imageView.setPadding(8,8,8,8);
             imageView.setTag(edu1_provisional[i]);
             imageView.setOnClickListener(this);
-            imageView.setImageResource(R.drawable.attachmentblue);
+            imageView.setImageResource(R.drawable.file_attachment);
             edu1provisional_layout.addView(imageView);
         }
         for (int i=0; i<edu1_marksheet.length;i++){
@@ -257,7 +257,7 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
             imageView.setPadding(8,8,8,8);
             imageView.setTag(edu1_marksheet[i]);
             imageView.setOnClickListener(this);
-            imageView.setImageResource(R.drawable.attachmentblue);
+            imageView.setImageResource(R.drawable.file_attachment);
             edu1marksheet_layout.addView(imageView);
         }
         for (int i=0; i<edu2_degree.length;i++){
@@ -266,7 +266,7 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
             imageView.setPadding(8,8,8,8);
             imageView.setTag(edu2_degree[i]);
             imageView.setOnClickListener(this);
-            imageView.setImageResource(R.drawable.attachmentblue);
+            imageView.setImageResource(R.drawable.file_attachment);
             edu2degree_layout.addView(imageView);
         }
         for (int i=0; i<edu2_provisional.length;i++){
@@ -275,7 +275,7 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
             imageView.setPadding(8,8,8,8);
             imageView.setTag(edu2_provisional[i]);
             imageView.setOnClickListener(this);
-            imageView.setImageResource(R.drawable.attachmentblue);
+            imageView.setImageResource(R.drawable.file_attachment);
             edu2provisional_layout.addView(imageView);
         }
         for (int i=0; i<edu2_marksheet.length;i++){
@@ -284,7 +284,7 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
             imageView.setPadding(8,8,8,8);
             imageView.setTag(edu2_marksheet[i]);
             imageView.setOnClickListener(this);
-            imageView.setImageResource(R.drawable.attachmentblue);
+            imageView.setImageResource(R.drawable.file_attachment);
             edu2marksheet_layout.addView(imageView);
         }
         for (int i=0; i<experience_certificate.length;i++){
@@ -293,7 +293,7 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
             imageView.setPadding(8,8,8,8);
             imageView.setTag(experience_certificate[i]);
             imageView.setOnClickListener(this);
-            imageView.setImageResource(R.drawable.attachmentblue);
+            imageView.setImageResource(R.drawable.file_attachment);
             experiencecertificate_layout.addView(imageView);
         }
         for (int i=0; i<payslips.length;i++){
@@ -302,7 +302,7 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
             imageView.setPadding(8,8,8,8);
             imageView.setTag(payslips[i]);
             imageView.setOnClickListener(this);
-            imageView.setImageResource(R.drawable.attachmentblue);
+            imageView.setImageResource(R.drawable.file_attachment);
             payslips_layout.addView(imageView);
         }
         for (int i=0; i<Experience.length;i++){
@@ -311,7 +311,7 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
             imageView.setPadding(8,8,8,8);
             imageView.setTag(Experience[i]);
             imageView.setOnClickListener(this);
-            imageView.setImageResource(R.drawable.attachmentblue);
+            imageView.setImageResource(R.drawable.file_attachment);
             experience_layout.addView(imageView);
         }
     }

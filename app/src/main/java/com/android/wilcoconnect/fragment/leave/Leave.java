@@ -24,6 +24,7 @@ import com.android.wilcoconnect.model.leave.MyLeave;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
+import com.android.wilcoconnect.network_interface.DialogListener;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.leave.MyLeaveListDataAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,7 +38,7 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class Leave extends Fragment {
+public class Leave extends Fragment implements DialogListener {
 
     /*
     * Initialize the variables to access the Module
@@ -108,6 +109,7 @@ public class Leave extends Fragment {
 
     private void apply_Leave() {
         ApplyLeave leave = new ApplyLeave();
+        leave.setTargetFragment(this, 0);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         leave.show(transaction,leave.TAG);
     }
@@ -153,5 +155,19 @@ public class Leave extends Fragment {
         bundle.putString("leave", s);
         viewApplyLeaveDetails.setArguments(bundle);
         viewApplyLeaveDetails.show(transaction,viewApplyLeaveDetails.TAG);
+    }
+
+    @Override
+    public void onDialogClick(String value) {
+        if(value == "Success"){
+            replaceFragment();
+        }
+    }
+
+    private void replaceFragment() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.leave_frame, new Leave());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

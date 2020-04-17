@@ -24,11 +24,12 @@ import com.android.wilcoconnect.model.leave.ApproveList;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.LeaveAvailableTable;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
+import com.android.wilcoconnect.network_interface.DialogListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class ApproveFromPage extends DialogFragment {
+public class ApproveFromPage extends DialogFragment implements DialogListener {
 
     /*
      * Initialize the XML element or views
@@ -44,6 +45,13 @@ public class ApproveFromPage extends DialogFragment {
     public static String TAG = "ApproveFromPage";
     private ApprovePost approvePost = new ApprovePost();
     private AddRequest request = new AddRequest();
+    private DialogListener listener;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        listener = (DialogListener) getTargetFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -264,5 +272,12 @@ public class ApproveFromPage extends DialogFragment {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         remarks.setArguments(bundle);
         remarks.show(transaction,remarks.TAG);
+    }
+
+    @Override
+    public void onDialogClick(String value) {
+        if(value == "Success"){
+            listener.onDialogClick(value);
+        }
     }
 }

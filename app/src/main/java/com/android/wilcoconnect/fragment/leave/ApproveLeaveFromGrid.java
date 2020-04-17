@@ -21,6 +21,7 @@ import com.android.wilcoconnect.model.leave.MyLeaveData;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
+import com.android.wilcoconnect.network_interface.DialogListener;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.leave.ApproveLeaveListAdapter;
 import com.google.android.material.snackbar.Snackbar;
@@ -34,7 +35,7 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class ApproveLeaveFromGrid extends Fragment {
+public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
 
     /*
      * Initialize the XML element or views
@@ -150,10 +151,8 @@ public class ApproveLeaveFromGrid extends Fragment {
                 }
                 @Override
                 public void OnStore(View view, OnDutyApprovePost postData) {}
-
                 @Override
                 public void OnCompOffStore(View view, CompOffApprovePost post) {}
-
                 @Override
                 public void onClick(View view, ApprovePost post) {
                     getNewInstance(post);
@@ -179,8 +178,23 @@ public class ApproveLeaveFromGrid extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString("Submit",value);
         Remarks remarks = new Remarks();
+        remarks.setTargetFragment(this, 0);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         remarks.setArguments(bundle);
         remarks.show(transaction,remarks.TAG);
+    }
+
+    @Override
+    public void onDialogClick(String value) {
+        if(value == "Success"){
+            replaceFragment();
+        }
+    }
+
+    private void replaceFragment() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.approve_frame, new ApproveLeaveFromGrid());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

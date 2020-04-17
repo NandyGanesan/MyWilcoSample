@@ -6,6 +6,7 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +29,7 @@ import com.android.wilcoconnect.model.leave.leavebalance.GetLeaveBalance;
 import com.android.wilcoconnect.model.leave.leavebalance.LeaveDetails;
 import com.android.wilcoconnect.model.leave.leavebalance.LeaveTypeDetails;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
+import com.android.wilcoconnect.network_interface.DialogListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -63,10 +65,18 @@ public class ApplyLeave extends DialogFragment {
     private ArrayList<LeaveDetails> leaveBalanceDetail = new ArrayList<>();
     private ArrayList<LeaveTypeDetails> leaveTypeDetail = new ArrayList<>();
     private int availableBalance=0;
-
+    private DialogListener listener;
+    private String value;
     private String LeaveTypeName;
     private LinearLayout balanceFrame;
     private TextView title,content;
+    private View view;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+         listener = (DialogListener) getTargetFragment();
+    }
 
     //Session: F->Fullday, A->After Noon,M ->Morning
 
@@ -74,7 +84,7 @@ public class ApplyLeave extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_apply_leave, container, false);
+        view = inflater.inflate(R.layout.fragment_apply_leave, container, false);
 
         balanceFrame = view.findViewById(R.id.leaveBalanceFrame);
         title = view.findViewById(R.id.tv_leaveType);
@@ -308,11 +318,12 @@ public class ApplyLeave extends DialogFragment {
             @Override
             public void onResponse(Call<Success> call, Response<Success> response) {
                 assert response.body() != null;
-                if(response.isSuccessful() && response.body().getStatus().equals("true")){
+                if(response.isSuccessful() && response.body().getStatus().equals("true") && response.body().getMessage().equals("successfully Stored")){
                     dismiss();
+                    value = "Success";
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle(response.body().getMessage());
-                    builder.setPositiveButton("Ok",null);
+                    builder.setPositiveButton("Ok", (dialog, which) -> listener.onDialogClick(value));
                     AlertDialog dialog = builder.create();
                     dialog.show();
                     btn_leaveType.setText("--- SELECT ---");
@@ -330,7 +341,7 @@ public class ApplyLeave extends DialogFragment {
                 else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle(response.body().getMessage());
-                    builder.setPositiveButton("Ok",null);
+                    builder.setPositiveButton("Ok", null);
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }

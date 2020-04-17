@@ -22,6 +22,7 @@ import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.common.Success;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
+import com.android.wilcoconnect.network_interface.DialogListener;
 import com.google.gson.Gson;
 
 import retrofit2.Call;
@@ -38,6 +39,14 @@ public class Remarks extends DialogFragment {
     private static String MYPREFS_NAME = "logininfo";
     private Button submit;
     private ApprovePost post = new ApprovePost();
+    private String result;
+    private DialogListener listener;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        listener = (DialogListener) getTargetFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,11 +92,12 @@ public class Remarks extends DialogFragment {
                 ApiManager.getInstance().storeApproveLeave(post, new Callback<Success>() {
                     @Override
                     public void onResponse(Call<Success> call, Response<Success> response) {
-                        if(response.isSuccessful() && response.body().getStatus().equals("true")){
+                        if(response.isSuccessful() && response.body().getStatus().equals("true") && response.body().getMessage().equals("successfully Stored")){
                             dismiss();
+                            result = "Success";
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                             builder.setTitle(response.body().getMessage());
-                            builder.setPositiveButton("Ok",null);
+                            builder.setPositiveButton("Ok",(dialog, which) -> listener.onDialogClick(result));
                             AlertDialog dialog = builder.create();
                             dialog.show();
                         }

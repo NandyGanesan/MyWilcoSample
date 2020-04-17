@@ -16,12 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
+import com.android.wilcoconnect.fragment.leave.ApproveLeaveFromGrid;
+import com.android.wilcoconnect.fragment.leave.Leave;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffDetail;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffDetailData;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
+import com.android.wilcoconnect.network_interface.DialogListener;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.leave.compensatory.ApproveCompOffAdapter;
 import com.google.android.material.snackbar.Snackbar;
@@ -35,7 +38,7 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class ApproveCompOff extends Fragment {
+public class ApproveCompOff extends Fragment implements DialogListener {
 
     /*
      * Initialize the XML element or views
@@ -53,7 +56,7 @@ public class ApproveCompOff extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_approve_leave, container, false);
+        View view = inflater.inflate(R.layout.fragment_approve_comp_off, container, false);
 
         recyclerView = view.findViewById(R.id.recycler_view);
         frameLayout = view.findViewById(R.id.approve_frame);
@@ -144,8 +147,25 @@ public class ApproveCompOff extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString("SubmitCompOff",value);
         CompOffRemarks remarks = new CompOffRemarks();
+        remarks.setTargetFragment(this, 0);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         remarks.setArguments(bundle);
         remarks.show(transaction,remarks.TAG);
+    }
+
+
+    @Override
+    public void onDialogClick(String value) {
+        if(value == "Success"){
+            replaceFragment();
+        }
+    }
+
+    private void replaceFragment() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.comp_off_frame, new CompensatoryDetail());
+        transaction.replace(R.id.approve_comp_off_frame,new ApproveCompOff());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

@@ -18,12 +18,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
+import com.android.wilcoconnect.fragment.leave.ApproveLeaveFromGrid;
+import com.android.wilcoconnect.fragment.leave.Leave;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffDetail;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffDetailData;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
+import com.android.wilcoconnect.network_interface.DialogListener;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.leave.compensatory.CompAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,7 +40,7 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class CompensatoryDetail extends Fragment {
+public class CompensatoryDetail extends Fragment implements DialogListener {
 
     private static String TAG = "CompensatoryDetail";
     private AddRequest addRequest = new AddRequest();
@@ -103,6 +106,7 @@ public class CompensatoryDetail extends Fragment {
 
     private void apply_compOff() {
         ApplyCompensatory comp = new ApplyCompensatory();
+        comp.setTargetFragment(this, 0);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         comp.show(transaction,comp.TAG);
     }
@@ -144,5 +148,21 @@ public class CompensatoryDetail extends Fragment {
         bundle.putString("compOff", s);
         compOffDetail.setArguments(bundle);
         compOffDetail.show(transaction,compOffDetail.TAG);
+    }
+
+
+    @Override
+    public void onDialogClick(String value) {
+        if(value == "Success"){
+            replaceFragment();
+        }
+    }
+
+    private void replaceFragment() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.comp_off_frame, new CompensatoryDetail());
+        transaction.replace(R.id.approve_comp_off_frame,new ApproveCompOff());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

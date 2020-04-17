@@ -160,6 +160,7 @@ public class OnDuty extends Fragment implements DialogListener {
     private void replaceFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.on_duty_frame, new OnDuty());
+        transaction.replace(R.id.approve_on_duty_frame,new ApproveOnDutyGrid());
         transaction.addToBackStack(null);
         transaction.commit();
     }

@@ -167,6 +167,7 @@ public class Leave extends Fragment implements DialogListener {
     private void replaceFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.leave_frame, new Leave());
+        transaction.replace(R.id.apply_leave_frame,new ApproveLeaveFromGrid());
         transaction.addToBackStack(null);
         transaction.commit();
     }

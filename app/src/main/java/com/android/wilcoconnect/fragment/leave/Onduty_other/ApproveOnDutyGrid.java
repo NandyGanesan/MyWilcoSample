@@ -157,6 +157,7 @@ public class ApproveOnDutyGrid extends Fragment implements DialogListener {
     private void replaceFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.approve_on_duty_frame, new ApproveOnDutyGrid());
+        transaction.replace(R.id.on_duty_frame,new OnDuty());
         transaction.addToBackStack(null);
         transaction.commit();
     }

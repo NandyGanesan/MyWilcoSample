@@ -25,6 +25,7 @@ import com.android.wilcoconnect.model.common.Success;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffPost;
 import com.android.wilcoconnect.model.leave.compensatory.GetCompOffDays;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
+import com.android.wilcoconnect.network_interface.DialogListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,6 +54,14 @@ public class ApplyCompensatory extends DialogFragment {
     private CompOffPost post = new CompOffPost();
     private String from_date,to_date;
     private GetCompOffDays.Data data;
+    private DialogListener listener;
+    private String value;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        listener = (DialogListener) getTargetFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,19 +106,6 @@ public class ApplyCompensatory extends DialogFragment {
             addRequest.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
-/*
-
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        String Date = formatter.format(date);
-        String[] datedata = Date.split("-");
-        int[] dataintarray = new int[datedata.length];
-        for(int j=0;j<datedata.length;j++){
-            dataintarray[j]=Integer.parseInt(datedata[j]);
-        }
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(dataintarray[2],dataintarray[1]-1,dataintarray[0]);
-*/
 
         ApiManager.getInstance().getDays(addRequest, new Callback<GetCompOffDays>() {
             @Override
@@ -213,11 +209,12 @@ public class ApplyCompensatory extends DialogFragment {
                     @Override
                     public void onResponse(Call<Success> call, Response<Success> response) {
                         assert response.body() != null;
-                        if(response.isSuccessful() && response.body().getStatus().equals("true")){
+                        if(response.isSuccessful() && response.body().getStatus().equals("true") && response.body().getMessage().equals("successfully Stored")){
                             dismiss();
+                            value = "Success";
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                             builder.setTitle(response.body().getMessage());
-                            builder.setPositiveButton("Ok",null);
+                            builder.setPositiveButton("Ok", (dialog, which) -> listener.onDialogClick(value));
                             AlertDialog dialog = builder.create();
                             dialog.show();
                             btn_from_date.setText("");

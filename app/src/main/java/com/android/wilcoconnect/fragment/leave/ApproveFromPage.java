@@ -1,9 +1,11 @@
 package com.android.wilcoconnect.fragment.leave;
 
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,14 +22,23 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.android.wilcoconnect.R;
+import com.android.wilcoconnect.api.ApiManager;
+import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.leave.ApproveList;
 import com.android.wilcoconnect.model.leave.ApprovePost;
-import com.android.wilcoconnect.model.leave.LeaveAvailableTable;
+import com.android.wilcoconnect.model.leave.leavebalance.GetLeaveBalance;
+import com.android.wilcoconnect.model.leave.leavebalance.LeaveDetails;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.network_interface.DialogListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ApproveFromPage extends DialogFragment implements DialogListener {
 
@@ -39,7 +50,9 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
     private TextView labelid,labelname,label1,label2,label3,label4;
     private Button accept,reject;
     private TableLayout tableLayout;
-    private ArrayList<LeaveAvailableTable> availableTableArrayList = new ArrayList<>();
+    private AddRequest addRequest= new AddRequest();
+    private static String MYPREFS_NAME = "logininfo";
+    private ArrayList<LeaveDetails> leaveBalanceDetail = new ArrayList<>();
     private View view;
     private HorizontalScrollView scrollView;
     public static String TAG = "ApproveFromPage";
@@ -67,6 +80,24 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
 
         String value1 = this.getArguments().getString("email");
         request = gson.fromJson(value1,AddRequest.class);
+
+        /*
+         * Get the Header
+         * */
+        SharedPreferences preferences = getActivity().getSharedPreferences(MainApplication.MY_PREFS_NAME, MODE_PRIVATE);
+        if (preferences != null) {
+            MainApplication.token_data = preferences.getString("header", "No name defined");
+        }
+
+        /*
+         * Get the shared preference data to assign the another object..
+         * */
+        SharedPreferences prefs = getActivity().getSharedPreferences(MYPREFS_NAME, MODE_PRIVATE);
+        if(prefs!=null) {
+            addRequest.setEmail(prefs.getString("Email", "No name defined"));
+            addRequest.setCompanyCode(prefs.getString("CompanyCode", "No name defined"));
+            addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
+        }
 
         /*
         * Define the Toolbar and set title
@@ -147,8 +178,6 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
         tv_View_no_of_counts.setText(""+approveList.getNo_of_days());
         tv_View_remarks.setText(approveList.getRequestRemarks());
 
-        setTableData();
-
         return view;
     }
 
@@ -198,28 +227,28 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
         tv3.setTextColor(Color.BLACK);
         tbrow0.addView(tv3);
         stk.addView(tbrow0);
-        for (int i = 0; i < availableTableArrayList.size(); i++) {
+        for (int i = 0; i < leaveBalanceDetail.size(); i++) {
             TableRow tbrow = new TableRow(getActivity());
             TextView t1v = new TextView(getActivity());
-            t1v.setText("" + availableTableArrayList.get(i).getLeaveType());
+            t1v.setText("" + leaveBalanceDetail.get(i).getLeaveTypeText());
             t1v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17);
             t1v.setTextColor(Color.BLACK);
             t1v.setPadding(4,4,7,4);
             tbrow.addView(t1v);
             TextView t2v = new TextView(getActivity());
-            t2v.setText("" + availableTableArrayList.get(i).getLeaveTaken());
+            t2v.setText("" + leaveBalanceDetail.get(i).getLeaveTaken());
             t2v.setTextColor(Color.BLACK);
             t2v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17);
             t2v.setGravity(Gravity.CENTER);
             tbrow.addView(t2v);
             TextView t3v = new TextView(getActivity());
-            t3v.setText("" + availableTableArrayList.get(i).getLeaveAvailability());
+            t3v.setText("" + leaveBalanceDetail.get(i).getLeaveAvailability());
             t3v.setTextColor(Color.BLACK);
             t3v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17);
             t3v.setGravity(Gravity.CENTER);
             tbrow.addView(t3v);
             TextView t4v = new TextView(getActivity());
-            t4v.setText("" + availableTableArrayList.get(i).getLeaveApplied());
+            t4v.setText("" + leaveBalanceDetail.get(i).getAppliedLeave());
             t4v.setTextColor(Color.BLACK);
             t4v.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 17);
             t4v.setGravity(Gravity.CENTER);
@@ -232,35 +261,21 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
     * Method to assign the Table Content in ArrayList
     * */
     private void getTableData() {
-        availableTableArrayList = new ArrayList<>();
+        leaveBalanceDetail = new ArrayList<>();
+        ApiManager.getInstance().getLeaveBalance(addRequest, new Callback<GetLeaveBalance>() {
+            @Override
+            public void onResponse(Call<GetLeaveBalance> call, Response<GetLeaveBalance> response) {
+                if(response.isSuccessful() && response.body()!=null){
+                    leaveBalanceDetail = response.body().getData().getLeaveDetails();
+                    setTableData();
+                }
+            }
 
-        LeaveAvailableTable table = new LeaveAvailableTable();
-        table.setLeaveType("Sick Leave");
-        table.setLeaveTaken("146");
-        table.setLeaveAvailability("11");
-        table.setLeaveApplied("-145");
-        availableTableArrayList.add(table);
-
-        LeaveAvailableTable table1 = new LeaveAvailableTable();
-        table1.setLeaveType("Maternity Leave");
-        table1.setLeaveTaken("0");
-        table1.setLeaveAvailability("2");
-        table1.setLeaveApplied("0");
-        availableTableArrayList.add(table1);
-
-        LeaveAvailableTable table2 = new LeaveAvailableTable();
-        table2.setLeaveType("Casual Leave");
-        table2.setLeaveTaken("0");
-        table2.setLeaveAvailability("6");
-        table2.setLeaveApplied("0");
-        availableTableArrayList.add(table2);
-
-        LeaveAvailableTable table3 = new LeaveAvailableTable();
-        table3.setLeaveType("Loss of Pay");
-        table3.setLeaveTaken("0");
-        table3.setLeaveAvailability("12");
-        table3.setLeaveApplied("0");
-        availableTableArrayList.add(table3);
+            @Override
+            public void onFailure(Call<GetLeaveBalance> call, Throwable t) {
+                Log.e(TAG,t.getLocalizedMessage());
+            }
+        });
     }
 
     private void get_remarks(){

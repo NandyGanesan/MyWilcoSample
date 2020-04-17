@@ -66,6 +66,9 @@ public class MenuFragment extends Fragment {
     private void get_item_value() {
         item = new HashMap<>();
 
+        ArrayList<String> logout = new ArrayList<>();
+        item.put("Logout",logout);
+
         ArrayList<String> organization = new ArrayList<>();
         organization.add("Employee Directory");
         item.put("Organization", organization);
@@ -73,9 +76,6 @@ public class MenuFragment extends Fragment {
         ArrayList<String> training = new ArrayList<>();
         training.add("My Training");
         item.put("Training", training);
-
-        ArrayList<String> logout = new ArrayList<>();
-        item.put("Logout",logout);
 
     }
 }

@@ -12,6 +12,9 @@ import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.app.MainApplication;
 
 import static com.android.wilcoconnect.app.MainApplication.MY_PREFS_NAME;
+import com.microsoft.appcenter.AppCenter;
+import com.microsoft.appcenter.analytics.Analytics;
+import com.microsoft.appcenter.crashes.Crashes;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -22,6 +25,9 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_home);
+
+        AppCenter.start(getApplication(), "62d6488b-0b8b-41bd-bb68-3d694d3db948",
+                Analytics.class, Crashes.class);
         /*
         * Check whether the Token is Enable or not
         * */

@@ -18,7 +18,7 @@ import com.microsoft.appcenter.crashes.Crashes;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static int SPLASH_TIME_OUT=2000;
+    private static int SPLASH_TIME_OUT = 2000;
     private String TAG = "SplashActivity";
 
     @Override
@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_home);
 
-        AppCenter.start(getApplication(), "62d6488b-0b8b-41bd-bb68-3d694d3db948",
+        AppCenter.start(getApplication(), "Secret",
                 Analytics.class, Crashes.class);
         /*
         * Check whether the Token is Enable or not

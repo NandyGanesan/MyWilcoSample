@@ -48,7 +48,6 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
     private static String MYPREFS_NAME = "logininfo";
     private ArrayList<MyLeaveData> approveList = new ArrayList<>();
     private ArrayList<MyLeaveData> appliedList = new ArrayList<>();
-    private ArrayList<MyLeaveData> otherList = new ArrayList<>();
     private AddRequest request = new AddRequest();
     private String data;
 
@@ -118,21 +117,6 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
                 data.setFirstName(approveList.get(i).getFirstName());
                 data.setLeaveTypeText(approveList.get(i).getLeaveTypeText());
                 appliedList.add(data);
-            }
-            else {
-                MyLeaveData data = new MyLeaveData();
-                data.setEmail(approveList.get(i).getEmail());
-                data.setStrFromDate(approveList.get(i).getStrFromDate());
-                data.setStrToDate(approveList.get(i).getStrToDate());
-                data.setStrApprovedDate(approveList.get(i).getStrApprovedDate());
-                data.setLeaveRequestID(approveList.get(i).getLeaveRequestID());
-                data.setEmployeeID(approveList.get(i).getEmployeeID());
-                data.setNoofDays(approveList.get(i).getNoofDays());
-                data.setRequestRemarks(approveList.get(i).getRequestRemarks());
-                data.setRequestStatus(approveList.get(i).getRequestStatus());
-                data.setFirstName(approveList.get(i).getFirstName());
-                data.setLeaveTypeText(approveList.get(i).getLeaveTypeText());
-                otherList.add(data);
             }
         }
         recyclerView.setHasFixedSize(true);

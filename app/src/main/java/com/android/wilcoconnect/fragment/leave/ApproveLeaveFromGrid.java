@@ -180,9 +180,10 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
         bundle.putString("Submit",value);
         Remarks remarks = new Remarks();
         remarks.setTargetFragment(this, 0);
+        assert getFragmentManager() != null;
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         remarks.setArguments(bundle);
-        remarks.show(transaction,remarks.TAG);
+        remarks.show(transaction, Remarks.TAG);
     }
 
     @Override

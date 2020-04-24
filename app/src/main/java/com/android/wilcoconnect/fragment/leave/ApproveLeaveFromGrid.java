@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -136,9 +138,10 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         ApproveLeaveListAdapter approve_adapter;
-        if(appliedList.size()<0){
+        if(appliedList.size()<=0){
             approve_adapter =null;
             recyclerView.setAdapter(approve_adapter);
+            Toast.makeText(getActivity(),"Data Not Found",Toast.LENGTH_LONG).show();
             Snackbar snackbar = Snackbar
                     .make(frameLayout, "No Data Found", Snackbar.LENGTH_LONG);
             snackbar.show();

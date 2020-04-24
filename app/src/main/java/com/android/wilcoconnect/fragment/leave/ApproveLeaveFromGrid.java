@@ -139,8 +139,7 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         ApproveLeaveListAdapter approve_adapter;
         if(appliedList.size()<=0){
-            approve_adapter =null;
-            recyclerView.setAdapter(approve_adapter);
+            recyclerView.setAdapter(null);
             Toast.makeText(getActivity(),"Data Not Found",Toast.LENGTH_LONG).show();
             Snackbar snackbar = Snackbar
                     .make(frameLayout, "No Data Found", Snackbar.LENGTH_LONG);
@@ -167,13 +166,14 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
 
     private void newInstance(String s) {
         ApproveFromPage approve = new ApproveFromPage();
+        assert getFragmentManager() != null;
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
         bundle.putString("leave", s);
         bundle.putString("email", data);
         approve.setTargetFragment(this, 0);
         approve.setArguments(bundle);
-        approve.show(transaction,approve.TAG);
+        approve.show(transaction, ApproveFromPage.TAG);
     }
 
     private void getNewInstance(ApprovePost post){
@@ -191,7 +191,7 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
 
     @Override
     public void onDialogClick(String value) {
-        if(value == "Success"){
+        if(value.equals("Success")){
             replaceFragment();
         }
     }

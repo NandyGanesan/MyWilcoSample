@@ -118,7 +118,7 @@ public class ApproveCompOff extends Fragment implements DialogListener {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        if(compOffArrayList.size()<=0){
+        if(selectedList.size()<=0){
             recyclerView.setAdapter(null);
             recyclerView.setVisibility(View.GONE);
             dataNotFound.setVisibility(View.VISIBLE);
@@ -149,20 +149,22 @@ public class ApproveCompOff extends Fragment implements DialogListener {
         bundle.putString("SubmitCompOff",value);
         CompOffRemarks remarks = new CompOffRemarks();
         remarks.setTargetFragment(this, 0);
+        assert getFragmentManager() != null;
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         remarks.setArguments(bundle);
-        remarks.show(transaction,remarks.TAG);
+        remarks.show(transaction, CompOffRemarks.TAG);
     }
 
 
     @Override
     public void onDialogClick(String value) {
-        if(value == "Success"){
+        if(value.equals("Success")){
             replaceFragment();
         }
     }
 
     private void replaceFragment() {
+        assert getFragmentManager() != null;
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.comp_off_frame, new CompensatoryDetail());
         transaction.replace(R.id.approve_comp_off_frame,new ApproveCompOff());

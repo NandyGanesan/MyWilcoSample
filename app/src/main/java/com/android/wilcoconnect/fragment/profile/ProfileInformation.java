@@ -252,6 +252,8 @@ public class ProfileInformation extends DialogFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         if(additionalDetail.size()>0){
             ProfileInformationDisplayAdapter adapter = new ProfileInformationDisplayAdapter(additionalDetail,getActivity());
+            recyclerView.setVisibility(View.VISIBLE);
+            dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
         }
         else {
@@ -284,6 +286,8 @@ public class ProfileInformation extends DialogFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         if (referenceDetailDataList.size() > 0) {
             ReferenceAdapter adapter = new ReferenceAdapter(referenceDetailDataList,getActivity());
+            recyclerView.setVisibility(View.VISIBLE);
+            dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
         }
         else {
@@ -330,6 +334,8 @@ public class ProfileInformation extends DialogFragment {
                 @Override
                 public void OnCompOffStore(View view, CompOffApprovePost post) {}
             });
+            recyclerView.setVisibility(View.VISIBLE);
+            dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
         }
         else {
@@ -371,6 +377,8 @@ public class ProfileInformation extends DialogFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         if(familylist.size()>0) {
             FamilyAdapter adapter = new FamilyAdapter(familylist,getActivity());
+            recyclerView.setVisibility(View.VISIBLE);
+            dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
         }
         else {
@@ -413,6 +421,8 @@ public class ProfileInformation extends DialogFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         if(educationlist.size()>0) {
             EducationAdapter adapter = new EducationAdapter(educationlist,getActivity());
+            recyclerView.setVisibility(View.VISIBLE);
+            dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
         }
         else {
@@ -617,6 +627,8 @@ public class ProfileInformation extends DialogFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         if(selectedList.size()>0){
             ProfileInformationDisplayAdapter adapter = new ProfileInformationDisplayAdapter(selectedList,getActivity());
+            recyclerView.setVisibility(View.VISIBLE);
+            dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
         }
         else {
@@ -745,6 +757,8 @@ public class ProfileInformation extends DialogFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         if(lastpositiondetail.size()>0){
             ProfileInformationDisplayAdapter adapter = new ProfileInformationDisplayAdapter(lastpositiondetail,getActivity());
+            recyclerView.setVisibility(View.VISIBLE);
+            dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
         }
         else {
@@ -877,6 +891,8 @@ public class ProfileInformation extends DialogFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         if(emergency.size()>0){
             ProfileInformationDisplayAdapter adapter = new ProfileInformationDisplayAdapter(emergency,getActivity());
+            recyclerView.setVisibility(View.VISIBLE);
+            dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
         }
         else {
@@ -928,6 +944,8 @@ public class ProfileInformation extends DialogFragment {
                 @Override
                 public void OnCompOffStore(View view, CompOffApprovePost post) {}
             });
+            recyclerView.setVisibility(View.VISIBLE);
+            dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
         }
         else {

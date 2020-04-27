@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
@@ -46,12 +47,11 @@ public class OnDuty extends Fragment implements DialogListener {
     private String TAG = "OnDuty";
     View view;
     private RecyclerView recyclerView;
-    private FrameLayout frameLayout;
-    private CoordinatorLayout coordinatorLayout;
     private AddRequest addRequest = new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
     private ArrayList<OnDutyData> dutyData = new ArrayList<>();
     private OnDutyListAdapter adapter;
+    private TextView dataNotFound;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,8 +59,7 @@ public class OnDuty extends Fragment implements DialogListener {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_on_duty, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
-        coordinatorLayout = view.findViewById(R.id.coordinatorLayout);
-        frameLayout = view.findViewById(R.id.leave_frame);
+        dataNotFound = view.findViewById(R.id.label_name);
 
         /*
          * Get the Header
@@ -116,12 +115,10 @@ public class OnDuty extends Fragment implements DialogListener {
     private void set_list() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        if (dutyData.size() < 0) {
-            adapter = null;
-            recyclerView.setAdapter(adapter);
-            Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout, "No Data Found", Snackbar.LENGTH_LONG);
-            snackbar.show();
+        if (dutyData.size() <= 0) {
+            recyclerView.setAdapter(null);
+            recyclerView.setVisibility(View.GONE);
+            dataNotFound.setVisibility(View.VISIBLE);
         } else {
             adapter = new OnDutyListAdapter(getActivity(), dutyData, new RecyclerViewListener() {
                 @Override

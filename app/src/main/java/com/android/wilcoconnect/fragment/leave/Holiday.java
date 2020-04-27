@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
@@ -42,9 +43,9 @@ public class Holiday extends Fragment {
     private ArrayList<HolidayData> selectedholidaylist = new ArrayList<>();
     private int checkItem=0;
     private RecyclerView recyclerView;
-    private ConstraintLayout layout;
     private AddRequest addRequest = new AddRequest();
     private static String MY_PREFS_NAME = "logininfo";
+    private TextView dataNotFound;
     private HolidayListAdapter holidayadapter;
 
     @Override
@@ -57,8 +58,8 @@ public class Holiday extends Fragment {
          * Assign the Values for the Particular View Elements
          * */
         btn_location = view.findViewById(R.id.btn_location);
+        dataNotFound = view.findViewById(R.id.label_name);
         recyclerView = view.findViewById(R.id.holiday_recycler_view);
-        layout = view.findViewById(R.id.layoutdata);
 
         /*
          * Get the Header
@@ -153,20 +154,16 @@ public class Holiday extends Fragment {
                     recyclerView.setAdapter(holidayadapter);
                 }
                 else{
-                    holidayadapter =null;
-                    recyclerView.setAdapter(holidayadapter);
-                    Snackbar snackbar = Snackbar
-                            .make(layout, "No Data Found", Snackbar.LENGTH_LONG);
-                    snackbar.show();
+                    recyclerView.setAdapter(null);
+                    recyclerView.setVisibility(View.GONE);
+                    dataNotFound.setVisibility(View.VISIBLE);
                 }
             }
         }
         else{
-            holidayadapter =null;
-            recyclerView.setAdapter(holidayadapter);
-            Snackbar snackbar = Snackbar
-                    .make(layout, "No Data Found", Snackbar.LENGTH_LONG);
-            snackbar.show();
+            recyclerView.setAdapter(null);
+            recyclerView.setVisibility(View.GONE);
+            dataNotFound.setVisibility(View.VISIBLE);
         }
     }
 }

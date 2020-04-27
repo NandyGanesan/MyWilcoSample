@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,11 +46,11 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
      * */
     private RecyclerView recyclerView;
     private String TAG = "ApproveLeaveFromGrid";
-    private FrameLayout frameLayout;
     private static String MYPREFS_NAME = "logininfo";
     private ArrayList<MyLeaveData> approveList = new ArrayList<>();
     private ArrayList<MyLeaveData> appliedList = new ArrayList<>();
     private AddRequest request = new AddRequest();
+    private TextView dataNotFound;
     private String data;
 
     @Override
@@ -58,7 +60,7 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
         View view = inflater.inflate(R.layout.fragment_approve_leave, container, false);
 
         recyclerView = view.findViewById(R.id.recycler_view);
-        frameLayout = view.findViewById(R.id.approve_frame);
+        dataNotFound = view.findViewById(R.id.label_name);
 
         /*
          * Get the Header
@@ -124,10 +126,8 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
         ApproveLeaveListAdapter approve_adapter;
         if(appliedList.size()<=0){
             recyclerView.setAdapter(null);
-            Toast.makeText(getActivity(),"Data Not Found",Toast.LENGTH_LONG).show();
-            Snackbar snackbar = Snackbar
-                    .make(frameLayout, "No Data Found", Snackbar.LENGTH_LONG);
-            snackbar.show();
+            recyclerView.setVisibility(View.GONE);
+            dataNotFound.setVisibility(View.VISIBLE);
         }
         else {
             approve_adapter = new ApproveLeaveListAdapter(getActivity(), appliedList, request, new RecyclerViewListener() {

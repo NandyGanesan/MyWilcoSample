@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#C0C0C0"
-    tools:context=".fragment.leave.Leave"
     android:id="@+id/on_duty_frame">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -32,7 +31,18 @@
             app:layout_anchor="@+id/recycler_view"
             app:layout_anchorGravity="bottom|right|end" />
 
-
+        <TextView
+            android:id="@+id/label_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="No Data Found"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </FrameLayout>

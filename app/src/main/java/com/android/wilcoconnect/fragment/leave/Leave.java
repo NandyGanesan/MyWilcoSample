@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
@@ -46,10 +47,9 @@ public class Leave extends Fragment implements DialogListener {
     private String TAG = "Leave";
     private ArrayList<MyLeaveData> leavedata = new ArrayList<>();
     private RecyclerView recyclerView;
-    private FrameLayout frameLayout;
     private AddRequest addRequest = new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
-    private CoordinatorLayout coordinatorLayout;
+    private TextView dataNotFound;
     private MyLeaveListDataAdapter leaveadapter;
 
     @Override
@@ -58,8 +58,8 @@ public class Leave extends Fragment implements DialogListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_leave, container, false);
         recyclerView = view.findViewById(R.id.recycler_view);
-        coordinatorLayout = view.findViewById(R.id.coordinatorLayout);
-        frameLayout = view.findViewById(R.id.leave_frame);
+        dataNotFound = view.findViewById(R.id.label_name);
+
 
         /*
          * Get the Header
@@ -120,12 +120,10 @@ public class Leave extends Fragment implements DialogListener {
     private void setleavelist() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        if(leavedata.size()<0){
-            leaveadapter =null;
-            recyclerView.setAdapter(leaveadapter);
-            Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout, "No Data Found", Snackbar.LENGTH_LONG);
-            snackbar.show();
+        if(leavedata.size()<=0){
+            recyclerView.setAdapter(null);
+            recyclerView.setVisibility(View.GONE);
+            dataNotFound.setVisibility(View.VISIBLE);
         }
         else{
             leaveadapter = new MyLeaveListDataAdapter(getActivity(), leavedata, new RecyclerViewListener() {

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -46,10 +47,9 @@ public class CompensatoryDetail extends Fragment implements DialogListener {
     private AddRequest addRequest = new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
     private RecyclerView recyclerView;
-    private FrameLayout frameLayout;
-    private CoordinatorLayout coordinatorLayout;
     private ArrayList<CompOffDetailData> compOffDetailData;
     private CompAdapter adapter;
+    private TextView dataNotFound;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,8 +59,7 @@ public class CompensatoryDetail extends Fragment implements DialogListener {
         View view = inflater.inflate(R.layout.fragment_comp_off, container, false);
 
         recyclerView = view.findViewById(R.id.recycler_view);
-        coordinatorLayout = view.findViewById(R.id.coordinatorLayout);
-        frameLayout = view.findViewById(R.id.leave_frame);
+        dataNotFound = view.findViewById(R.id.label_name);
 
         /*
          * Get the Header
@@ -115,11 +114,9 @@ public class CompensatoryDetail extends Fragment implements DialogListener {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         if (compOffDetailData.size() < 0) {
-            adapter = null;
-            recyclerView.setAdapter(adapter);
-            Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout, "No Data Found", Snackbar.LENGTH_LONG);
-            snackbar.show();
+            recyclerView.setAdapter(null);
+            recyclerView.setVisibility(View.GONE);
+            dataNotFound.setVisibility(View.VISIBLE);
         } else {
             adapter = new CompAdapter(getActivity(), compOffDetailData, new RecyclerViewListener() {
                 @Override

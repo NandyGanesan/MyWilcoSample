@@ -43,12 +43,12 @@ public class ApproveLeaveListAdapter extends RecyclerView.Adapter<ApproveLeaveLi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
-            holder.employeeid.setText(approveLists.get(position).getEmployeeID());
-            holder.employeename.setText(approveLists.get(position).getFirstName());
-            holder.leavetype.setText(approveLists.get(position).getLeaveTypeText());
+            holder.employeeId.setText(approveLists.get(position).getEmployeeID());
+            holder.employeeName.setText(approveLists.get(position).getFirstName());
+            holder.leaveType.setText(approveLists.get(position).getLeaveTypeText());
             holder.status.setText(approveLists.get(position).getRequestStatus());
-            holder.fromdate.setText(approveLists.get(position).getStrFromDate());
-            holder.todate.setText(approveLists.get(position).getStrToDate());
+            holder.fromDate.setText(approveLists.get(position).getStrFromDate());
+            holder.toDate.setText(approveLists.get(position).getStrToDate());
 
         holder.approve.setOnClickListener(v -> {
             ApproveList approveList = new ApproveList();
@@ -101,18 +101,18 @@ public class ApproveLeaveListAdapter extends RecyclerView.Adapter<ApproveLeaveLi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView leavetype,status,fromdate,todate,employeeid,employeename;
+        TextView leaveType,status, fromDate, toDate, employeeId, employeeName;
         CardView approve;
         Button accept,reject;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            leavetype = itemView.findViewById(R.id.tv_leaveType);
+            leaveType = itemView.findViewById(R.id.tv_leaveType);
             status = itemView.findViewById(R.id.tv_LeaveStatus);
-            fromdate = itemView.findViewById(R.id.tv_fromDate);
-            todate = itemView.findViewById(R.id.tv_ToDate);
-            employeeid = itemView.findViewById(R.id.tv_employeeid);
-            employeename = itemView.findViewById(R.id.tv_employeename);
+            fromDate = itemView.findViewById(R.id.tv_fromDate);
+            toDate = itemView.findViewById(R.id.tv_ToDate);
+            employeeId = itemView.findViewById(R.id.tv_employeeid);
+            employeeName = itemView.findViewById(R.id.tv_employeename);
             approve = itemView.findViewById(R.id.approverequest);
 
             accept = itemView.findViewById(R.id.btn_accept);

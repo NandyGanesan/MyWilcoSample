@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -45,11 +46,11 @@ public class ApproveCompOff extends Fragment implements DialogListener {
      * */
     private RecyclerView recyclerView;
     private String TAG = "ApproveCompOff";
-    private FrameLayout frameLayout;
     private static String MYPREFS_NAME = "logininfo";
     private ArrayList<CompOffDetailData> compOffArrayList = new ArrayList<>();
     private ArrayList<CompOffDetailData> selectedList = new ArrayList<>();
     private AddRequest request = new AddRequest();
+    private TextView dataNotFound;
     private ApproveCompOffAdapter adapter;
 
     @Override
@@ -59,7 +60,7 @@ public class ApproveCompOff extends Fragment implements DialogListener {
         View view = inflater.inflate(R.layout.fragment_approve_comp_off, container, false);
 
         recyclerView = view.findViewById(R.id.recycler_view);
-        frameLayout = view.findViewById(R.id.approve_frame);
+        dataNotFound = view.findViewById(R.id.label_name);
 
         /*
          * Get the Header
@@ -117,12 +118,10 @@ public class ApproveCompOff extends Fragment implements DialogListener {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        if(compOffArrayList.size()<0){
-            adapter =null;
-            recyclerView.setAdapter(adapter);
-            Snackbar snackbar = Snackbar
-                    .make(frameLayout, "No Data Found", Snackbar.LENGTH_LONG);
-            snackbar.show();
+        if(compOffArrayList.size()<=0){
+            recyclerView.setAdapter(null);
+            recyclerView.setVisibility(View.GONE);
+            dataNotFound.setVisibility(View.VISIBLE);
         }
         else {
             adapter = new ApproveCompOffAdapter(getActivity(), selectedList, request, new RecyclerViewListener() {

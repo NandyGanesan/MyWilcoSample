@@ -130,6 +130,8 @@ public class ApproveOnDutyGrid extends Fragment implements DialogListener {
                 @Override
                             public void onClick(View view, ApprovePost post) {}
                         }, getActivity(), onDutyDataArrayList, request);
+            recyclerView.setVisibility(View.VISIBLE);
+            dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
         }
     }

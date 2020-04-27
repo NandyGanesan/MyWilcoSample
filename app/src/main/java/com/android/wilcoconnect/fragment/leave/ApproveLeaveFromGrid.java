@@ -144,6 +144,8 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
                     getNewInstance(post);
                 }
             });
+            recyclerView.setVisibility(View.VISIBLE);
+            dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(approve_adapter);
         }
     }

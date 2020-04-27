@@ -134,6 +134,8 @@ public class OnDuty extends Fragment implements DialogListener {
                 @Override
                 public void onClick(View view, ApprovePost post) {}
             });
+            recyclerView.setVisibility(View.VISIBLE);
+            dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
         }
     }

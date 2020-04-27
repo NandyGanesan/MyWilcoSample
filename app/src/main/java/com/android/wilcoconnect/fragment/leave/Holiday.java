@@ -136,6 +136,8 @@ public class Holiday extends Fragment {
         if(holidayDataList.size()>0) {
             if (btn_location.getText().equals("All")) {
                 holidayadapter = new HolidayListAdapter(getActivity(), holidayDataList);
+                recyclerView.setVisibility(View.VISIBLE);
+                dataNotFound.setVisibility(View.GONE);
                 recyclerView.setAdapter(holidayadapter);
             } else {
                 selectedholidaylist = new ArrayList<>();
@@ -153,6 +155,8 @@ public class Holiday extends Fragment {
                 }
                 if(selectedholidaylist.size()>0) {
                     holidayadapter = new HolidayListAdapter(getActivity(), selectedholidaylist);
+                    dataNotFound.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
                     recyclerView.setAdapter(holidayadapter);
                 }
                 else{

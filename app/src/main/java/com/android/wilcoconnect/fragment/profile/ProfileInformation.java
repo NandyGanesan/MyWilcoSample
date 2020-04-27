@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
@@ -89,6 +90,7 @@ public class ProfileInformation extends DialogFragment {
     private RecyclerView recyclerView;
     private ArrayList<BasicInformation> additionalDetail;
     private ProfileMenu menu;
+    private TextView dataNotFound;
     private AddRequest addRequest = new AddRequest();
 
     @Override
@@ -116,6 +118,7 @@ public class ProfileInformation extends DialogFragment {
         }
 
         recyclerView = view.findViewById(R.id.profile_menu_data);
+        dataNotFound = view.findViewById(R.id.label_name);
 
         /*
          * Retrieve the Intent Value
@@ -251,6 +254,11 @@ public class ProfileInformation extends DialogFragment {
             ProfileInformationDisplayAdapter adapter = new ProfileInformationDisplayAdapter(additionalDetail,getActivity());
             recyclerView.setAdapter(adapter);
         }
+        else {
+            recyclerView.setAdapter(null);
+            recyclerView.setVisibility(View.GONE);
+            dataNotFound.setVisibility(View.VISIBLE);
+        }
     }
 
     private void get_reference_value() {
@@ -277,6 +285,11 @@ public class ProfileInformation extends DialogFragment {
         if (referenceDetailDataList.size() > 0) {
             ReferenceAdapter adapter = new ReferenceAdapter(referenceDetailDataList,getActivity());
             recyclerView.setAdapter(adapter);
+        }
+        else {
+            recyclerView.setAdapter(null);
+            recyclerView.setVisibility(View.GONE);
+            dataNotFound.setVisibility(View.VISIBLE);
         }
     }
 
@@ -320,8 +333,9 @@ public class ProfileInformation extends DialogFragment {
             recyclerView.setAdapter(adapter);
         }
         else {
-           adapter = null;
-           recyclerView.setAdapter(adapter);
+            recyclerView.setAdapter(null);
+            recyclerView.setVisibility(View.GONE);
+            dataNotFound.setVisibility(View.VISIBLE);
         }
     }
 
@@ -359,6 +373,11 @@ public class ProfileInformation extends DialogFragment {
             FamilyAdapter adapter = new FamilyAdapter(familylist,getActivity());
             recyclerView.setAdapter(adapter);
         }
+        else {
+            recyclerView.setAdapter(null);
+            recyclerView.setVisibility(View.GONE);
+            dataNotFound.setVisibility(View.VISIBLE);
+        }
     }
 
     private void get_education_value() {
@@ -395,6 +414,11 @@ public class ProfileInformation extends DialogFragment {
         if(educationlist.size()>0) {
             EducationAdapter adapter = new EducationAdapter(educationlist,getActivity());
             recyclerView.setAdapter(adapter);
+        }
+        else {
+            recyclerView.setAdapter(null);
+            recyclerView.setVisibility(View.GONE);
+            dataNotFound.setVisibility(View.VISIBLE);
         }
     }
 
@@ -595,6 +619,11 @@ public class ProfileInformation extends DialogFragment {
             ProfileInformationDisplayAdapter adapter = new ProfileInformationDisplayAdapter(selectedList,getActivity());
             recyclerView.setAdapter(adapter);
         }
+        else {
+            recyclerView.setAdapter(null);
+            recyclerView.setVisibility(View.GONE);
+            dataNotFound.setVisibility(View.VISIBLE);
+        }
     }
 
     private void get_value() {
@@ -717,6 +746,11 @@ public class ProfileInformation extends DialogFragment {
         if(lastpositiondetail.size()>0){
             ProfileInformationDisplayAdapter adapter = new ProfileInformationDisplayAdapter(lastpositiondetail,getActivity());
             recyclerView.setAdapter(adapter);
+        }
+        else {
+            recyclerView.setAdapter(null);
+            recyclerView.setVisibility(View.GONE);
+            dataNotFound.setVisibility(View.VISIBLE);
         }
     }
 
@@ -845,7 +879,11 @@ public class ProfileInformation extends DialogFragment {
             ProfileInformationDisplayAdapter adapter = new ProfileInformationDisplayAdapter(emergency,getActivity());
             recyclerView.setAdapter(adapter);
         }
-
+        else {
+            recyclerView.setAdapter(null);
+            recyclerView.setVisibility(View.GONE);
+            dataNotFound.setVisibility(View.VISIBLE);
+        }
     }
 
     private void get_Passport_detail(){
@@ -891,6 +929,11 @@ public class ProfileInformation extends DialogFragment {
                 public void OnCompOffStore(View view, CompOffApprovePost post) {}
             });
             recyclerView.setAdapter(adapter);
+        }
+        else {
+            recyclerView.setAdapter(null);
+            recyclerView.setVisibility(View.GONE);
+            dataNotFound.setVisibility(View.VISIBLE);
         }
     }
 

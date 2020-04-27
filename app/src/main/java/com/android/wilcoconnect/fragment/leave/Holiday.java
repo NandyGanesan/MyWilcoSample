@@ -111,6 +111,7 @@ public class Holiday extends Fragment {
             @Override
             public void onResponse(Call<com.android.wilcoconnect.model.leave.Holiday> call, Response<com.android.wilcoconnect.model.leave.Holiday> response) {
                 if(response.body()!=null && response.isSuccessful()){
+                    holidayDataList = new ArrayList<>();
                     holidayDataList = response.body().getData();
                     if(holidayDataList.size()>0) {
                         set_holiday_list();
@@ -131,6 +132,7 @@ public class Holiday extends Fragment {
     private void set_holiday_list() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+
         if(holidayDataList.size()>0) {
             if (btn_location.getText().equals("All")) {
                 holidayadapter = new HolidayListAdapter(getActivity(), holidayDataList);

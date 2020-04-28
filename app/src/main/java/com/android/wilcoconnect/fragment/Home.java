@@ -13,7 +13,7 @@ import com.android.wilcoconnect.R;
 
 public class Home extends Fragment {
 
-    private String TAG = "Home";
+    private static String TAG = "Home";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

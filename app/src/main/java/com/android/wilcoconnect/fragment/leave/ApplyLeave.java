@@ -54,7 +54,7 @@ public class ApplyLeave extends DialogFragment {
     private TextView tv_no_of_days_count, tv_date_error;
     private int checkItem =0;
     private int fromYear,fromMonth,fromDay,toYear,toMonth,toDay;
-    private RadioGroup fullandhalf,mrngandevening;
+    private RadioGroup full_half, mrng_evening;
     private AddRequest addRequest= new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
     private String leavelevel;
@@ -141,9 +141,9 @@ public class ApplyLeave extends DialogFragment {
         et_remarks = view.findViewById(R.id.et_remarks);
         tv_no_of_days_count = view.findViewById(R.id.tv_noofdayscount);
         tv_date_error = view.findViewById(R.id.tv_dateerror);
-        fullandhalf = view.findViewById(R.id.radioGroupleave);
-        mrngandevening = view.findViewById(R.id.radioGroup);
-        mrngandevening.setVisibility(View.GONE);
+        full_half = view.findViewById(R.id.radioGroupleave);
+        mrng_evening = view.findViewById(R.id.radioGroup);
+        mrng_evening.setVisibility(View.GONE);
 
         /*
         * Select the Particular leave type to enable the From and To date
@@ -223,16 +223,16 @@ public class ApplyLeave extends DialogFragment {
             datePickerDialog.show();
         });
 
-        fullandhalf.setOnCheckedChangeListener((group, checkedId) -> {
-            int radioButtonID = fullandhalf.getCheckedRadioButtonId();
-            View radioButton = fullandhalf.findViewById(radioButtonID);
-            int idx = fullandhalf.indexOfChild(radioButton);
+        full_half.setOnCheckedChangeListener((group, checkedId) -> {
+            int radioButtonID = full_half.getCheckedRadioButtonId();
+            View radioButton = full_half.findViewById(radioButtonID);
+            int idx = full_half.indexOfChild(radioButton);
             if(idx==0){
                 tv_no_of_days_count.setText(""+1);
-                mrngandevening.setVisibility(View.GONE);
+                mrng_evening.setVisibility(View.GONE);
             }
             else {
-                mrngandevening.setVisibility(View.VISIBLE);
+                mrng_evening.setVisibility(View.VISIBLE);
                 tv_no_of_days_count.setText(""+0.5);
             }
         });
@@ -250,8 +250,8 @@ public class ApplyLeave extends DialogFragment {
             tv_no_of_days_count.setText("");
             et_remarks.setText("");
             balanceFrame.setVisibility(View.GONE);
-            mrngandevening.setVisibility(View.GONE);
-            fullandhalf.setVisibility(View.GONE);
+            mrng_evening.setVisibility(View.GONE);
+            full_half.setVisibility(View.GONE);
         });
 
         /*
@@ -334,8 +334,8 @@ public class ApplyLeave extends DialogFragment {
                     tv_no_of_days_count.setText("");
                     et_remarks.setText("");
                     balanceFrame.setVisibility(View.GONE);
-                    mrngandevening.setVisibility(View.GONE);
-                    fullandhalf.setVisibility(View.GONE);
+                    mrng_evening.setVisibility(View.GONE);
+                    full_half.setVisibility(View.GONE);
                 }
                 else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -370,16 +370,16 @@ public class ApplyLeave extends DialogFragment {
     }
 
     private void get_radiobutton_value() {
-        int radioButtonID = fullandhalf.getCheckedRadioButtonId();
-        View radioButton = fullandhalf.findViewById(radioButtonID);
-        int idx = fullandhalf.indexOfChild(radioButton);
+        int radioButtonID = full_half.getCheckedRadioButtonId();
+        View radioButton = full_half.findViewById(radioButtonID);
+        int idx = full_half.indexOfChild(radioButton);
         if(idx==0){
             leavelevel = "F";
         }
         else {
-            int radio = mrngandevening.getCheckedRadioButtonId();
-            View radioButtons = mrngandevening.findViewById(radio);
-            int index = mrngandevening.indexOfChild(radioButtons);
+            int radio = mrng_evening.getCheckedRadioButtonId();
+            View radioButtons = mrng_evening.findViewById(radio);
+            int index = mrng_evening.indexOfChild(radioButtons);
             if(index==0){
                 leavelevel = "M";
             }
@@ -420,8 +420,8 @@ public class ApplyLeave extends DialogFragment {
                     long elapsedDays = different / daysInMilli;
                    tv_no_of_days_count.setText(Integer.toString((int)(elapsedDays+1)));
                    if(elapsedDays+1 == 1){
-                       fullandhalf.setVisibility(View.VISIBLE);
-                       mrngandevening.setVisibility(View.GONE);
+                       full_half.setVisibility(View.VISIBLE);
+                       mrng_evening.setVisibility(View.GONE);
                    }
                }
             } catch (ParseException e) {

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
 import android.util.Log;
@@ -58,6 +59,11 @@ public class OnDutyRemarks extends DialogFragment {
         String value = this.getArguments().getString("SubmitOnDuty");
         Gson gson = new Gson();
         post = gson.fromJson(value, OnDutyApprovePost.class);
+
+        Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
+        detail_toolbar.setTitle("REMARKS");
+        detail_toolbar.setNavigationIcon(R.drawable.close);
+        detail_toolbar.setNavigationOnClickListener(v -> dismiss());
 
         /*
          * Get the Header

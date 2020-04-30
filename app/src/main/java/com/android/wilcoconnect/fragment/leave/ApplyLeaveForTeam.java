@@ -204,6 +204,8 @@ public class ApplyLeaveForTeam extends Fragment {
                 }
             }
             get_leave_Balance();
+            balanceFrame.setVisibility(View.GONE);
+            btn_leaveType.setText("--- SELECT ---");
             btn_leaveType.setEnabled(true);
         });
 

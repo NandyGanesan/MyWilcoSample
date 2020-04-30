@@ -106,9 +106,9 @@ public class ApproveCompOff extends Fragment implements DialogListener {
                 data.setEmpCompensatoryID(compOffArrayList.get(i).getEmpCompensatoryID());
                 data.setEmployeeID(compOffArrayList.get(i).getEmployeeID());
                 data.setFirstName(compOffArrayList.get(i).getFirstName());
-                data.setAppliedDate(compOffArrayList.get(i).getAppliedDate());
-                data.setFromDate(compOffArrayList.get(i).getFromDate());
-                data.setToDate(compOffArrayList.get(i).getToDate());
+                data.setStrAppliedDate(compOffArrayList.get(i).getStrAppliedDate());
+                data.setStrFromDate(compOffArrayList.get(i).getStrFromDate());
+                data.setStrToDate(compOffArrayList.get(i).getStrToDate());
                 data.setRequestStatus(compOffArrayList.get(i).getRequestStatus());
                 data.setNoOfDays(compOffArrayList.get(i).getNoOfDays());
                 data.setRequestRemarks(compOffArrayList.get(i).getRequestRemarks());

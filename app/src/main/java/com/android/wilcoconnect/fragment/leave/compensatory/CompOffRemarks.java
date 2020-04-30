@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
 import com.android.wilcoconnect.R;
@@ -50,6 +51,12 @@ public class CompOffRemarks extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_remarks, container, false);
+
+        Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
+        detail_toolbar.setTitle("REMARKS");
+        detail_toolbar.setNavigationIcon(R.drawable.close);
+        detail_toolbar.setNavigationOnClickListener(v -> dismiss());
+
 
         /*
          * Retrieve the Intent Value

@@ -159,7 +159,7 @@ public class Leave extends Fragment implements DialogListener {
 
     @Override
     public void onDialogClick(String value) {
-        if(value == "Success"){
+        if(value.equals("Success")){
             replaceFragment();
         }
     }
@@ -167,7 +167,8 @@ public class Leave extends Fragment implements DialogListener {
     private void replaceFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.leave_frame, new Leave());
-        transaction.replace(R.id.apply_leave_frame,new ApproveLeaveFromGrid());
+        transaction.replace(R.id.approve_frame,new ApproveLeaveFromGrid());
+        transaction.replace(R.id.calender_frame,new LeaveCalenderForTeam());
         transaction.addToBackStack(null);
         transaction.commit();
     }

@@ -26,10 +26,10 @@ public class ApproveCompOffAdapter extends RecyclerView.Adapter<ApproveCompOffAd
     private ArrayList<CompOffDetailData> appliedlist;
     private AddRequest request;
 
-    public ApproveCompOffAdapter(Context c, ArrayList<CompOffDetailData> appliedlist, AddRequest request, RecyclerViewListener listener) {
+    public ApproveCompOffAdapter(Context c, ArrayList<CompOffDetailData> appliedList, AddRequest request, RecyclerViewListener listener) {
         this.listener = listener;
         this.c = c;
-        this.appliedlist = appliedlist;
+        this.appliedlist = appliedList;
         this.request = request;
     }
 
@@ -44,10 +44,10 @@ public class ApproveCompOffAdapter extends RecyclerView.Adapter<ApproveCompOffAd
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.tv_id.setText(appliedlist.get(position).getEmployeeID());
         holder.tv_name.setText(appliedlist.get(position).getFirstName());
-        holder.tv_type.setText(appliedlist.get(position).getAppliedDate());
+        holder.tv_type.setText(appliedlist.get(position).getStrAppliedDate());
         holder.tv_status.setText(appliedlist.get(position).getRequestStatus());
-        holder.tv_fromdate.setText(appliedlist.get(position).getFromDate());
-        holder.tv_todate.setText(appliedlist.get(position).getToDate());
+        holder.tv_fromdate.setText(appliedlist.get(position).getStrFromDate());
+        holder.tv_todate.setText(appliedlist.get(position).getStrToDate());
         holder.tv_noofdays.setText(""+appliedlist.get(position).getNoOfDays());
         holder.tv_reason.setText(appliedlist.get(position).getRequestRemarks());
 

@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 public class CompOffDetailDisplay extends DialogFragment {
 
     public static final String TAG = "CompOffDetailDisplay";
-    private CompOffDetailData data;
+    private CompOffDetailData data = new CompOffDetailData();
     private TextView tv_View_fromDate;
     private TextView tv_View_toDate;
     private TextView tv_View_no_of_counts;

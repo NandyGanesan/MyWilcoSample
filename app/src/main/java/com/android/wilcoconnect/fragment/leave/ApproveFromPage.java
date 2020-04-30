@@ -154,13 +154,11 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
 
         accept.setOnClickListener(v -> {
             approvePost.setApproveStatus("Approved");
-            dismiss();
             get_remarks();
         });
 
         reject.setOnClickListener(v -> {
             approvePost.setApproveStatus("Rejected");
-            dismiss();
             get_remarks();
         });
 
@@ -285,15 +283,25 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
         bundle.putString("Submit",value);
         Remarks remarks = new Remarks();
         remarks.setTargetFragment(this, 0);
+        assert getFragmentManager() != null;
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         remarks.setArguments(bundle);
-        remarks.show(transaction,remarks.TAG);
+        remarks.show(transaction, Remarks.TAG);
     }
 
     @Override
     public void onDialogClick(String value) {
-        if(value == "Success"){
-            listener.onDialogClick(value);
+        if(value.equals("Success")){
+            dismiss();
+            replaceFragment();
         }
+    }
+
+    private void replaceFragment() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.approve_frame, new ApproveLeaveFromGrid());
+        transaction.replace(R.id.leave_frame,new Leave());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

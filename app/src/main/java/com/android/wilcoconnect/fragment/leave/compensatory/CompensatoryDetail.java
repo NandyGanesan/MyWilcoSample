@@ -47,7 +47,7 @@ public class CompensatoryDetail extends Fragment implements DialogListener {
     private AddRequest addRequest = new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
     private RecyclerView recyclerView;
-    private ArrayList<CompOffDetailData> compOffDetailData;
+    private ArrayList<CompOffDetailData> compOffDetailData = new ArrayList<>();
     private CompAdapter adapter;
     private TextView dataNotFound;
 
@@ -107,13 +107,13 @@ public class CompensatoryDetail extends Fragment implements DialogListener {
         ApplyCompensatory comp = new ApplyCompensatory();
         comp.setTargetFragment(this, 0);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        comp.show(transaction,comp.TAG);
+        comp.show(transaction, ApplyCompensatory.TAG);
     }
 
     private void set_list() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        if (compOffDetailData.size() < 0) {
+        if (compOffDetailData.size() <= 0) {
             recyclerView.setAdapter(null);
             recyclerView.setVisibility(View.GONE);
             dataNotFound.setVisibility(View.VISIBLE);
@@ -146,7 +146,6 @@ public class CompensatoryDetail extends Fragment implements DialogListener {
         compOffDetail.setArguments(bundle);
         compOffDetail.show(transaction,compOffDetail.TAG);
     }
-
 
     @Override
     public void onDialogClick(String value) {

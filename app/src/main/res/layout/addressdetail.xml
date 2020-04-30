@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/CardView_GridData"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="4dp"
+    android:elevation="16dp"
+    app:contentPadding="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardBackgroundColor="@android:color/white"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_View_title1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text="Communication Address: "
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_View_address1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text="Address"
+                android:textStyle="bold"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_View_title1" />
+
+            <TextView
+                android:id="@+id/et_View_address1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text="1/37,..."
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_View_address1" />
+
+            <TextView
+                android:id="@+id/tv_View_country1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text="Country "
+                android:textStyle="bold"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_address1"/>
+
+            <TextView
+                android:id="@+id/et_View_country1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text="India "
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_View_country1" />
+
+            <TextView
+                android:id="@+id/tv_View_state1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text="State"
+                android:textStyle="bold"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_country1"/>
+
+            <TextView
+                android:id="@+id/et_View_state1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text="Tamil Nadu"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_View_state1" />
+
+            <TextView
+                android:id="@+id/tv_View_city1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="City "
+                android:textStyle="bold"
+                android:padding="4dp"
+                android:background="@color/white"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_state1"/>
+
+            <TextView
+                android:id="@+id/et_View_city1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text=" "
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_View_city1" />
+
+            <TextView
+                android:id="@+id/tv_View_pincode1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pincode "
+                android:textStyle="bold"
+                android:padding="4dp"
+                android:background="@color/white"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_city1"/>
+
+            <TextView
+                android:id="@+id/et_View_pincode1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text=" "
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_View_pincode1" />
+
+            <TextView
+                android:id="@+id/tv_View_title2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Permanent Address: "
+                android:textStyle="bold"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_pincode1"/>
+
+
+            <TextView
+                android:id="@+id/tv_View_address2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text="Address"
+                android:textStyle="bold"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_View_title2" />
+
+            <TextView
+                android:id="@+id/et_View_address2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text="1/37,..."
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_View_address2" />
+
+            <TextView
+                android:id="@+id/tv_View_country2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text="Country "
+                android:textStyle="bold"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_address2"/>
+
+            <TextView
+                android:id="@+id/et_View_country2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text="India"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_View_country2" />
+
+            <TextView
+                android:id="@+id/tv_View_state2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text="State"
+                android:textStyle="bold"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_country2"/>
+
+            <TextView
+                android:id="@+id/et_View_state2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text="Tamil Nadu "
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_View_state2" />
+
+            <TextView
+                android:id="@+id/tv_View_city2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="City "
+                android:textStyle="bold"
+                android:padding="4dp"
+                android:background="@color/white"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_state2"/>
+
+            <TextView
+                android:id="@+id/et_View_city2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text=" "
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_View_city2" />
+
+            <TextView
+                android:id="@+id/tv_View_pincode2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pincode "
+                android:textStyle="bold"
+                android:padding="4dp"
+                android:background="@color/white"
+                android:layout_margin="8dp"
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_View_city2"/>
+
+            <TextView
+                android:id="@+id/et_View_pincode2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"
+                android:padding="4dp"
+                android:text=" "
+                android:textColor="#0A0606"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_View_pincode2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.cardview.widget.CardView>

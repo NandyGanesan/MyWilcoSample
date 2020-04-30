@@ -45,6 +45,7 @@ import com.android.wilcoconnect.model.profile.ReferenceDetailData;
 import com.android.wilcoconnect.model.profile.ReferenceDetails;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
+import com.android.wilcoconnect.shared.profile.AddressAdapter;
 import com.android.wilcoconnect.shared.profile.EducationAdapter;
 import com.android.wilcoconnect.shared.profile.ExperienceAdapter;
 import com.android.wilcoconnect.shared.profile.FamilyAdapter;
@@ -92,6 +93,7 @@ public class ProfileInformation extends DialogFragment {
     private ProfileMenu menu;
     private TextView dataNotFound;
     private AddRequest addRequest = new AddRequest();
+    private String Value;
 
     @Override
     public View onCreateView(LayoutInflater  inflater, ViewGroup container,
@@ -133,6 +135,7 @@ public class ProfileInformation extends DialogFragment {
         profile_toolbar.setNavigationOnClickListener(v -> dismiss());
 
         if(menu.getValues().equals("Basic information")||menu.getValues().equals("Address")){
+            Value = "Address";
             get_value();
         }
         else if(menu.getValues().equals("Education")){
@@ -554,70 +557,6 @@ public class ProfileInformation extends DialogFragment {
 
         item.put("Basic information", basicInformations);
 
-        ArrayList<BasicInformation> AddressDetail=new ArrayList<>();
-
-        BasicInformation addressinfo = new BasicInformation();
-        addressinfo.setDataLabel("Communication Address");
-        addressinfo.setDataDetail("");
-        AddressDetail.add(addressinfo);
-
-        BasicInformation addressinfo1 = new BasicInformation();
-        addressinfo1.setDataLabel("Address");
-        addressinfo1.setDataDetail(basicinformationdata.getData().getCommunication_Address1());
-        AddressDetail.add(addressinfo1);
-
-        BasicInformation addressinfo2 = new BasicInformation();
-        addressinfo2.setDataLabel("Country");
-        addressinfo2.setDataDetail(basicinformationdata.getData().getCommunicationCountryName());
-        AddressDetail.add(addressinfo2);
-
-        BasicInformation addressinfo3 = new BasicInformation();
-        addressinfo3.setDataLabel("State");
-        addressinfo3.setDataDetail(basicinformationdata.getData().getCommunicationStateName());
-        AddressDetail.add(addressinfo3);
-
-        BasicInformation addressinfo4 = new BasicInformation();
-        addressinfo4.setDataLabel("City");
-        addressinfo4.setDataDetail(basicinformationdata.getData().getCommunicationCity());
-        AddressDetail.add(addressinfo4);
-
-        BasicInformation addressinfo5 = new BasicInformation();
-        addressinfo5.setDataLabel("Pincode");
-        addressinfo5.setDataDetail(basicinformationdata.getData().getCommAddressPincode());
-        AddressDetail.add(addressinfo5);
-
-        BasicInformation addressinfo6 = new BasicInformation();
-        addressinfo6.setDataLabel("Permanent Address");
-        addressinfo6.setDataDetail("");
-        AddressDetail.add(addressinfo6);
-
-        BasicInformation addressinfo7 = new BasicInformation();
-        addressinfo7.setDataLabel("Address");
-        addressinfo7.setDataDetail(basicinformationdata.getData().getAddress1());
-        AddressDetail.add(addressinfo7);
-
-        BasicInformation addressinfo8 = new BasicInformation();
-        addressinfo8.setDataLabel("Country");
-        addressinfo8.setDataDetail(basicinformationdata.getData().getCountryName());
-        AddressDetail.add(addressinfo8);
-
-        BasicInformation addressinfo9 = new BasicInformation();
-        addressinfo9.setDataLabel("State");
-        addressinfo9.setDataDetail(basicinformationdata.getData().getStateName());
-        AddressDetail.add(addressinfo9);
-
-        BasicInformation addressinfo0 = new BasicInformation();
-        addressinfo0.setDataLabel("City");
-        addressinfo0.setDataDetail(basicinformationdata.getData().getCity());
-        AddressDetail.add(addressinfo0);
-
-        BasicInformation addressinfo11 = new BasicInformation();
-        addressinfo11.setDataLabel("Pincode");
-        addressinfo11.setDataDetail(basicinformationdata.getData().getAddressPincode());
-        AddressDetail.add(addressinfo11);
-
-        item.put("Address",AddressDetail);
-
         if (item.containsKey(menu.getValues())) {
             selectedList = new ArrayList<>();
             selectedList = new ArrayList<>(item.get(menu.getValues()));
@@ -651,6 +590,9 @@ public class ProfileInformation extends DialogFragment {
                 basicinformationdata = response.body();
                 if(basicinformationdata!=null){
                     get_HashMap_value();
+                    if(Value.equals("Address")){
+                        display_address();
+                    }
                 }
             }
 
@@ -662,6 +604,22 @@ public class ProfileInformation extends DialogFragment {
                 Log.e(TAG, Objects.requireNonNull(t.getLocalizedMessage()));
             }
         });
+    }
+
+    private void display_address(){
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        if(basicinformationdata!=null) {
+            AddressAdapter adapter = new AddressAdapter(basicinformationdata,getActivity());
+            recyclerView.setVisibility(View.VISIBLE);
+            dataNotFound.setVisibility(View.GONE);
+            recyclerView.setAdapter(adapter);
+        }
+        else {
+            recyclerView.setAdapter(null);
+            recyclerView.setVisibility(View.GONE);
+            dataNotFound.setVisibility(View.VISIBLE);
+        }
     }
 
     private void get_last_position_data(){

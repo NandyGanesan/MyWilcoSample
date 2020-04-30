@@ -366,7 +366,6 @@ public class ApplyLeave extends DialogFragment {
                 balanceFrame.setVisibility(View.VISIBLE);
             }
         }
-
     }
 
     private void get_radiobutton_value() {

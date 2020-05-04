@@ -134,7 +134,11 @@ public class ProfileInformation extends DialogFragment {
         profile_toolbar.setNavigationIcon(R.drawable.close);
         profile_toolbar.setNavigationOnClickListener(v -> dismiss());
 
-        if(menu.getValues().equals("Basic information")||menu.getValues().equals("Address")){
+        if(menu.getValues().equals("Basic information")){
+            Value = "Basic information";
+            get_value();
+        }
+        else if(menu.getValues().equals("Address")){
             Value = "Address";
             get_value();
         }
@@ -447,7 +451,6 @@ public class ProfileInformation extends DialogFragment {
     }
 
     private void get_HashMap_value(){
-        item = new HashMap<>();
         ArrayList<BasicInformation> basicInformations=new ArrayList<>();
 
         BasicInformation information = new BasicInformation();
@@ -555,8 +558,6 @@ public class ProfileInformation extends DialogFragment {
         information20.setDataDetail(basicinformationdata.getData().getDateofJoin());
         basicInformations.add(information20);
 
-        item.put("Basic information", basicInformations);
-
         if (item.containsKey(menu.getValues())) {
             selectedList = new ArrayList<>();
             selectedList = new ArrayList<>(item.get(menu.getValues()));
@@ -564,8 +565,8 @@ public class ProfileInformation extends DialogFragment {
         }
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        if(selectedList.size()>0){
-            ProfileInformationDisplayAdapter adapter = new ProfileInformationDisplayAdapter(selectedList,getActivity());
+        if(basicInformations.size()>0){
+            ProfileInformationDisplayAdapter adapter = new ProfileInformationDisplayAdapter(basicInformations,getActivity());
             recyclerView.setVisibility(View.VISIBLE);
             dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
@@ -589,8 +590,10 @@ public class ProfileInformation extends DialogFragment {
             public void onResponse(Call<BasicDetails> call, Response<BasicDetails> response) {
                 basicinformationdata = response.body();
                 if(basicinformationdata!=null){
-                    get_HashMap_value();
-                    if(Value.equals("Address")){
+                    if(Value.equals("Basic information")) {
+                        get_HashMap_value();
+                    }
+                    else if(Value.equals("Address")){
                         display_address();
                     }
                 }

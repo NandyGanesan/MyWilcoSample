@@ -265,7 +265,9 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
             public void onResponse(Call<GetLeaveBalance> call, Response<GetLeaveBalance> response) {
                 if(response.isSuccessful() && response.body()!=null){
                     leaveBalanceDetail = response.body().getData().getLeaveDetails();
-                    setTableData();
+                    if(leaveBalanceDetail.size()>0) {
+                        setTableData();
+                    }
                 }
             }
 

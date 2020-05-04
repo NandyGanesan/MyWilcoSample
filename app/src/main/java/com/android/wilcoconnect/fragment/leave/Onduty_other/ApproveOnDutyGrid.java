@@ -63,6 +63,9 @@ public class ApproveOnDutyGrid extends Fragment implements DialogListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_approve_on_duty, container, false);
 
+        /*
+         * Assign the Values for the Particular View Elements
+         * */
         recyclerView = view.findViewById(R.id.recycler_view);
         dataNotFound = view.findViewById(R.id.label_name);
 
@@ -84,7 +87,11 @@ public class ApproveOnDutyGrid extends Fragment implements DialogListener {
             request.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
+        /*
+        * Get the API Call to get the OnDuty Applied List
+        * */
         ApiManager.getInstance().getAppliedOnDutyDetail(request, new Callback<OnDutyDetails>() {
+            //API Call Success
             @Override
             public void onResponse(Call<OnDutyDetails> call, Response<OnDutyDetails> response) {
                 if(response.body()!=null && response.isSuccessful()){
@@ -92,50 +99,57 @@ public class ApproveOnDutyGrid extends Fragment implements DialogListener {
                     set_Approve_onDuty_list();
                 }
             }
-
+            //API Call Failure
             @Override
             public void onFailure(Call<OnDutyDetails> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
             }
         });
 
-
         return view;
     }
 
+    /*
+    * Set the List of Data into the Adapter Class
+    * */
     private void set_Approve_onDuty_list() {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        /*
+        * Adapter is an Empty
+        * */
         if(onDutyDataArrayList.size()<=0){
             recyclerView.setAdapter(null);
             recyclerView.setVisibility(View.GONE);
             dataNotFound.setVisibility(View.VISIBLE);
         }
+        /*
+        * Adapter is not an Empty
+        * */
         else {
             adapter = new ApproveOnDutyAdapter(new RecyclerViewListener() {
                             @Override
-                            public void onClick(View view, String value) {
-                            }
+                            public void onClick(View view, String value) {}
                             @Override
                             public void OnStore(View view, OnDutyApprovePost postData) {
                                 getNewInstance(postData);
                             }
-
-                @Override
-                public void OnCompOffStore(View view, CompOffApprovePost post) {
-
-                }
-
-                @Override
+                            @Override
+                            public void OnCompOffStore(View view, CompOffApprovePost post) {}
+                            @Override
                             public void onClick(View view, ApprovePost post) {}
                         }, getActivity(), onDutyDataArrayList, request);
+
             recyclerView.setVisibility(View.VISIBLE);
             dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
         }
     }
 
+    /*
+     * Call the Remarks Dialog Fragment to get the Remarks
+     * */
     private void getNewInstance(OnDutyApprovePost post){
         Gson gson = new Gson();
         String value = gson.toJson(post);
@@ -148,6 +162,9 @@ public class ApproveOnDutyGrid extends Fragment implements DialogListener {
         remarks.show(transaction,remarks.TAG);
     }
 
+    /*
+     * Listener - Return Value from the Dialog Fragment
+     * */
     @Override
     public void onDialogClick(String value) {
         if(value == "Success"){
@@ -155,6 +172,9 @@ public class ApproveOnDutyGrid extends Fragment implements DialogListener {
         }
     }
 
+    /*
+     * After Data Submission to refresh the Fragment
+     * */
     private void replaceFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.approve_on_duty_frame, new ApproveOnDutyGrid());
@@ -162,4 +182,5 @@ public class ApproveOnDutyGrid extends Fragment implements DialogListener {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
 }

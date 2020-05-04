@@ -35,6 +35,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class LeaveCalenderForTeam extends Fragment {
 
+    /*
+     * Initialize the variables to access the Module
+     * */
     private CalendarView calendarview;
     private static String TAG = "LeaveCalenderForTeam";
     private ArrayList<MyLeaveData> leavelist = new ArrayList<>();
@@ -47,6 +50,9 @@ public class LeaveCalenderForTeam extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_leave_calender_for_team, container, false);
 
+        /*
+         * Define the UI Element
+         * */
         calendarview = view.findViewById(R.id.custom_calender);
 
         /*
@@ -67,9 +73,16 @@ public class LeaveCalenderForTeam extends Fragment {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
+        /*
+        * Initialize the List
+        * */
         leavelist = new ArrayList<>();
 
+        /*
+        * API Call to get the List of Data
+        * */
         ApiManager.getInstance().getLeaveDetailForCalender(addRequest, new Callback<LeaveCalender>() {
+            //API Success
             @Override
             public void onResponse(Call<LeaveCalender> call, Response<LeaveCalender> response) {
                 if(response.body()!=null && response.isSuccessful()){
@@ -79,13 +92,16 @@ public class LeaveCalenderForTeam extends Fragment {
                     }
                 }
             }
-
+            //API Failure
             @Override
             public void onFailure(Call<LeaveCalender> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
             }
         });
 
+        /*
+        * Set the Calender View Action
+        * */
         calendarview.setOnDayClickListener(eventDay -> {
             Calendar clickedDayCalendar = eventDay.getCalendar();
             SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
@@ -93,6 +109,9 @@ public class LeaveCalenderForTeam extends Fragment {
             String formatted = format1.format(clickedDayCalendar.getTime());
             System.out.println(formatted);
             ArrayList<ApproveList> leavedetail = new ArrayList<>();
+            /*
+            * Get the particular date based Detail
+            * */
             for(int i=0;i<leavelist.size();i++){
                 if(leavelist.get(i).getStrFromDate().equals(formatted)){
                     ApproveList approveList = new ApproveList();
@@ -104,6 +123,9 @@ public class LeaveCalenderForTeam extends Fragment {
                     leavedetail.add(approveList);
                 }
             }
+            /*
+            * Assign the object to convert the String
+            * */
             if(leavedetail.size()>0){
                 Gson gson = new Gson();
                 String s = gson.toJson(leavedetail);
@@ -114,6 +136,9 @@ public class LeaveCalenderForTeam extends Fragment {
         return view;
     }
 
+    /*
+    * To add the Event based on the List of Date in Leave List
+    * */
     private void add_events(){
         List<EventDay> events = new ArrayList<>();
         String[] datedata;
@@ -131,6 +156,9 @@ public class LeaveCalenderForTeam extends Fragment {
         calendarview.setEvents(events);
     }
 
+    /*
+     * Call the Calendar Detail Dialog Fragment to Display the Detail
+     * */
     private void newInstance(String s) {
         ViewCalenderLeaveDetail viewCalenderLeaveDetail = new ViewCalenderLeaveDetail();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();

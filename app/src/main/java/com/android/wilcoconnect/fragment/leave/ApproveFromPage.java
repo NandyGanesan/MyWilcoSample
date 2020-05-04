@@ -60,6 +60,9 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
     private AddRequest request = new AddRequest();
     private DialogListener listener;
 
+    /*
+     * Define the OnCreate method to set the Fragment to the Particular Listener
+     * */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,6 +135,9 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
         label4 = view.findViewById(R.id.tv_View_approver);
         scrollView = view.findViewById(R.id.scroll);
 
+        /*
+        * Assign the Value to the UI element
+        * */
         approvePost.setEmployeeCode(request.getEmployeeID());
         approvePost.setEmail(request.getEmail());
         approvePost.setLeaveRequestID(approveList.getLeaveRequestStatusID());
@@ -152,16 +158,25 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
         tableLayout.setVisibility(View.VISIBLE);
         scrollView.setVisibility(View.VISIBLE);
 
+        /*
+        * Approve Button Action
+        * */
         accept.setOnClickListener(v -> {
             approvePost.setApproveStatus("Approved");
             get_remarks();
         });
 
+        /*
+        * Reject Button Action
+        * */
         reject.setOnClickListener(v -> {
             approvePost.setApproveStatus("Rejected");
             get_remarks();
         });
 
+        /*
+        * Get the Table Content
+        * */
         getTableData();
 
         /*
@@ -179,6 +194,9 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
         return view;
     }
 
+    /*
+     * Dialog Window OnStart Method
+     * */
     @Override
     public void onStart() {
         super.onStart();
@@ -261,6 +279,7 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
     private void getTableData() {
         leaveBalanceDetail = new ArrayList<>();
         ApiManager.getInstance().getLeaveBalance(addRequest, new Callback<GetLeaveBalance>() {
+//           API Success
             @Override
             public void onResponse(Call<GetLeaveBalance> call, Response<GetLeaveBalance> response) {
                 if(response.isSuccessful() && response.body()!=null){
@@ -270,7 +289,7 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
                     }
                 }
             }
-
+//          API Failure
             @Override
             public void onFailure(Call<GetLeaveBalance> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
@@ -278,6 +297,9 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
         });
     }
 
+    /*
+    * Call the Remarks Dialog Fragment to get the Remarks
+    * */
     private void get_remarks(){
         Gson gson = new Gson();
         String value = gson.toJson(approvePost);
@@ -291,6 +313,9 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
         remarks.show(transaction, Remarks.TAG);
     }
 
+    /*
+    * Listener - Return Value from the Dialog Fragment
+    * */
     @Override
     public void onDialogClick(String value) {
         if(value.equals("Success")){
@@ -299,6 +324,9 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
         }
     }
 
+    /*
+    * After Data Submission to refresh the Fragment
+    * */
     private void replaceFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.approve_frame, new ApproveLeaveFromGrid());

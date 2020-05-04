@@ -24,6 +24,9 @@ import java.util.ArrayList;
 
 public class Profile extends Fragment {
 
+    /*
+     * Initialize the XML element or views
+     * */
     private static String TAG = "Profile";
     private Toolbar profile_toolbar;
     private View view;
@@ -36,14 +39,26 @@ public class Profile extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        /*
+        * Define the Toolbar
+        * */
         profile_toolbar = view.findViewById(R.id.main_nonav_toolbar);
         profile_toolbar.setTitle("PROFILE");
 
+        /*
+        * Define the Recycler View Elements
+        * */
         recyclerView = view.findViewById(R.id.griddata);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
+        /*
+        * Get Menu Details to add Adapter Class
+        * */
         getMenu();
+        /*
+        * Adapter List is not an Empty
+        * */
         if (menu.size()>0) {
             ProfileAdapter adapter = new ProfileAdapter(getActivity(), menu, new RecyclerViewListener() {
                 @Override
@@ -58,13 +73,20 @@ public class Profile extends Fragment {
                 public void onClick(View view, ApprovePost post) {}
             });
             recyclerView.setAdapter(adapter);
-        } else {
+        }
+        /*
+        * Adapter List is an Empty
+        * */
+        else {
             ProfileAdapter adapter = null;
             recyclerView.setAdapter(adapter);
         }
         return view;
     }
 
+    /*
+    * Assign the Menu List and It's Icon
+    * */
     private void getMenu() {
         menu = new ArrayList<>();
         ProfileMenu menuobj = new ProfileMenu();
@@ -123,19 +145,24 @@ public class Profile extends Fragment {
         menu.add(menuobj0);
     }
 
+    /*
+    * Show the Dialog Fragment Based on the Value
+    * */
     private void newInstance(String s) {
         if(s.equals("Attachments")){
             Attachment attachment = new Attachment();
+            assert getFragmentManager() != null;
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            attachment.show(transaction, attachment.TAG);
+            attachment.show(transaction, Attachment.TAG);
         }
         else {
             ProfileInformation information = new ProfileInformation();
+            assert getFragmentManager() != null;
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             Bundle bundle = new Bundle();
             bundle.putString("selectedoption", s);
             information.setArguments(bundle);
-            information.show(transaction, information.TAG);
+            information.show(transaction, ProfileInformation.TAG);
         }
     }
 }

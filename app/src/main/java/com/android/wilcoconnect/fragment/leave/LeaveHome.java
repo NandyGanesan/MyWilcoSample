@@ -39,6 +39,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class LeaveHome extends Fragment {
 
+    /*
+     * Initialize the variables to access the Module
+     * */
     private ArrayList<Fragment> fragments;
     private static String TAG = "LeaveHome";
     private ViewPager viewPager;
@@ -89,7 +92,11 @@ public class LeaveHome extends Fragment {
         viewPager = view.findViewById(R.id.leavepager);
         tabLayout = view.findViewById(R.id.leavetabLayout);
 
+        /*
+        * API Call to get the Over all Menu List
+        * */
         ApiManager.getInstance().getMenuList(addRequest, new Callback<Menu>() {
+            //API Success
             @Override
             public void onResponse(Call<Menu> call, Response<Menu> response) {
                 menu= response.body();
@@ -158,6 +165,9 @@ public class LeaveHome extends Fragment {
                             viewPager.setAdapter(pagerAdapter);
                             viewPager.setOffscreenPageLimit(fragments.size());
                             tabLayout.setupWithViewPager(viewPager);
+                            /*
+                            * Assign the Tab Name
+                            * */
                             for(int i = 0; i<fragments.size(); i++) {
                                 tabLayout.getTabAt(i).setText(tabName[i]);
                             }
@@ -166,7 +176,7 @@ public class LeaveHome extends Fragment {
                     }
                 }
             }
-
+            //API Failure
             @Override
             public void onFailure(Call<Menu> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());

@@ -54,7 +54,7 @@ public class ApplyLeave extends DialogFragment {
     private TextView tv_no_of_days_count, tv_date_error;
     private int checkItem =0;
     private int fromYear,fromMonth,fromDay,toYear,toMonth,toDay;
-    private RadioGroup full_half, mrng_evening;
+    private RadioGroup full_half, mrng_evening;    //Session: F->Fullday, A->After Noon,M ->Morning
     private AddRequest addRequest= new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
     private String leavelevel;
@@ -63,7 +63,7 @@ public class ApplyLeave extends DialogFragment {
     public static final String TAG = "ApplyLeave";
     private ArrayList<LeaveDetails> leaveBalanceDetail = new ArrayList<>();
     private ArrayList<LeaveTypeDetails> leaveTypeDetail = new ArrayList<>();
-    private int availableBalance=0;
+    private double availableBalance=0.0;
     private DialogListener listener;
     private String value;
     private String LeaveTypeName;
@@ -71,13 +71,14 @@ public class ApplyLeave extends DialogFragment {
     private TextView title,content;
     private View view;
 
+    /*
+    * Define the OnCreate method to set the Fragment to the Particular Listener
+    * */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
          listener = (DialogListener) getTargetFragment();
     }
-
-    //Session: F->Fullday, A->After Noon,M ->Morning
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,10 +86,16 @@ public class ApplyLeave extends DialogFragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_apply_leave, container, false);
 
+        /*
+        * Define the UI element
+        * */
         balanceFrame = view.findViewById(R.id.leaveBalanceFrame);
         title = view.findViewById(R.id.tv_leaveType);
         content = view.findViewById(R.id.tv_leaveBalance);
 
+        /*
+        * Define the ToolBar
+        * */
         Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
         detail_toolbar.setTitle("APPLY LEAVE");
         detail_toolbar.setNavigationIcon(R.drawable.close);
@@ -112,7 +119,11 @@ public class ApplyLeave extends DialogFragment {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
+        /*
+        * Api Call to get the DropDown Data and Leave Balance
+        * */
         ApiManager.getInstance().getLeaveBalance(addRequest, new Callback<GetLeaveBalance>() {
+            //API Success
             @Override
             public void onResponse(Call<GetLeaveBalance> call, Response<GetLeaveBalance> response) {
                 if(response.isSuccessful() && response.body()!=null){
@@ -121,7 +132,7 @@ public class ApplyLeave extends DialogFragment {
                     get_dropdown_value();
                 }
             }
-
+            // API Failure
             @Override
             public void onFailure(Call<GetLeaveBalance> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
@@ -223,6 +234,12 @@ public class ApplyLeave extends DialogFragment {
             datePickerDialog.show();
         });
 
+        /*
+        * One Day Leave can divided into two Option
+        * Full Day and Half Day
+        * Half Day can divided into two Option
+        * Morning and Evening
+        * */
         full_half.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonID = full_half.getCheckedRadioButtonId();
             View radioButton = full_half.findViewById(radioButtonID);
@@ -283,7 +300,10 @@ public class ApplyLeave extends DialogFragment {
                 dialog.show();
             }
             else{
-                if(availableBalance<Integer.parseInt(tv_no_of_days_count.getText().toString())){
+                /*
+                * Check LOP
+                * */
+                if(availableBalance< Double.parseDouble(tv_no_of_days_count.getText().toString())){
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("LOP?");
                     builder.setPositiveButton("YES", (dialog ,which)->{
@@ -293,6 +313,9 @@ public class ApplyLeave extends DialogFragment {
                     AlertDialog dialog = builder.create();
                     dialog.show();
                 }
+                /*
+                * Store Data
+                * */
                 else {
                     store_value();
                 }
@@ -301,6 +324,9 @@ public class ApplyLeave extends DialogFragment {
         return view;
     }
 
+    /*
+    * Store Apply Leave Request
+    * */
     private void store_value(){
 
         get_radiobutton_value();
@@ -308,15 +334,20 @@ public class ApplyLeave extends DialogFragment {
         leavepost.setEmployeeCode(addRequest.getEmployeeID());
         leavepost.setFromDate(from_date);
         leavepost.setToDate(to_date);
-        leavepost.setNoofDays(Integer.parseInt(tv_no_of_days_count.getText().toString()));
+        leavepost.setNoofDays(Double.parseDouble(tv_no_of_days_count.getText().toString()));
         leavepost.setRequestRemarks(et_remarks.getText().toString());
         leavepost.setSession(leavelevel);
         leavepost.setLeaveRequestID(0);
 
+        /*
+        * API Call to store the Leave Request
+        * */
         ApiManager.getInstance().storeLeaveDetail(leavepost, new Callback<Success>() {
+            //API Success
             @Override
             public void onResponse(Call<Success> call, Response<Success> response) {
                 assert response.body() != null;
+                //Data Store Success
                 if(response.isSuccessful() && response.body().getStatus().equals("true") && response.body().getMessage().equals("successfully Stored")){
                     dismiss();
                     value = "Success";
@@ -337,6 +368,7 @@ public class ApplyLeave extends DialogFragment {
                     mrng_evening.setVisibility(View.GONE);
                     full_half.setVisibility(View.GONE);
                 }
+                //Data Store Failure
                 else{
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle(response.body().getMessage());
@@ -345,7 +377,7 @@ public class ApplyLeave extends DialogFragment {
                     dialog.show();
                 }
             }
-
+            //API Failure
             @Override
             public void onFailure(Call<Success> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
@@ -353,6 +385,9 @@ public class ApplyLeave extends DialogFragment {
         });
     }
 
+    /*
+    * Display the Leave Balance Based on Leave Type Selection
+    * */
     private void display_balance() {
 
         for(int i=0;i<leaveBalanceDetail.size();i++){
@@ -362,12 +397,16 @@ public class ApplyLeave extends DialogFragment {
                         +"Taken:  "+leaveBalanceDetail.get(i).getLeaveTaken()+"\n"
                         +"Leave Not Approved:  "+leaveBalanceDetail.get(i).getAppliedLeave()+"\n"
                         +"Available:  "+leaveBalanceDetail.get(i).getLeaveAvailability());
-                availableBalance = (int)leaveBalanceDetail.get(i).getLeaveAvailability();
+                availableBalance = (double) leaveBalanceDetail.get(i).getLeaveAvailability();
                 balanceFrame.setVisibility(View.VISIBLE);
             }
         }
     }
 
+    /*
+    * Get the Radio Button Value
+    * Session: F->Full day, A->After Noon,M ->Morning
+    * */
     private void get_radiobutton_value() {
         int radioButtonID = full_half.getCheckedRadioButtonId();
         View radioButton = full_half.findViewById(radioButtonID);
@@ -388,6 +427,9 @@ public class ApplyLeave extends DialogFragment {
         }
     }
 
+    /*
+    * Get the DropDown Value from the API Call
+    * */
     private void get_dropdown_value() {
         if(leaveTypeDetail.size()>0) {
             LeaveType = new String[leaveTypeDetail.size()];
@@ -428,6 +470,9 @@ public class ApplyLeave extends DialogFragment {
             }
     }
 
+    /*
+    * Dialog Window OnStart Method
+    * */
     @Override
     public void onStart() {
         super.onStart();

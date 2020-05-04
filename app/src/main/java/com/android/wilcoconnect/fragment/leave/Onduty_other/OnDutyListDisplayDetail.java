@@ -17,6 +17,9 @@ import com.google.gson.Gson;
 
 public class OnDutyListDisplayDetail extends DialogFragment {
 
+    /*
+     * Initialize the XML element or views
+     * */
     public static final String TAG = "OnDutyListDisplayDetail";
     private View view;
     private TextView tv_View_type;
@@ -37,6 +40,9 @@ public class OnDutyListDisplayDetail extends DialogFragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_on_duty_list_display_detail, container, false);
 
+        /*
+        * Define the Toolbar
+        * */
         Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
         detail_toolbar.setTitle("VIEW ON-DUTY DETAILS");
         detail_toolbar.setNavigationIcon(R.drawable.close);
@@ -49,6 +55,9 @@ public class OnDutyListDisplayDetail extends DialogFragment {
         Gson gson = new Gson();
         dutyData = gson.fromJson(value, OnDutyData.class);
 
+        /*
+         * Assign the Values for the Particular View Elements
+         * */
         tv_View_type = view.findViewById(R.id.et_View_type);
         tv_View_fromdate = view.findViewById(R.id.et_View_fromdate);
         tv_View_todate = view.findViewById(R.id.et_View_todate);
@@ -58,17 +67,26 @@ public class OnDutyListDisplayDetail extends DialogFragment {
         tv_View_approveddate = view.findViewById(R.id.et_View_approveddate);
         tv_View_approvedremarks = view.findViewById(R.id.et_View_remarksbyapprover);
         tv_View_approver = view.findViewById(R.id.et_View_approver);
-
         label1 = view.findViewById(R.id.tv_View_approveddate);
         label2 = view.findViewById(R.id.tv_View_remarksbyapprover);
         label3 = view.findViewById(R.id.tv_View_approver);
 
+        /*
+        * Assign the Value to UI Element
+        * */
         tv_View_type.setText(dutyData.getOnDutyName());
         tv_View_fromdate.setText(dutyData.getStrFromDate());
         tv_View_todate.setText(dutyData.getStrToDate());
         tv_View_no_of_counts.setText(""+dutyData.getNumberOfDays());
         tv_View_reason.setText(dutyData.getReason());
         tv_View_status.setText(dutyData.getRequestStatus());
+        tv_View_approveddate.setText(dutyData.getApprovedDate());
+        tv_View_approvedremarks.setText(dutyData.getApprovedRemarks());
+        tv_View_approver.setText(dutyData.getPrimaryApprover());
+
+        /*
+        * Status based UI Element Hide and Show
+        * */
         if(dutyData.getRequestStatus().equals("Applied")){
             tv_View_approveddate.setVisibility(View.GONE);
             tv_View_approvedremarks.setVisibility(View.GONE);
@@ -77,13 +95,13 @@ public class OnDutyListDisplayDetail extends DialogFragment {
             label2.setVisibility(View.GONE);
             label3.setVisibility(View.GONE);
         }
-        tv_View_approveddate.setText(dutyData.getApprovedDate());
-        tv_View_approvedremarks.setText(dutyData.getApprovedRemarks());
-        tv_View_approver.setText(dutyData.getPrimaryApprover());
 
         return view;
     }
 
+    /*
+     * Dialog Window OnStart Method
+     * */
     @Override
     public void onStart() {
         super.onStart();

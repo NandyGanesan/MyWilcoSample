@@ -32,6 +32,9 @@ import static com.android.wilcoconnect.app.MainApplication.MY_PREFS_NAME;
 
 public class Attachment extends DialogFragment implements View.OnClickListener {
 
+    /*
+     * Initialize the XML element or views
+     * */
     public static String TAG = "Attachment";
     private static final String MYPREFS_NAME = "logininfo";
     private AddRequest addRequest = new AddRequest();
@@ -45,6 +48,9 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_attachment, container, false);
 
+        /*
+        * Define the UI Element
+        * */
         adharCard_layout = view.findViewById(R.id.et_View_aadhar);
         panCard_layout = view.findViewById(R.id.et_View_pan);
         presentAddress_layout = view.findViewById(R.id.et_View_addressproof);
@@ -78,6 +84,9 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
+        /*
+        * Define the Toolbar
+        * */
         Toolbar profile_toolbar = view.findViewById(R.id.main_withnav_toolbar);
         profile_toolbar.setTitle("Attachments");
         profile_toolbar.setNavigationIcon(R.drawable.close);
@@ -110,6 +119,9 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
         return view;
     }
 
+    /*
+    * Split the List of Data to store Another List
+    * */
     private void get_array_data() {
         for (int i = 0; i < attachmentDetailData.getDocumentList().size(); i++) {
             if (attachmentDetailData.getDocumentList().get(i).getAttachmentFileName().equals("Aadhar Card")) {
@@ -187,6 +199,9 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
         set_attachment();
     }
 
+    /*
+    * Set the Attachment Icon with Tag
+    * */
     private void set_attachment() {
         for (int i = 0; i< adarCard.length; i++){
             ImageView imageView = new ImageView(getActivity());
@@ -316,6 +331,9 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
         }
     }
 
+    /*
+     * Dialog Window OnStart Method
+     * */
     @Override
     public void onStart() {
         super.onStart();
@@ -327,6 +345,9 @@ public class Attachment extends DialogFragment implements View.OnClickListener {
         }
     }
 
+    /*
+    * OnClick Action for Attachment File
+    * */
     @Override
     public void onClick(View v) {
         String url = this.getTag();

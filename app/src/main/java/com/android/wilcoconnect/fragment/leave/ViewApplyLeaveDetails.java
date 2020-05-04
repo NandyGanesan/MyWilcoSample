@@ -16,6 +16,9 @@ import com.google.gson.Gson;
 
 public class ViewApplyLeaveDetails extends DialogFragment {
 
+    /*
+     * Initialize the variables to access the Module
+     * */
     private MyLeaveData leaveData;
     private TextView tv_View_leavetype;
     private TextView tv_View_fromdate;
@@ -43,11 +46,17 @@ public class ViewApplyLeaveDetails extends DialogFragment {
         Gson gson = new Gson();
         leaveData = gson.fromJson(value, MyLeaveData.class);
 
+        /*
+         * Define the ToolBar
+         * */
         Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
         detail_toolbar.setTitle("VIEW LEAVE DETAILS");
         detail_toolbar.setNavigationIcon(R.drawable.close);
         detail_toolbar.setNavigationOnClickListener(v -> dismiss());
 
+        /*
+         * Define the UI element
+         * */
         tv_View_leavetype = view.findViewById(R.id.et_View_leavetype);
         tv_View_applieddate = view.findViewById(R.id.et_View_applieddate);
         tv_View_fromdate = view.findViewById(R.id.et_View_fromdate);
@@ -58,12 +67,13 @@ public class ViewApplyLeaveDetails extends DialogFragment {
         tv_View_approveddate = view.findViewById(R.id.et_View_approveddate);
         tv_View_remarksbyapprover = view.findViewById(R.id.et_View_remarksbyapprover);
         tv_View_approver = view.findViewById(R.id.et_View_approver);
-
         label1 = view.findViewById(R.id.tv_View_approveddate);
         label2 = view.findViewById(R.id.tv_View_remarksbyapprover);
         label3 = view.findViewById(R.id.tv_View_approver);
 
-
+        /*
+         * Assign the Values for the Particular View Elements
+         * */
         tv_View_leavetype.setText(leaveData.getLeaveTypeText());
         tv_View_applieddate.setText(leaveData.getLeaveAppliedDate());
         tv_View_fromdate.setText(leaveData.getStrFromDate());
@@ -71,6 +81,13 @@ public class ViewApplyLeaveDetails extends DialogFragment {
         tv_View_no_of_counts.setText(""+leaveData.getNoofDays());
         tv_View_remarks.setText(leaveData.getRequestRemarks());
         tv_View_leavestatus.setText(leaveData.getRequestStatus());
+        tv_View_approveddate.setText(leaveData.getApprovedDate());
+        tv_View_remarksbyapprover.setText(leaveData.getApprovedRemarks());
+        tv_View_approver.setText(leaveData.getPrimaryApprover());
+
+        /*
+        * Validate the Status to Hide and Show the UI Element
+        * */
         if(leaveData.getRequestStatus().equals("Applied")){
             tv_View_approveddate.setVisibility(View.GONE);
             tv_View_remarksbyapprover.setVisibility(View.GONE);
@@ -79,13 +96,13 @@ public class ViewApplyLeaveDetails extends DialogFragment {
             label2.setVisibility(View.GONE);
             label3.setVisibility(View.GONE);
         }
-        tv_View_approveddate.setText(leaveData.getApprovedDate());
-        tv_View_remarksbyapprover.setText(leaveData.getApprovedRemarks());
-        tv_View_approver.setText(leaveData.getPrimaryApprover());
 
         return view;
     }
 
+    /*
+     * Dialog Window OnStart Method
+     * */
     @Override
     public void onStart() {
         super.onStart();

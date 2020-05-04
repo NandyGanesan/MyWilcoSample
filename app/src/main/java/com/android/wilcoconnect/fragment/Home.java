@@ -19,8 +19,13 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        /*
+        * Define the ToolBar
+        * */
         Toolbar home_toolbar = view.findViewById(R.id.main_nonav_toolbar);
         home_toolbar.setTitle("MYWILCO HOME");
+
         return view;
     }
 }

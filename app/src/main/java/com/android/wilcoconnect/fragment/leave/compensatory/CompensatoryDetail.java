@@ -43,6 +43,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class CompensatoryDetail extends Fragment implements DialogListener {
 
+    /*
+     * Initialize the XML element or views
+     * */
     private static String TAG = "CompensatoryDetail";
     private AddRequest addRequest = new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
@@ -58,6 +61,9 @@ public class CompensatoryDetail extends Fragment implements DialogListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_comp_off, container, false);
 
+        /*
+         * Assign the Values for the Particular View Elements
+         * */
         recyclerView = view.findViewById(R.id.recycler_view);
         dataNotFound = view.findViewById(R.id.label_name);
 
@@ -87,7 +93,11 @@ public class CompensatoryDetail extends Fragment implements DialogListener {
             apply_compOff();
         });
 
+        /*
+        * API Call to get the Comp-Off Detail
+        * */
         ApiManager.getInstance().getMyCompOffDetail(addRequest, new Callback<CompOffDetail>() {
+            //API Success
             @Override
             public void onResponse(Call<CompOffDetail> call, Response<CompOffDetail> response) {
                 if (response.body() != null && response.isSuccessful()) {
@@ -95,6 +105,7 @@ public class CompensatoryDetail extends Fragment implements DialogListener {
                     set_list();
                 }
             }
+            //API Failure
             @Override
             public void onFailure(Call<CompOffDetail> call, Throwable t) {
                 Log.e(TAG, t.getLocalizedMessage());
@@ -103,6 +114,9 @@ public class CompensatoryDetail extends Fragment implements DialogListener {
         return view;
     }
 
+    /*
+     * Call the Apply Comp-Off Dialog Fragment to apply new Request
+     * */
     private void apply_compOff() {
         ApplyCompensatory comp = new ApplyCompensatory();
         comp.setTargetFragment(this, 0);
@@ -110,34 +124,43 @@ public class CompensatoryDetail extends Fragment implements DialogListener {
         comp.show(transaction, ApplyCompensatory.TAG);
     }
 
+    /*
+    * Set the List of Data into the Adapter Class
+    * */
     private void set_list() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        /*
+        * Adapter Data is an Empty
+        * */
         if (compOffDetailData.size() <= 0) {
             recyclerView.setAdapter(null);
             recyclerView.setVisibility(View.GONE);
             dataNotFound.setVisibility(View.VISIBLE);
-        } else {
+        }
+        /*
+        * Adapter Date is not an Empty
+        * */
+        else {
             adapter = new CompAdapter(getActivity(), compOffDetailData, new RecyclerViewListener() {
                 @Override
                 public void onClick(View view, String value) {
                     newInstance(value);
                 }
                 @Override
-                public void OnStore(View view, OnDutyApprovePost postData) {
-                }
+                public void OnStore(View view, OnDutyApprovePost postData) {}
                 @Override
-                public void OnCompOffStore(View view, CompOffApprovePost post) {
-
-                }
+                public void OnCompOffStore(View view, CompOffApprovePost post) {}
                 @Override
-                public void onClick(View view, ApprovePost post) {
-                }
+                public void onClick(View view, ApprovePost post) {}
             });
             recyclerView.setAdapter(adapter);
         }
     }
 
+    /*
+     * Call the Detail Dialog Fragment
+     * */
     private void newInstance(String s) {
         CompOffDetailDisplay compOffDetail = new CompOffDetailDisplay();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -147,6 +170,9 @@ public class CompensatoryDetail extends Fragment implements DialogListener {
         compOffDetail.show(transaction,compOffDetail.TAG);
     }
 
+    /*
+     * Listener - Return Value from the Dialog Fragment
+     * */
     @Override
     public void onDialogClick(String value) {
         if(value == "Success"){
@@ -154,6 +180,9 @@ public class CompensatoryDetail extends Fragment implements DialogListener {
         }
     }
 
+    /*
+     * After Data Submission to refresh the Fragment
+     * */
     private void replaceFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.comp_off_frame, new CompensatoryDetail());

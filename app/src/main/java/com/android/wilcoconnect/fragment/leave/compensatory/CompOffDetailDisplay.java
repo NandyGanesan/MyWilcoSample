@@ -16,6 +16,9 @@ import com.google.gson.Gson;
 
 public class CompOffDetailDisplay extends DialogFragment {
 
+    /*
+     * Initialize the XML element or views
+     * */
     public static final String TAG = "CompOffDetailDisplay";
     private CompOffDetailData data = new CompOffDetailData();
     private TextView tv_View_fromDate;
@@ -42,11 +45,17 @@ public class CompOffDetailDisplay extends DialogFragment {
         Gson gson = new Gson();
         data = gson.fromJson(value, CompOffDetailData.class);
 
+        /*
+        * Define the Toolbar
+        * */
         Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
         detail_toolbar.setTitle("COMP-OFF DETAILS");
         detail_toolbar.setNavigationIcon(R.drawable.close);
         detail_toolbar.setNavigationOnClickListener(v -> dismiss());
 
+        /*
+         * Assign the Values for the Particular View Elements
+         * */
         tv_View_appliedDate = view.findViewById(R.id.et_View_applieddate);
         tv_View_fromDate = view.findViewById(R.id.et_View_fromdate);
         tv_View_toDate = view.findViewById(R.id.et_View_todate);
@@ -56,17 +65,26 @@ public class CompOffDetailDisplay extends DialogFragment {
         tv_View_approvedDate = view.findViewById(R.id.et_View_approveddate);
         tv_View_remarksByApprover = view.findViewById(R.id.et_View_remarksbyapprover);
         tv_View_approver = view.findViewById(R.id.et_View_approver);
-
         label1 = view.findViewById(R.id.tv_View_approveddate);
         label2 = view.findViewById(R.id.tv_View_remarksbyapprover);
         label3 = view.findViewById(R.id.tv_View_approver);
 
+        /*
+        * Assign the UI Element to the Values
+        * */
         tv_View_appliedDate.setText(data.getAppliedDate());
         tv_View_fromDate.setText(data.getStrFromDate());
         tv_View_toDate.setText(data.getStrToDate());
         tv_View_no_of_counts.setText(""+data.getNoOfDays());
         tv_View_remarks.setText(data.getRequestRemarks());
         tv_View_leaveStatus.setText(data.getRequestStatus());
+        tv_View_approvedDate.setText(data.getApprovedDate());
+        tv_View_remarksByApprover.setText(data.getApprovedRemarks());
+        tv_View_approver.setText(data.getApproverName());
+
+        /*
+        * Set the Status based Hide and Show
+        * */
         if(data.getRequestStatus().equals("Applied")){
             tv_View_approvedDate.setVisibility(View.GONE);
             tv_View_remarksByApprover.setVisibility(View.GONE);
@@ -75,13 +93,13 @@ public class CompOffDetailDisplay extends DialogFragment {
             label2.setVisibility(View.GONE);
             label3.setVisibility(View.GONE);
         }
-        tv_View_approvedDate.setText(data.getApprovedDate());
-        tv_View_remarksByApprover.setText(data.getApprovedRemarks());
-        tv_View_approver.setText(data.getApproverName());
 
         return view;
     }
 
+    /*
+     * Dialog Window OnStart Method
+     * */
     @Override
     public void onStart() {
         super.onStart();

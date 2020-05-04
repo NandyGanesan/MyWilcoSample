@@ -25,8 +25,6 @@ import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.profile.AdditionalDetailData;
 import com.android.wilcoconnect.model.profile.AdditionalDetails;
-import com.android.wilcoconnect.model.profile.AttachmentDetailData;
-import com.android.wilcoconnect.model.profile.AttachmentDetails;
 import com.android.wilcoconnect.model.profile.BasicDetails;
 import com.android.wilcoconnect.model.profile.BasicInformation;
 import com.android.wilcoconnect.model.profile.EducationDetailData;
@@ -68,15 +66,18 @@ import static com.android.wilcoconnect.app.MainApplication.MY_PREFS_NAME;
 
 public class ProfileInformation extends DialogFragment {
 
+    /*
+     * Initialize the XML element or views
+     * */
     public static String TAG = "ProfileInformation";
     private HashMap<String, ArrayList<BasicInformation>> item = new HashMap<>();
     private ArrayList<BasicInformation> selectedList = new ArrayList<>();
-    private BasicDetails basicinformationdata = new BasicDetails();
-    private EducationDetails educationDetailsdata = new EducationDetails();
-    private List<EducationDetailData> educationlist;
-    private FamilyDetails familyDetailsdata = new FamilyDetails();
-    private List<FamilyDetailData> familylist;
-    private LastPositionDetails lastPositionDetailsdata = new LastPositionDetails();
+    private BasicDetails basicInformationData = new BasicDetails();
+    private EducationDetails educationDetailsData = new EducationDetails();
+    private List<EducationDetailData> educationList;
+    private FamilyDetails familyDetailsData = new FamilyDetails();
+    private List<FamilyDetailData> familyList;
+    private LastPositionDetails lastPositionDetailsData = new LastPositionDetails();
     private ReferenceDetails referenceDetails;
     private List<ReferenceDetailData> referenceDetailDataList;
     private ExperienceDetails experienceDetails = new ExperienceDetails();
@@ -119,6 +120,9 @@ public class ProfileInformation extends DialogFragment {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
+        /*
+        * Define the UI Elements
+        * */
         recyclerView = view.findViewById(R.id.profile_menu_data);
         dataNotFound = view.findViewById(R.id.label_name);
 
@@ -129,11 +133,17 @@ public class ProfileInformation extends DialogFragment {
         Gson gson = new Gson();
         menu = gson.fromJson(value, ProfileMenu.class);
 
+        /*
+        * Define the Toolbar
+        * */
         Toolbar profile_toolbar = view.findViewById(R.id.main_withnav_toolbar);
         profile_toolbar.setTitle(menu.getValues());
         profile_toolbar.setNavigationIcon(R.drawable.close);
         profile_toolbar.setNavigationOnClickListener(v -> dismiss());
 
+        /*
+        * Check the Menu Value to call the Method
+        * */
         if(menu.getValues().equals("Basic information")){
             Value = "Basic information";
             get_value();
@@ -169,10 +179,11 @@ public class ProfileInformation extends DialogFragment {
         return view;
     }
 
+    /*
+     * Get the Additional Detail
+     * */
     private void get_additional_value() {
-        /*
-        * Get the Additional Detail
-        * */
+
         ApiManager.getInstance().getAdditionalDetail(addRequest, new Callback<AdditionalDetails>() {
             /*
              * Get the Api success..
@@ -197,6 +208,9 @@ public class ProfileInformation extends DialogFragment {
         });
     }
 
+    /*
+    * Display the Additional Detail
+    * */
     private void display_additional_detail() {
         additionalDetail = new ArrayList<>();
 
@@ -270,8 +284,12 @@ public class ProfileInformation extends DialogFragment {
         }
     }
 
+    /*
+    * Get the Reference Detail
+    * */
     private void get_reference_value() {
         ApiManager.getInstance().getReferenceDetail(addRequest, new Callback<ReferenceDetails>() {
+            //API Call Success
             @Override
             public void onResponse(Call<ReferenceDetails> call, Response<ReferenceDetails> response) {
                 referenceDetails = response.body();
@@ -280,7 +298,7 @@ public class ProfileInformation extends DialogFragment {
                     display_reference_Detail();
                 }
             }
-
+            //API Call Failure
             @Override
             public void onFailure(Call<ReferenceDetails> call, Throwable t) {
                 Log.d(TAG,t.getLocalizedMessage());
@@ -288,6 +306,9 @@ public class ProfileInformation extends DialogFragment {
         });
     }
 
+    /*
+    * Display the Reference Detail
+    * */
     private void display_reference_Detail() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
@@ -362,10 +383,10 @@ public class ProfileInformation extends DialogFragment {
              * */
             @Override
             public void onResponse(Call<FamilyDetails> call, Response<FamilyDetails> response) {
-                familyDetailsdata = response.body();
-                assert familyDetailsdata != null;
-                if(familyDetailsdata.getData()!=null){
-                    familylist = familyDetailsdata.getData();
+                familyDetailsData = response.body();
+                assert familyDetailsData != null;
+                if(familyDetailsData.getData()!=null){
+                    familyList = familyDetailsData.getData();
                     display_family();
                 }
             }
@@ -382,8 +403,8 @@ public class ProfileInformation extends DialogFragment {
     private void display_family() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        if(familylist.size()>0) {
-            FamilyAdapter adapter = new FamilyAdapter(familylist,getActivity());
+        if(familyList.size()>0) {
+            FamilyAdapter adapter = new FamilyAdapter(familyList,getActivity());
             recyclerView.setVisibility(View.VISIBLE);
             dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
@@ -405,10 +426,10 @@ public class ProfileInformation extends DialogFragment {
              * */
             @Override
             public void onResponse(Call<EducationDetails> call, Response<EducationDetails> response) {
-                educationDetailsdata = response.body();
-                assert educationDetailsdata != null;
-                if(educationDetailsdata.getData()!=null){
-                    educationlist = educationDetailsdata.getData();
+                educationDetailsData = response.body();
+                assert educationDetailsData != null;
+                if(educationDetailsData.getData()!=null){
+                    educationList = educationDetailsData.getData();
                     display_education();
                 }
 
@@ -426,8 +447,8 @@ public class ProfileInformation extends DialogFragment {
     private void display_education() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        if(educationlist.size()>0) {
-            EducationAdapter adapter = new EducationAdapter(educationlist,getActivity());
+        if(educationList.size()>0) {
+            EducationAdapter adapter = new EducationAdapter(educationList,getActivity());
             recyclerView.setVisibility(View.VISIBLE);
             dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
@@ -455,107 +476,107 @@ public class ProfileInformation extends DialogFragment {
 
         BasicInformation information = new BasicInformation();
         information.setDataLabel("First Name");
-        information.setDataDetail(basicinformationdata.getData().getFirstName());
+        information.setDataDetail(basicInformationData.getData().getFirstName());
         basicInformations.add(information);
 
         BasicInformation information0 = new BasicInformation();
         information0.setDataLabel("Last Name");
-        information0.setDataDetail(basicinformationdata.getData().getLastName());
+        information0.setDataDetail(basicInformationData.getData().getLastName());
         basicInformations.add(information0);
 
         BasicInformation information1 = new BasicInformation();
         information1.setDataLabel("Father/Husband Name");
-        information1.setDataDetail(basicinformationdata.getData().getF_H_Name());
+        information1.setDataDetail(basicInformationData.getData().getF_H_Name());
         basicInformations.add(information1);
 
         BasicInformation information2 = new BasicInformation();
         information2.setDataLabel("Date of Birth");
-        information2.setDataDetail(basicinformationdata.getData().getDateofBirth());
+        information2.setDataDetail(basicInformationData.getData().getDateofBirth());
         basicInformations.add(information2);
 
         BasicInformation information3 = new BasicInformation();
         information3.setDataLabel("EMail ID");
-        information3.setDataDetail(basicinformationdata.getData().getEMailID());
+        information3.setDataDetail(basicInformationData.getData().getEMailID());
         basicInformations.add(information3);
 
         BasicInformation information4 = new BasicInformation();
         information4.setDataLabel("Marital Status");
-        information4.setDataDetail(basicinformationdata.getData().getMaritalStatus());
+        information4.setDataDetail(basicInformationData.getData().getMaritalStatus());
         basicInformations.add(information4);
 
         BasicInformation information5 = new BasicInformation();
         information5.setDataLabel("Contact Number-1");
-        information5.setDataDetail(basicinformationdata.getData().getContactNumber1());
+        information5.setDataDetail(basicInformationData.getData().getContactNumber1());
         basicInformations.add(information5);
 
         BasicInformation information6 = new BasicInformation();
         information6.setDataLabel("Contact Number-2");
-        information6.setDataDetail(basicinformationdata.getData().getContactNumber2());
+        information6.setDataDetail(basicInformationData.getData().getContactNumber2());
         basicInformations.add(information6);
 
         BasicInformation information7 = new BasicInformation();
         information7.setDataLabel("Pan Number");
-        information7.setDataDetail(basicinformationdata.getData().getPanNumber());
+        information7.setDataDetail(basicInformationData.getData().getPanNumber());
         basicInformations.add(information7);
 
         BasicInformation information8 = new BasicInformation();
         information8.setDataLabel("Aadhar Number");
-        information8.setDataDetail(basicinformationdata.getData().getAadharNumber());
+        information8.setDataDetail(basicInformationData.getData().getAadharNumber());
         basicInformations.add(information8);
 
         BasicInformation information9 = new BasicInformation();
         information9.setDataLabel("Personal Email ID");
-        information9.setDataDetail(basicinformationdata.getData().getPersonalEmailID());
+        information9.setDataDetail(basicInformationData.getData().getPersonalEmailID());
         basicInformations.add(information9);
 
         BasicInformation information11 = new BasicInformation();
         information11.setDataLabel("Band Level");
-        information11.setDataDetail(basicinformationdata.getData().getEmpBandLevel());
+        information11.setDataDetail(basicInformationData.getData().getEmpBandLevel());
         basicInformations.add(information11);
 
         BasicInformation information12 = new BasicInformation();
         information12.setDataLabel("Designation");
-        information12.setDataDetail(basicinformationdata.getData().getDesignation());
+        information12.setDataDetail(basicInformationData.getData().getDesignation());
         basicInformations.add(information12);
 
         BasicInformation information13 = new BasicInformation();
         information13.setDataLabel("Stream");
-        information13.setDataDetail(basicinformationdata.getData().getStream());
+        information13.setDataDetail(basicInformationData.getData().getStream());
         basicInformations.add(information13);
 
         BasicInformation information14 = new BasicInformation();
         information14.setDataLabel("Work Branch");
-        information14.setDataDetail(basicinformationdata.getData().getWorkBranch());
+        information14.setDataDetail(basicInformationData.getData().getWorkBranch());
         basicInformations.add(information14);
 
         BasicInformation information15 = new BasicInformation();
         information15.setDataLabel("Department");
-        information15.setDataDetail(basicinformationdata.getData().getDepartment());
+        information15.setDataDetail(basicInformationData.getData().getDepartment());
         basicInformations.add(information15);
 
         BasicInformation information16 = new BasicInformation();
         information16.setDataLabel("Work Extension");
-        information16.setDataDetail(basicinformationdata.getData().getWorkExtension());
+        information16.setDataDetail(basicInformationData.getData().getWorkExtension());
         basicInformations.add(information16);
 
         BasicInformation information17 = new BasicInformation();
         information17.setDataLabel("Work Number");
-        information17.setDataDetail(basicinformationdata.getData().getWorkNumber());
+        information17.setDataDetail(basicInformationData.getData().getWorkNumber());
         basicInformations.add(information17);
 
         BasicInformation information18 = new BasicInformation();
         information18.setDataLabel("Height");
-        information18.setDataDetail(basicinformationdata.getData().getHeight());
+        information18.setDataDetail(basicInformationData.getData().getHeight());
         basicInformations.add(information18);
 
         BasicInformation information19 = new BasicInformation();
         information19.setDataLabel("Weight");
-        information19.setDataDetail(basicinformationdata.getData().getWeight());
+        information19.setDataDetail(basicInformationData.getData().getWeight());
         basicInformations.add(information19);
 
         BasicInformation information20 = new BasicInformation();
         information20.setDataLabel("Date of Join");
-        information20.setDataDetail(basicinformationdata.getData().getDateofJoin());
+        information20.setDataDetail(basicInformationData.getData().getDateofJoin());
         basicInformations.add(information20);
 
         if (item.containsKey(menu.getValues())) {
@@ -588,8 +609,8 @@ public class ProfileInformation extends DialogFragment {
              * */
             @Override
             public void onResponse(Call<BasicDetails> call, Response<BasicDetails> response) {
-                basicinformationdata = response.body();
-                if(basicinformationdata!=null){
+                basicInformationData = response.body();
+                if(basicInformationData !=null){
                     if(Value.equals("Basic information")) {
                         get_HashMap_value();
                     }
@@ -612,8 +633,8 @@ public class ProfileInformation extends DialogFragment {
     private void display_address(){
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        if(basicinformationdata!=null) {
-            AddressAdapter adapter = new AddressAdapter(basicinformationdata,getActivity());
+        if(basicInformationData !=null) {
+            AddressAdapter adapter = new AddressAdapter(basicInformationData,getActivity());
             recyclerView.setVisibility(View.VISIBLE);
             dataNotFound.setVisibility(View.GONE);
             recyclerView.setAdapter(adapter);
@@ -635,8 +656,8 @@ public class ProfileInformation extends DialogFragment {
              * */
             @Override
             public void onResponse(Call<LastPositionDetails> call, Response<LastPositionDetails> response) {
-                lastPositionDetailsdata = response.body();
-                if(lastPositionDetailsdata!=null){
+                lastPositionDetailsData = response.body();
+                if(lastPositionDetailsData !=null){
                     set_last_position_data();
                 }
             }
@@ -656,62 +677,62 @@ public class ProfileInformation extends DialogFragment {
 
         BasicInformation lastposition = new BasicInformation();
         lastposition.setDataLabel("Designation");
-        lastposition.setDataDetail(lastPositionDetailsdata.getData().getDesignation());
+        lastposition.setDataDetail(lastPositionDetailsData.getData().getDesignation());
         lastpositiondetail.add(lastposition);
 
         BasicInformation lastposition1 = new BasicInformation();
         lastposition1.setDataLabel("Organization");
-        lastposition1.setDataDetail(lastPositionDetailsdata.getData().getOrganisation());
+        lastposition1.setDataDetail(lastPositionDetailsData.getData().getOrganisation());
         lastpositiondetail.add(lastposition1);
 
         BasicInformation lastposition2 = new BasicInformation();
         lastposition2.setDataLabel("Job Responsibilities");
-        lastposition2.setDataDetail(lastPositionDetailsdata.getData().getJobResponsibilities());
+        lastposition2.setDataDetail(lastPositionDetailsData.getData().getJobResponsibilities());
         lastpositiondetail.add(lastposition2);
 
         BasicInformation lastposition3 = new BasicInformation();
         lastposition3.setDataLabel("Gross Salary(Per Month)");
-        lastposition3.setDataDetail(""+lastPositionDetailsdata.getData().getGrossSalaryPerMonth());
+        lastposition3.setDataDetail(""+ lastPositionDetailsData.getData().getGrossSalaryPerMonth());
         lastpositiondetail.add(lastposition3);
 
         BasicInformation lastposition4 = new BasicInformation();
         lastposition4.setDataLabel("Joined Date");
-        lastposition4.setDataDetail(lastPositionDetailsdata.getData().getLastPositionDateofJoin());
+        lastposition4.setDataDetail(lastPositionDetailsData.getData().getLastPositionDateofJoin());
         lastpositiondetail.add(lastposition4);
 
         BasicInformation lastposition5 = new BasicInformation();
         lastposition5.setDataLabel("Designation at Joined Date");
-        lastposition5.setDataDetail(lastPositionDetailsdata.getData().getDateofJoinDesignation());
+        lastposition5.setDataDetail(lastPositionDetailsData.getData().getDateofJoinDesignation());
         lastpositiondetail.add(lastposition5);
 
         BasicInformation lastposition6 = new BasicInformation();
         lastposition6.setDataLabel("Reported Person");
-        lastposition6.setDataDetail(lastPositionDetailsdata.getData().getReportingTo());
+        lastposition6.setDataDetail(lastPositionDetailsData.getData().getReportingTo());
         lastpositiondetail.add(lastposition6);
 
         BasicInformation lastposition7 = new BasicInformation();
         lastposition7.setDataLabel("Reported Designation");
-        lastposition7.setDataDetail(lastPositionDetailsdata.getData().getReportingToDesignation());
+        lastposition7.setDataDetail(lastPositionDetailsData.getData().getReportingToDesignation());
         lastpositiondetail.add(lastposition7);
 
         BasicInformation lastposition8 = new BasicInformation();
         lastposition8.setDataLabel("Address");
-        lastposition8.setDataDetail(lastPositionDetailsdata.getData().getAddress1());
+        lastposition8.setDataDetail(lastPositionDetailsData.getData().getAddress1());
         lastpositiondetail.add(lastposition8);
 
         BasicInformation lastposition9 = new BasicInformation();
         lastposition9.setDataLabel("Country");
-        lastposition9.setDataDetail(lastPositionDetailsdata.getData().getCountryName());
+        lastposition9.setDataDetail(lastPositionDetailsData.getData().getCountryName());
         lastpositiondetail.add(lastposition9);
 
         BasicInformation lastposition0 = new BasicInformation();
         lastposition0.setDataLabel("State");
-        lastposition0.setDataDetail(lastPositionDetailsdata.getData().getStateName());
+        lastposition0.setDataDetail(lastPositionDetailsData.getData().getStateName());
         lastpositiondetail.add(lastposition0);
 
         BasicInformation lastposition00 = new BasicInformation();
         lastposition00.setDataLabel("City");
-        lastposition00.setDataDetail(lastPositionDetailsdata.getData().getLastPosCity());
+        lastposition00.setDataDetail(lastPositionDetailsData.getData().getLastPosCity());
         lastpositiondetail.add(lastposition00);
 
         recyclerView.setHasFixedSize(true);

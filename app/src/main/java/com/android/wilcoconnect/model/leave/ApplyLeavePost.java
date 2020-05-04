@@ -10,7 +10,7 @@ public class ApplyLeavePost {
 
     public int leaveTypeID;
 
-    public long noofDays;
+    public double noofDays;
 
     public String fromDate;
 
@@ -62,11 +62,11 @@ public class ApplyLeavePost {
         this.leaveTypeID = leaveTypeID;
     }
 
-    public long getNoofDays() {
+    public double getNoofDays() {
         return noofDays;
     }
 
-    public void setNoofDays(long noofDays) {
+    public void setNoofDays(double noofDays) {
         this.noofDays = noofDays;
     }
 

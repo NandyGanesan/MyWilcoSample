@@ -3,7 +3,6 @@ package com.android.wilcoconnect.fragment.leave;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.android.wilcoconnect.R;
@@ -29,7 +27,6 @@ import com.android.wilcoconnect.network_interface.DialogListener;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.leave.MyLeaveListDataAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -57,9 +54,12 @@ public class Leave extends Fragment implements DialogListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_leave, container, false);
+
+        /*
+        * Define the UI Element
+        * */
         recyclerView = view.findViewById(R.id.recycler_view);
         dataNotFound = view.findViewById(R.id.label_name);
-
 
         /*
          * Get the Header
@@ -79,17 +79,21 @@ public class Leave extends Fragment implements DialogListener {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
+        /*
+        * API Call to get the Leave List
+        * */
         ApiManager.getInstance().getMyLeaveList(addRequest, new Callback<MyLeave>() {
+            //API Success
             @Override
             public void onResponse(Call<MyLeave> call, Response<MyLeave> response) {
                 if(response.body()!=null && response.isSuccessful()){
                     leavedata = response.body().getData().get(0).getLeaveList();
                     if(leavedata!=null) {
-                        setleavelist();
+                        setLeaveList();
                     }
                 }
             }
-
+            //API Failure
             @Override
             public void onFailure(Call<MyLeave> call, Throwable t) {
                 Log.d(TAG,t.getLocalizedMessage());
@@ -107,6 +111,9 @@ public class Leave extends Fragment implements DialogListener {
         return view;
     }
 
+    /*
+     * Call the Apply Leave Dialog Fragment to Store the new leave
+     * */
     private void apply_Leave() {
         ApplyLeave leave = new ApplyLeave();
         leave.setTargetFragment(this, 0);
@@ -117,14 +124,20 @@ public class Leave extends Fragment implements DialogListener {
     /*
      * When append the list of data into the RecyclerView within the CardView
      * */
-    private void setleavelist() {
+    private void setLeaveList() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        /*
+        * Adapter data is Empty
+        * */
         if(leavedata.size()<=0){
             recyclerView.setAdapter(null);
             recyclerView.setVisibility(View.GONE);
             dataNotFound.setVisibility(View.VISIBLE);
         }
+        /*
+        * Adapter data is not an Empty
+        * */
         else{
             leaveadapter = new MyLeaveListDataAdapter(getActivity(), leavedata, new RecyclerViewListener() {
                 @Override
@@ -133,12 +146,8 @@ public class Leave extends Fragment implements DialogListener {
                 }
                 @Override
                 public void OnStore(View view, OnDutyApprovePost postData) {}
-
                 @Override
-                public void OnCompOffStore(View view, CompOffApprovePost post) {
-
-                }
-
+                public void OnCompOffStore(View view, CompOffApprovePost post) {}
                 @Override
                 public void onClick(View view, ApprovePost post) {}
             });
@@ -148,6 +157,9 @@ public class Leave extends Fragment implements DialogListener {
         }
     }
 
+    /*
+     * Call the Apply Leave Dialog Fragment to Store New Leave
+     * */
     private void newInstance(String s) {
         ViewApplyLeaveDetails viewApplyLeaveDetails = new ViewApplyLeaveDetails();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -157,6 +169,9 @@ public class Leave extends Fragment implements DialogListener {
         viewApplyLeaveDetails.show(transaction,viewApplyLeaveDetails.TAG);
     }
 
+    /*
+     * Listener - Return Value from the Dialog Fragment
+     * */
     @Override
     public void onDialogClick(String value) {
         if(value.equals("Success")){
@@ -164,6 +179,9 @@ public class Leave extends Fragment implements DialogListener {
         }
     }
 
+    /*
+     * After Data Submission to refresh the Fragment
+     * */
     private void replaceFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.leave_frame, new Leave());

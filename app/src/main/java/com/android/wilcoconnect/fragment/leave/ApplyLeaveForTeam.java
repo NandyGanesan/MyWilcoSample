@@ -61,7 +61,7 @@ public class ApplyLeaveForTeam extends Fragment {
     private AddRequest addRequest = new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
     private int fromYear, fromMonth, fromDay, toYear, toMonth, toDay;
-    private RadioGroup fullandhalf,mrngandevening;
+    private RadioGroup fullandhalf,mrngandevening; //Session: F->Fullday, A->After Noon,M ->Morning
     private String[] employee;
     private String leavelevel;
     private List<TeamLeaveAutoList.Data> teamlist;
@@ -73,7 +73,6 @@ public class ApplyLeaveForTeam extends Fragment {
     private String LeaveTypeName;
     private AddRequest sendRequest = new AddRequest();
     private int availableBalance=0;
-
     private LinearLayout balanceFrame;
     private TextView title,content;
 
@@ -83,10 +82,16 @@ public class ApplyLeaveForTeam extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_apply_leave, container, false);
 
+        /*
+         * Define the UI element
+         * */
         balanceFrame = view.findViewById(R.id.leaveBalanceFrame);
         title = view.findViewById(R.id.tv_leaveType);
         content = view.findViewById(R.id.tv_leaveBalance);
 
+        /*
+         * Define the ToolBar
+         * */
         Toolbar tool = view.findViewById(R.id.main_withnav_toolbar);
         tool.setVisibility(View.GONE);
 
@@ -128,8 +133,11 @@ public class ApplyLeaveForTeam extends Fragment {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
-
+        /*
+         * Api Call to get the Employee List
+         * */
         ApiManager.getInstance().getEmployeeNameList(addRequest, new Callback<TeamLeaveAutoList>() {
+//           API Success
             @Override
             public void onResponse(Call<TeamLeaveAutoList> call, Response<TeamLeaveAutoList> response) {
                 if(response.body() != null && response.isSuccessful()){
@@ -151,6 +159,7 @@ public class ApplyLeaveForTeam extends Fragment {
                     }
                 }
             }
+//          API Failure
             @Override
             public void onFailure(Call<TeamLeaveAutoList> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
@@ -248,6 +257,12 @@ public class ApplyLeaveForTeam extends Fragment {
             datePickerDialog.show();
         });
 
+        /*
+         * One Day Leave can divided into two Option
+         * Full Day and Half Day
+         * Half Day can divided into two Option
+         * Morning and Evening
+         * */
         fullandhalf.setOnCheckedChangeListener((group, checkedId) -> {
             int radioButtonID = fullandhalf.getCheckedRadioButtonId();
             View radioButton = fullandhalf.findViewById(radioButtonID);
@@ -308,6 +323,9 @@ public class ApplyLeaveForTeam extends Fragment {
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }else {
+                /*
+                 * Check LOP
+                 * */
                 if (availableBalance < Integer.parseInt(tv_no_of_days_count.getText().toString())) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("LOP?");
@@ -317,7 +335,11 @@ public class ApplyLeaveForTeam extends Fragment {
                     builder.setNegativeButton("NO", null);
                     AlertDialog dialog = builder.create();
                     dialog.show();
-                } else {
+                }
+                /*
+                 * Store Data
+                 * */
+                else {
                     store_value();
                 }
             }
@@ -325,6 +347,9 @@ public class ApplyLeaveForTeam extends Fragment {
         return view;
     }
 
+    /*
+     * Store Apply Leave Request
+     * */
     private void store_value(){
         for(int i=0;i<teamlist.size();i++) {
             if (teamlist.get(i).getEmployeeName().equals(employeee)) {
@@ -342,9 +367,14 @@ public class ApplyLeaveForTeam extends Fragment {
         leavepost.setSession(leavelevel);
         leavepost.setLeaveRequestID(0);
 
+        /*
+         * API Call to store the Leave Request
+         * */
         ApiManager.getInstance().storeLeaveForTeam(leavepost, new Callback<Success>() {
+//            API Success
             @Override
             public void onResponse(Call<Success> call, Response<Success> response) {
+                //Data Store Success
                 if(response.isSuccessful() && response.body().getStatus().equals("true")){
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle(response.body().getMessage());
@@ -365,6 +395,7 @@ public class ApplyLeaveForTeam extends Fragment {
                     mrngandevening.setVisibility(View.GONE);
                     fullandhalf.setVisibility(View.GONE);
                 }
+                //Data Store Failure
                 else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle(response.body().getMessage());
@@ -373,6 +404,7 @@ public class ApplyLeaveForTeam extends Fragment {
                     dialog.show();
                 }
             }
+            //API Failure
             @Override
             public void onFailure(Call<Success> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
@@ -380,10 +412,14 @@ public class ApplyLeaveForTeam extends Fragment {
         });
     }
 
+    /*
+     * Api Call to get the DropDown Data and Leave Balance
+     * */
     private void get_leave_Balance() {
         leaveTypeDetail = new ArrayList<>();
         leaveBalanceDetail = new ArrayList<>();
         ApiManager.getInstance().getLeaveBalance(sendRequest, new Callback<GetLeaveBalance>() {
+//            API Success
             @Override
             public void onResponse(Call<GetLeaveBalance> call, Response<GetLeaveBalance> response) {
                 if(response.isSuccessful() && response.body()!=null){
@@ -392,7 +428,7 @@ public class ApplyLeaveForTeam extends Fragment {
                     get_dropdown_value();
                 }
             }
-
+//          API Failure
             @Override
             public void onFailure(Call<GetLeaveBalance> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
@@ -400,6 +436,9 @@ public class ApplyLeaveForTeam extends Fragment {
         });
     }
 
+    /*
+     * Display the Leave Balance Based on Leave Type Selection
+     * */
     private void display_balance() {
 
         for(int i=0;i<leaveBalanceDetail.size();i++){
@@ -445,6 +484,10 @@ public class ApplyLeaveForTeam extends Fragment {
         }
     }
 
+    /*
+     * Get the Radio Button Value
+     * Session: F->Full day, A->After Noon,M ->Morning
+     * */
     private void get_radiobutton_value() {
         int radioButtonID = fullandhalf.getCheckedRadioButtonId();
         View radioButton = fullandhalf.findViewById(radioButtonID);
@@ -465,6 +508,9 @@ public class ApplyLeaveForTeam extends Fragment {
         }
     }
 
+    /*
+     * Get the DropDown Value from the API Call
+     * */
     private void get_dropdown_value() {
         if(leaveTypeDetail.size()>0) {
             LeaveType = new String[leaveTypeDetail.size()];

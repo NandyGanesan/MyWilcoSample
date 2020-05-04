@@ -34,6 +34,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Remarks extends DialogFragment {
 
+    /*
+     * Initialize the variables to access the Module
+     * */
     public static final String TAG = "Remarks";
     private EditText et_remarks;
     private AddRequest addRequest = new AddRequest();
@@ -43,6 +46,9 @@ public class Remarks extends DialogFragment {
     private String result;
     private DialogListener listener;
 
+    /*
+     * Define the OnCreate method to set the Fragment to the Particular Listener
+     * */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,10 +68,14 @@ public class Remarks extends DialogFragment {
         Gson gson = new Gson();
         post = gson.fromJson(value, ApprovePost.class);
 
+        /*
+         * Define the ToolBar
+         * */
         Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
         detail_toolbar.setTitle("REMARKS");
         detail_toolbar.setNavigationIcon(R.drawable.close);
         detail_toolbar.setNavigationOnClickListener(v -> dismiss());
+
         /*
          * Get the Header
          * */
@@ -84,9 +94,15 @@ public class Remarks extends DialogFragment {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
+        /*
+         * Define the UI element
+         * */
         et_remarks = view.findViewById(R.id.et_remarks);
         submit = view.findViewById(R.id.btn_submit);
 
+        /*
+        * Submit Button Click Action
+        * */
         submit.setOnClickListener(v -> {
             if(et_remarks.getText().equals("")){
                 et_remarks.setError("Enter the Valid Remarks");
@@ -94,7 +110,11 @@ public class Remarks extends DialogFragment {
             else {
                 et_remarks.setError(null);
                 post.setApprovedRemarks(et_remarks.getText().toString());
+                /*
+                * Store the Details
+                * */
                 ApiManager.getInstance().storeApproveLeave(post, new Callback<Success>() {
+                    //API Success
                     @Override
                     public void onResponse(Call<Success> call, Response<Success> response) {
                         if(response.isSuccessful() && response.body().getStatus().equals("true") && response.body().getMessage().equals("successfully Stored")){
@@ -107,6 +127,7 @@ public class Remarks extends DialogFragment {
                             dialog.show();
                         }
                     }
+                    //API Failure
                     @Override
                     public void onFailure(Call<Success> call, Throwable t) {
                         Log.e(TAG,t.getLocalizedMessage());
@@ -118,6 +139,9 @@ public class Remarks extends DialogFragment {
         return view;
     }
 
+    /*
+     * Dialog Window OnStart Method
+     * */
     @Override
     public void onStart() {
         super.onStart();

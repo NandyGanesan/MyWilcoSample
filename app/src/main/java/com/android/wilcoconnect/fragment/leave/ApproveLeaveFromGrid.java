@@ -59,6 +59,9 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_approve_leave, container, false);
 
+        /*
+        * Assign the Values for the Particular View Elements
+        * */
         recyclerView = view.findViewById(R.id.recycler_view);
         dataNotFound = view.findViewById(R.id.label_name);
 
@@ -80,10 +83,17 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
             request.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
+        /*
+        * Assign the object to Convert the String Value
+        * */
         Gson gson = new Gson();
         data = gson.toJson(request);
 
+        /*
+        * Get the Approve List from the API Call
+        * */
         ApiManager.getInstance().getApproveList(request, new Callback<ApproveLeaveData>() {
+            //API Success
             @Override
             public void onResponse(Call<ApproveLeaveData> call, Response<ApproveLeaveData> response) {
                 if(response.body()!=null && response.isSuccessful()){
@@ -93,7 +103,7 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
                     }
                 }
             }
-
+            //API Failure
             @Override
             public void onFailure(Call<ApproveLeaveData> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
@@ -103,8 +113,14 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
         return view;
     }
 
+    /*
+    * Get the Approve List
+    * */
     private void set_Approve_leave_list() {
         for (int i=0;i<approveList.size();i++){
+            /*
+            * Store the Applied list Into the Selected List
+            * */
             if(approveList.get(i).getRequestStatus().equals("Applied")){
                 MyLeaveData data = new MyLeaveData();
                 data.setEmail(approveList.get(i).getEmail());
@@ -124,11 +140,13 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         ApproveLeaveListAdapter approve_adapter;
+        //Adapter Data is Null
         if(appliedList.size()<=0){
             recyclerView.setAdapter(null);
             recyclerView.setVisibility(View.GONE);
             dataNotFound.setVisibility(View.VISIBLE);
         }
+        // Set Adapter to List of Data
         else {
             approve_adapter = new ApproveLeaveListAdapter(getActivity(), appliedList, request, new RecyclerViewListener() {
                 @Override
@@ -150,6 +168,9 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
         }
     }
 
+    /*
+     * Call the Approve From Page Dialog Fragment to Display the Detail
+     * */
     private void newInstance(String s) {
         ApproveFromPage approve = new ApproveFromPage();
         assert getFragmentManager() != null;
@@ -161,6 +182,9 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
         approve.show(transaction, ApproveFromPage.TAG);
     }
 
+    /*
+     * Call the Remarks Dialog Fragment to get the Remarks
+     * */
     private void getNewInstance(ApprovePost post){
         Gson gson = new Gson();
         String value = gson.toJson(post);
@@ -174,6 +198,9 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
         remarks.show(transaction, Remarks.TAG);
     }
 
+    /*
+     * Listener - Return Value from the Dialog Fragment
+     * */
     @Override
     public void onDialogClick(String value) {
         if(value.equals("Success")){
@@ -181,6 +208,9 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
         }
     }
 
+    /*
+     * After Data Submission to refresh the Fragment
+     * */
     private void replaceFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.approve_frame, new ApproveLeaveFromGrid());

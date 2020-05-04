@@ -1,7 +1,6 @@
 package com.android.wilcoconnect.fragment.leave;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +20,6 @@ import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.leave.HolidayData;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.shared.leave.HolidayListAdapter;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -82,7 +80,7 @@ public class Holiday extends Fragment {
         /*
         * Get the List of Data
         * */
-        getlist();
+        get_list();
 
         /*
         * Click the Selection Dropdown to select Particular Location
@@ -106,8 +104,13 @@ public class Holiday extends Fragment {
         return view;
     }
 
-    private void getlist() {
+    /*
+    * Get the List from the API Call
+    * */
+    private void get_list() {
+
         ApiManager.getInstance().getHolidayList(addRequest, new Callback<com.android.wilcoconnect.model.leave.Holiday>() {
+            //API Success
             @Override
             public void onResponse(Call<com.android.wilcoconnect.model.leave.Holiday> call, Response<com.android.wilcoconnect.model.leave.Holiday> response) {
                 if(response.body()!=null && response.isSuccessful()){
@@ -118,7 +121,7 @@ public class Holiday extends Fragment {
                     }
                 }
             }
-
+            //API Failure
             @Override
             public void onFailure(Call<com.android.wilcoconnect.model.leave.Holiday> call, Throwable t) {
                 Log.d(TAG , t.getLocalizedMessage());
@@ -132,14 +135,23 @@ public class Holiday extends Fragment {
     private void set_holiday_list() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-
+        /*
+        * Check the list is not an Empty
+        * */
         if(holidayDataList.size()>0) {
+            /*
+            * Location _ All
+            * */
             if (btn_location.getText().equals("All")) {
                 holidayadapter = new HolidayListAdapter(getActivity(), holidayDataList);
                 recyclerView.setVisibility(View.VISIBLE);
                 dataNotFound.setVisibility(View.GONE);
                 recyclerView.setAdapter(holidayadapter);
-            } else {
+            }
+            /*
+            * Location _ ?
+            * */
+            else {
                 selectedholidaylist = new ArrayList<>();
                 for(int i = 0; i< holidayDataList.size(); i++){
                     if(btn_location.getText().equals(holidayDataList.get(i).getStateName())){
@@ -153,12 +165,18 @@ public class Holiday extends Fragment {
                         selectedholidaylist.add(data);
                     }
                 }
+                /*
+                * Location Based list is not an Empty
+                * */
                 if(selectedholidaylist.size()>0) {
                     holidayadapter = new HolidayListAdapter(getActivity(), selectedholidaylist);
                     dataNotFound.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                     recyclerView.setAdapter(holidayadapter);
                 }
+                /*
+                * Location Based list is an Empty
+                * */
                 else{
                     recyclerView.setAdapter(null);
                     recyclerView.setVisibility(View.GONE);
@@ -166,6 +184,9 @@ public class Holiday extends Fragment {
                 }
             }
         }
+        /*
+        * List is an Empty
+        * */
         else{
             recyclerView.setAdapter(null);
             recyclerView.setVisibility(View.GONE);

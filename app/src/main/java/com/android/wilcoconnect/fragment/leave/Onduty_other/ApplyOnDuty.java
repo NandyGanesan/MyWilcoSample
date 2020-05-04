@@ -65,6 +65,9 @@ public class ApplyOnDuty extends DialogFragment {
     private DialogListener listener;
     private String value;
 
+    /*
+     * Define the OnCreate method to set the Fragment to the Particular Listener
+     * */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,11 +98,17 @@ public class ApplyOnDuty extends DialogFragment {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
+        /*
+        * Define the Toolbar
+        * */
         Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
         detail_toolbar.setTitle("APPLY ON-DUTY");
         detail_toolbar.setNavigationIcon(R.drawable.close);
         detail_toolbar.setNavigationOnClickListener(v -> dismiss());
 
+        /*
+        * API Call to get the Dropdown list
+        * */
         ApiManager.getInstance().getMasterList(addRequest, new Callback<OnDutyMasterData>() {
             @Override
             public void onResponse(Call<OnDutyMasterData> call, Response<OnDutyMasterData> response) {
@@ -255,10 +264,15 @@ public class ApplyOnDuty extends DialogFragment {
                 post.setReason(et_remarks.getText().toString());
                 post.setWorkFromHomeEmployeeRequestID(0);
 
+                /*
+                * API Call to store the New Request
+                * */
                 ApiManager.getInstance().storeOnDuty(post, new Callback<Success>() {
+                    //API Call Success
                     @Override
                     public void onResponse(Call<Success> call, Response<Success> response) {
                         assert response.body() != null;
+                        //Data Stored Success
                         if(response.isSuccessful() && response.body().getStatus().equals("true") && response.body().getMessage().equals("successfully Stored")){
                             dismiss();
                             value = "Success";
@@ -276,6 +290,7 @@ public class ApplyOnDuty extends DialogFragment {
                             tv_no_of_days_count.setText("");
                             et_remarks.setText("");
                         }
+                        //Data Stored Failure
                         else {
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                             builder.setTitle(response.body().getMessage());
@@ -284,7 +299,7 @@ public class ApplyOnDuty extends DialogFragment {
                             dialog.show();
                         }
                     }
-
+                    //API Call Failure
                     @Override
                     public void onFailure(Call<Success> call, Throwable t) {
                         Log.e(TAG,t.getLocalizedMessage());
@@ -296,6 +311,9 @@ public class ApplyOnDuty extends DialogFragment {
         return view;
     }
 
+    /*
+    * Get the DropDown Data
+    * */
     private void get_dropdown_value() {
         if(type.size()>0) {
             Type = new String[type.size()];
@@ -311,18 +329,18 @@ public class ApplyOnDuty extends DialogFragment {
     private void getCount(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            Date fromdate = simpleDateFormat.parse(btn_from_date.getText().toString());
-            Date todate = simpleDateFormat.parse(btn_to_date.getText().toString());
+            Date from_date = simpleDateFormat.parse(btn_from_date.getText().toString());
+            Date to_date = simpleDateFormat.parse(btn_to_date.getText().toString());
 
-            assert fromdate != null;
-            assert todate != null;
-            if(fromdate.after(todate) || todate.before(fromdate)){
+            assert from_date != null;
+            assert to_date != null;
+            if(from_date.after(to_date) || to_date.before(from_date)){
                 tv_date_error.setText("From Date must Lower than the To Date");
                 tv_date_error.setVisibility(View.VISIBLE);
             }
             else{
                 tv_date_error.setVisibility(View.GONE);
-                long different = todate.getTime() - fromdate.getTime();
+                long different = to_date.getTime() - from_date.getTime();
                 long daysInMilli = 1000 * 60 * 60* 24;
                 long elapsedDays = different / daysInMilli;
                 tv_no_of_days_count.setText(Integer.toString((int)(elapsedDays+1)));
@@ -332,6 +350,9 @@ public class ApplyOnDuty extends DialogFragment {
         }
     }
 
+    /*
+     * Dialog Window OnStart Method
+     * */
     @Override
     public void onStart() {
         super.onStart();

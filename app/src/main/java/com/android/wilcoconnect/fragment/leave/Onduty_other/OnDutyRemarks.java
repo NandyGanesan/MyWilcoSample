@@ -32,6 +32,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class OnDutyRemarks extends DialogFragment {
 
+    /*
+     * Initialize the XML element or views
+     * */
     public static final String TAG = "OnDutyRemarks";
     private EditText et_remarks;
     private AddRequest addRequest = new AddRequest();
@@ -41,6 +44,9 @@ public class OnDutyRemarks extends DialogFragment {
     private DialogListener listener;
     private String result;
 
+    /*
+     * Define the OnCreate method to set the Fragment to the Particular Listener
+     * */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +66,9 @@ public class OnDutyRemarks extends DialogFragment {
         Gson gson = new Gson();
         post = gson.fromJson(value, OnDutyApprovePost.class);
 
+        /*
+        * Define the Toolbar
+        * */
         Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
         detail_toolbar.setTitle("REMARKS");
         detail_toolbar.setNavigationIcon(R.drawable.close);
@@ -83,18 +92,30 @@ public class OnDutyRemarks extends DialogFragment {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
+        /*
+        * Define the UI Element
+        * */
         et_remarks = view.findViewById(R.id.et_remarks);
         submit = view.findViewById(R.id.btn_submit);
 
+        /*
+        * Store the New Request based on the Click Action
+        * */
         submit.setOnClickListener(v -> {
             if (et_remarks.getText().equals("")) {
                 et_remarks.setError("Enter the Valid Remarks");
             } else {
                 et_remarks.setError(null);
                 post.setReason(et_remarks.getText().toString());
+
+                /*
+                * API Call to store the New Request
+                * */
                 ApiManager.getInstance().storeApproveOrRejectOnDuty(post, new Callback<Success>() {
+                    //API Call Success
                     @Override
                     public void onResponse(Call<Success> call, Response<Success> response) {
+                        //Data Stored Success
                         if(response.body()!=null && response.body().getStatus().equals("true") && response.body().getMessage().equals("success")){
                             dismiss();
                             result = "Success";
@@ -105,7 +126,7 @@ public class OnDutyRemarks extends DialogFragment {
                             dialog.show();
                         }
                     }
-
+                    //API Call Failure
                     @Override
                     public void onFailure(Call<Success> call, Throwable t) {
                         Log.e(TAG,t.getLocalizedMessage());
@@ -116,6 +137,9 @@ public class OnDutyRemarks extends DialogFragment {
         return view;
     }
 
+    /*
+     * Dialog Window OnStart Method
+     * */
     @Override
     public void onStart() {
         super.onStart();

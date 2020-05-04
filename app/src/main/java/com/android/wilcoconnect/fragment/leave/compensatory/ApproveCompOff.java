@@ -59,6 +59,9 @@ public class ApproveCompOff extends Fragment implements DialogListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_approve_comp_off, container, false);
 
+        /*
+         * Assign the Values for the Particular View Elements
+         * */
         recyclerView = view.findViewById(R.id.recycler_view);
         dataNotFound = view.findViewById(R.id.label_name);
 
@@ -80,7 +83,11 @@ public class ApproveCompOff extends Fragment implements DialogListener {
             request.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
+        /*
+        * API Call to get the Comp-Off List
+        * */
         ApiManager.getInstance().getApproveCompOffDetail(request, new Callback<CompOffDetail>() {
+            //API Success
             @Override
             public void onResponse(Call<CompOffDetail> call, Response<CompOffDetail> response) {
                 if(response.body() != null && response.isSuccessful()){
@@ -88,7 +95,7 @@ public class ApproveCompOff extends Fragment implements DialogListener {
                     set_Approve_onDuty_list();
                 }
             }
-
+            //API Failure
             @Override
             public void onFailure(Call<CompOffDetail> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
@@ -98,9 +105,15 @@ public class ApproveCompOff extends Fragment implements DialogListener {
         return view;
     }
 
+    /*
+    * Set the Approve List into the Adapter Class
+    * */
     private void set_Approve_onDuty_list() {
         selectedList = new ArrayList<>();
         for (int i=0;i<compOffArrayList.size();i++){
+            /*
+            * Get the Applied List
+            * */
             if(compOffArrayList.get(i).getRequestStatus().equals("Applied")){
                 CompOffDetailData data = new CompOffDetailData();
                 data.setEmpCompensatoryID(compOffArrayList.get(i).getEmpCompensatoryID());
@@ -118,11 +131,17 @@ public class ApproveCompOff extends Fragment implements DialogListener {
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        /*
+        * Adapter Data is an Empty
+        * */
         if(selectedList.size()<=0){
             recyclerView.setAdapter(null);
             recyclerView.setVisibility(View.GONE);
             dataNotFound.setVisibility(View.VISIBLE);
         }
+        /*
+        * Adapter Data is not an Empty
+        * */
         else {
             adapter = new ApproveCompOffAdapter(getActivity(), selectedList, request, new RecyclerViewListener() {
                             @Override
@@ -142,6 +161,9 @@ public class ApproveCompOff extends Fragment implements DialogListener {
         }
     }
 
+    /*
+     * Call the Remarks Dialog Fragment to get the Remarks
+     * */
     private void getNewInstance(CompOffApprovePost post) {
         Gson gson = new Gson();
         String value = gson.toJson(post);
@@ -155,7 +177,9 @@ public class ApproveCompOff extends Fragment implements DialogListener {
         remarks.show(transaction, CompOffRemarks.TAG);
     }
 
-
+    /*
+     * Listener - Return Value from the Dialog Fragment
+     * */
     @Override
     public void onDialogClick(String value) {
         if(value.equals("Success")){
@@ -163,6 +187,9 @@ public class ApproveCompOff extends Fragment implements DialogListener {
         }
     }
 
+    /*
+     * After Data Submission to refresh the Fragment
+     * */
     private void replaceFragment() {
         assert getFragmentManager() != null;
         FragmentTransaction transaction = getFragmentManager().beginTransaction();

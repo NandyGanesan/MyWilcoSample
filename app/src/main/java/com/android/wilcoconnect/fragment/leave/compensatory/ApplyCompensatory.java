@@ -57,6 +57,9 @@ public class ApplyCompensatory extends DialogFragment {
     private DialogListener listener;
     private String value;
 
+    /*
+     * Define the OnCreate method to set the Fragment to the Particular Listener
+     * */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +87,9 @@ public class ApplyCompensatory extends DialogFragment {
         content1 = view.findViewById(R.id.content1);
         content2 = view.findViewById(R.id.content2);
 
+        /*
+         * Define the ToolBar
+         * */
         Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
         detail_toolbar.setTitle("ADD COMP-OFF");
         detail_toolbar.setNavigationIcon(R.drawable.close);
@@ -107,7 +113,11 @@ public class ApplyCompensatory extends DialogFragment {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
+        /*
+        * API Call to get the Number of Days
+        * */
         ApiManager.getInstance().getDays(addRequest, new Callback<GetCompOffDays>() {
+            //API Success
             @Override
             public void onResponse(Call<GetCompOffDays> call, Response<GetCompOffDays> response) {
                 if(response.body()!=null && response.isSuccessful()){
@@ -116,7 +126,7 @@ public class ApplyCompensatory extends DialogFragment {
                     content2.setText("2.You Should Avail Before " + data.getAvailBefore() +" Days.");
                 }
             }
-
+            //API Failure
             @Override
             public void onFailure(Call<GetCompOffDays> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
@@ -131,7 +141,6 @@ public class ApplyCompensatory extends DialogFragment {
             fromYear = c.get(Calendar.YEAR);
             fromMonth = c.get(Calendar.MONTH);
             fromDay = c.get(Calendar.DAY_OF_MONTH);
-
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view1, year, monthOfYear, dayOfMonth) -> {
                 btn_from_date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                 from_date = (year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
@@ -205,10 +214,15 @@ public class ApplyCompensatory extends DialogFragment {
                 post.setNoofDays(Integer.parseInt(tv_no_of_days_count.getText().toString()));
                 post.setRequestRemarks(et_remarks.getText().toString());
 
+                /*
+                * Store the new Comp-Off Detail
+                * */
                 ApiManager.getInstance().storeCompOffDetail(post, new Callback<Success>() {
+                    //API Success
                     @Override
                     public void onResponse(Call<Success> call, Response<Success> response) {
                         assert response.body() != null;
+                        //Data Stored Success
                         if(response.isSuccessful() && response.body().getStatus().equals("true") && response.body().getMessage().equals("successfully Stored")){
                             dismiss();
                             value = "Success";
@@ -225,6 +239,7 @@ public class ApplyCompensatory extends DialogFragment {
                             tv_no_of_days_count.setText("");
                             et_remarks.setText("");
                         }
+                        //Data Stored Failure
                         else{
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                             builder.setTitle(response.body().getMessage());
@@ -233,6 +248,7 @@ public class ApplyCompensatory extends DialogFragment {
                             dialog.show();
                         }
                     }
+                    //API Failure
                     @Override
                     public void onFailure(Call<Success> call, Throwable t) {
                         Log.e(TAG,t.getLocalizedMessage());
@@ -269,7 +285,9 @@ public class ApplyCompensatory extends DialogFragment {
         }
     }
 
-
+    /*
+     * Dialog Window OnStart Method
+     * */
     @Override
     public void onStart() {
         super.onStart();

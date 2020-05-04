@@ -18,8 +18,10 @@ import com.google.gson.Gson;
 
 public class ApprovedListDisplay extends DialogFragment {
 
+    /*
+     * Initialize the variables to access the Module
+     * */
     public static final String TAG = "ApprovedListDisplay";
-
     private MyLeaveData leaveData;
     private TextView et_View_employeeid;
     private TextView et_View_employeename;
@@ -47,10 +49,17 @@ public class ApprovedListDisplay extends DialogFragment {
         Gson gson = new Gson();
         leaveData = gson.fromJson(value, MyLeaveData.class);
 
+        /*
+         * Define the ToolBar
+         * */
         Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
         detail_toolbar.setTitle("VIEW LEAVE DETAILS");
         detail_toolbar.setNavigationIcon(R.drawable.close);
         detail_toolbar.setNavigationOnClickListener(v -> dismiss());
+
+        /*
+         * Define the UI element
+         * */
         et_View_employeeid = view.findViewById(R.id.et_View_employeeid);
         et_View_employeename = view.findViewById(R.id.et_View_employeename);
         et_View_leavetype = view.findViewById(R.id.et_View_leavetype);
@@ -63,6 +72,9 @@ public class ApprovedListDisplay extends DialogFragment {
         et_View_approveddate = view.findViewById(R.id.et_View_approveddate);
         et_View_approvedremarks = view.findViewById(R.id.et_View_approvedremarks);
 
+        /*
+         * Assign the Value to the UI element
+         * */
         et_View_employeeid.setText(leaveData.getEmployeeID());
         et_View_employeename.setText(leaveData.getFirstName());
         et_View_leavetype.setText(leaveData.getLeaveTypeText());
@@ -78,6 +90,9 @@ public class ApprovedListDisplay extends DialogFragment {
         return view;
     }
 
+    /*
+     * Dialog Window OnStart Method
+     * */
     @Override
     public void onStart() {
         super.onStart();

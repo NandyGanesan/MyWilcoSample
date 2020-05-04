@@ -23,6 +23,9 @@ import java.util.List;
 
 public class MenuFragment extends Fragment {
 
+    /*
+    * Declare the Variables
+    * */
     private String TAG = "MenuFragment";
     private Toolbar menu_toolbar;
     private static String MYPREFS_NAME = "logininfo";
@@ -36,16 +39,31 @@ public class MenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item, container, false);
 
+        /*
+        * Define the Toolbar
+        * */
         menu_toolbar = view.findViewById(R.id.main_nonav_toolbar);
         menu_toolbar.setTitle("MENU");
 
+        /*
+        * Define the Extendable List View
+        * */
         expandable_ListView = view.findViewById(R.id.elv_data);
 
+        /*
+        * Get the Item Value
+        * */
         get_item_value();
 
+        /*
+        * Define the Adapter and set the Adapter into the ListView
+        * */
         adapter = new MyExtendableListAdapter(item);
         expandable_ListView.setAdapter(adapter);
 
+        /*
+        * Log Out Code
+        * */
         expandable_ListView.setOnGroupClickListener((parent, v, groupPosition, id) -> {
             if(adapter.getChildrenCount(groupPosition)==0){
                 if(adapter.getGroupId(groupPosition)==1){
@@ -60,9 +78,13 @@ public class MenuFragment extends Fragment {
             }
             return false;
         });
+
         return view;
     }
 
+    /*
+     * Get the Item Value
+     * */
     private void get_item_value() {
         item = new HashMap<>();
 

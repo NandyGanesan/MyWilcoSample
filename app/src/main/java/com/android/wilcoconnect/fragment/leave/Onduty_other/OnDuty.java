@@ -44,6 +44,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class OnDuty extends Fragment implements DialogListener {
 
+    /*
+     * Initialize the XML element or views
+     * */
     private String TAG = "OnDuty";
     View view;
     private RecyclerView recyclerView;
@@ -58,6 +61,10 @@ public class OnDuty extends Fragment implements DialogListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_on_duty, container, false);
+
+        /*
+         * Assign the Values for the Particular View Elements
+         * */
         recyclerView = view.findViewById(R.id.recycler_view);
         dataNotFound = view.findViewById(R.id.label_name);
 
@@ -79,7 +86,11 @@ public class OnDuty extends Fragment implements DialogListener {
             addRequest.setEmployeeID(prefs.getString("EmployeeID", "No name defined"));
         }
 
+        /*
+        * API Call to get the OnDuty List
+        * */
         ApiManager.getInstance().getMyOnDutyDetails(addRequest, new Callback<OnDutyDetails>() {
+            //API Call Success
             @Override
             public void onResponse(Call<OnDutyDetails> call, Response<OnDutyDetails> response) {
                 if(response.body()!=null && response.isSuccessful()){
@@ -87,7 +98,7 @@ public class OnDuty extends Fragment implements DialogListener {
                     set_list();
                 }
             }
-
+            //API Call Failure
             @Override
             public void onFailure(Call<OnDutyDetails> call, Throwable t) {
                 Log.e(TAG,t.getLocalizedMessage());
@@ -105,6 +116,9 @@ public class OnDuty extends Fragment implements DialogListener {
         return view;
     }
 
+    /*
+     * Call the Apply On-Duty Dialog Fragment to apply new Request
+     * */
     private void apply_onDuty() {
         ApplyOnDuty duty = new ApplyOnDuty();
         duty.setTargetFragment(this, 0);
@@ -112,14 +126,24 @@ public class OnDuty extends Fragment implements DialogListener {
         duty.show(transaction,duty.TAG);
     }
 
+    /*
+     * Set the List of Data into the Adapter Class
+     * */
     private void set_list() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        /*
+         * Adapter Data is an Empty
+         * */
         if (dutyData.size() <= 0) {
             recyclerView.setAdapter(null);
             recyclerView.setVisibility(View.GONE);
             dataNotFound.setVisibility(View.VISIBLE);
-        } else {
+        }
+        /*
+         * Adapter Date is not an Empty
+         * */
+        else {
             adapter = new OnDutyListAdapter(getActivity(), dutyData, new RecyclerViewListener() {
                 @Override
                 public void onClick(View view, String value) {
@@ -128,9 +152,7 @@ public class OnDuty extends Fragment implements DialogListener {
                 @Override
                 public void OnStore(View view, OnDutyApprovePost postData) {}
                 @Override
-                public void OnCompOffStore(View view, CompOffApprovePost post) {
-
-                }
+                public void OnCompOffStore(View view, CompOffApprovePost post) {}
                 @Override
                 public void onClick(View view, ApprovePost post) {}
             });
@@ -140,6 +162,9 @@ public class OnDuty extends Fragment implements DialogListener {
         }
     }
 
+    /*
+     * Call the Detail Dialog Fragment
+     * */
     private void Instance(String s) {
         OnDutyListDisplayDetail detail = new OnDutyListDisplayDetail();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -149,13 +174,19 @@ public class OnDuty extends Fragment implements DialogListener {
         detail.show(transaction,detail.TAG);
     }
 
+    /*
+     * Listener - Return Value from the Dialog Fragment
+     * */
     @Override
     public void onDialogClick(String value) {
-        if(value == "Success"){
+        if(value.equals("Success")){
             replaceFragment();
         }
     }
 
+    /*
+     * After Data Submission to refresh the Fragment
+     * */
     private void replaceFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.on_duty_frame, new OnDuty());

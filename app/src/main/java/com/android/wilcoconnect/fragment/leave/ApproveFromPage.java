@@ -51,6 +51,7 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
     private Button accept,reject;
     private TableLayout tableLayout;
     private AddRequest addRequest= new AddRequest();
+    private AddRequest newRequest= new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
     private ArrayList<LeaveDetails> leaveBalanceDetail = new ArrayList<>();
     private View view;
@@ -277,8 +278,13 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
     * Method to assign the Table Content in ArrayList
     * */
     private void getTableData() {
+
+        newRequest.setEmail(approveList.getEmail());
+        newRequest.setEmployeeID(approveList.getEmployeeID());
+        newRequest.setCompanyCode(newRequest.getCompanyCode());
+
         leaveBalanceDetail = new ArrayList<>();
-        ApiManager.getInstance().getLeaveBalance(addRequest, new Callback<GetLeaveBalance>() {
+        ApiManager.getInstance().getLeaveBalance(newRequest, new Callback<GetLeaveBalance>() {
 //           API Success
             @Override
             public void onResponse(Call<GetLeaveBalance> call, Response<GetLeaveBalance> response) {

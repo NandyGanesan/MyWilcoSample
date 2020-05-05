@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.SharedPreferences;
@@ -388,6 +389,7 @@ public class ApplyLeave extends DialogFragment {
     /*
     * Display the Leave Balance Based on Leave Type Selection
     * */
+    @SuppressLint("SetTextI18n")
     private void display_balance() {
 
         for(int i=0;i<leaveBalanceDetail.size();i++){

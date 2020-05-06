@@ -284,7 +284,7 @@ public class ApproveFromPage extends DialogFragment implements DialogListener {
         newRequest.setCompanyCode(newRequest.getCompanyCode());
 
         leaveBalanceDetail = new ArrayList<>();
-        ApiManager.getInstance().getLeaveBalance(newRequest, new Callback<GetLeaveBalance>() {
+        ApiManager.getInstance().getLeaveBalance(addRequest, new Callback<GetLeaveBalance>() {
 //           API Success
             @Override
             public void onResponse(Call<GetLeaveBalance> call, Response<GetLeaveBalance> response) {

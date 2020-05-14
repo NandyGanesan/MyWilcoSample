@@ -114,7 +114,7 @@ public class ApproveLeaveListAdapter extends RecyclerView.Adapter<ApproveLeaveLi
             toDate = itemView.findViewById(R.id.tv_ToDate);
             employeeId = itemView.findViewById(R.id.tv_employeeid);
             employeeName = itemView.findViewById(R.id.tv_employeename);
-            approve = itemView.findViewById(R.id.approverequest);
+            approve = itemView.findViewById(R.id.CardView_GridData);
 
             accept = itemView.findViewById(R.id.btn_accept);
             reject = itemView.findViewById(R.id.btn_reject);

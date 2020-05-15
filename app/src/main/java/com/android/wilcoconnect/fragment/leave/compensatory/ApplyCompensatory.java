@@ -31,6 +31,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -142,11 +143,17 @@ public class ApplyCompensatory extends DialogFragment {
             fromMonth = c.get(Calendar.MONTH);
             fromDay = c.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view1, year, monthOfYear, dayOfMonth) -> {
-                btn_from_date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                from_date = (year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-                if(btn_to_date.getText().toString()!="" && btn_from_date.getText().toString()!="" &&
-                        btn_to_date.getText().toString()!=null && btn_from_date.getText().toString()!=null){
-                    getCount();
+                int value = analyse_day(dayOfMonth,monthOfYear,year);
+                if(value==1) {
+                    btn_from_date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                    from_date = (year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                    if (btn_to_date.getText().toString() != "" && btn_from_date.getText().toString() != "" &&
+                            btn_to_date.getText().toString() != null && btn_from_date.getText().toString() != null) {
+                        getCount();
+                    }
+                }
+                else {
+                    alert_msg();
                 }
             }, fromYear, fromMonth, fromDay);
             datePickerDialog.show();
@@ -161,11 +168,17 @@ public class ApplyCompensatory extends DialogFragment {
             toMonth = c.get(Calendar.MONTH);
             toDay = c.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view12, year, monthOfYear, dayOfMonth) -> {
-                to_date = (year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-                btn_to_date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-                if(btn_to_date.getText().toString()!=""&& btn_from_date.getText().toString()!=""
-                        && btn_to_date.getText().toString()!=null && btn_from_date.getText().toString()!=null){
-                    getCount();
+                int value = analyse_day(dayOfMonth,monthOfYear,year);
+                if(value==1) {
+                    to_date = (year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                    btn_to_date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                    if (btn_to_date.getText().toString() != "" && btn_from_date.getText().toString() != ""
+                            && btn_to_date.getText().toString() != null && btn_from_date.getText().toString() != null) {
+                        getCount();
+                    }
+                }
+                else {
+                    alert_msg();
                 }
             }, toYear, toMonth, toDay);
             datePickerDialog.show();
@@ -257,6 +270,45 @@ public class ApplyCompensatory extends DialogFragment {
             }
         });
         return view;
+    }
+
+    private void alert_msg() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Error Message : ");
+        builder.setMessage("Please select the dates in Holidays or Weekends.");
+        builder.setPositiveButton("Ok", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private int analyse_day(int dayOfMonth,int monthOfYear,int year) {
+        Calendar calendar = new GregorianCalendar(year, monthOfYear, dayOfMonth); // Note that Month value is 0-based. e.g., 0 for January.
+        int result = calendar.get(Calendar.DAY_OF_WEEK);
+        int value=0;
+        switch (result) {
+            case Calendar.MONDAY:
+                value=0;
+                break;
+            case Calendar.TUESDAY:
+                value=0;
+                break;
+            case Calendar.WEDNESDAY:
+                value=0;
+                break;
+            case Calendar.THURSDAY:
+                value=0;
+                break;
+            case Calendar.FRIDAY:
+                value=0;
+                break;
+            case Calendar.SATURDAY:
+                value=1;
+                break;
+            case Calendar.SUNDAY:
+                value=1;
+                break;
+        }
+        return value;
     }
 
     /*

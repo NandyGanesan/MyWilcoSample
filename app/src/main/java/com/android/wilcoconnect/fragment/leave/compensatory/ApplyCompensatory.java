@@ -41,11 +41,11 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class ApplyCompensatory extends DialogFragment {
 
-    public static final String TAG = "ApplyCompensatory";
     /*
      * Initialize the variables to access the Module
      * */
     private Button btn_from_date, btn_to_date,btn_clear,btn_submit;
+    public static final String TAG = "ApplyCompensatory";
     private ImageView iv_from_date, iv_to_date;
     private EditText et_remarks;
     private TextView tv_no_of_days_count, tv_date_error,content1,content2;
@@ -272,6 +272,9 @@ public class ApplyCompensatory extends DialogFragment {
         return view;
     }
 
+    /*
+    * When the Days not a Holiday Then display the alert message.
+    * */
     private void alert_msg() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("Error Message : ");
@@ -281,6 +284,9 @@ public class ApplyCompensatory extends DialogFragment {
         dialog.show();
     }
 
+    /*
+    * Analyse the Day is Holiday or not
+    * */
     private int analyse_day(int dayOfMonth,int monthOfYear,int year) {
         Calendar calendar = new GregorianCalendar(year, monthOfYear, dayOfMonth); // Note that Month value is 0-based. e.g., 0 for January.
         int result = calendar.get(Calendar.DAY_OF_WEEK);

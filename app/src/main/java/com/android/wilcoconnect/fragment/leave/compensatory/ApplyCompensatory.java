@@ -27,6 +27,7 @@ import com.android.wilcoconnect.model.leave.compensatory.GetCompOffDays;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
 import com.android.wilcoconnect.network_interface.DialogListener;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -57,6 +58,7 @@ public class ApplyCompensatory extends DialogFragment {
     private GetCompOffDays.Data data;
     private DialogListener listener;
     private String value;
+    private Calendar cal;
 
     /*
      * Define the OnCreate method to set the Fragment to the Particular Listener
@@ -156,6 +158,11 @@ public class ApplyCompensatory extends DialogFragment {
                     alert_msg();
                 }
             }, fromYear, fromMonth, fromDay);
+            cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, -data.getCreateBefore());
+            datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
+            cal = Calendar.getInstance();
+            datePickerDialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
             datePickerDialog.show();
         });
 
@@ -181,6 +188,11 @@ public class ApplyCompensatory extends DialogFragment {
                     alert_msg();
                 }
             }, toYear, toMonth, toDay);
+            cal = Calendar.getInstance();
+            cal.add(Calendar.DATE, -data.getCreateBefore());
+            datePickerDialog.getDatePicker().setMinDate(cal.getTimeInMillis());
+            cal = Calendar.getInstance();
+            datePickerDialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
             datePickerDialog.show();
         });
 

@@ -50,7 +50,8 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-    String BASE_URL = "http://192.168.1.50/hrdev/";
+    //String BASE_URL = "http://192.168.1.50/hrdev/";
+    String BASE_URL = "http://mywilco.wilcosource.com/";
 
     /*
     * Get the Token to get the session

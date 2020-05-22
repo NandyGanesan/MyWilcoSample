@@ -2,6 +2,7 @@ package com.android.wilcoconnect.api;
 
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.MenuList.Menu;
+import com.android.wilcoconnect.model.expense.FoodExpense;
 import com.android.wilcoconnect.model.leave.ApplyLeavePost;
 import com.android.wilcoconnect.model.leave.ApproveLeaveData;
 import com.android.wilcoconnect.model.leave.ApprovePost;
@@ -446,5 +447,13 @@ public class ApiManager {
         public void getDays(AddRequest request, Callback<GetCompOffDays> callback){
             Call<GetCompOffDays> reply = service.getDays(request.Email,request.companyCode,request.EmployeeID);
             reply.enqueue(callback);
+        }
+
+        /*
+        * Get the Food Expense data
+        * */
+        public void getFoodExpense(AddRequest request, Callback<FoodExpense> callback){
+            Call<FoodExpense> foodExpense = service.getFoodExpense(request.Email,request.EmployeeID);
+            foodExpense.enqueue(callback);
         }
 }

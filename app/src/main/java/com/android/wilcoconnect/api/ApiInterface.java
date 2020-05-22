@@ -1,6 +1,7 @@
 package com.android.wilcoconnect.api;
 
 import com.android.wilcoconnect.model.MenuList.Menu;
+import com.android.wilcoconnect.model.expense.FoodExpense;
 import com.android.wilcoconnect.model.leave.ApplyLeavePost;
 import com.android.wilcoconnect.model.leave.ApproveLeaveData;
 import com.android.wilcoconnect.model.leave.ApprovePost;
@@ -50,8 +51,8 @@ import retrofit2.http.Query;
 
 public interface ApiInterface {
 
-    //String BASE_URL = "http://192.168.1.50/hrdev/";
-    String BASE_URL = "http://mywilco.wilcosource.com/";
+    String BASE_URL = "http://192.168.1.50/hrdev/";
+    //String BASE_URL = "http://mywilco.wilcosource.com/";
 
     /*
     * Get the Token to get the session
@@ -357,4 +358,11 @@ public interface ApiInterface {
     Call<GetCompOffDays> getDays(@Query("Email") String Email,
                                  @Query("companyCode") String companyCode,
                                  @Query("employeeID") String employeeID);
+
+    /*
+    * Get the Food Expense data
+    * */
+    @GET("api/foodexpenses/GetFoodExpenses")
+    Call<FoodExpense> getFoodExpense(@Query("Email") String Email,
+                                     @Query("employeeID") String employeeID);
 }

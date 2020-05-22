@@ -14,7 +14,8 @@ import android.util.Log;
 
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
-import com.android.wilcoconnect.fragment.Home;
+import com.android.wilcoconnect.fragment.Expense;
+import com.android.wilcoconnect.fragment.ExpenseHome;
 import com.android.wilcoconnect.fragment.leave.LeaveHome;
 import com.android.wilcoconnect.fragment.MenuFragment;
 import com.android.wilcoconnect.fragment.profile.Profile;
@@ -92,10 +93,10 @@ public class MainActivity extends AppCompatActivity {
         /*
          * Define the Fragment Array with Fragment
          * */
-        fragments.add(new Home());
         fragments.add(new WilcoConnect());
         fragments.add(new LeaveHome());
         fragments.add(new Profile());
+        fragments.add(new ExpenseHome());
         fragments.add(new MenuFragment());
 
         /*
@@ -109,10 +110,10 @@ public class MainActivity extends AppCompatActivity {
         /*
          * Define the Tab Layout index based Icons
          * */
-        tabLayout.getTabAt(0).setIcon(R.drawable.home);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_add_circle_outline_black_24dp);
-        tabLayout.getTabAt(2).setIcon(R.drawable.leave);
-        tabLayout.getTabAt(3).setIcon(R.drawable.user);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_add_circle_outline_black_24dp);
+        tabLayout.getTabAt(1).setIcon(R.drawable.leave);
+        tabLayout.getTabAt(2).setIcon(R.drawable.user);
+        tabLayout.getTabAt(3).setIcon(R.drawable.home);
         tabLayout.getTabAt(4).setIcon(R.drawable.ic_dehaze_black_24dp);
 
          /*

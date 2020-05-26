@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,15 +65,16 @@ public class ApplyFoodExpense extends DialogFragment {
     private String applied_date;
     private ArrayList<FoodExpenseProject> projects = new ArrayList<>();
     private static int RESULT_LOAD_FILE = 1;
-    private String Name;
+    private String FileName,Name;
     private int checkItem =0;
+    private View view;
     private String[] projectName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_apply_food_expense, container, false);
+        view = inflater.inflate(R.layout.fragment_apply_food_expense, container, false);
 
         date = view.findViewById(R.id.btn_date);
         project = view.findViewById(R.id.btn_type);
@@ -89,7 +91,7 @@ public class ApplyFoodExpense extends DialogFragment {
          * Define the ToolBar
          * */
         Toolbar detail_toolbar = view.findViewById(R.id.main_withnav_toolbar);
-        detail_toolbar.setTitle("APPLY LEAVE");
+        detail_toolbar.setTitle("FOOD EXPENSE");
         detail_toolbar.setNavigationIcon(R.drawable.close);
         detail_toolbar.setNavigationOnClickListener(v -> dismiss());
 
@@ -205,6 +207,49 @@ public class ApplyFoodExpense extends DialogFragment {
             purpose.clearCheck();
         });
 
+        /*
+         * When submit the leave request
+         * */
+        submit.setOnClickListener(v -> {
+
+            int selectedId = purpose .getCheckedRadioButtonId();
+
+            // find the radio button by returned id
+            RadioButton radioButton = (RadioButton) view.findViewById(selectedId);
+            if(date.getText().toString().equals("")||
+                    project.getText().toString().equals("")||
+                    remarks.getText().toString().equals("")||
+                    amount.getText().toString().equals("")||
+                    FileName == null)
+            {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Error:");
+                if (date.getText().toString().equals("")) {
+                    builder.setMessage("Select the valid date");
+                }
+                else  if(radioButton.getText().toString().equals("  Project")){
+                    if(project.getText().toString().equals("--- SELECT ---")){
+                        builder.setMessage("Select the valid Project Name");
+                    }
+                }
+                else  if(remarks.getText().toString().equals("")){
+                    builder.setMessage("Enter the valid Remarks");
+                }
+                else  if(amount.getText().toString().equals("")){
+                    builder.setMessage("Enter the valid amount");
+                }
+                else if(FileName == null){
+                    builder.setMessage("Please attach the Receipt");
+                }
+                builder.setPositiveButton("OK",null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+            else {
+
+            }
+        });
+
         return view;
     }
 
@@ -236,8 +281,7 @@ public class ApplyFoodExpense extends DialogFragment {
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
-
-            attachment.setTag(picturePath);
+            FileName = picturePath;
         }
     }
 

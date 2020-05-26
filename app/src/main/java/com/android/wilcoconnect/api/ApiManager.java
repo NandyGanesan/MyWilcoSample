@@ -2,13 +2,13 @@ package com.android.wilcoconnect.api;
 
 import com.android.wilcoconnect.app.MainApplication;
 import com.android.wilcoconnect.model.MenuList.Menu;
-import com.android.wilcoconnect.model.expense.FoodExpense;
+import com.android.wilcoconnect.model.expense.FoodExpenseDetail;
+import com.android.wilcoconnect.model.expense.FoodExpenseProjectList;
 import com.android.wilcoconnect.model.leave.ApplyLeavePost;
 import com.android.wilcoconnect.model.leave.ApproveLeaveData;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.Holiday;
 import com.android.wilcoconnect.model.leave.LeaveCalender;
-import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.MyLeave;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
@@ -452,8 +452,17 @@ public class ApiManager {
         /*
         * Get the Food Expense data
         * */
-        public void getFoodExpense(AddRequest request, Callback<FoodExpense> callback){
-            Call<FoodExpense> foodExpense = service.getFoodExpense(request.Email,request.EmployeeID);
+        public void getFoodExpense(AddRequest request, Callback<FoodExpenseDetail> callback){
+            Call<FoodExpenseDetail> foodExpense = service.getFoodExpense(request.Email,request.EmployeeID);
             foodExpense.enqueue(callback);
+        }
+
+        /*
+        * Get the Project Names
+        * */
+        public void getProjectDetail(AddRequest request, Callback<FoodExpenseProjectList> callback){
+            Call<FoodExpenseProjectList> projectList = service.getProjectDetail(request.Email,request.EmployeeID);
+            projectList.enqueue(callback);
+
         }
 }

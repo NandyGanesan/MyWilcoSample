@@ -1,4 +1,4 @@
-package com.android.wilcoconnect.fragment;
+package com.android.wilcoconnect.fragment.expense;
 
 import android.os.Bundle;
 

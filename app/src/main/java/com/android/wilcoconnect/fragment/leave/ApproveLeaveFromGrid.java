@@ -98,9 +98,7 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
             public void onResponse(Call<ApproveLeaveData> call, Response<ApproveLeaveData> response) {
                 if(response.body()!=null && response.isSuccessful()){
                     approveList = response.body().getData();
-                    if(approveList.size()>0) {
                         set_Approve_leave_list();
-                    }
                 }
             }
             //API Failure
@@ -117,54 +115,59 @@ public class ApproveLeaveFromGrid extends Fragment implements DialogListener {
     * Get the Approve List
     * */
     private void set_Approve_leave_list() {
-        for (int i=0;i<approveList.size();i++){
-            /*
-            * Store the Applied list Into the Selected List
-            * */
-            if(approveList.get(i).getRequestStatus().equals("Applied")){
-                MyLeaveData data = new MyLeaveData();
-                data.setEmail(approveList.get(i).getEmail());
-                data.setStrFromDate(approveList.get(i).getStrFromDate());
-                data.setStrToDate(approveList.get(i).getStrToDate());
-                data.setStrApprovedDate(approveList.get(i).getStrApprovedDate());
-                data.setLeaveRequestID(approveList.get(i).getLeaveRequestID());
-                data.setEmployeeID(approveList.get(i).getEmployeeID());
-                data.setNoofDays(approveList.get(i).getNoofDays());
-                data.setRequestRemarks(approveList.get(i).getRequestRemarks());
-                data.setRequestStatus(approveList.get(i).getRequestStatus());
-                data.setFirstName(approveList.get(i).getFirstName());
-                data.setLeaveTypeText(approveList.get(i).getLeaveTypeText());
-                appliedList.add(data);
-            }
-        }
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         ApproveLeaveListAdapter approve_adapter;
-        //Adapter Data is Null
-        if(appliedList.size()<=0){
+        if (appliedList.size() <= 0) {
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+            //Adapter Data is Null
             recyclerView.setAdapter(null);
             recyclerView.setVisibility(View.GONE);
             dataNotFound.setVisibility(View.VISIBLE);
         }
         // Set Adapter to List of Data
         else {
-            approve_adapter = new ApproveLeaveListAdapter(getActivity(), appliedList, request, new RecyclerViewListener() {
-                @Override
-                public void onClick(View view, String value) {
-                    newInstance(value);
+            for (int i = 0; i < approveList.size(); i++) {
+                /*
+                 * Store the Applied list Into the Selected List
+                 * */
+                if (approveList.get(i).getRequestStatus().equals("Applied")) {
+                    MyLeaveData data = new MyLeaveData();
+                    data.setEmail(approveList.get(i).getEmail());
+                    data.setStrFromDate(approveList.get(i).getStrFromDate());
+                    data.setStrToDate(approveList.get(i).getStrToDate());
+                    data.setStrApprovedDate(approveList.get(i).getStrApprovedDate());
+                    data.setLeaveRequestID(approveList.get(i).getLeaveRequestID());
+                    data.setEmployeeID(approveList.get(i).getEmployeeID());
+                    data.setNoofDays(approveList.get(i).getNoofDays());
+                    data.setRequestRemarks(approveList.get(i).getRequestRemarks());
+                    data.setRequestStatus(approveList.get(i).getRequestStatus());
+                    data.setFirstName(approveList.get(i).getFirstName());
+                    data.setLeaveTypeText(approveList.get(i).getLeaveTypeText());
+                    appliedList.add(data);
                 }
-                @Override
-                public void OnStore(View view, OnDutyApprovePost postData) {}
-                @Override
-                public void OnCompOffStore(View view, CompOffApprovePost post) {}
-                @Override
-                public void onClick(View view, ApprovePost post) {
-                    getNewInstance(post);
-                }
-            });
-            recyclerView.setVisibility(View.VISIBLE);
-            dataNotFound.setVisibility(View.GONE);
-            recyclerView.setAdapter(approve_adapter);
+                approve_adapter = new ApproveLeaveListAdapter(getActivity(), appliedList, request, new RecyclerViewListener() {
+                    @Override
+                    public void onClick(View view, String value) {
+                        newInstance(value);
+                    }
+
+                    @Override
+                    public void OnStore(View view, OnDutyApprovePost postData) {
+                    }
+
+                    @Override
+                    public void OnCompOffStore(View view, CompOffApprovePost post) {
+                    }
+
+                    @Override
+                    public void onClick(View view, ApprovePost post) {
+                        getNewInstance(post);
+                    }
+                });
+                recyclerView.setVisibility(View.VISIBLE);
+                dataNotFound.setVisibility(View.GONE);
+                recyclerView.setAdapter(approve_adapter);
+            }
         }
     }
 

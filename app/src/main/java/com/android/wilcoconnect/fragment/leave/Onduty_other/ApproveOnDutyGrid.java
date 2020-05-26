@@ -119,7 +119,7 @@ public class ApproveOnDutyGrid extends Fragment implements DialogListener {
         /*
         * Adapter is an Empty
         * */
-        if(onDutyDataArrayList.size()<=0){
+        if(onDutyDataArrayList==null){
             recyclerView.setAdapter(null);
             recyclerView.setVisibility(View.GONE);
             dataNotFound.setVisibility(View.VISIBLE);

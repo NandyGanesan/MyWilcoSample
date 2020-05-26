@@ -1,4 +1,4 @@
-package com.android.wilcoconnect.fragment;
+package com.android.wilcoconnect.fragment.expense;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,6 +20,7 @@ import retrofit2.Response;
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
+import com.android.wilcoconnect.fragment.expense.Expense;
 import com.android.wilcoconnect.model.MenuList.MainMenu;
 import com.android.wilcoconnect.model.MenuList.Menu;
 import com.android.wilcoconnect.model.MenuList.SubMenu;
@@ -109,7 +110,7 @@ public class ExpenseHome extends Fragment {
                         int count = 0;
                         for (int i=0;i<subMenuArrayList.size();i++) {
                             if (subMenuArrayList.get(i).getMenuName().equals("Raise Claim")){
-                                fragments.add(new Expense());
+                                fragments.add(new FoodExpense());
                                 tabName[count] = "FOOD";
                                 count++;
                             }

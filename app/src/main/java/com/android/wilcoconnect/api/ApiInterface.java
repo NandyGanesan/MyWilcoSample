@@ -1,13 +1,13 @@
 package com.android.wilcoconnect.api;
 
 import com.android.wilcoconnect.model.MenuList.Menu;
-import com.android.wilcoconnect.model.expense.FoodExpense;
+import com.android.wilcoconnect.model.expense.FoodExpenseDetail;
+import com.android.wilcoconnect.model.expense.FoodExpenseProjectList;
 import com.android.wilcoconnect.model.leave.ApplyLeavePost;
 import com.android.wilcoconnect.model.leave.ApproveLeaveData;
 import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.Holiday;
 import com.android.wilcoconnect.model.leave.LeaveCalender;
-import com.android.wilcoconnect.model.leave.LeaveType;
 import com.android.wilcoconnect.model.leave.MyLeave;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyDetails;
@@ -363,6 +363,13 @@ public interface ApiInterface {
     * Get the Food Expense data
     * */
     @GET("api/foodexpenses/GetFoodExpenses")
-    Call<FoodExpense> getFoodExpense(@Query("Email") String Email,
-                                     @Query("employeeID") String employeeID);
+    Call<FoodExpenseDetail> getFoodExpense(@Query("Email") String Email,
+                                           @Query("employeeID") String employeeID);
+
+    /*
+    * Get the Project Name
+    * */
+    @GET("api/foodexpenses/GetAllProjects")
+    Call<FoodExpenseProjectList> getProjectDetail(@Query("Email") String Email,
+                                                  @Query("employeeID") String employeeID);
 }

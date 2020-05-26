@@ -14,8 +14,7 @@ import android.util.Log;
 
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
-import com.android.wilcoconnect.fragment.Expense;
-import com.android.wilcoconnect.fragment.ExpenseHome;
+import com.android.wilcoconnect.fragment.expense.ExpenseHome;
 import com.android.wilcoconnect.fragment.leave.LeaveHome;
 import com.android.wilcoconnect.fragment.MenuFragment;
 import com.android.wilcoconnect.fragment.profile.Profile;

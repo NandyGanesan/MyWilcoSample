@@ -41,7 +41,7 @@ public class Leave extends Fragment implements DialogListener {
     /*
     * Initialize the variables to access the Module
     * */
-    private String TAG = "Leave";
+    private static String TAG = "Leave";
     private ArrayList<MyLeaveData> leavedata = new ArrayList<>();
     private RecyclerView recyclerView;
     private AddRequest addRequest = new AddRequest();

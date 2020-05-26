@@ -246,7 +246,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
-                        android:checked="false"
+                        android:checked="true"
                         android:text="  Fullday"
                         android:textColor="@color/black"
                         android:textSize="20dp" />
@@ -280,7 +280,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
-                        android:checked="false"
+                        android:checked="true"
                         android:text="  Morning"
                         android:textColor="@color/black"
                         android:textSize="20dp" />

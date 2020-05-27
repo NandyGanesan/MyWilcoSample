@@ -463,6 +463,32 @@ public class ApiManager {
         public void getProjectDetail(AddRequest request, Callback<FoodExpenseProjectList> callback){
             Call<FoodExpenseProjectList> projectList = service.getProjectDetail(request.Email,request.EmployeeID);
             projectList.enqueue(callback);
-
         }
+
+    /**
+     * store the New Food Expense Request
+     * And the also used to Update the Request
+     * */
+    public void StoreNewFoodExpenseRequest(RequestBody ReEmployeeId,
+                                           RequestBody ReEmail,
+                                           RequestBody ReFoodID ,
+                                           RequestBody ReClaimNumber,
+                                           RequestBody ReBillDate,
+                                           RequestBody ReProjectID,
+                                           RequestBody ReRemarks,
+                                           RequestBody ReFoodExpenseAmount,
+                                           MultipartBody.Part file,
+                             Callback<Success> callback) {
+
+        Call<Success> data = service.StoreNewFoodExpenseRequest(ReEmployeeId,
+                ReEmail,
+                ReFoodID,
+                ReClaimNumber,
+                ReBillDate,
+                ReProjectID,
+                ReRemarks,
+                ReFoodExpenseAmount,
+                file);
+        data.enqueue(callback);
+    }
 }

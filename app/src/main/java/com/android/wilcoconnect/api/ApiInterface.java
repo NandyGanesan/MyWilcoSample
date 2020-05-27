@@ -372,4 +372,16 @@ public interface ApiInterface {
     @GET("api/foodexpenses/GetAllProjects")
     Call<FoodExpenseProjectList> getProjectDetail(@Query("Email") String Email,
                                                   @Query("employeeID") String employeeID);
+
+    @Multipart
+    @POST("api/foodexpenses/StoreFoodExpenses")
+    Call<Success> StoreNewFoodExpenseRequest(@Part("EmployeeID") RequestBody reEmployeeId,
+                                             @Part("ReEmail") RequestBody reEmail,
+                                             @Part("ReFoodID") RequestBody reFoodID,
+                                             @Part("ReClaimNumber") RequestBody reClaimNumber,
+                                             @Part("ReBillDate") RequestBody reBillDate,
+                                             @Part("ReProjectID") RequestBody reProjectID,
+                                             @Part("ReRemarks") RequestBody reRemarks,
+                                             @Part("ReFoodExpenseAmount") RequestBody reFoodExpenseAmount,
+                                             @Part MultipartBody.Part file);
 }

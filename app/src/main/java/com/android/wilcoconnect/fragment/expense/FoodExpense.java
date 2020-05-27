@@ -23,6 +23,7 @@ import com.android.wilcoconnect.model.leave.ApprovePost;
 import com.android.wilcoconnect.model.leave.Onduty.OnDutyApprovePost;
 import com.android.wilcoconnect.model.leave.compensatory.CompOffApprovePost;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
+import com.android.wilcoconnect.network_interface.DialogListener;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.expense.FoodExpenseAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,7 +36,7 @@ import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class FoodExpense extends Fragment {
+public class FoodExpense extends Fragment implements DialogListener {
 
     private static String TAG = "FoodExpense";
     private RecyclerView recyclerView;
@@ -104,6 +105,9 @@ public class FoodExpense extends Fragment {
         return view;
     }
 
+    /*
+    * Open the Dialog Fragment
+    * */
     private void apply_new_food_expense() {
         ApplyFoodExpense foodExpense = new ApplyFoodExpense();
         foodExpense.setTargetFragment(this, 0);
@@ -111,6 +115,9 @@ public class FoodExpense extends Fragment {
         foodExpense.show(transaction,foodExpense.TAG);
     }
 
+    /*
+    * Set the Recycler View Data
+    * */
     private void display_data() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
@@ -128,7 +135,7 @@ public class FoodExpense extends Fragment {
         adapter = new FoodExpenseAdapter(data, getActivity(), new RecyclerViewListener() {
                     @Override
                     public void onClick(View view, String value) {
-
+                        //newInstance(value);
                     }
                     @Override
                     public void onClick(View view, ApprovePost post) {}
@@ -140,5 +147,37 @@ public class FoodExpense extends Fragment {
         recyclerView.setVisibility(View.VISIBLE);
         dataNotFound.setVisibility(View.GONE);
         recyclerView.setAdapter(adapter);
+    }
+
+    /*
+     * Call the Apply Leave Dialog Fragment to Store New Leave
+     * */
+    /*private void newInstance(String s) {
+        ViewApplyLeaveDetails viewApplyLeaveDetails = new ViewApplyLeaveDetails();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putString("leave", s);
+        viewApplyLeaveDetails.setArguments(bundle);
+        viewApplyLeaveDetails.show(transaction,viewApplyLeaveDetails.TAG);
+    }*/
+
+    /*
+     * Listener - Return Value from the Dialog Fragment
+     * */
+    @Override
+    public void onDialogClick(String value) {
+        if(value.equals("Success")){
+            replaceFragment();
+        }
+    }
+
+    /*
+     * After Data Submission to refresh the Fragment
+     * */
+    private void replaceFragment() {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.food_expense_frame, new FoodExpense());
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

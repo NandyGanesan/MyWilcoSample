@@ -35,14 +35,20 @@ import android.widget.Toast;
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
 import com.android.wilcoconnect.app.MainApplication;
+import com.android.wilcoconnect.model.common.Success;
 import com.android.wilcoconnect.model.expense.FoodExpenseProject;
 import com.android.wilcoconnect.model.expense.FoodExpenseProjectList;
 import com.android.wilcoconnect.model.wilcoconnect.AddRequest;
+import com.android.wilcoconnect.network_interface.DialogListener;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -65,10 +71,21 @@ public class ApplyFoodExpense extends DialogFragment {
     private String applied_date;
     private ArrayList<FoodExpenseProject> projects = new ArrayList<>();
     private static int RESULT_LOAD_FILE = 1;
-    private String FileName,Name;
-    private int checkItem =0;
+    private String FileName,value;
+    private int checkItem =0,ProjectID;
     private View view;
+    private DialogListener listener;
     private String[] projectName;
+
+    /*
+     * Define the OnCreate method to set the Fragment to the Particular Listener
+     * */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        listener = (DialogListener) getTargetFragment();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -173,7 +190,7 @@ public class ApplyFoodExpense extends DialogFragment {
             builder.setItems(projectName, (dialog, which) -> {
                 checkItem = which;
                 project.setText(projectName[which]);
-                Name = projectName[which];
+                ProjectID = projects.get(which).getProjectID();
             }).setNegativeButton("Cancel", (dialog, which) -> {
                 checkItem=-1;
                 if (checkItem < 0) {
@@ -246,10 +263,58 @@ public class ApplyFoodExpense extends DialogFragment {
                 dialog.show();
             }
             else {
+                MediaType text = MediaType.parse("text/plain");
+                RequestBody ReEmployeeID = RequestBody.create(text,addRequest.getEmployeeID());
+                RequestBody ReEmail = RequestBody.create(text,addRequest.getEmail());
+                RequestBody ReFoodID = RequestBody.create(text, String.valueOf(0));
+                RequestBody ReClaimNumber = RequestBody.create(text, String.valueOf(0));
+                RequestBody ReBillDate = RequestBody.create(text,applied_date);
+                RequestBody ReProjectID = RequestBody.create(text, String.valueOf(ProjectID));
+                RequestBody ReRemarks = RequestBody.create(text,remarks.getText().toString());
+                RequestBody ReFoodExpenseAmount = RequestBody.create(text,amount.getText().toString());
+                File file = new File(FileName);
+                RequestBody requestBody1 = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                // MultipartBody.Part is used to send also the actual file name
+                MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestBody1);
 
+                ApiManager.getInstance().StoreNewFoodExpenseRequest(ReEmployeeID, ReEmail, ReFoodID, ReClaimNumber, ReBillDate, ReProjectID, ReRemarks, ReFoodExpenseAmount, body,
+                        new Callback<Success>() {
+                            @Override
+                            public void onResponse(Call<Success> call, Response<Success> response) {
+                                //Data Store Success
+                                if(response.isSuccessful() && response.body().getStatus().equals("true") && response.body().getMessage().equals("successfully Stored")) {
+                                    dismiss();
+                                    value = "Success";
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                    builder.setTitle(response.body().getMessage());
+                                    builder.setPositiveButton("Ok", (dialog, which) -> listener.onDialogClick(value));
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+                                    date.setText("");
+                                    project_label.setVisibility(View.GONE);
+                                    project.setVisibility(View.GONE);
+                                    remarks.setText("");
+                                    amount.setText("");
+                                    attachment.setTag("");
+                                    purpose.clearCheck();
+                                }
+                                //Data Store Failure
+                                else{
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                    builder.setTitle(response.body().getMessage());
+                                    builder.setPositiveButton("Ok", null);
+                                    AlertDialog dialog = builder.create();
+                                    dialog.show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Success> call, Throwable t) {
+                                Log.e(TAG,t.getLocalizedMessage());
+                            }
+                        });
             }
         });
-
         return view;
     }
 
@@ -276,7 +341,7 @@ public class ApplyFoodExpense extends DialogFragment {
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
             Cursor cursor = getActivity().getContentResolver().query(Objects.requireNonNull(selectedImage), filePathColumn, null, null, null);
-            Objects.requireNonNull(cursor).moveToFirst();
+            cursor.moveToFirst();
 
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
             String picturePath = cursor.getString(columnIndex);

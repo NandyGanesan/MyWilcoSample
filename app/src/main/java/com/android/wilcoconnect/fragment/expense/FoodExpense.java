@@ -135,7 +135,7 @@ public class FoodExpense extends Fragment implements DialogListener {
         adapter = new FoodExpenseAdapter(data, getActivity(), new RecyclerViewListener() {
                     @Override
                     public void onClick(View view, String value) {
-                        //newInstance(value);
+                        newInstance(value);
                     }
                     @Override
                     public void onClick(View view, ApprovePost post) {}
@@ -152,14 +152,14 @@ public class FoodExpense extends Fragment implements DialogListener {
     /*
      * Call the Apply Leave Dialog Fragment to Store New Leave
      * */
-    /*private void newInstance(String s) {
-        ViewApplyLeaveDetails viewApplyLeaveDetails = new ViewApplyLeaveDetails();
+    private void newInstance(String s) {
+        ApplyFoodExpense edit = new ApplyFoodExpense();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
-        bundle.putString("leave", s);
-        viewApplyLeaveDetails.setArguments(bundle);
-        viewApplyLeaveDetails.show(transaction,viewApplyLeaveDetails.TAG);
-    }*/
+        bundle.putString("FoodExpenseEdit", s);
+        edit.setArguments(bundle);
+        edit.show(transaction,ApplyFoodExpense.TAG);
+    }
 
     /*
      * Listener - Return Value from the Dialog Fragment

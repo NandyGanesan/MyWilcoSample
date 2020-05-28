@@ -10,15 +10,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
-
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +22,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 
 import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.api.ApiManager;
@@ -59,9 +58,9 @@ import static android.Manifest.permission_group.CAMERA;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
-public class ApplyFoodExpense extends DialogFragment {
+public class FoodExpenseEdit extends DialogFragment {
 
-    public static final String TAG = "ApplyFoodExpense";
+    public static final String TAG = "FoodExpenseEdit";
     private AddRequest addRequest= new AddRequest();
     private static String MYPREFS_NAME = "logininfo";
     private Button date,project,clear,submit;
@@ -78,7 +77,6 @@ public class ApplyFoodExpense extends DialogFragment {
     private View view;
     private DialogListener listener;
     private String[] projectName;
-    private FoodExpenseData data = new FoodExpenseData();
 
     /*
      * Define the OnCreate method to set the Fragment to the Particular Listener
@@ -95,15 +93,6 @@ public class ApplyFoodExpense extends DialogFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_apply_food_expense, container, false);
-
-        /*
-         * Retrieve the Intent Value
-         * */
-        if(this.getArguments().getString("FoodExpenseEdit")!=null) {
-            String foodExpenseEdit = this.getArguments().getString("FoodExpenseEdit");
-            Gson gson = new Gson();
-            data = gson.fromJson(foodExpenseEdit, FoodExpenseData.class);
-        }
 
         date = view.findViewById(R.id.btn_date);
         project = view.findViewById(R.id.btn_type);
@@ -143,8 +132,8 @@ public class ApplyFoodExpense extends DialogFragment {
         }
 
         /*
-        * Get the Project Name
-        * */
+         * Get the Project Name
+         * */
         ApiManager.getInstance().getProjectDetail(addRequest, new Callback<FoodExpenseProjectList>() {
             //API Call Success
             @Override
@@ -225,16 +214,6 @@ public class ApplyFoodExpense extends DialogFragment {
                 requestPermission();
             }
         });
-
-        if(data!=null){
-            date.setText(data.getStrBillDate());
-            if(data.getProjectID()!=null) {
-                project.setVisibility(View.VISIBLE);
-                setProjectName(data.getProjectID());
-            }
-            remarks.setText(data.getRemarks());
-            amount.setText(""+data.getRequestedAmount());
-        }
 
         clear.setOnClickListener(v -> {
             date.setText("");
@@ -340,16 +319,6 @@ public class ApplyFoodExpense extends DialogFragment {
         return view;
     }
 
-    private void setProjectName(String projectID) {
-        if(projects.size()>0) {
-            for (int i = 0; i < projects.size(); i++) {
-                if(projects.get(i).getProjectID() == projectID){
-                    project.setText(projects.get(i).getProjectName());
-                }
-            }
-        }
-    }
-
     /*
      * Get the DropDown Value from the API Call
      * */
@@ -424,7 +393,7 @@ public class ApplyFoodExpense extends DialogFragment {
     }
 
     /**
-     * Alert Box to display permission granted or denied
+     * Alert Box to display permission granted or denaied
      */
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(getActivity())

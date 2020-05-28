@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class FoodExpenseProject {
 
     @SerializedName("ProjectID")
-    public int ProjectID;
+    public String ProjectID;
 
     @SerializedName("ProjectTypeID")
     public int ProjectTypeID;
@@ -16,11 +16,11 @@ public class FoodExpenseProject {
     @SerializedName("ProjectDescription")
     public String ProjectDescription;
 
-    public int getProjectID() {
+    public String getProjectID() {
         return ProjectID;
     }
 
-    public void setProjectID(int projectID) {
+    public void setProjectID(String projectID) {
         ProjectID = projectID;
     }
 

@@ -14,6 +14,7 @@ import com.android.wilcoconnect.R;
 import com.android.wilcoconnect.model.expense.FoodExpenseData;
 import com.android.wilcoconnect.network_interface.RecyclerViewListener;
 import com.android.wilcoconnect.shared.leave.CalenderListAdapter;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,25 @@ public class FoodExpenseAdapter extends RecyclerView.Adapter<FoodExpenseAdapter.
         holder.status.setText("Claim Number : "+data.get(position).getClaimNumber());
         holder.fromDate.setText("Date : "+data.get(position).getStrRequestedDate());
         holder.toDate.setText("Amount : "+data.get(position).getRequestedAmount());
-        holder.remarks.setText(data.get(position).getRemarks());
+        holder.remarks.setText(data.get(position).getStatus());
+        holder.cardView.setOnClickListener(v -> {
+            FoodExpenseData datas = new FoodExpenseData();
+            datas.setClaimNumber(data.get(position).getClaimNumber());
+            datas.setProjectID(data.get(position).getProjectID());
+            datas.setStrBillDate(data.get(position).getStrBillDate());
+            datas.setRemarks(data.get(position).getRemarks());
+            datas.setRequestedAmount(data.get(position).getRequestedAmount());
+            datas.setEmpReceiptList(data.get(position).getEmpReceiptList());
+
+            /**
+             * Show the data in New Update View
+             * and perform respective operations
+             * */
+            Gson gson = new Gson();
+            String s = gson.toJson(datas);
+            if (listener != null)
+                listener.onClick(v, s);
+        });
     }
 
     @Override
@@ -61,7 +80,6 @@ public class FoodExpenseAdapter extends RecyclerView.Adapter<FoodExpenseAdapter.
             fromDate = itemView.findViewById(R.id.tv_fromDate);
             remarks = itemView.findViewById(R.id.tv_remarks);
             toDate = itemView.findViewById(R.id.tv_ToDate);
-            remarks.setVisibility(View.GONE);
         }
     }
 }

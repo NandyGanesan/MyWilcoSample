@@ -99,7 +99,7 @@ public class ApplyFoodExpense extends DialogFragment {
         /*
          * Retrieve the Intent Value
          * */
-        if(this.getArguments().getString("FoodExpenseEdit")!=null) {
+        if(this.getArguments()!=null) {
             String foodExpenseEdit = this.getArguments().getString("FoodExpenseEdit");
             Gson gson = new Gson();
             data = gson.fromJson(foodExpenseEdit, FoodExpenseData.class);
@@ -231,6 +231,7 @@ public class ApplyFoodExpense extends DialogFragment {
             if(data.getProjectID()!=null) {
                 project.setVisibility(View.VISIBLE);
                 setProjectName(data.getProjectID());
+                purpose.check(0);
             }
             remarks.setText(data.getRemarks());
             amount.setText(""+data.getRequestedAmount());
@@ -343,7 +344,7 @@ public class ApplyFoodExpense extends DialogFragment {
     private void setProjectName(String projectID) {
         if(projects.size()>0) {
             for (int i = 0; i < projects.size(); i++) {
-                if(projects.get(i).getProjectID() == projectID){
+                if(projects.get(i).getProjectID().equals(projectID)){
                     project.setText(projects.get(i).getProjectName());
                 }
             }

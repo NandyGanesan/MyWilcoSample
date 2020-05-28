@@ -40,7 +40,7 @@ public class FoodExpenseAdapter extends RecyclerView.Adapter<FoodExpenseAdapter.
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.status.setText("Claim Number : "+data.get(position).getClaimNumber());
-        holder.fromDate.setText("Date : "+data.get(position).getStrRequestedDate());
+        holder.fromDate.setText("Date : "+data.get(position).getStrBillDate());
         holder.toDate.setText("Amount : "+data.get(position).getRequestedAmount());
         holder.remarks.setText(data.get(position).getStatus());
         holder.cardView.setOnClickListener(v -> {

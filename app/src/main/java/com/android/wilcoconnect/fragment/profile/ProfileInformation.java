@@ -432,7 +432,6 @@ public class ProfileInformation extends DialogFragment {
                     educationList = educationDetailsData.getData();
                     display_education();
                 }
-
             }
             /*
              * Get the Api Failure

@@ -109,7 +109,7 @@ public class FoodExpenseData {
     @SerializedName("RemarksFromFinance")
     public String RemarksFromFinance;
 
-    @SerializedName("")
+    @SerializedName("empReceiptList")
     public List<EmpReceiptList> empReceiptList;
 
     public class EmpReceiptList {

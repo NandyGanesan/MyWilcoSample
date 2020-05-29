@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -59,7 +60,7 @@ import static android.Manifest.permission_group.CAMERA;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
-public class ApplyFoodExpense extends DialogFragment {
+public class ApplyFoodExpense extends DialogFragment implements View.OnClickListener {
 
     public static final String TAG = "ApplyFoodExpense";
     private AddRequest addRequest= new AddRequest();
@@ -67,7 +68,7 @@ public class ApplyFoodExpense extends DialogFragment {
     private Button date,project,clear,submit;
     private TextView project_label;
     private RadioGroup purpose;
-    private EditText remarks,amount;
+    private EditText remarks,amount,actionDate,approvedamount,settlementamount,status;
     private ImageView attachment,date_picker;
     private int Year,Month,Day;
     private String applied_date,ProjectID;
@@ -79,6 +80,7 @@ public class ApplyFoodExpense extends DialogFragment {
     private DialogListener listener;
     private String[] projectName;
     private FoodExpenseData data = new FoodExpenseData();
+    private LinearLayout layout,file;
 
     /*
      * Define the OnCreate method to set the Fragment to the Particular Listener
@@ -115,6 +117,14 @@ public class ApplyFoodExpense extends DialogFragment {
         date_picker = view.findViewById(R.id.iv_date);
         submit = view.findViewById(R.id.btn_submit);
         clear = view.findViewById(R.id.btn_clear);
+        actionDate = view.findViewById(R.id.et_actionDate);
+        approvedamount = view.findViewById(R.id.et_approvedamount);
+        settlementamount = view.findViewById(R.id.et_settlementamount);
+        status = view.findViewById(R.id.et_status);
+        layout = view.findViewById(R.id.approverDetail_Frame);
+        file = view.findViewById(R.id.attachment_frame);
+
+        RadioButton radioButton_project = (RadioButton) view.findViewById(R.id.radioProject);
 
         /*
          * Define the ToolBar
@@ -152,6 +162,54 @@ public class ApplyFoodExpense extends DialogFragment {
                 if(response.isSuccessful() && response.body()!=null){
                     projects = response.body().getData();
                     get_dropdown_value();
+                    if(data.getClaimNumber()!=null){
+                        date.setText(data.getStrBillDate());
+                        remarks.setText(data.getRemarks());
+                        amount.setText("" + data.getRequestedAmount());
+                        if (data.getProjectID() != null) {
+                            if(projects.size()>0) {
+                                for (int i = 0; i < projects.size(); i++) {
+                                    if(projects.get(i).getProjectID().equals(data.getProjectID())){
+                                        project.setText(projects.get(i).getProjectName());
+                                        radioButton_project.setChecked(true);
+                                    }
+                                }
+                            }
+                            project_label.setVisibility(View.VISIBLE);
+                            project.setVisibility(View.VISIBLE);
+                        }
+                        get_filepath();
+                        if(data.getStatus().equals("SUBMITTED")) {
+                            project.setEnabled(true);
+                            date_picker.setEnabled(true);
+                            purpose.setEnabled(true);
+                            remarks.setEnabled(true);
+                            amount.setEnabled(true);
+                            attachment.setEnabled(true);
+                            submit.setVisibility(View.VISIBLE);
+                            clear.setVisibility(View.VISIBLE);
+                            layout.setVisibility(View.GONE);
+                            attachment.setVisibility(View.VISIBLE);
+                            file.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            project.setEnabled(false);
+                            date_picker.setEnabled(false);
+                            purpose.setEnabled(false);
+                            remarks.setEnabled(false);
+                            amount.setEnabled(false);
+                            attachment.setEnabled(false);
+                            submit.setVisibility(View.GONE);
+                            clear.setVisibility(View.GONE);
+                            layout.setVisibility(View.VISIBLE);
+                            attachment.setVisibility(View.GONE);
+                            actionDate.setText(data.getActionDate());
+                            settlementamount.setText(data.getSettlementAmount());
+                            status.setText(data.getStatus());
+                            approvedamount.setText(""+data.getApprovedAmount());
+                            file.setVisibility(View.VISIBLE);
+                        }
+                    }
                 }
             }
             //API Call Failure
@@ -170,7 +228,7 @@ public class ApplyFoodExpense extends DialogFragment {
             Month = c.get(Calendar.MONTH);
             Day = c.get(Calendar.DAY_OF_MONTH);
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view1, year, monthOfYear, dayOfMonth) -> {
-                date.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                date.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                 applied_date = (year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
             }, Year, Month, Day);
             Calendar cal = Calendar.getInstance();
@@ -225,17 +283,6 @@ public class ApplyFoodExpense extends DialogFragment {
                 requestPermission();
             }
         });
-
-        if(data!=null){
-            date.setText(data.getStrBillDate());
-            if(data.getProjectID()!=null) {
-                project.setVisibility(View.VISIBLE);
-                setProjectName(data.getProjectID());
-                purpose.check(0);
-            }
-            remarks.setText(data.getRemarks());
-            amount.setText(""+data.getRequestedAmount());
-        }
 
         clear.setOnClickListener(v -> {
             date.setText("");
@@ -341,12 +388,16 @@ public class ApplyFoodExpense extends DialogFragment {
         return view;
     }
 
-    private void setProjectName(String projectID) {
-        if(projects.size()>0) {
-            for (int i = 0; i < projects.size(); i++) {
-                if(projects.get(i).getProjectID().equals(projectID)){
-                    project.setText(projects.get(i).getProjectName());
-                }
+    private void get_filepath() {
+        for (int i=0; i<data.getEmpReceiptList().size();i++){
+            for (int j=0;j<data.getEmpReceiptList().get(i).getFilepath().size();j++) {
+                ImageView imageView = new ImageView(getActivity());
+                imageView.setLayoutParams(new LinearLayout.LayoutParams(80, 80));
+                imageView.setPadding(8, 8, 8, 8);
+                imageView.setTag(data.getEmpReceiptList().get(i).getFilepath().get(j));
+                imageView.setOnClickListener(this);
+                imageView.setImageResource(R.drawable.ic_attachment_black_24dp);
+                layout.addView(imageView);
             }
         }
     }
@@ -448,5 +499,16 @@ public class ApplyFoodExpense extends DialogFragment {
             int height = ViewGroup.LayoutParams.MATCH_PARENT;
             dialog.getWindow().setLayout(width, height);
         }
+    }
+
+    /*
+     * OnClick Action for Attachment File
+     * */
+    @Override
+    public void onClick(View v) {
+        String url = this.getTag();
+        Uri uri = Uri.parse("http://192.168.1.50/hrdev/content/"+url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
     }
 }

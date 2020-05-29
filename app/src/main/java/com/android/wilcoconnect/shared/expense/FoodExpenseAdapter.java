@@ -39,9 +39,9 @@ public class FoodExpenseAdapter extends RecyclerView.Adapter<FoodExpenseAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.status.setText("Claim Number : "+data.get(position).getClaimNumber());
-        holder.fromDate.setText("Date : "+data.get(position).getStrBillDate());
-        holder.toDate.setText("Amount : "+data.get(position).getRequestedAmount());
+        holder.status.setText(data.get(position).getClaimNumber());
+        holder.fromDate.setText(data.get(position).getStrBillDate());
+        holder.toDate.setText(""+data.get(position).getRequestedAmount());
         holder.remarks.setText(data.get(position).getStatus());
         holder.cardView.setOnClickListener(v -> {
             FoodExpenseData datas = new FoodExpenseData();
@@ -49,8 +49,13 @@ public class FoodExpenseAdapter extends RecyclerView.Adapter<FoodExpenseAdapter.
             datas.setProjectID(data.get(position).getProjectID());
             datas.setStrBillDate(data.get(position).getStrBillDate());
             datas.setRemarks(data.get(position).getRemarks());
+            datas.setStatus(data.get(position).getStatus());
             datas.setRequestedAmount(data.get(position).getRequestedAmount());
             datas.setEmpReceiptList(data.get(position).getEmpReceiptList());
+            datas.setActionDate(data.get(position).getActionDate());
+            datas.setSettlementAmount(data.get(position).getSettlementAmount());
+            datas.setApprovedAmount(data.get(position).getApprovedAmount());
+
 
             /**
              * Show the data in New Update View

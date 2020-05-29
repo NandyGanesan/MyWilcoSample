@@ -82,6 +82,7 @@ public class FoodExpense extends Fragment implements DialogListener {
         ApiManager.getInstance().getFoodExpense(addRequest, new Callback<FoodExpenseDetail>() {
             @Override
             public void onResponse(Call<FoodExpenseDetail> call, Response<FoodExpenseDetail> response) {
+                data = new ArrayList<>();
                 if(response.body()!=null && response.isSuccessful()){
                     data = response.body().getData();
                     display_data();

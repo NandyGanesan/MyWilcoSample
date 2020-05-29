@@ -71,7 +71,7 @@ public class ApplyFoodExpense extends DialogFragment implements View.OnClickList
     private EditText remarks,amount,actionDate,approvedamount,settlementamount,status;
     private ImageView attachment,date_picker;
     private int Year,Month,Day;
-    private String applied_date,ProjectID;
+    private String applied_date,ProjectID,ClaimNumber="0";
     private ArrayList<FoodExpenseProject> projects = new ArrayList<>();
     private static int RESULT_LOAD_FILE = 1;
     private String FileName,value;
@@ -180,6 +180,7 @@ public class ApplyFoodExpense extends DialogFragment implements View.OnClickList
                         }
                         get_filepath();
                         if(data.getStatus().equals("SUBMITTED")) {
+                            ClaimNumber = data.getClaimNumber();
                             project.setEnabled(true);
                             date_picker.setEnabled(true);
                             purpose.setEnabled(true);
@@ -298,7 +299,6 @@ public class ApplyFoodExpense extends DialogFragment implements View.OnClickList
          * When submit the leave request
          * */
         submit.setOnClickListener(v -> {
-
             int selectedId = purpose .getCheckedRadioButtonId();
 
             // find the radio button by returned id
@@ -337,7 +337,7 @@ public class ApplyFoodExpense extends DialogFragment implements View.OnClickList
                 RequestBody ReEmployeeID = RequestBody.create(text,addRequest.getEmployeeID());
                 RequestBody ReEmail = RequestBody.create(text,addRequest.getEmail());
                 RequestBody ReFoodID = RequestBody.create(text, String.valueOf(0));
-                RequestBody ReClaimNumber = RequestBody.create(text, String.valueOf(0));
+                RequestBody ReClaimNumber = RequestBody.create(text, ClaimNumber);
                 RequestBody ReBillDate = RequestBody.create(text,applied_date);
                 RequestBody ReProjectID = RequestBody.create(text, String.valueOf(ProjectID));
                 RequestBody ReRemarks = RequestBody.create(text,remarks.getText().toString());
@@ -377,13 +377,12 @@ public class ApplyFoodExpense extends DialogFragment implements View.OnClickList
                                     dialog.show();
                                 }
                             }
-
                             @Override
                             public void onFailure(Call<Success> call, Throwable t) {
                                 Log.e(TAG,t.getLocalizedMessage());
                             }
                         });
-            }
+                }
         });
         return view;
     }

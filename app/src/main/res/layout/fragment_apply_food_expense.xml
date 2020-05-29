@@ -190,9 +190,10 @@
                     android:id="@+id/approverDetail_Frame"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     android:orientation="vertical"
                     android:visibility="gone"
-                    android:layout_margin="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/et_amount">
 
@@ -201,8 +202,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:text="Action Date"
                         android:enabled="false"
+                        android:text="Action Date"
                         android:textColor="#0A0606"
                         android:textSize="16dp"
                         android:textStyle="bold" />
@@ -221,21 +222,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:text="Approved Amount"
                         android:enabled="false"
+                        android:text="Approved Amount"
                         android:textColor="#0A0606"
                         android:textSize="16dp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/et_approvedamount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:inputType="numberSigned"
                         android:enabled="false"
+                        android:inputType="numberSigned"
                         android:textColor="#0A0606"
-                        android:textSize="16dp"/>
+                        android:textSize="16dp" />
 
                     <TextView
                         android:id="@+id/tv_settlementamount"
@@ -262,21 +263,21 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
+                        android:enabled="false"
                         android:text="Status"
                         android:textColor="#0A0606"
-                        android:enabled="false"
                         android:textSize="16dp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/et_status"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp"
-                        android:inputType="numberSigned"
                         android:enabled="false"
+                        android:inputType="numberSigned"
                         android:textColor="#0A0606"
-                        android:textSize="16dp"/>
+                        android:textSize="16dp" />
 
                 </LinearLayout>
 
